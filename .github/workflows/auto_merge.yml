@@ -1,0 +1,19 @@
+name: Auto Merge PR to Dev
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  merge_to_dev:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged && github.event.pull_request.base.ref == 'dev'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Merge PR
+        run: git merge --no-ff ${{ github.event.pull_request.head.sha }} -m "${{ github.event.pull_request.title }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
