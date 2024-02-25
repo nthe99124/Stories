@@ -5,17 +5,17 @@ namespace StoriesProject.Model.BaseEntity;
 public partial class Accountant
 {
     [Key]
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
 
-    [StringLength(50)]
-    [Required]
+    [StringLength(50, ErrorMessage = "UserName quá dài")]
+    [Required(ErrorMessage = "UserName chưa có giá trị")]
     public string UserName { get; set; }
 
-    [StringLength(50)]
-    [Required]
+    [StringLength(50, ErrorMessage = "Password quá dài")]
+    [Required(ErrorMessage ="Password chưa có giá trị")]
     public string Password { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "Ngôn ngữ chưa có giá trị")]
     public string Language { get; set; } = "vi-VN";
 
     public bool IsLocked { get; set; }

@@ -1,14 +1,12 @@
 ﻿using AspNetCoreRateLimit;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Localization;
 using StoriesProject.Common.Cache;
 using StoriesProject.Common.Repository;
-using StoriesProject.Data;
 using StoriesProject.MiddleWare;
 using StoriesProject.Model.ViewModel;
-using StoriesProject.Repositories.Base;
+using StoriesProject.Services;
 using System.Globalization;
 
 #region Config service
@@ -89,6 +87,9 @@ services.Configure<RequestLocalizationOptions>(options =>
 services.AddScoped<RestOutput>();
 services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+// mỗi lần gọi 1 phát tạo insert nên dùng luôn Transient
+services.AddTransient<ILogEntryService, LogEntryService>();
+
 #endregion
 
 #region Config AutoMapper
@@ -122,9 +123,6 @@ services.AddDistributedMemoryCache();
 services.AddSingleton<IDistributedCacheCustom, DistributedCacheCustom>();
 #endregion
 
-
-
-services.AddSingleton<WeatherForecastService>();
 #endregion
 
 #region Run service pipleline
@@ -174,6 +172,9 @@ app.MapFallbackToPage("/_Host");
 app.UseRequestLocalization();
 app.UseMiddleware<LanguageMiddleware>();
 #endregion
+
+// xử lý lỗi api
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.Run();
 #endregion

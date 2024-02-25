@@ -1,15 +1,14 @@
 ﻿using StoriesProject.Common.Cache;
-using StoriesProject.Common.Repository;
-using StoriesProject.Model.DTO;
+using StoriesProject.Models.DTO.Accountant;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace WebCrawlTMDT.BL
+namespace WebCrawlTMDT.Services.Base
 {
-    public class ServiceBase
+    public class BaseService
     {
         protected static IHttpContextAccessor _httpContextAccessor;
         protected IDistributedCacheCustom _cache;
-        public ServiceBase(IHttpContextAccessor httpContextAccessor, IDistributedCacheCustom cache)
+        public BaseService(IHttpContextAccessor httpContextAccessor, IDistributedCacheCustom cache)
         {
             _httpContextAccessor = httpContextAccessor;
             _cache = cache;

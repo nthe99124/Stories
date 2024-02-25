@@ -6,7 +6,7 @@ namespace StoriesProject.Model.BaseEntity;
 public partial class Order
 {
     [Key]
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
 
     public decimal TotalAmount { get; set; }
 

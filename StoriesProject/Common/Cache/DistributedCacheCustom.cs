@@ -1,12 +1,13 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
+using System.Text.Json;
 
 namespace StoriesProject.Common.Cache
 {
     public interface IDistributedCacheCustom
     {
         Task SetStringAsync(string key, string value, TimeSpan? timeSpanCache = null, DistributedCacheEntryOptions? options = null, CancellationToken token = default(CancellationToken));
-        Task<string> GetStringAsync(string key, CancellationToken token = default(CancellationToken));
-        string GetString(string key);
+        Task<T?> GetValueCacheAsync<T>(string key, CancellationToken token = default(CancellationToken));
+        T? GetValueCache<T>(string key);
         void SetString(string key, string value, TimeSpan? timeSpanCache = null, DistributedCacheEntryOptions? options = null, CancellationToken token = default(CancellationToken));
     }
     public class DistributedCacheCustom : IDistributedCacheCustom
@@ -45,26 +46,42 @@ namespace StoriesProject.Common.Cache
         }
 
         /// <summary>
-        /// Custom thêm hàm get tạm thời custom thôi
+        /// Custom thêm hàm get lấy value object
         /// CreatedBy ntthe 25.02.2024
         /// </summary>
         /// <param name="key"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public async Task<string> GetStringAsync(string key, CancellationToken token = default(CancellationToken))
+        public async Task<T?> GetValueCacheAsync<T>(string key, CancellationToken token = default(CancellationToken))
         {
-            return await _cache.GetStringAsync(key, token) ?? string.Empty;
+            var cacheValue = await _cache.GetStringAsync(key);
+            if (cacheValue != null)
+            {
+                return JsonSerializer.Deserialize<T>(cacheValue);
+            }
+            else
+            {
+                return default(T);
+            }
         }
 
         /// <summary>
-        /// Custom thêm hàm get (đồng bộ) tạm thời custom thôi
+        /// Custom thêm hàm get lấy value object
         /// CreatedBy ntthe 25.02.2024
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public string GetString(string key)
+        public T? GetValueCache<T>(string key)
         {
-            return _cache.GetString(key) ?? string.Empty;
+            var cacheValue = _cache.GetString(key);
+            if (cacheValue != null)
+            {
+                return JsonSerializer.Deserialize<T>(cacheValue);
+            }
+            else
+            {
+                return default(T);
+            }
         }
 
         /// <summary>
@@ -86,7 +103,7 @@ namespace StoriesProject.Common.Cache
             {
                 options.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5); // mặc định cache 5 phút
             }
-            var cacheValue = GetString(key);
+            var cacheValue = _cache.GetString(key);
             if (string.IsNullOrEmpty(cacheValue))
             {
                 _cache.SetString(key, value, options);

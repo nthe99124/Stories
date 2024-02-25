@@ -6,18 +6,14 @@ namespace StoriesProject.Model.BaseEntity;
 public partial class CoinLog
 {
     [Key]
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
 
-    [Required]
     public int CoinTransacted { get; set; }
 
-    [Required]
     public decimal MoneyConvert { get; set; }
 
-    [Required]
     public CoinLogType Type { get; set; }
 
-    [Required]
     public bool IsApproved { get; set; }
 
     public DateTime? CreatedDate { get; set; }

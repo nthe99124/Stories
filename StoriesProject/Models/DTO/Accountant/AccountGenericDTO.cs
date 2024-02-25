@@ -1,4 +1,4 @@
-﻿namespace StoriesProject.Model.DTO
+﻿namespace StoriesProject.Models.DTO.Accountant
 {
     public class AccountGenericDTO
     {

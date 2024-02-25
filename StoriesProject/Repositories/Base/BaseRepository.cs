@@ -32,7 +32,6 @@ namespace StoriesProject.Repositories.Base
         private readonly DbSet<T> _dbset;
         private readonly IUnitOfWork _entities;
 
-
         protected BaseRepository(IUnitOfWork entities)
         {
             _entities = entities;

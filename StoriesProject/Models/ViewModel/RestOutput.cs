@@ -21,11 +21,21 @@ namespace StoriesProject.Model.ViewModel
             Data = data;
         }
 
-        public void SuccessEventHandler(object data, string? message = null)
+        public void SuccessEventHandler(object data = null, string? message = null)
         {
             StatusCode = HttpStatusCode.OK;
             Data = data;
             if (!string.IsNullOrEmpty(message)) 
+            {
+                Message = message;
+            }
+        }
+
+        public void ErrorEventHandler(object data, string? message = "Đã có lỗi xảy ra")
+        {
+            StatusCode = HttpStatusCode.OK;
+            Data = data;
+            if (!string.IsNullOrEmpty(message))
             {
                 Message = message;
             }

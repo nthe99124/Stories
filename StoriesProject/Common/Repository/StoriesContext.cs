@@ -1,19 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using StoriesProject.Model.BaseEntity;
+using System.ComponentModel.DataAnnotations;
+using System.Configuration;
 
 namespace StoriesProject.Common.Repository;
 
 public partial class StoriesContext : DbContext
 {
+    private readonly IConfiguration _configuration;
     public StoriesContext()
     {
     }
 
-    public StoriesContext(DbContextOptions<StoriesContext> options)
+    public StoriesContext(DbContextOptions<StoriesContext> options, IConfiguration configuration)
         : base(options)
     {
+        _configuration = configuration;
     }
 
     public virtual DbSet<Accountant> Accountants { get; set; }
@@ -36,6 +38,11 @@ public partial class StoriesContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        if (!optionsBuilder.IsConfigured)
+        {
+            string connectionString = _configuration.GetConnectionString("DefaultConnection");
+            optionsBuilder.UseSqlServer(connectionString);
+        }
         base.OnConfiguring(optionsBuilder);
     }
 
@@ -154,6 +161,12 @@ public partial class StoriesContext : DbContext
     #region override custom savechanges
     public override int SaveChanges()
     {
+        var validModel = ValidateModel();
+        if (!validModel.IsValid && !string.IsNullOrEmpty(validModel.ErrorMessage))
+        {
+            // Ném ra một exception với thông điệp lỗi
+            throw new InvalidOperationException(validModel.ErrorMessage);
+        }
         TrimStringPropertype();
         return base.SaveChanges();
     }
@@ -178,6 +191,29 @@ public partial class StoriesContext : DbContext
                 }
             }
         }
+    }
+
+    /// <summary>
+    /// Kiểm tra dữ liệu null có phù hợp kiểu dữ liệu không trước khi lưu (chỉ xảy ra với string)
+    /// CreatedBy ntthe 25.02.2024
+    /// </summary>
+    public (bool IsValid, string ErrorMessage) ValidateModel()
+    {
+        var entities = ChangeTracker.Entries()
+                        .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified).Select(e => e.Entity);
+        var validationContext = new ValidationContext(entities);
+        var validationResults = new List<ValidationResult>();
+
+        // Kiểm tra tính hợp lệ của model
+        bool isValid = Validator.TryValidateObject(entities, validationContext, validationResults, true);
+        if (!isValid)
+        {
+            // Lặp qua các lỗi và tạo thông điệp lỗi
+            string errorMessage = string.Join(Environment.NewLine, validationResults.Select(r => r.ErrorMessage));
+            return (false, errorMessage);
+        }
+
+        return (true, "");
     }
     #endregion
 

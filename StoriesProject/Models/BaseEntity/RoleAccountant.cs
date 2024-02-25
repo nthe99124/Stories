@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace StoriesProject.Model.BaseEntity;
 
 public partial class RoleAccountant
 {
-    public Guid Id { get; set; }
+    [Key]
+    public Guid Id { get; set; } = Guid.NewGuid();
 
     public Guid RoleId { get; set; }
 

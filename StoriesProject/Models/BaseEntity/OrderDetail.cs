@@ -5,7 +5,7 @@ namespace StoriesProject.Model.BaseEntity;
 public partial class OrderDetail
 {
     [Key]
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
 
     public Guid OrderId { get; set; }
 
