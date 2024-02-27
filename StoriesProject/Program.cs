@@ -1,12 +1,7 @@
-﻿using AspNetCoreRateLimit;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Localization;
+﻿using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Localization;
 using StoriesProject.Common.Cache;
-using StoriesProject.Common.Repository;
-using StoriesProject.MiddleWare;
-using StoriesProject.Model.ViewModel;
-using StoriesProject.Services;
+using StoriesProject.Common.MiddleWare;
 using System.Globalization;
 
 #region Config service
@@ -25,38 +20,6 @@ services.AddSingleton(configuration);
 #region Razor page config
 services.AddRazorPages();
 services.AddServerSideBlazor();
-#endregion
-
-#region config Author, Authen
-// TODO: ntthe => hiện tại dùng cookie, nếu cần thay đổi thì chuyển BearToken thì cần config lại
-services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultSignOutScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-}).AddCookie(options =>
-{
-    options.LoginPath = "/Account/Login"; // đường dẫn tới trang đăng nhập
-    //option.AccessDeniedPath = "/"; // đường dẫn tới trang không có quyền
-});
-#endregion
-
-#region config CORS
-// TODO: ntthe => xác định lại cần truy cập từ đâu nữa để config thêm nhé -> hiện tại defined allow all rồi
-services.AddCors(options =>
-{
-    options.AddPolicy("AllowAnyOrigin",
-        builder => builder.AllowAnyOrigin()
-                          .AllowAnyHeader()
-                          .AllowAnyMethod());
-});
-#endregion
-
-#region Context DB
-//service.AddDbContext<StoriesProjectContext>(options =>
-//{
-//    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-//});
 #endregion
 
 #region Localize
@@ -83,38 +46,13 @@ services.Configure<RequestLocalizationOptions>(options =>
 });
 #endregion
 
-#region Đăng kí lifetime cho các Service, Respository
-services.AddScoped<RestOutput>();
-services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-// mỗi lần gọi 1 phát tạo insert nên dùng luôn Transient
-services.AddTransient<ILogEntryService, LogEntryService>();
-
-#endregion
-
 #region Config AutoMapper
 //services.AddAutoMapper(typeof(Startup));
 #endregion
 
 #region Config http requets
 // cấu hình phiên 
-// TODO: ntthe => đánh giá lại xem blazor app có cần quản lý session kiểu này không, hay chỉ cần quản lý phiên author thôi
-//services.AddSession(options =>
-//{
-//    options.IdleTimeout = TimeSpan.FromMinutes(30);
-//    options.Cookie.HttpOnly = true;
-//});
-// lấy thông tin từ http request
 services.AddHttpContextAccessor();
-#endregion
-
-#region Xử lý DDOS
-services.AddMemoryCache();
-services.Configure<IpRateLimitOptions>(options => configuration.GetSection("IPRateLimiting").Bind(options));
-services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
-services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
-services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
-services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
 #endregion
 
 #region Config cache
@@ -127,7 +65,7 @@ services.AddSingleton<IDistributedCacheCustom, DistributedCacheCustom>();
 
 #region Run service pipleline
 var app = builder.Build();
-
+ 
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
@@ -143,38 +81,22 @@ app.UseRouting();
 
 app.MapBlazorHub();
 
-#region CORS
-app.UseCors("AllowAnyOrigin");
-#endregion
-
-#region DDOS
-app.UseIpRateLimiting();
-#endregion
-
-#region Authen, Author
-app.UseStatusCodePages(async context =>
+app.MapWhen(ctx => !ctx.Request.Path.StartsWithSegments("/api"), client =>
 {
-    var response = context.HttpContext.Response;
-    if (response != null && response.StatusCode == 401)
+    client.UseStaticFiles();
+    client.UseRouting();
+    client.UseEndpoints(endpoints =>
     {
-        await Task.Run(() => {
-            response.Redirect("/Account/Login");
-        });
-    }
+        endpoints.MapBlazorHub();
+        endpoints.MapFallbackToPage("/_Host");
+    });
 });
-app.UseAuthentication();
-app.UseAuthorization();
-#endregion
 
-app.MapFallbackToPage("/_Host");
 
 #region Localize
 app.UseRequestLocalization();
 app.UseMiddleware<LanguageMiddleware>();
 #endregion
-
-// xử lý lỗi api
-app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.Run();
 #endregion
