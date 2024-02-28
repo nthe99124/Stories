@@ -1,7 +1,7 @@
 ﻿using AspNetCoreRateLimit;
-using AutoMapper;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using StoriesProject.API.Common.Cache;
 using StoriesProject.API.Common.Repository;
@@ -63,26 +63,25 @@ services.AddSwaggerGen(c =>
 // sử dụng jwt bear token
 var secretKey = configuration.GetSection("Jwt").GetSection("SecretKey").Value;
 var secretKeyBytes = Encoding.UTF8.GetBytes(secretKey);
-//services.AddAuthentication(opt =>
-//{
-//    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//}).AddJwtBearer(opt =>
-//                {
-//                    opt.TokenValidationParameters = new TokenValidationParameters
-//                    {
-//                        // các mã xác thực thông báo
-//                        //grant token
-//                        ValidateIssuer = false,
-//                        ValidateAudience = false,
+services.AddAuthentication(opt =>
+{
+    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(opt =>
+                {
+                    opt.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        // các mã xác thực thông báo
+                        //grant token
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
 
-//                        //sign token
-//                        ValidateIssuerSigningKey = true,
-//                        IssuerSigningKey = new SymmetricSecurityKey(secretKeyBytes),
-
-//                        ClockSkew = TimeSpan.Zero
-//                    };
-//                });
+                        //sign token
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(secretKeyBytes),
+                        ClockSkew = TimeSpan.Zero
+                    };
+                });
 #endregion
 
 #region config CORS
