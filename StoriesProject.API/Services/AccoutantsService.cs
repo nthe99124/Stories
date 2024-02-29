@@ -47,21 +47,21 @@ namespace StoriesProject.API.Services
             {
                 var token = HandleSignInAndGenerateToken(account);
 
-                // ghi token vào cookie
-                _httpContextAccessor.HttpContext.Response.Cookies.Append("access_token", token, new CookieOptions
+                if (token != null)
                 {
-                    HttpOnly = true, // Set HttpOnly to true for security
-                    Secure = true,   // Set Secure to true if your site uses HTTPS
-                    SameSite = SameSiteMode.Strict, // Set SameSite to Strict for added security
-                    Expires = DateTimeOffset.UtcNow.AddMinutes(15) // Set the expiration time
-                });
+                    // ghi token vào cookie
+                    _httpContextAccessor?.HttpContext?.Response.Cookies.Append("access_token", token, new CookieOptions
+                    {
+                        HttpOnly = true, // Set HttpOnly to true for security
+                        Secure = true,   // Set Secure to true if your site uses HTTPS
+                        SameSite = SameSiteMode.Strict, // Set SameSite to Strict for added security
+                        Expires = DateTimeOffset.UtcNow.AddMinutes(15) // Set the expiration time
+                    });
 
-                return token;
+                    return token;
+                }
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
         /// <summary>
@@ -97,8 +97,8 @@ namespace StoriesProject.API.Services
         public void Logout()
         {
             // SignOut
-            _httpContextAccessor.HttpContext.Response.Cookies.Delete("access_token");
-            _httpContextAccessor.HttpContext.Session.Clear();
+            _httpContextAccessor?.HttpContext?.Response?.Cookies.Delete("access_token");
+            _httpContextAccessor?.HttpContext?.Session.Clear();
         }
 
         #region Private Method
@@ -109,25 +109,34 @@ namespace StoriesProject.API.Services
         /// </summary>
         /// <param name="account"></param>
         /// <returns></returns>
-        private string HandleSignInAndGenerateToken(Accountant account)
+        private string? HandleSignInAndGenerateToken(Accountant account)
         {
-            var jwtToken = new JwtSecurityTokenHandler();
-            var secretKeyByte = Encoding.UTF8.GetBytes(_configuration["AppSettings:SecretKey"]);
-            var tokenDescription = new SecurityTokenDescriptor
+            if (_configuration != null)
             {
-                Subject = new ClaimsIdentity(new[]
+                var jwtToken = new JwtSecurityTokenHandler();
+                var secretKeyByte = Encoding.UTF8.GetBytes(_configuration.GetSection("Jwt").GetSection("SecretKey").Value);
+                var tokenDescription = new SecurityTokenDescriptor
                 {
+                    Subject = new ClaimsIdentity(new[]
+                    {
                     new Claim(JwtRegisteredClaimsNamesConstant.Sid, Guid.NewGuid().ToString()),
                     new Claim(JwtRegisteredClaimsNamesConstant.Sub, account.UserName),
                     new Claim(JwtRegisteredClaimsNamesConstant.Coin, account.Coin.ToString()),
                     new Claim(JwtRegisteredClaimsNamesConstant.Jti, Guid.NewGuid().ToString())
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(10),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKeyByte), SecurityAlgorithms.HmacSha512Signature)
-            };
-            var token = jwtToken.CreateToken(tokenDescription);
+                    Expires = DateTime.UtcNow.AddMinutes(10),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKeyByte), SecurityAlgorithms.HmacSha256)
+                };
+                var token = jwtToken.CreateToken(tokenDescription);
+                return jwtToken.WriteToken(token);
+            }
+            else
+            {
+                return null;
+            }
+            
 
-            return jwtToken.WriteToken(token);
+            
         }
         #endregion
 
@@ -139,12 +148,12 @@ namespace StoriesProject.API.Services
         /// <param name="account"></param>
         /// <returns></returns>
         [Obsolete]
-        private async Task<AccountGenericDTO> HandleSignInWithCookieSign(Accountant account)
+        private async Task<AccountGenericDTO?> HandleSignInWithCookieSign(Accountant account)
         {
             var authenObject = SignClaimWriteToken(account);
             if (authenObject != null)
             {
-                await _httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, 
+                await _httpContextAccessor?.HttpContext?.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, 
                                                             new ClaimsPrincipal(authenObject.ClaimsIdentity), 
                                                             authenObject.AuthProperties);
                 var data = new AccountGenericDTO
@@ -211,8 +220,8 @@ namespace StoriesProject.API.Services
         public async Task LogoutCookie()
         {
             // SignOut
-            await _httpContextAccessor.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            _httpContextAccessor.HttpContext.Session.Clear();
+            await _httpContextAccessor?.HttpContext?.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            _httpContextAccessor?.HttpContext?.Session.Clear();
         }
         #endregion
         #endregion

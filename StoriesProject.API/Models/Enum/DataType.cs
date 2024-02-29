@@ -4,14 +4,14 @@ namespace StoriesProject.API.Model.Enum
 {
     public class DataType
     {
-        public enum CoinLogType
+        public enum CoinLogType : Int16
         {
             [Description("Nạp tiền")]
             Deposit,
             [Description("Rút tiền")]
             Withdrawal,
         }
-        public enum OrderStatus
+        public enum OrderStatus : Int16
         {
             [Description("Chưa thanh toán")]
             NotPaidYet,
@@ -20,7 +20,7 @@ namespace StoriesProject.API.Model.Enum
             [Description("Đã thanh toán, đã duyệt")]
             PaidApproval,
         }
-        public enum OrderPaymentMethod
+        public enum OrderPaymentMethod : Int16
         {
             [Description("Tiền chuyển khoản, Momo")]
             Momo,
@@ -28,7 +28,7 @@ namespace StoriesProject.API.Model.Enum
             VNPay,
         }
         
-        public enum TypeOfStory
+        public enum TypeOfStory: Int16
         {
             [Description("Truyện chữ")]
             Text,

@@ -10,16 +10,10 @@ namespace StoriesProject.Model.ViewModel
     public class RestOutput: IRestOutput
     {
         public HttpStatusCode StatusCode { get; set; }  // Mã trạng thái HTTP
-        public string Message { get; set; }  // Thông điệp mô tả kết quả
-        public object Data { get; set; }          // Dữ liệu trả về
+        public string? Message { get; set; }  // Thông điệp mô tả kết quả
+        public object? Data { get; set; }          // Dữ liệu trả về
 
-        // Constructor để tạo một đối tượng RestOutput
-        public RestOutput()
-        {
-
-        }
-
-        public void SuccessEventHandler(object data = null, string? message = null)
+        public void SuccessEventHandler(object? data = null, string? message = null)
         {
             StatusCode = HttpStatusCode.OK;
             Data = data;
@@ -29,7 +23,7 @@ namespace StoriesProject.Model.ViewModel
             }
         }
 
-        public void ErrorEventHandler(object data, string? message = "Đã có lỗi xảy ra")
+        public void ErrorEventHandler(object? data, string? message = "Đã có lỗi xảy ra")
         {
             StatusCode = HttpStatusCode.OK;
             Data = data;
