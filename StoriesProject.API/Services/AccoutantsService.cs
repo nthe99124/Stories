@@ -1,4 +1,5 @@
-﻿using Azure;
+﻿using AutoMapper;
+using Azure;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.IdentityModel.Tokens;
@@ -19,17 +20,19 @@ namespace StoriesProject.API.Services
     public interface IAccoutantsService
     {
         Task<string?> Login(string userName, string password);
-        Task<bool> Register(Accountant account);
+        Task<bool> Register(AccountantRegister account);
         void Logout();
     }
     public class AccoutantsService: BaseService, IAccoutantsService
     {
         private readonly IAccountantsRepository _accoutantsRepository;
         private readonly IConfiguration _configuration;
-        public AccoutantsService(IHttpContextAccessor httpContextAccessor, IDistributedCacheCustom cache, IAccountantsRepository accoutantsRepository, IConfiguration configuration) : base(httpContextAccessor, cache)
+        private readonly IMapper _mapper;
+        public AccoutantsService(IHttpContextAccessor httpContextAccessor, IDistributedCacheCustom cache, IAccountantsRepository accoutantsRepository, IConfiguration configuration, IMapper mapper) : base(httpContextAccessor, cache)
         {
             _accoutantsRepository = accoutantsRepository;
             _configuration = configuration;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -42,7 +45,7 @@ namespace StoriesProject.API.Services
         /// <returns></returns>
         public async Task<string?> Login(string userName, string password)
         {
-            var account = await _accoutantsRepository.GetUserByEmailAndPass(userName, password);
+            var account = await _accoutantsRepository.GetUserByUserNameAndPass(userName, password);
             if (account != null)
             {
                 var token = HandleSignInAndGenerateToken(account);
@@ -71,15 +74,16 @@ namespace StoriesProject.API.Services
         /// <param name="account"></param>
         /// <param name="hasLogin"></param>
         /// <returns></returns>
-        public async Task<bool> Register(Accountant account)
+        public async Task<bool> Register(AccountantRegister account)
         {
-            var acc = await _accoutantsRepository.GetUserByEmailAndPass(account.UserName, account.Password);
+            var acc = await _accoutantsRepository.GetUserByUserNameAndPass(account.UserName, account.Password);
             if (acc == null)
             {
                 // encode pass trước khi cất
                 account.Password = HashCodeUlti.EncodePassword(account.Password);
+                var accountInsert = _mapper.Map<Accountant>(account);
                 // cất
-                await _accoutantsRepository.Create(account);
+                await _accoutantsRepository.Create(accountInsert);
 
                 return true;
             }
@@ -98,7 +102,6 @@ namespace StoriesProject.API.Services
         {
             // SignOut
             _httpContextAccessor?.HttpContext?.Response?.Cookies.Delete("access_token");
-            _httpContextAccessor?.HttpContext?.Session.Clear();
         }
 
         #region Private Method

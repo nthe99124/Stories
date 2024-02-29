@@ -65,7 +65,7 @@ namespace StoriesProject.API.Controller.Base
         /// <param name="acc"></param>
         /// <returns></returns>
         [HttpPost("Register")]
-        public async Task<IActionResult> Register(Accountant acc)
+        public async Task<IActionResult> Register(AccountantRegister acc)
         {
             if (acc != null)
             {

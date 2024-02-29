@@ -11,7 +11,7 @@ public partial class RoleAccountant
 
     public Guid AccountId { get; set; }
 
-    public DateTime? CreatedDate { get; set; }
+    public DateTime? CreatedDate { get; set; } = DateTime.UtcNow;
 
     public Guid? CreatedBy { get; set; }
 

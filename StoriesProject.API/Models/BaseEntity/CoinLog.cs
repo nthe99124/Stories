@@ -16,7 +16,7 @@ public partial class CoinLog
 
     public bool IsApproved { get; set; }
 
-    public DateTime? CreatedDate { get; set; }
+    public DateTime? CreatedDate { get; set; } = DateTime.UtcNow;
 
     public Guid? CreatedBy { get; set; }
 

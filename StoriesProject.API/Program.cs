@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using StoriesProject.API.Common.Cache;
+using StoriesProject.API.Common.Mappings;
 using StoriesProject.API.Common.Repository;
 using StoriesProject.API.Model.ViewModel;
 using StoriesProject.API.Repositories;
@@ -146,7 +147,7 @@ services.AddTransient<IStoriesService, StoriesService>();
 #endregion
 
 #region Config AutoMapper
-//services.AddAutoMapper(typeof(Startup));
+services.AddAutoMapper(typeof(MappingProfile));
 #endregion
 
 #endregion

@@ -17,6 +17,12 @@ namespace StoriesProject.API.Repositories
             
         }
 
+        /// <summary>
+        /// Hàm xử lý lấy 10 truyện mới nhất
+        /// CreatedBy ntthe 28.02.2024
+        /// </summary>
+        /// <param name="numberStory"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<Story>?> GetTopStoryNew(int numberStory)
         {
             var sortedList = new List<SortedPaging>
@@ -24,11 +30,6 @@ namespace StoriesProject.API.Repositories
                 new SortedPaging
                 {
                     Field = "CreatedDate",
-                    IsAsc = false
-                },
-                new SortedPaging
-                {
-                    Field = "Price",
                     IsAsc = false
                 }
             };

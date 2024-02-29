@@ -20,7 +20,7 @@ public partial class Order
 
     public int CoinTransacted { get; set; }
 
-    public DateTime? CreatedDate { get; set; }
+    public DateTime? CreatedDate { get; set; } = DateTime.UtcNow;
 
     public Guid? CreatedBy { get; set; }
 

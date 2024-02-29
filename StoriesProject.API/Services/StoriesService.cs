@@ -17,6 +17,11 @@ namespace StoriesProject.API.Services
             _storiesRepository = storiesRepository;
         }
 
+        /// <summary>
+        /// Hàm xử lý lấy 10 truyện mới nhất
+        /// CreatedBy ntthe 28.02.2024
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<Story>?> GetTop10StoryNew()
         {
             return await _storiesRepository.GetTopStoryNew(10);

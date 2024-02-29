@@ -22,7 +22,7 @@ public partial class Accountant
 
     public int Coin { get; set; }
 
-    public DateTime? CreatedDate { get; set; }
+    public DateTime? CreatedDate { get; set; } = DateTime.UtcNow;
 
     public virtual CoinLog IdNavigation { get; set; } = null!;
 

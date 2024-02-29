@@ -26,7 +26,7 @@ public partial class Story
 
     public string? ModifiedDescription { get; set; }
 
-    public DateTime? CreatedDate { get; set; }
+    public DateTime? CreatedDate { get; set; } = DateTime.UtcNow;
 
     public Guid? CreatedBy { get; set; }
 
