@@ -15,12 +15,13 @@ namespace StoriesProject.API.Services.Base
         protected IDistributedCacheCustom _cache;
         private readonly string _remoteServiceBaseUrl;
         private readonly IHttpClientFactory _httpClientFactory;
-        public BaseService(IDistributedCacheCustom cache)
+        public BaseService(IDistributedCacheCustom cache, IHttpClientFactory httpClientFactory)
         {
             _cache = cache;
+            _httpClientFactory = httpClientFactory;
             _remoteServiceBaseUrl = "";
         }
-        public async Task<RestOutput> RequestPostAsync<T>(T model, string accessToken)
+        public async Task<RestOutput?> RequestPostAsync<T>(T model, string accessToken)
         {
             try
             {

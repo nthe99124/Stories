@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using StoriesProject.API.Common.Cache;
+using StoriesProject.API.Common.Mappings;
 using StoriesProject.API.Common.Repository;
 using StoriesProject.API.Model.ViewModel;
 using StoriesProject.API.Repositories;
@@ -62,26 +63,31 @@ services.AddSwaggerGen(c =>
 #region config Author, Authen
 // sử dụng jwt bear token
 var secretKey = configuration.GetSection("Jwt").GetSection("SecretKey").Value;
-var secretKeyBytes = Encoding.UTF8.GetBytes(secretKey);
-services.AddAuthentication(opt =>
+if (secretKey != null)
 {
-    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(opt =>
-                {
-                    opt.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        // các mã xác thực thông báo
-                        //grant token
-                        ValidateIssuer = false,
-                        ValidateAudience = false,
+    var secretKeyBytes = Encoding.UTF8.GetBytes(secretKey);
+    services.AddAuthentication(opt =>
+    {
+        opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    }).AddJwtBearer(opt =>
+    {
+        opt.TokenValidationParameters = new TokenValidationParameters
+        {
+            // các mã xác thực thông báo
+            //grant token
+            ValidateIssuer = false,
+            ValidateAudience = false,
 
-                        //sign token
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(secretKeyBytes),
-                        ClockSkew = TimeSpan.Zero
-                    };
-                });
+            //sign token
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(secretKeyBytes),
+            ClockSkew = TimeSpan.Zero
+        };
+    });
+}
+
+
 #endregion
 
 #region config CORS
@@ -130,15 +136,18 @@ services.AddScoped<IUnitOfWork, UnitOfWork>();
 //Repository
 services.AddTransient<ILogEntryRepository, LogEntryRepository>();
 services.AddTransient<IAccountantsRepository, AccountantRepository>();
+services.AddTransient<IStoriesRepository, StoriesRepository>();
+
 
 //Service
 services.AddTransient<ILogEntryService, LogEntryService>();
 services.AddTransient<IAccoutantsService, AccoutantsService>();
+services.AddTransient<IStoriesService, StoriesService>();
 
 #endregion
 
 #region Config AutoMapper
-//services.AddAutoMapper(typeof(Startup));
+services.AddAutoMapper(typeof(MappingProfile));
 #endregion
 
 #endregion

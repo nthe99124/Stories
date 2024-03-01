@@ -25,7 +25,7 @@ namespace StoriesProject.API.Controller.Base
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginViewModel loginInfor)
         {
-            var token = await _accoutantsService.Login(loginInfor.Email, loginInfor.Password);
+            var token = await _accoutantsService.Login(loginInfor.UserName, loginInfor.Password);
             if (token != null)
             {
                 _res.SuccessEventHandler(token);
@@ -65,7 +65,7 @@ namespace StoriesProject.API.Controller.Base
         /// <param name="acc"></param>
         /// <returns></returns>
         [HttpPost("Register")]
-        public async Task<IActionResult> Register(Accountant acc)
+        public async Task<IActionResult> Register(AccountantRegister acc)
         {
             if (acc != null)
             {

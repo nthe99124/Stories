@@ -1,0 +1,164 @@
+{
+	"info": {
+		"_postman_id": "6c054f8b-1c30-4b0c-86ee-6a1a285a6c2c",
+		"name": "Stories",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11581331"
+	},
+	"item": [
+		{
+			"name": "Account",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.environment.set(\"TOKEN\",jsonData.data);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\": \"nthe99124\",\r\n  \"password\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/Accountant/Login",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"Accountant",
+								"Login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"if(jsonData && jsonData.statusCode == \"200\") {\r",
+									"    pm.environment.set(\"TOKEN\",\"\");\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/Accountant/Logout",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"Accountant",
+								"Logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\": \"nthe99125\",\r\n  \"password\": \"1\",\r\n  \"language\": \"vi-VN\",\r\n  \"coin\": 100\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}/Accountant/Register",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"Accountant",
+								"Register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stories",
+			"item": [
+				{
+					"name": "GetTop10StoryNew",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/Stories/GetTop10StoryNew",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								"Stories",
+								"GetTop10StoryNew"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "HOST",
+			"value": "https://localhost:44362/api/",
+			"type": "string"
+		}
+	]
+}
