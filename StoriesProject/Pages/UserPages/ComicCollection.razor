@@ -1,0 +1,577 @@
+﻿@page "/user/collection"
+<html>
+<head>
+  <title>我的收藏 - 漫客栈</title>
+  <meta charset="utf-8">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="keywords" content="关键词">
+  <meta name="description" content="描述">
+  <link rel="shortcut icon" href="https://static.mkzcdn.com/common/favicon.ico" type="image/x-icon" />
+
+  <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/script/libs/layui/css/layui.css?v=0b3cd68">
+  <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/style/common/common_user.css?v=a19b47d">
+  <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/style/bundle/user.css?v=b5db955">
+
+
+
+  <!-- start Dplus -->
+</head>
+<style>
+  .header-user-wrapper .search-box input {
+    width: 250px;
+    background: rgba(255, 255, 255, 0.34);
+    border-radius: 18px;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 11px 15px;
+    border: none;
+    font-size: 14px;
+    line-height: 14px;
+    height: 40px !important;
+  }
+</style>
+
+<body class="page-collection">
+  <!-- 头部 -->
+
+  <div class="header-user-wrapper">
+    <div class="main-container clearfix">
+      <!-- logo -->
+      <a href="/user/" class="header-logo">
+        <img src="//static.mkzcdn.com/home/assets/images/header/pic_dzzx_logo.png?v=5d2ae5c" />
+      </a>
+      <!-- link -->
+      <!-- <div class="nav-link"> -->
+      <!-- <div class="sub-text">我是读者</div> -->
+      <!-- <a href="/">返回客栈首页</a> -->
+      <!-- </div> -->
+      <!-- menu -->
+      <ul class="nav-menu">
+        <li><a rel="nofollow" href="/">Trang chủ truyện tranh</a></li>
+        <li><a rel="nofollow" href="https://www.xiaoshuohui.com.cn/">Quản lý cá nhân</a></li>
+      </ul>
+      <!-- search -->
+      <div class="j-header-searchbox search-box">
+        <input class="j-header-search-input" type="text" name="user-search-icon" value=""
+          placeholder="Tác giả/ Tác phẩm" autocomplete="off" />
+        <div class="j-header-search-btn search-btn">
+          <i class="icon-search-white"></i>
+        </div>
+      </div>
+      <div class="fr">
+        <!-- switch -->
+        <ul class="switch-tab reader">
+          <!-- <a class="hl" rel="nofollow" href="/user/">读者</a> -->
+          <a rel="nofollow" href="/author/">Tác giả</a>
+        </ul>
+        <!-- user-box -->
+        <div class="j-header-avatar user-box">
+          <div class="user-avatar">
+            <a href="/user/">
+              <img class="j-user-avatar"
+                src="//static.mkzcdn.com/home/assets/images/common/pic_login_defaulthead.png?v=83881ca" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 内容 -->
+  <div class="main-container">
+    <div class="aside-user">
+
+      <dl class="aside-user--first">
+        <dt>
+          <i class="iconfont icon-door"></i>
+          <a rel="nofollow" href="/user/">Trung tâm độc giả</a>
+        </dt>
+      </dl>
+      <dl>
+        <dt>
+          <i class="iconfont icon-book"></i>Thông tin truyện
+        </dt>
+        <dd class="aside-user--selected">
+          <a rel="nofollow" href="/user/collection/">Bộ sưu tập</a>
+        </dd>
+        <dd>
+          <a rel="nofollow" href="/user/history/">Lịch sử đọc</a>
+        </dd>
+        <dd>
+          <a rel="nofollow" href="/user/buy/">Mua</a>
+        </dd>
+      </dl>
+      <dl>
+        <dt>
+          <i class="iconfont icon-data"></i>Cài đặt tài khoản
+        </dt>
+        <dd>
+          <a rel="nofollow" href="/user/task/">Thông tin</a>
+        </dd>
+        <dd>
+          <a rel="nofollow" href="/shop/integral/">Đổi mật khẩu</a>
+        </dd>
+      </dl>
+    </div>
+
+    <!-- main-content -->
+    <div class="main-content--aside">
+      <!-- title -->
+      <div class="main-content_title">
+        <h3>Bộ sưu tập</h3>
+        <div class="main-content_subtitle">
+          Tổng cộng<strong class="j-collection-count">1</strong>Tác phẩm
+        </div>
+        <!-- toolbox -->
+        <div class="main-content__title--toolbox">
+          <div class="j-collection-toolbox clear-btn">
+            <i class="iconfont icon-clearlist"></i> 整理收藏
+          </div>
+          <div class="j-collection-feature toolbox-btn layui-form hide">
+            <div class="layui-input-block">
+              <input type="checkbox" name="select-all" lay-skin="primary" lay-filter="select-all" title="全选">
+            </div>
+            <div class="btn-group">
+              <span class="j-collection-delete delete-btn delete-btn--disable">删除收藏</span>
+              <span class="j-collection-cancel cancel-btn">取消</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- comic-list -->
+      <div class="j-collection-list main-content__comic-list">
+        <!-- <script id="user_collection_list" type="text/html"> -->
+        <ul class="user-comic-list">
+          <!-- {{# layui.each(d, function(i, item){ }} -->
+          <li class="user-comic-item" data-comic={{d[i].comic_id}}>
+            <div class="j-item-select user-comic-item__select" data-comic={{d[i].comic_id}}>
+              <i class="pic-select"></i>
+            </div>
+            <a class="user-comic-item__cover" href="/{{d[i].comic_id}}/" target="_blank">
+              <!-- {{# if(d[i].is_update == 1 && d[i].status != 0) { }} -->
+              <i class="pic-comic-update"></i>
+              <!-- {{# } }} -->
+              <!-- {{# if (d[i].status == 0) { }} -->
+              <i class="pic-comic-off"></i>
+              <!-- {{# } }} -->
+              <img src="https://oss.mkzcdn.com/comic/cover/20231019/6530a23275954-399x533.jpg!cover-400">
+            </a>
+            <div class="user-comic-item__detail">
+              <p class="user-comic-item--name">
+                <a class="text-overflow" href="/{{d[i].comic_id}}/" target="_blank">Tên truyện</a>
+              </p>
+              <p class="user-comic-item--text user-comic-item--latest">
+                <a class="text-overflow--gray" href="/{{d[i].comic_id}}/{{d[i].chapter_id}}.html"
+                  target="_blank">Chapter x：Title của chapter</a>
+              </p>
+              <p class="user-comic-item--text">
+                <a class="text-overflow--gray" href="/{{d[i].comic_id}}/{{d[i].read_chapter_id}}.html"
+                  target="_blank">Đang đọc: Title của chapter</a>
+              </p>
+            </div>
+          </li>
+          <!-- {{#  }); }}   -->
+          <!-- {{#  if(d.length === 0){ }} -->
+          <div class="no-collection"></div>
+          <!-- {{#  } }} -->
+        </ul>
+        <!-- </> -->
+      </div>
+
+
+      <!-- pagination -->
+      <div class="pagination--center" id="collection-pagination"></div>
+    </div>
+
+  </div>
+  <div class="footer-wrapper">
+    <!-- footer-top -->
+    <div class="container--response">
+      <div class="footer-top clearfix">
+        <div class="column-left column-33">
+          <div class="column-box-center">
+            <a href="https://www.mkzhan.com/author/" class="pic-tg" rel="nofollow">
+              <img src="//static.mkzcdn.com/home/assets/images/footer/footer_tg.png?v=15232b4" alt="">
+            </a>
+            <div class="fl">
+              <p class="column-title"> 投稿邮箱：<a href="mailto:tougao@xiaomingtaiji.com">tougao@xiaomingtaiji.com</a></p>
+              <ul class="link-list">
+                <li>
+                  <a href="https://www.mkzhan.com/help/10013.html" target="_blank" rel="nofollow">作品要求</a>
+                </li>
+                <li>
+                  <a href="https://www.mkzhan.com/help/10016.html" target="_blank" rel="nofollow">漫画签约</a>
+                </li>
+                <li>
+                  <a href="https://www.mkzhan.com/help/10015.html" target="_blank" rel="nofollow">审核机制</a>
+                </li>
+                <li>
+                  <a href="https://www.mkzhan.com/help/10017.html" target="_blank" rel="nofollow">福利体系</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="column-center column-33">
+          <div class="column-box-center">
+            <p class="column-title">关注我们：</p>
+            <div class="fl">
+              <a class="icon-wx" href="javascript:;" rel="nofollow">
+                <div class="wx-qrcode"></div>
+              </a>
+              <a class="icon-wb" target="_blank" href="http://weibo.com/mankezhan" rel="nofollow">
+                <div class="wb-qrcode"></div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="column-right column-33">
+          <div class="column-box-center">
+            <div class="fl online-link">
+              <p class="column-title">在线客服：</p>
+              <a class="pic-kf" href="tencent://message/?uin=204528691&Site=www.mkzhan.com&Menu=yes" target="_blank"
+                rel="nofollow">
+                <img src="//static.mkzcdn.com/home/assets/images/footer/footer_kf.png?v=e418bcb" alt="">
+              </a>
+            </div>
+            <div class="fl">
+              <p class="column-title qq-text">QQ群：</p>
+              <a target="_blank"
+                href="//shang.qq.com/wpa/qunwpa?idkey=a34447c7f6028298534b61c9295d12b1a273156b9674475e48ee15697f61c6d4"
+                class="pic-qq" rel="nofollow">
+                <img src="//static.mkzcdn.com/home/assets/images/footer/footer_qq.png?v=626a9ca" alt="">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- footer-bottom -->
+    <div class="container--response">
+      <div class="footer-bottom">
+        <ul class="footer-link clearfix">
+          <li>
+            <a href="https://www.mkzhan.com/help/10001.html" target="_blank" rel="nofollow">帮助中心</a>
+          </li>
+          <li>
+            <a href="https://www.mkzhan.com/about/" target="_blank" rel="nofollow">关于我们</a>
+          </li>
+          <li>
+            <a href="https://www.mkzhan.com/contact/" target="_blank" rel="nofollow">联系我们</a>
+          </li>
+          <li>
+            <a href="https://www.mkzhan.com/map/" target="_blank" rel="nofollow">网站地图</a>
+          </li>
+          <li>
+            <a href="https://www.mkzhan.com/legal_notice/" target="_blank" rel="nofollow">法律声明</a>
+          </li>
+          <li>
+            <a href="https://www.xiaomingtaiji.com/about/auditing.html" target="_blank" rel="nofollow">内容审核</a>
+          </li>
+          <li>
+            <a href="http://shareact.50manhua.com/2021/netaccuse/report" target="_blank" rel="nofollow">网安警务室</a>
+          </li>
+          <li class="noborder">
+            <a style="cursor:pointer;" id="feedback" class="feedback j-home-feed" rel="nofollow">意见反馈</a>
+          </li>
+        </ul>
+        <div style="margin-top:10px;">
+          <ul class="footer-link clearfix">
+            <li>
+              <a href="https://jbts.mct.gov.cn/" target="_blank" rel="nofollow">12318全国文化市场举报</a>
+            </li>
+            <li>
+              <a href="https://www.12377.cn/" target="_blank" rel="nofollow">网上有害信息举报</a>
+            </li>
+            <li>
+              <a href="http://www.shdf.gov.cn/shdf/channels/740.html" target="_blank" rel="nofollow">扫黄打非举报</a>
+            </li>
+            <li>
+              <a href="https://www.12377.cn/jbxzxq/zpljbxzxq.html?spm=zm1033-001.0.0.1.SOXBdI" target="_blank"
+                rel="nofollow">电信诈骗举报</a>
+            </li>
+            <li>
+              <a href="https://www.12377.cn/jbxzxq/64d38691937611ebb858c9da04cf59d3_web.html?spm=zm1033-001.0.0.1.SOXBdI&smallHarmType=64d38691937611ebb858c9da04cf59d3"
+                target="_blank" rel="nofollow">历史虚无主义举报</a>
+            </li>
+          </ul>
+        </div>
+        <p>
+          <span>联系电话：027-59327268</span>
+          <span>联系QQ：<a href="tencent://message/?uin=204528691&Site=www.mkzhan.com&Menu=yes" target="_blank"
+              rel="nofollow">204528691</a></span>
+          <span>举报邮箱：<a href="mailto:jubao@xiaomingtaiji.com">jubao@xiaomingtaiji.com</a></span>
+          <span>工作时间：周一至周五9：00--18：00</span>
+          联系地址：湖北省武汉市洪山区新世界铭丰大厦9层
+        </p>
+        <p>
+          <span><a href="https://beian.miit.gov.cn/" target="_blank" rel="nofollow">鄂ICP备16020642号-7</a></span>
+          <span>鄂公网安备 42070302000053号</span>
+          网络文化经营许可证：<a href="https://static.mkzcdn.com/home/assets/images/xukezheng.jpg" target="_blank"
+            rel="nofollow">鄂网文（2019）5588-345号</a>
+        </p>
+        <p>
+          <span>Copyright ©2010-2023<a href="https://www.mkzhan.com/" rel="nofollow">漫客栈</a></span>
+          <span><a href="http://www.xiaomingtaiji.com/" target="_blank" rel="nofollow">小明太极（湖北）国漫文化有限公司</a></span>
+          版权所有<a href="https://v.yunaq.com/certificate?domain=www.mkzhan.com" rel="nofollow" target="_blank">
+            <img class="pic-copyright"
+              src="//static.mkzcdn.com/home/assets/images/footer/footer_copyright.png?v=2f3e4cb"></a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+@*  <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/vendor/base_lib.js?v=e631876"></script>
+  <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/libs/layer/layer.js?v=6e80f0c"></script>
+  <script type="text/javascript" charset="utf-8" src="https://g.alicdn.com/sd/nch5/index.js?t=2015052012"></script>
+
+  <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/libs/layui/layui.js?v=3320191"></script>
+  <script type="text/javascript">
+    seajs.use(['assets/script/modules/httpApi/httpApi'], function (httpApi)
+    {
+      layui.use(['form', 'laypage', 'laytpl'], function ()
+      {
+        var form = layui.form,
+          laypage = layui.laypage,
+          laytpl = layui.laytpl;
+
+        var $count = $('.j-collection-count'), // 收藏数
+          $list = $('.j-collection-list'), // 收藏列表
+          $tpl_list = $('#user_collection_list'), // 渲染模板
+          $pagination = $('#collection-pagination'), // 分页
+          $toolbox = $('.j-collection-toolbox'), // 工具栏
+          $btn_delete = $('.j-collection-delete'), // 工具栏 - 删除按钮
+          $btn_cancel = $('.j-collection-cancel');  // 工具栏 - 取消按钮
+
+        var collection_params = {
+          page_num: 1,
+          page_size: 10
+        };
+
+        // 渲染收藏列表
+        function renderCollectionList(currentPageNum)
+        {
+          collection_params.page_num = currentPageNum;
+          // 请求收藏列表数据
+          return httpApi.comic
+            .collectionLists(collection_params)
+            .done(function (res)
+            {
+              if (res.code == 200)
+              {
+                var count = res.data.count;
+                // 渲染收藏数
+                $count.text(count);
+                // 渲染模板
+                laytpl($tpl_list.html()).render(res.data.list, function (result)
+                {
+                  $list.html(result);
+                });
+              }
+            });
+        }
+
+        // 渲染分页
+        function renderPagination(count)
+        {
+          laypage.render({
+            elem: $pagination,
+            count: count,
+            theme: 'mkz',
+            prev: '<',
+            next: '>',
+            limit: 10,
+            jump: function (obj, first)
+            {
+              if (!first)
+              {
+                renderCollectionList(obj.curr)
+                  .then(overlayHandle)
+                  .then(bindHandle);
+              }
+            }
+          });
+        }
+
+        // 初始化分页
+        function initPagination()
+        {
+          return renderCollectionList(1).then(function (res)
+          {
+            var count = res.data.count;
+            if (count <= collection_params.page_size)
+            {
+              $pagination.hide();
+            } else
+            {
+              $pagination.show();
+            }
+            if (count !== 0)
+            {
+              renderPagination(count);
+              bindHandle();
+            }
+          });
+        }
+
+        // 选择状态
+        function itemSelectStatus()
+        {
+          $list
+            .find('.j-item-select')
+            .addClass('user-comic-item--selected')
+            .show();
+        }
+
+        // 取消状态
+        function itemCancelStatus()
+        {
+          $list.find('.j-item-select').removeClass('user-comic-item--selected');
+        }
+
+        // 是否添加遮罩层
+        function overlayHandle()
+        {
+          if ($('.j-collection-feature').is(':visible'))
+          {
+            $list.find('.j-item-select').show();
+            // 如果选中状态，则改变所有为选中
+            if ($('input[name="select-all"]').is(':checked'))
+            {
+              itemSelectStatus();
+            }
+          }
+        }
+
+        // checkbox事件
+        function checkboxHandle(data)
+        {
+          if (data.elem.checked)
+          {
+            $(data.elem).attr('checked', true);
+            itemSelectStatus();
+          } else
+          {
+            $(data.elem).attr('checked', false);
+            itemCancelStatus();
+          }
+          deleteBtnHandle();
+        }
+
+        // 删除事件
+        function deleteHandle()
+        {
+          // 如果禁用状态则不处理
+          if ($btn_delete.hasClass('delete-btn--disable')) return;
+          layer.open({
+            content: '亲，确定要取消收藏吗？',
+            btn: ['确定', '取消'],
+            yes: function (index)
+            {
+              layer.close(index);
+              httpApi.comic.collectionCancel({
+                comic_ids: getSelectIds()
+              })
+                .done(function (res)
+                {
+                  if (res.code == 200)
+                  {
+                    layer.msg(res.message, {
+                      end: function ()
+                      {
+                        window.location.reload();
+                      }
+                    });
+                  }
+                });
+            }
+          });
+        }
+
+        // 取消事件
+        function cancelHandle()
+        {
+          $('.j-collection-feature').hide();
+          $toolbox.show();
+          $list.find('.j-item-select').fadeOut();
+          itemCancelStatus();
+          $('input[name="select-all"]').attr('checked', false);
+          form.render('checkbox');
+        }
+
+        // 获取选中漫画的id
+        function getSelectIds()
+        {
+          var _comicids = [];
+          $('.user-comic-item--selected').each(function (idx, ele)
+          {
+            _comicids.push($(ele).data('comic'));
+          });
+          return _comicids.join(',');
+        }
+
+        // 是否允许删除
+        function deleteBtnHandle()
+        {
+          if ($('.user-comic-item--selected').length > 0)
+          {
+            $btn_delete.removeClass('delete-btn--disable');
+          } else
+          {
+            $btn_delete.addClass('delete-btn--disable');
+          }
+        }
+
+        // 绑定事件
+        function bindHandle()
+        {
+          // toolbox
+          $toolbox.on('click', function ()
+          {
+            $list.find('.j-item-select').fadeIn();
+            $(this).hide();
+            $('.j-collection-feature').show();
+          });
+          form.on('checkbox(select-all)', checkboxHandle);
+          $btn_delete.on('click', deleteHandle);
+          $btn_cancel.on('click', cancelHandle);
+          // 选择事件
+          $('.j-item-select').on('click', function ()
+          {
+            $(this).toggleClass('user-comic-item--selected');
+            deleteBtnHandle();
+          });
+        }
+
+        // 初始化执行方法
+        initPagination();
+      });
+    });
+  </script>
+  <script>
+    (function ()
+    {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https')
+      {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else
+      {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>*@
+
+
+
+</body>
+
+</html>
+@code {
+
+}
