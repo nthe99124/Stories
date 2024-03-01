@@ -1,0 +1,733 @@
+﻿@page "/user/profile"
+<html>
+<head>
+  <title>我的收藏 - 漫客栈</title>
+  <meta charset="utf-8">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="keywords" content="关键词">
+  <meta name="description" content="描述">
+  <link rel="shortcut icon" href="https://static.mkzcdn.com/common/favicon.ico" type="image/x-icon" />
+
+  <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/script/libs/layui/css/layui.css?v=0b3cd68">
+  <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/style/common/common_user.css?v=a19b47d">
+  <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/style/bundle/user.css?v=b5db955">
+
+
+
+  <!-- start Dplus -->
+</head>
+<style>
+  .header-user-wrapper .search-box input {
+    width: 250px;
+    background: rgba(255, 255, 255, 0.34);
+    border-radius: 18px;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 11px 15px;
+    border: none;
+    font-size: 14px;
+    line-height: 14px;
+    height: 40px !important;
+  }
+</style>
+
+<body class="page-collection">
+  <!-- 头部 -->
+
+  <div class="header-user-wrapper">
+    <div class="main-container clearfix">
+      <!-- logo -->
+      <a href="/user/" class="header-logo">
+        <img src="//static.mkzcdn.com/home/assets/images/header/pic_dzzx_logo.png?v=5d2ae5c" />
+      </a>
+      <!-- link -->
+      <!-- <div class="nav-link"> -->
+      <!-- <div class="sub-text">我是读者</div> -->
+      <!-- <a href="/">返回客栈首页</a> -->
+      <!-- </div> -->
+      <!-- menu -->
+      <ul class="nav-menu">
+        <li><a rel="nofollow" href="/">Trang chủ truyện tranh</a></li>
+        <li><a rel="nofollow" href="https://www.xiaoshuohui.com.cn/">Quản lý cá nhân</a></li>
+      </ul>
+      <!-- search -->
+      <div class="j-header-searchbox search-box">
+        <input class="j-header-search-input" type="text" name="user-search-icon" value=""
+          placeholder="Tác giả/ Tác phẩm" autocomplete="off" />
+        <div class="j-header-search-btn search-btn">
+          <i class="icon-search-white"></i>
+        </div>
+      </div>
+      <div class="fr">
+        <!-- switch -->
+        <ul class="switch-tab reader">
+          <!-- <a class="hl" rel="nofollow" href="/user/">读者</a> -->
+          <a rel="nofollow" href="/author/">Tác giả</a>
+        </ul>
+        <!-- user-box -->
+        <div class="j-header-avatar user-box">
+          <div class="user-avatar">
+            <a href="/user/">
+              <img class="j-user-avatar"
+                src="//static.mkzcdn.com/home/assets/images/common/pic_login_defaulthead.png?v=83881ca" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 内容 -->
+  <div class="main-container">
+    <div class="aside-user">
+
+      <dl class="aside-user--first">
+        <dt>
+          <i class="iconfont icon-door"></i>
+          <a rel="nofollow" href="/user/">Trung tâm độc giả</a>
+        </dt>
+      </dl>
+      <dl>
+        <dt>
+          <i class="iconfont icon-book"></i>Thông tin truyện
+        </dt>
+        <dd>
+          <a rel="nofollow" href="/user/collection/">Bộ sưu tập</a>
+        </dd>
+        <dd>
+          <a rel="nofollow" href="/user/history/">Lịch sử đọc</a>
+        </dd>
+        <dd>
+          <a rel="nofollow" href="/user/buy/">Mua</a>
+        </dd>
+      </dl>
+      <dl>
+        <dt>
+          <i class="iconfont icon-data"></i>Cài đặt tài khoản
+        </dt>
+        <dd class="aside-user--selected">
+          <a rel="nofollow" href="/user/task/">Thông tin</a>
+        </dd>
+        <dd>
+          <a rel="nofollow" href="/shop/integral/">Đổi mật khẩu</a>
+        </dd>
+      </dl>
+    </div>
+
+    <!-- main-content -->
+    <div class="main-content--aside">
+      <!-- title -->
+      <div class="main-content_title">
+        <h3>Thông tin cá nhân</h3>
+      </div>
+      <div class="main-content__profile clearfix">
+        <!-- left -->
+        <div class="main-content__profile--left">
+          <form class="layui-form">
+            <!-- 用户名 -->
+            <div class="layui-form-item">
+              <label class="layui-form-label">
+                <em class="label-required-symbol">*</em>Username</label>
+              <div class="layui-input-block">
+                <input type="text" name="username" class="user-name layui-input" lay-verify="required|username"
+                  autocomplete="off" value="mk_65ddb6932cf83">
+                <div class="label-tips">Tên người dùng có thể được sử dụng làm tên đăng nhập và chỉ được sửa đổi một
+                  lần. Vui lòng thận trọng khi sửa đổi.</div>
+              </div>
+            </div>
+            <!-- 昵称 -->
+            <div class="layui-form-item">
+              <label class="layui-form-label">Họ tên</label>
+              <div class="layui-input-block">
+                <input type="text" class="layui-input" name="nickname" value="Trần thế vinh">
+              </div>
+            </div>
+            <!-- QQ -->
+            <div class="layui-form-item">
+              <label class="layui-form-label">Email</label>
+              <div class="layui-input-block">
+                <input type="text" class="layui-input" name="qq" value="0">
+              </div>
+            </div>
+            <!-- 性别 -->
+            <div class="layui-form-item">
+              <label class="layui-form-label">
+                <em class="label-required-symbol">*</em>Giới tính</label>
+              <div class="layui-input-block">
+                <input type="radio" name="sex" value="1" title="Name">
+                <div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i>
+                  <div>Name</div>
+                </div>
+                <input type="radio" name="sex" value="2" title="Nữ">
+                <div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i>
+                  <div>nữ</div>
+                </div>
+                <input type="radio" name="sex" value="0" title="Khác" checked="checked">
+                <div class="layui-unselect layui-form-radio layui-form-radioed"><i class="layui-anim layui-icon"></i>
+                  <div>Khác</div>
+                </div>
+              </div>
+            </div>
+            <!-- 生日 -->
+            <div class="layui-form-item">
+              <label class="layui-form-label">Năm sinh</label>
+              <div class="layui-input-inline form__profile-input--city">
+                <input type="text" name="birthday" id="date" lay-verify="date" placeholder="yyyy-MM-dd"
+                  autocomplete="off" class="layui-input" value="1970-01-01" lay-key="1">
+              </div>
+            </div>
+            <!-- 所在城市 -->
+            <!-- <div class="layui-form-item">
+              <label class="layui-form-label">所在城市：</label>
+              <div class="layui-input-inline form__profile-input--city">
+                <select name="province" data-code="110000" lay-filter="province">
+                  <option value="110000" selected="">北京市</option>
+                  <option value="120000">天津市</option>
+                  <option value="130000">河北省</option>
+                  <option value="140000">山西省</option>
+                  <option value="150000">内蒙古自治区</option>
+                  <option value="210000">辽宁省</option>
+                  <option value="220000">吉林省</option>
+                  <option value="230000">黑龙江省</option>
+                  <option value="310000">上海市</option>
+                  <option value="320000">江苏省</option>
+                  <option value="330000">浙江省</option>
+                  <option value="340000">安徽省</option>
+                  <option value="350000">福建省</option>
+                  <option value="360000">江西省</option>
+                  <option value="370000">山东省</option>
+                  <option value="410000">河南省</option>
+                  <option value="420000">湖北省</option>
+                  <option value="430000">湖南省</option>
+                  <option value="440000">广东省</option>
+                  <option value="450000">广西壮族自治区</option>
+                  <option value="460000">海南省</option>
+                  <option value="500000">重庆市</option>
+                  <option value="510000">四川省</option>
+                  <option value="520000">贵州省</option>
+                  <option value="530000">云南省</option>
+                  <option value="540000">西藏自治区</option>
+                  <option value="610000">陕西省</option>
+                  <option value="620000">甘肃省</option>
+                  <option value="630000">青海省</option>
+                  <option value="640000">宁夏回族自治区</option>
+                  <option value="650000">新疆维吾尔自治区</option>
+                  <option value="710000">台湾省</option>
+                  <option value="810000">香港特别行政区</option>
+                  <option value="820000">澳门特别行政区</option>
+                </select>
+                <div class="layui-unselect layui-form-select">
+                  <div class="layui-select-title"><input type="text" placeholder="请选择" value="北京市" readonly=""
+                      class="layui-input layui-unselect"><i class="layui-edge"></i></div>
+                  <dl class="layui-anim layui-anim-upbit">
+                    <dd lay-value="110000" class="layui-this">北京市</dd>
+                    <dd lay-value="120000" class="">天津市</dd>
+                    <dd lay-value="130000" class="">河北省</dd>
+                    <dd lay-value="140000" class="">山西省</dd>
+                    <dd lay-value="150000" class="">内蒙古自治区</dd>
+                    <dd lay-value="210000" class="">辽宁省</dd>
+                    <dd lay-value="220000" class="">吉林省</dd>
+                    <dd lay-value="230000" class="">黑龙江省</dd>
+                    <dd lay-value="310000" class="">上海市</dd>
+                    <dd lay-value="320000" class="">江苏省</dd>
+                    <dd lay-value="330000" class="">浙江省</dd>
+                    <dd lay-value="340000" class="">安徽省</dd>
+                    <dd lay-value="350000" class="">福建省</dd>
+                    <dd lay-value="360000" class="">江西省</dd>
+                    <dd lay-value="370000" class="">山东省</dd>
+                    <dd lay-value="410000" class="">河南省</dd>
+                    <dd lay-value="420000" class="">湖北省</dd>
+                    <dd lay-value="430000" class="">湖南省</dd>
+                    <dd lay-value="440000" class="">广东省</dd>
+                    <dd lay-value="450000" class="">广西壮族自治区</dd>
+                    <dd lay-value="460000" class="">海南省</dd>
+                    <dd lay-value="500000" class="">重庆市</dd>
+                    <dd lay-value="510000" class="">四川省</dd>
+                    <dd lay-value="520000" class="">贵州省</dd>
+                    <dd lay-value="530000" class="">云南省</dd>
+                    <dd lay-value="540000" class="">西藏自治区</dd>
+                    <dd lay-value="610000" class="">陕西省</dd>
+                    <dd lay-value="620000" class="">甘肃省</dd>
+                    <dd lay-value="630000" class="">青海省</dd>
+                    <dd lay-value="640000" class="">宁夏回族自治区</dd>
+                    <dd lay-value="650000" class="">新疆维吾尔自治区</dd>
+                    <dd lay-value="710000" class="">台湾省</dd>
+                    <dd lay-value="810000" class="">香港特别行政区</dd>
+                    <dd lay-value="820000" class="">澳门特别行政区</dd>
+                  </dl>
+                </div>
+              </div>
+              <div class="layui-input-inline form__profile-input--city">
+                <select name="city" data-code="110100" lay-filter="city">
+                  <option value="110100" selected="">市辖区</option>
+                  <option value="110200">县</option>
+                </select>
+                <div class="layui-unselect layui-form-select">
+                  <div class="layui-select-title"><input type="text" placeholder="请选择" value="市辖区" readonly=""
+                      class="layui-input layui-unselect"><i class="layui-edge"></i></div>
+                  <dl class="layui-anim layui-anim-upbit">
+                    <dd lay-value="110100" class="layui-this">市辖区</dd>
+                    <dd lay-value="110200" class="">县</dd>
+                  </dl>
+                </div>
+              </div>
+              <div class="layui-input-inline form__profile-input--city">
+                <select name="area" data-code="110200" lay-filter="area">
+                  <option value="110102">西城区</option>
+                  <option value="110105">朝阳区</option>
+                  <option value="110106">丰台区</option>
+                  <option value="110107">石景山区</option>
+                  <option value="110108">海淀区</option>
+                  <option value="110109">门头沟区</option>
+                  <option value="110111">房山区</option>
+                  <option value="110112">通州区</option>
+                  <option value="110113">顺义区</option>
+                  <option value="110114">昌平区</option>
+                  <option value="110115">大兴区</option>
+                  <option value="110116">怀柔区</option>
+                  <option value="110117">平谷区</option>
+                </select>
+                <div class="layui-unselect layui-form-select">
+                  <div class="layui-select-title"><input type="text" placeholder="请选择" value="西城区" readonly=""
+                      class="layui-input layui-unselect"><i class="layui-edge"></i></div>
+                  <dl class="layui-anim layui-anim-upbit">
+                    <dd lay-value="110102" class="layui-this">西城区</dd>
+                    <dd lay-value="110105" class="">朝阳区</dd>
+                    <dd lay-value="110106" class="">丰台区</dd>
+                    <dd lay-value="110107" class="">石景山区</dd>
+                    <dd lay-value="110108" class="">海淀区</dd>
+                    <dd lay-value="110109" class="">门头沟区</dd>
+                    <dd lay-value="110111" class="">房山区</dd>
+                    <dd lay-value="110112" class="">通州区</dd>
+                    <dd lay-value="110113" class="">顺义区</dd>
+                    <dd lay-value="110114" class="">昌平区</dd>
+                    <dd lay-value="110115" class="">大兴区</dd>
+                    <dd lay-value="110116" class="">怀柔区</dd>
+                    <dd lay-value="110117" class="">平谷区</dd>
+                  </dl>
+                </div>
+              </div>
+            </div> -->
+            <!-- 自我描述 -->
+            <div class="layui-form-item layui-form-text">
+              <label class="layui-form-label">Tự mô tả</label>
+              <div class="layui-input-block">
+                <textarea maxlength="100" name="description"
+                  placeholder="Giới thiệu bản thân với những người dùng khác, lưu ý không quá 200 từ"
+                  class="layui-textarea"></textarea>
+              </div>
+            </div>
+            <!-- 保存资料 -->
+            <div class="layui-form-item layui-form-text">
+              <div class="layui-input-block">
+                <button class="layui-btn layui-btn-danger" lay-submit="">Cập nhật</button>
+              </div>
+            </div>
+            <!-- avatar -->
+            <input type="hidden" name="avatar" value="http://oss.mkzcdn.com/default/member/avatar/10.png">
+          </form>
+        </div>
+        <!-- right -->
+        <div class="main-content__profile--right">
+          <img class="j-user-avatar main-content__profile--avatar"
+            src="https://oss.mkzcdn.com/default/member/avatar/10.png!avatar-100">
+          <button class="j-change-avatar main-content__profile--right-btn layui-btn layui-btn-danger">Thay đổi
+            Avatar</button>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="footer-wrapper">
+    <!-- footer-top -->
+    <div class="container--response">
+      <div class="footer-top clearfix">
+        <div class="column-left column-33">
+          <div class="column-box-center">
+            <a href="https://www.mkzhan.com/author/" class="pic-tg" rel="nofollow">
+              <img src="//static.mkzcdn.com/home/assets/images/footer/footer_tg.png?v=15232b4" alt="">
+            </a>
+            <div class="fl">
+              <p class="column-title"> 投稿邮箱：<a href="mailto:tougao@xiaomingtaiji.com">tougao@xiaomingtaiji.com</a></p>
+              <ul class="link-list">
+                <li>
+                  <a href="https://www.mkzhan.com/help/10013.html" target="_blank" rel="nofollow">作品要求</a>
+                </li>
+                <li>
+                  <a href="https://www.mkzhan.com/help/10016.html" target="_blank" rel="nofollow">漫画签约</a>
+                </li>
+                <li>
+                  <a href="https://www.mkzhan.com/help/10015.html" target="_blank" rel="nofollow">审核机制</a>
+                </li>
+                <li>
+                  <a href="https://www.mkzhan.com/help/10017.html" target="_blank" rel="nofollow">福利体系</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="column-center column-33">
+          <div class="column-box-center">
+            <p class="column-title">关注我们：</p>
+            <div class="fl">
+              <a class="icon-wx" href="javascript:;" rel="nofollow">
+                <div class="wx-qrcode"></div>
+              </a>
+              <a class="icon-wb" target="_blank" href="http://weibo.com/mankezhan" rel="nofollow">
+                <div class="wb-qrcode"></div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="column-right column-33">
+          <div class="column-box-center">
+            <div class="fl online-link">
+              <p class="column-title">在线客服：</p>
+              <a class="pic-kf" href="tencent://message/?uin=204528691&Site=www.mkzhan.com&Menu=yes" target="_blank"
+                rel="nofollow">
+                <img src="//static.mkzcdn.com/home/assets/images/footer/footer_kf.png?v=e418bcb" alt="">
+              </a>
+            </div>
+            <div class="fl">
+              <p class="column-title qq-text">QQ群：</p>
+              <a target="_blank"
+                href="//shang.qq.com/wpa/qunwpa?idkey=a34447c7f6028298534b61c9295d12b1a273156b9674475e48ee15697f61c6d4"
+                class="pic-qq" rel="nofollow">
+                <img src="//static.mkzcdn.com/home/assets/images/footer/footer_qq.png?v=626a9ca" alt="">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- footer-bottom -->
+    <div class="container--response">
+      <div class="footer-bottom">
+        <ul class="footer-link clearfix">
+          <li>
+            <a href="https://www.mkzhan.com/help/10001.html" target="_blank" rel="nofollow">帮助中心</a>
+          </li>
+          <li>
+            <a href="https://www.mkzhan.com/about/" target="_blank" rel="nofollow">关于我们</a>
+          </li>
+          <li>
+            <a href="https://www.mkzhan.com/contact/" target="_blank" rel="nofollow">联系我们</a>
+          </li>
+          <li>
+            <a href="https://www.mkzhan.com/map/" target="_blank" rel="nofollow">网站地图</a>
+          </li>
+          <li>
+            <a href="https://www.mkzhan.com/legal_notice/" target="_blank" rel="nofollow">法律声明</a>
+          </li>
+          <li>
+            <a href="https://www.xiaomingtaiji.com/about/auditing.html" target="_blank" rel="nofollow">内容审核</a>
+          </li>
+          <li>
+            <a href="http://shareact.50manhua.com/2021/netaccuse/report" target="_blank" rel="nofollow">网安警务室</a>
+          </li>
+          <li class="noborder">
+            <a style="cursor:pointer;" id="feedback" class="feedback j-home-feed" rel="nofollow">意见反馈</a>
+          </li>
+        </ul>
+        <div style="margin-top:10px;">
+          <ul class="footer-link clearfix">
+            <li>
+              <a href="https://jbts.mct.gov.cn/" target="_blank" rel="nofollow">12318全国文化市场举报</a>
+            </li>
+            <li>
+              <a href="https://www.12377.cn/" target="_blank" rel="nofollow">网上有害信息举报</a>
+            </li>
+            <li>
+              <a href="http://www.shdf.gov.cn/shdf/channels/740.html" target="_blank" rel="nofollow">扫黄打非举报</a>
+            </li>
+            <li>
+              <a href="https://www.12377.cn/jbxzxq/zpljbxzxq.html?spm=zm1033-001.0.0.1.SOXBdI" target="_blank"
+                rel="nofollow">电信诈骗举报</a>
+            </li>
+            <li>
+              <a href="https://www.12377.cn/jbxzxq/64d38691937611ebb858c9da04cf59d3_web.html?spm=zm1033-001.0.0.1.SOXBdI&smallHarmType=64d38691937611ebb858c9da04cf59d3"
+                target="_blank" rel="nofollow">历史虚无主义举报</a>
+            </li>
+          </ul>
+        </div>
+        <p>
+          <span>联系电话：027-59327268</span>
+          <span>联系QQ：<a href="tencent://message/?uin=204528691&Site=www.mkzhan.com&Menu=yes" target="_blank"
+              rel="nofollow">204528691</a></span>
+          <span>举报邮箱：<a href="mailto:jubao@xiaomingtaiji.com">jubao@xiaomingtaiji.com</a></span>
+          <span>工作时间：周一至周五9：00--18：00</span>
+          联系地址：湖北省武汉市洪山区新世界铭丰大厦9层
+        </p>
+        <p>
+          <span><a href="https://beian.miit.gov.cn/" target="_blank" rel="nofollow">鄂ICP备16020642号-7</a></span>
+          <span>鄂公网安备 42070302000053号</span>
+          网络文化经营许可证：<a href="https://static.mkzcdn.com/home/assets/images/xukezheng.jpg" target="_blank"
+            rel="nofollow">鄂网文（2019）5588-345号</a>
+        </p>
+        <p>
+          <span>Copyright ©2010-2023<a href="https://www.mkzhan.com/" rel="nofollow">漫客栈</a></span>
+          <span><a href="http://www.xiaomingtaiji.com/" target="_blank" rel="nofollow">小明太极（湖北）国漫文化有限公司</a></span>
+          版权所有<a href="https://v.yunaq.com/certificate?domain=www.mkzhan.com" rel="nofollow" target="_blank">
+            <img class="pic-copyright"
+              src="//static.mkzcdn.com/home/assets/images/footer/footer_copyright.png?v=2f3e4cb"></a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+@*  <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/vendor/base_lib.js?v=e631876"></script>
+  <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/libs/layer/layer.js?v=6e80f0c"></script>
+  <script type="text/javascript" charset="utf-8" src="https://g.alicdn.com/sd/nch5/index.js?t=2015052012"></script>
+
+  <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/libs/layui/layui.js?v=3320191"></script>
+  <script type="text/javascript">
+    seajs.use(['assets/script/modules/httpApi/httpApi'], function (httpApi)
+    {
+      layui.use(['form', 'laypage', 'laytpl'], function ()
+      {
+        var form = layui.form,
+          laypage = layui.laypage,
+          laytpl = layui.laytpl;
+
+        var $count = $('.j-collection-count'), // 收藏数
+          $list = $('.j-collection-list'), // 收藏列表
+          $tpl_list = $('#user_collection_list'), // 渲染模板
+          $pagination = $('#collection-pagination'), // 分页
+          $toolbox = $('.j-collection-toolbox'), // 工具栏
+          $btn_delete = $('.j-collection-delete'), // 工具栏 - 删除按钮
+          $btn_cancel = $('.j-collection-cancel');  // 工具栏 - 取消按钮
+
+        var collection_params = {
+          page_num: 1,
+          page_size: 10
+        };
+
+        // 渲染收藏列表
+        function renderCollectionList(currentPageNum)
+        {
+          collection_params.page_num = currentPageNum;
+          // 请求收藏列表数据
+          return httpApi.comic
+            .collectionLists(collection_params)
+            .done(function (res)
+            {
+              if (res.code == 200)
+              {
+                var count = res.data.count;
+                // 渲染收藏数
+                $count.text(count);
+                // 渲染模板
+                laytpl($tpl_list.html()).render(res.data.list, function (result)
+                {
+                  $list.html(result);
+                });
+              }
+            });
+        }
+
+        // 渲染分页
+        function renderPagination(count)
+        {
+          laypage.render({
+            elem: $pagination,
+            count: count,
+            theme: 'mkz',
+            prev: '<',
+            next: '>',
+            limit: 10,
+            jump: function (obj, first)
+            {
+              if (!first)
+              {
+                renderCollectionList(obj.curr)
+                  .then(overlayHandle)
+                  .then(bindHandle);
+              }
+            }
+          });
+        }
+
+        // 初始化分页
+        function initPagination()
+        {
+          return renderCollectionList(1).then(function (res)
+          {
+            var count = res.data.count;
+            if (count <= collection_params.page_size)
+            {
+              $pagination.hide();
+            } else
+            {
+              $pagination.show();
+            }
+            if (count !== 0)
+            {
+              renderPagination(count);
+              bindHandle();
+            }
+          });
+        }
+
+        // 选择状态
+        function itemSelectStatus()
+        {
+          $list
+            .find('.j-item-select')
+            .addClass('user-comic-item--selected')
+            .show();
+        }
+
+        // 取消状态
+        function itemCancelStatus()
+        {
+          $list.find('.j-item-select').removeClass('user-comic-item--selected');
+        }
+
+        // 是否添加遮罩层
+        function overlayHandle()
+        {
+          if ($('.j-collection-feature').is(':visible'))
+          {
+            $list.find('.j-item-select').show();
+            // 如果选中状态，则改变所有为选中
+            if ($('input[name="select-all"]').is(':checked'))
+            {
+              itemSelectStatus();
+            }
+          }
+        }
+
+        // checkbox事件
+        function checkboxHandle(data)
+        {
+          if (data.elem.checked)
+          {
+            $(data.elem).attr('checked', true);
+            itemSelectStatus();
+          } else
+          {
+            $(data.elem).attr('checked', false);
+            itemCancelStatus();
+          }
+          deleteBtnHandle();
+        }
+
+        // 删除事件
+        function deleteHandle()
+        {
+          // 如果禁用状态则不处理
+          if ($btn_delete.hasClass('delete-btn--disable')) return;
+          layer.open({
+            content: '亲，确定要取消收藏吗？',
+            btn: ['确定', '取消'],
+            yes: function (index)
+            {
+              layer.close(index);
+              httpApi.comic.collectionCancel({
+                comic_ids: getSelectIds()
+              })
+                .done(function (res)
+                {
+                  if (res.code == 200)
+                  {
+                    layer.msg(res.message, {
+                      end: function ()
+                      {
+                        window.location.reload();
+                      }
+                    });
+                  }
+                });
+            }
+          });
+        }
+
+        // 取消事件
+        function cancelHandle()
+        {
+          $('.j-collection-feature').hide();
+          $toolbox.show();
+          $list.find('.j-item-select').fadeOut();
+          itemCancelStatus();
+          $('input[name="select-all"]').attr('checked', false);
+          form.render('checkbox');
+        }
+
+        // 获取选中漫画的id
+        function getSelectIds()
+        {
+          var _comicids = [];
+          $('.user-comic-item--selected').each(function (idx, ele)
+          {
+            _comicids.push($(ele).data('comic'));
+          });
+          return _comicids.join(',');
+        }
+
+        // 是否允许删除
+        function deleteBtnHandle()
+        {
+          if ($('.user-comic-item--selected').length > 0)
+          {
+            $btn_delete.removeClass('delete-btn--disable');
+          } else
+          {
+            $btn_delete.addClass('delete-btn--disable');
+          }
+        }
+
+        // 绑定事件
+        function bindHandle()
+        {
+          // toolbox
+          $toolbox.on('click', function ()
+          {
+            $list.find('.j-item-select').fadeIn();
+            $(this).hide();
+            $('.j-collection-feature').show();
+          });
+          form.on('checkbox(select-all)', checkboxHandle);
+          $btn_delete.on('click', deleteHandle);
+          $btn_cancel.on('click', cancelHandle);
+          // 选择事件
+          $('.j-item-select').on('click', function ()
+          {
+            $(this).toggleClass('user-comic-item--selected');
+            deleteBtnHandle();
+          });
+        }
+
+        // 初始化执行方法
+        initPagination();
+      });
+    });
+  </script>
+  <script>
+    (function ()
+    {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https')
+      {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else
+      {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>*@
+
+
+
+</body>
+
+</html>
+
+@code {
+
+}

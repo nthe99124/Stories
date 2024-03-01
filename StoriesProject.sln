@@ -5,7 +5,7 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoriesProject", "StoriesProject\StoriesProject.csproj", "{DB73FDDA-5109-4816-BE66-959E924AA5B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoriesProject.API", "StoriesProject.API\StoriesProject.API.csproj", "{5A248F60-B127-4BB4-A32B-C4FEEB48DD3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoriesProject.API", "StoriesProject.API\StoriesProject.API.csproj", "{5A248F60-B127-4BB4-A32B-C4FEEB48DD3C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

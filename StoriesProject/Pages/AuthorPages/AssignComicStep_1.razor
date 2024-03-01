@@ -1,0 +1,780 @@
+﻿@page "/author/assigncomicstep1"
+<html>
+
+<head>
+  <title>阅读历史 - 漫客栈</title>
+  <meta charset="utf-8">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="keywords" content="关键词">
+  <meta name="description" content="描述">
+  <link rel="shortcut icon" href="https://static.mkzcdn.com/common/favicon.ico" type="image/x-icon" />
+
+  <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/script/libs/layui/css/layui.css?v=0b3cd68">
+  <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/style/common/common_user.css?v=a19b47d">
+  <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/style/bundle/user.css?v=b5db955">
+
+  <!-- start Dplus -->
+  <!-- end Dplus -->
+  <!--[if lt IE 9]>
+  <script src="//static.mkzcdn.com/home/assets/script/libs/respond/respond.js?v=afc1984"></script>
+<![endif]-->
+  <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<style>
+  * {
+    box-sizing: content-box;
+  }
+
+  .header-user-wrapper .search-box input {
+    width: 250px;
+    background: rgba(255, 255, 255, 0.34);
+    border-radius: 18px;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 11px 15px;
+    border: none;
+    font-size: 14px;
+    line-height: 14px;
+    height: 40px !important;
+  }
+
+  .user-selecteds a {
+    border-left: 4px solid #00B798;
+    padding-left: 43px !important;
+    background: #F8F8F8 !important;
+    color: #00B798 !important;
+  }
+
+  a:hover {
+    color: #00b798;
+  }
+
+  dl dd a:hover {
+    border-left: 4px solid #00B798 !important;
+    padding-left: 43px !important;
+    background: #F8F8F8 !important;
+    color: #00B798 !important;
+  }
+
+  .center_selected {
+    color: #00b798;
+  }
+
+  .user-right {
+    float: right;
+    width: 838px;
+    margin: 20px 0 60px;
+    border: 1px solid #DDD;
+    min-height: 372px;
+    background: #FFF;
+  }
+
+  .user-right {
+    float: right;
+    width: 838px;
+    margin: 20px 0 60px;
+    border: 1px solid #DDD;
+    min-height: 372px;
+    background: #FFF;
+  }
+
+  .user-right .user-right-top {
+    width: 100%;
+    border-bottom: 1px solid #DDD;
+    height: 47px;
+    overflow: hidden;
+  }
+
+  .user-right .user-right-top h3 {
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    font-size: 18px;
+    font-weight: normal;
+    float: left;
+    line-height: 48px;
+    margin-left: 15px;
+    margin-top: 0;
+  }
+
+  .step-nav {
+    height: 36px;
+    margin: 32px 0;
+    padding-left: 254px;
+    line-height: 36px;
+    font-size: 18px;
+    color: #ccc;
+  }
+
+  .step-nav .active {
+    color: #00b798;
+  }
+
+  .step-nav .step-itm {
+    float: left;
+    margin-right: 60px;
+  }
+
+  .step-nav .active .num {
+    background: #00b798;
+  }
+
+  .step-nav .num {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+    text-align: center;
+    line-height: 36px;
+    color: #fff;
+    border-radius: 18px;
+    background: #ccc;
+  }
+
+  .step-nav .active {
+    color: #00b798;
+  }
+
+  .step-nav .step-itm {
+    float: left;
+    margin-right: 60px;
+  }
+
+  .layui-input-block {
+    margin-left: 140px;
+    line-height: 38px;
+    min-height: 36px;
+  }
+
+  .clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+
+  .step-box {
+    padding: 0 30px;
+    float: left;
+    width: 80%;
+  }
+
+  .layui-form-item {
+    margin-bottom: 15px;
+    clear: both;
+  }
+
+  .step-box .input-box .layui-form-label {
+    width: 110px;
+    font-size: 14px;
+    color: #2a2a2a;
+  }
+
+  .layui-form-item:after {
+    content: '\20';
+    clear: both;
+    display: block;
+    height: 0;
+  }
+
+
+  .layui-form-label {
+    float: left;
+    display: block;
+    padding: 9px 15px;
+    width: 80px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: right;
+  }
+
+  .layui-form-label {
+    position: relative;
+  }
+
+  label {
+    cursor: default;
+  }
+
+  .step-box .input-box .layui-form-label i {
+    color: #FF620E;
+    display: inline-block;
+    font-style: normal;
+    box-sizing: content-box;
+  }
+
+  .layui-input-block .cover-y,
+  .layui-input-block .cover-x {
+    float: left;
+    width: 90px;
+    height: 120px;
+    background: #f6f6f6;
+    margin-right: 10px;
+    position: relative;
+  }
+
+  .layui-input-block .cover-y>img,
+  .layui-input-block .cover-x>img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .layui-input-block .cover-y .btn,
+  .layui-input-block .cover-x .btn {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 36px;
+    text-align: center;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+  }
+
+  .layui-input-block>.tip {
+    line-height: 18px;
+    font-size: 12px;
+    color: #b4b4b4;
+  }
+
+  .layui-input-block .cover-y .btn,
+  .layui-input-block .cover-x .btn {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 36px;
+    text-align: center;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+  }
+
+  .layui-input,
+  .layui-textarea {
+    display: block;
+    width: 100%;
+    padding-left: 10px;
+  }
+
+  .layui-input,
+  .layui-select,
+  .layui-textarea {
+    height: 38px;
+    line-height: 1.3;
+    line-height: 38px\9;
+    border-width: 1px;
+    border-style: solid;
+    background-color: #fff;
+    border-radius: 2px;
+    -webkit-transition: all .3s;
+  }
+
+  .layui-form-label {
+    float: left;
+    display: block;
+    padding: 9px 15px;
+    width: 80px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: right;
+  }
+
+  .layui-input-block .ticai-list,
+  .layui-input-block .update-list {
+    float: left;
+    margin-right: 10px;
+  }
+
+  .layui-rate,
+  li {
+    list-style: none;
+    display: list-item;
+    text-align: -webkit-match-parent;
+  }
+
+  .layui-form-checkbox span {
+    padding: 0 10px;
+    font-size: 14px;
+    border-radius: 2px 0 0 2px;
+    background-color: #d2d2d2;
+    color: #fff;
+    overflow: hidden;
+    height: auto;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .step-box .input-box .protocol {
+    overflow: hidden;
+  }
+
+  .step-box .input-box .protocol .layui-unselect {
+    float: left;
+  }
+
+  .step-box .input-box .protocol a {
+    text-decoration: underline;
+    float: left;
+    margin-top: 10px;
+  }
+
+  .layui-form-checkbox[lay-skin=primary] {
+    height: auto !important;
+    line-height: normal !important;
+    border: none !important;
+    margin-right: 0;
+    padding-right: 0;
+    background: 0 0;
+  }
+</style>
+
+
+<body class="page-history">
+  <!-- 头部 -->
+
+  <div class="header-user-wrapper author">
+    <div class="main-container clearfix">
+      <!-- logo -->
+      <a href="/user/" class="header-logo">
+        <img src="//static.mkzcdn.com/home/assets/images/header/pic_dzzx_logo.png?v=5d2ae5c" />
+      </a>
+      <!-- link -->
+      <!-- <div class="nav-link"> -->
+      <!-- <div class="sub-text">我是读者</div> -->
+      <!-- <a href="/">返回客栈首页</a> -->
+      <!-- </div> -->
+      <!-- menu -->
+      <ul class="nav-menu">
+        <li><a rel="nofollow" href="/">Trang chủ truyện tranh</a></li>
+        <li><a rel="nofollow" href="https://www.xiaoshuohui.com.cn/">Trung tâm tác giả</a></li>
+      </ul>
+      <!-- search -->
+      <div class="fr">
+        <!-- switch -->
+        <ul class="switch-tab reader">
+          <!-- <a class="hl" rel="nofollow" href="/user/">读者</a> -->
+          <a rel="nofollow" href="/author/">Cá nhân</a>
+        </ul>
+        <!-- user-box -->
+        <div class="j-header-avatar user-box">
+          <div class="user-avatar">
+            <a href="/user/">
+              <img class="j-user-avatar"
+                src="//static.mkzcdn.com/home/assets/images/common/pic_login_defaulthead.png?v=83881ca" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 内容 -->
+  <div class="main-container">
+    <div class="aside-user">
+
+      <dl class="aside-user--first">
+        <dt class="center_selected">
+          <i class="iconfont icon-door"></i>
+          <a rel="nofollow" href="/user/">Trung tâm tác giả</a>
+        </dt>
+      </dl>
+      <dl>
+        <dt>
+          <i class="iconfont icon-book"></i>Quản lý công việc
+        </dt>
+        <dd>
+          <a rel="nofollow" href="/user/collection/">Đăng kí tác giả</a>
+        </dd>
+        <dd>
+          <a rel="nofollow" href="/user/collection/">Tác phẩm của tôi</a>
+        </dd>
+        <dd class="user-selecteds">
+          <a rel="nofollow" href="/user/history/">Tạo tác phẩm mới</a>
+        </dd>
+      </dl>
+      <dl>
+        <dt>
+          <i class="iconfont icon-data"></i>Thống kê
+        </dt>
+        <dd>
+          <a rel="nofollow" href="/user/task/">Thu nhập</a>
+        </dd>
+        <dd>
+          <a rel="nofollow" href="/shop/integral/">Khách hàng</a>
+        </dd>
+      </dl>
+    </div>
+
+    <!-- main-content -->
+    <div class="user-right">
+      <div class="user-right-top">
+        <h3>Tạo tác phẩm mới</h3>
+      </div>
+      <!--步骤-->
+      <div class="step-nav clearfix">
+        <div class="step-itm active">
+          <span class="num">1</span>
+          <span>Tạo thông tin cơ bản</span>
+        </div>
+        <div class="step-itm">
+          <span class="num">2</span>
+          <span>Thêm chương mới</span>
+        </div>
+      </div>
+      <!--步骤end-->
+      <div class="step-box">
+        <form class="input-box layui-form">
+          <div class="layui-form-item">
+            <label class="layui-form-label"><i>*</i>Tên truyện: </label>
+            <div class="layui-input-block">
+              <input type="text" name="title" required="" lay-verify="required"
+                placeholder="Không cần có số, tối đa 15 từ" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <label class="layui-form-label"><i>*</i>Bìa truyện</label>
+            <div class="layui-input-block">
+              <div class="cover-y">
+                <img src="" alt="">
+                <span class="btn J_cover_y">Ảnh bìa</span>
+              </div>
+              <p class="tip">Kích thước đề xuất 600x800</p>
+              <p class="tip">Hỗ trợ jpg, png</p>
+              <p class="tip">Dung lượng 5MB</p>
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <label class="layui-form-label"><i>*</i>Tác giả: </label>
+            <div class="layui-input-block">
+              <input type="text" name="title" required="" lay-verify="required"
+                placeholder="Không cần có số, tối đa 15 từ" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <label class="layui-form-label"><i>*</i>Giới thiệu ngắn: </label>
+            <div class="layui-input-block">
+              <input type="text" name="feature" required="" lay-verify="required"
+                placeholder="Giới thiệu ngắn sẽ xuất hiện trên trang chủ" autocomplete="off" class="layui-input">
+            </div>
+          </div>
+          <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label"><i>*</i>Giới thiệu: </label>
+            <div class="layui-input-block">
+              <textarea name="content" required="" lay-verify="required"
+                placeholder="Giới thiệt qua về tác phẩm để độc giả có thể hiểu được nội dung truyện"
+                class="layui-textarea"></textarea>
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <label class="layui-form-label"><i>*</i>Chủ đề: </label>
+            <div class="layui-input-block theme-block">
+              <ul>
+                <li class="ticai-list"><input lay-filter="theme" type="checkbox" name="theme_id" title="Học đường"
+                    lay-skin="primary" value="1">
+                  <div class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>Học đường</span><i
+                      class="layui-icon layui-icon-ok"></i></div>
+                </li>
+                <li class="ticai-list"><input lay-filter="theme" type="checkbox" name="theme_id" title="Tình yêu"
+                    lay-skin="primary" value="2">
+                  <div class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>Tình yêu</span><i
+                      class="layui-icon layui-icon-ok"></i></div>
+                </li>
+                <li class="ticai-list"><input lay-filter="theme" type="checkbox" name="theme_id" title="Gia đình"
+                    lay-skin="primary" value="3">
+                  <div class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>Gia đình</span><i
+                      class="layui-icon layui-icon-ok"></i></div>
+                </li>
+                <li class="ticai-list"><input lay-filter="theme" type="checkbox" name="theme_id" title="Hài hước"
+                    lay-skin="primary" value="4">
+                  <div class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>Hài hước </span><i
+                      class="layui-icon layui-icon-ok"></i></div>
+                </li>
+                <li class="ticai-list"><input lay-filter="theme" type="checkbox" name="theme_id" title="Khoa học"
+                    lay-skin="primary" value="5">
+                  <div class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>Khoa học</span><i
+                      class="layui-icon layui-icon-ok"></i></div>
+                </li>
+                <li class="ticai-list"><input lay-filter="theme" type="checkbox" name="theme_id" title="Siêu nhiên"
+                    lay-skin="primary" value="6">
+                  <div class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>Siêu nhiên</span><i
+                      class="layui-icon layui-icon-ok"></i></div>
+                </li>
+                <li class="ticai-list"><input lay-filter="theme" type="checkbox" name="theme_id" title="Du hành"
+                    lay-skin="primary" value="7">
+                  <div class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>Du hành</span><i
+                      class="layui-icon layui-icon-ok"></i></div>
+                </li>
+                <li class="ticai-list"><input lay-filter="theme" type="checkbox" name="theme_id" title="Thể thao"
+                    lay-skin="primary" value="8">
+                  <div class="layui-unselect layui-form-checkbox" lay-skin="primary"><span>Thể thao</span><i
+                      class="layui-icon layui-icon-ok"></i></div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label"><i>*</i>Đối tượng: </label>
+            <div class="layui-input-block">
+              <input type="radio" name="audience" value="1" title="Vị thành niên" checked="">
+              <div class="layui-unselect layui-form-radio layui-form-radioed"><i class="layui-anim layui-icon"></i>
+                <div>Vị thành niên</div>
+              </div>
+              <input type="radio" name="audience" value="2" title="Nữ giới">
+              <div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i>
+                <div>Nữ giới</div>
+              </div>
+              <input type="radio" name="audience" value="3" title="Nam giới">
+              <div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i>
+                <div>Nam giới</div>
+              </div>
+              <input type="radio" name="audience" value="4" title="Thiếu nhi">
+              <div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i>
+                <div>Thiếu nhi</div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="layui-form-item">
+            <label class="layui-form-label"><i>*</i>作品进度：</label>
+            <div class="layui-input-block">
+              <input type="radio" name="finish" value="1" title="连载" checked="">
+              <div class="layui-unselect layui-form-radio layui-form-radioed"><i class="layui-anim layui-icon"></i>
+                <div>连载</div>
+              </div>
+              <input type="radio" name="finish" value="2" title="完结">
+              <div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i>
+                <div>完结</div>
+              </div>
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <label class="layui-form-label"><i>*</i>首发状态：</label>
+            <div class="layui-input-block">
+              <input type="radio" name="first_launch" value="0" title="非漫客栈首发" checked="">
+              <div class="layui-unselect layui-form-radio layui-form-radioed"><i class="layui-anim layui-icon"></i>
+                <div>非漫客栈首发</div>
+              </div>
+              <input type="radio" name="first_launch" value="1" title="漫客栈首发" disabled="disabled" style="color:#28282d">
+              <div class="layui-unselect layui-form-radio layui-radio-disbaled layui-disabled"><i
+                  class="layui-anim layui-icon"></i>
+                <div>漫客栈首发</div>
+              </div>
+              <div class="call-editer-sf">( <a class=""
+                  href="tencent://message/?uin=204528691&amp;Site=www.mkzhan.com&amp;Menu=yes" target="_blank"
+                  rel="nofollow">联系编辑</a> )</div>
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label"><i>*</i>授权状态：</label>
+            <div class="layui-input-block">
+              <input type="radio" name="copyright" value="2" title="非独家作品" checked="">
+              <div class="layui-unselect layui-form-radio layui-form-radioed"><i class="layui-anim layui-icon"></i>
+                <div>非独家作品</div>
+              </div>
+              <input type="radio" name="copyright" value="1" title="独家作品" disabled="disabled" style="color:#28282d">
+              <div class="layui-unselect layui-form-radio layui-radio-disbaled layui-disabled"><i
+                  class="layui-anim layui-icon"></i>
+                <div>独家作品</div>
+              </div>
+              <div class="call-editer">( <a class=""
+                  href="tencent://message/?uin=204528691&amp;Site=www.mkzhan.com&amp;Menu=yes" target="_blank"
+                  rel="nofollow">联系编辑</a> )</div>
+            </div>
+          </div> -->
+          <div class="layui-form-item font-12 protocol">
+            <label class="layui-form-label"></label>
+            <input checked="" type="checkbox" name="protocol" title="Tôi đã đọc và chấp thuận" lay-skin="primary">
+            <div class="layui-unselect layui-form-checkbox layui-form-checked" lay-skin="primary"><span>Tôi đã đọc và
+                chấp thuận</span><i class="layui-icon layui-icon-ok"></i></div><a href="/help/10012/"
+              target="_blank">Thảo thuận của comic hub</a>
+          </div>
+
+          <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <div class="layui-input-block">
+              <button lay-submit="" lay-filter="stepOne" class="submit layui-btn">Tiếp theo</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="footer-wrapper">
+    <!-- footer-top -->
+    <div class="container--response">
+      <div class="footer-top clearfix">
+        <div class="column-left column-33">
+          <div class="column-box-center">
+            <a href="https://www.mkzhan.com/author/" class="pic-tg" rel="nofollow">
+              <img src="//static.mkzcdn.com/home/assets/images/footer/footer_tg.png?v=15232b4" alt="">
+            </a>
+            <div class="fl">
+              <p class="column-title"> 投稿邮箱：<a href="mailto:tougao@xiaomingtaiji.com">tougao@xiaomingtaiji.com</a></p>
+              <ul class="link-list">
+                <li>
+                  <a href="https://www.mkzhan.com/help/10013.html" target="_blank" rel="nofollow">作品要求</a>
+                </li>
+                <li>
+                  <a href="https://www.mkzhan.com/help/10016.html" target="_blank" rel="nofollow">漫画签约</a>
+                </li>
+                <li>
+                  <a href="https://www.mkzhan.com/help/10015.html" target="_blank" rel="nofollow">审核机制</a>
+                </li>
+                <li>
+                  <a href="https://www.mkzhan.com/help/10017.html" target="_blank" rel="nofollow">福利体系</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="column-center column-33">
+          <div class="column-box-center">
+            <p class="column-title">关注我们：</p>
+            <div class="fl">
+              <a class="icon-wx" href="javascript:;" rel="nofollow">
+                <div class="wx-qrcode"></div>
+              </a>
+              <a class="icon-wb" target="_blank" href="http://weibo.com/mankezhan" rel="nofollow">
+                <div class="wb-qrcode"></div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="column-right column-33">
+          <div class="column-box-center">
+            <div class="fl online-link">
+              <p class="column-title">在线客服：</p>
+              <a class="pic-kf" href="tencent://message/?uin=204528691&Site=www.mkzhan.com&Menu=yes" target="_blank"
+                rel="nofollow">
+                <img src="//static.mkzcdn.com/home/assets/images/footer/footer_kf.png?v=e418bcb" alt="">
+              </a>
+            </div>
+            <div class="fl">
+              <p class="column-title qq-text">QQ群：</p>
+              <a target="_blank"
+                href="//shang.qq.com/wpa/qunwpa?idkey=a34447c7f6028298534b61c9295d12b1a273156b9674475e48ee15697f61c6d4"
+                class="pic-qq" rel="nofollow">
+                <img src="//static.mkzcdn.com/home/assets/images/footer/footer_qq.png?v=626a9ca" alt="">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- footer-bottom -->
+    <div class="container--response">
+      <div class="footer-bottom">
+        <ul class="footer-link clearfix">
+          <li>
+            <a href="https://www.mkzhan.com/help/10001.html" target="_blank" rel="nofollow">帮助中心</a>
+          </li>
+          <li>
+            <a href="https://www.mkzhan.com/about/" target="_blank" rel="nofollow">关于我们</a>
+          </li>
+          <li>
+            <a href="https://www.mkzhan.com/contact/" target="_blank" rel="nofollow">联系我们</a>
+          </li>
+          <li>
+            <a href="https://www.mkzhan.com/map/" target="_blank" rel="nofollow">网站地图</a>
+          </li>
+          <li>
+            <a href="https://www.mkzhan.com/legal_notice/" target="_blank" rel="nofollow">法律声明</a>
+          </li>
+          <li>
+            <a href="https://www.xiaomingtaiji.com/about/auditing.html" target="_blank" rel="nofollow">内容审核</a>
+          </li>
+          <li>
+            <a href="http://shareact.50manhua.com/2021/netaccuse/report" target="_blank" rel="nofollow">网安警务室</a>
+          </li>
+          <li class="noborder">
+            <a style="cursor:pointer;" id="feedback" class="feedback j-home-feed" rel="nofollow">意见反馈</a>
+          </li>
+        </ul>
+        <div style="margin-top:10px;">
+          <ul class="footer-link clearfix">
+            <li>
+              <a href="https://jbts.mct.gov.cn/" target="_blank" rel="nofollow">12318全国文化市场举报</a>
+            </li>
+            <li>
+              <a href="https://www.12377.cn/" target="_blank" rel="nofollow">网上有害信息举报</a>
+            </li>
+            <li>
+              <a href="http://www.shdf.gov.cn/shdf/channels/740.html" target="_blank" rel="nofollow">扫黄打非举报</a>
+            </li>
+            <li>
+              <a href="https://www.12377.cn/jbxzxq/zpljbxzxq.html?spm=zm1033-001.0.0.1.SOXBdI" target="_blank"
+                rel="nofollow">电信诈骗举报</a>
+            </li>
+            <li>
+              <a href="https://www.12377.cn/jbxzxq/64d38691937611ebb858c9da04cf59d3_web.html?spm=zm1033-001.0.0.1.SOXBdI&smallHarmType=64d38691937611ebb858c9da04cf59d3"
+                target="_blank" rel="nofollow">历史虚无主义举报</a>
+            </li>
+          </ul>
+        </div>
+        <p>
+          <span>联系电话：027-59327268</span>
+          <span>联系QQ：<a href="tencent://message/?uin=204528691&Site=www.mkzhan.com&Menu=yes" target="_blank"
+              rel="nofollow">204528691</a></span>
+          <span>举报邮箱：<a href="mailto:jubao@xiaomingtaiji.com">jubao@xiaomingtaiji.com</a></span>
+          <span>工作时间：周一至周五9：00--18：00</span>
+          联系地址：湖北省武汉市洪山区新世界铭丰大厦9层
+        </p>
+        <p>
+          <span><a href="https://beian.miit.gov.cn/" target="_blank" rel="nofollow">鄂ICP备16020642号-7</a></span>
+          <span>鄂公网安备 42070302000053号</span>
+          网络文化经营许可证：<a href="https://static.mkzcdn.com/home/assets/images/xukezheng.jpg" target="_blank"
+            rel="nofollow">鄂网文（2019）5588-345号</a>
+        </p>
+        <p>
+          <span>Copyright ©2010-2023<a href="https://www.mkzhan.com/" rel="nofollow">漫客栈</a></span>
+          <span><a href="http://www.xiaomingtaiji.com/" target="_blank" rel="nofollow">小明太极（湖北）国漫文化有限公司</a></span>
+          版权所有<a href="https://v.yunaq.com/certificate?domain=www.mkzhan.com" rel="nofollow" target="_blank">
+            <img class="pic-copyright"
+              src="//static.mkzcdn.com/home/assets/images/footer/footer_copyright.png?v=2f3e4cb"></a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+@*  <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/vendor/base_lib.js?v=e631876"></script>
+  <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/libs/layer/layer.js?v=6e80f0c"></script>
+  <script type="text/javascript" charset="utf-8" src="https://g.alicdn.com/sd/nch5/index.js?t=2015052012"></script>
+  <!-- 国内使用 阿里云 滑动验证 --><!-- 若您的主要用户来源于海外，请替换使用下面的js资源 -->
+  <!-- <script type="text/javascript" charset="utf-8" src="//aeis.alicdn.com/sd/nch5/index.js?t=2015052012"></script> -->
+  <!-- <script src="https://g.alicdn.com/AWSC/AWSC/awsc.js"></script> -->
+
+  <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/libs/layui/layui.js?v=3320191"></script>
+  <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/page/user/history.js?v=7f36731"></script>
+  <script>
+    (function ()
+    {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https')
+      {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else
+      {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>*@
+
+
+
+</body>
+
+</html>
+
+@code {
+
+}
