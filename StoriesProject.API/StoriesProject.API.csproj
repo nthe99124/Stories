@@ -7,7 +7,63 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Stories.Postman.json" />
+    <Compile Remove="obj\**" />
+    <Content Remove="obj\**" />
+    <EmbeddedResource Remove="obj\**" />
+    <None Remove="obj\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Common\Attribute\CustomAuthorizeAttribute.cs" />
+    <Compile Include="Common\Cache\DistributedCacheCustom.cs" />
+    <Compile Include="Common\Constant\CacheKeyConstant.cs" />
+    <Compile Include="Common\Constant\JwtRegisteredClaimsNamesConstant.cs" />
+    <Compile Include="Common\Constant\LogLevelConstant.cs" />
+    <Compile Include="Common\Constant\RoleConstant.cs" />
+    <Compile Include="Common\Mappings\MappingProfile.cs" />
+    <Compile Include="Common\MiddleWare\ErrorHandlingMiddleware.cs" />
+    <Compile Include="Common\MiddleWare\LanguageMiddleware.cs" />
+    <Compile Include="Common\Repository\StoriesContext.cs" />
+    <Compile Include="Common\Repository\UnitOfWork.cs" />
+    <Compile Include="Common\Ulti\HashCodeUlti.cs" />
+    <Compile Include="Controller\AccountantController.cs" />
+    <Compile Include="Controller\Base\BaseController.cs" />
+    <Compile Include="Controller\StoriesController.cs" />
+    <Compile Include="Models\BaseEntity\Accountant.cs" />
+    <Compile Include="Models\BaseEntity\CoinLog.cs" />
+    <Compile Include="Models\BaseEntity\LogEntry.cs" />
+    <Compile Include="Models\BaseEntity\Order.cs" />
+    <Compile Include="Models\BaseEntity\OrderDetail.cs" />
+    <Compile Include="Models\BaseEntity\Role.cs" />
+    <Compile Include="Models\BaseEntity\RoleAccountant.cs" />
+    <Compile Include="Models\BaseEntity\Story.cs" />
+    <Compile Include="Models\BaseEntity\Topic.cs" />
+    <Compile Include="Models\BaseEntity\TopicStory.cs" />
+    <Compile Include="Models\DTO\Accountant\AccountAuthenDTO.cs" />
+    <Compile Include="Models\DTO\Accountant\AccountGenericDTO.cs" />
+    <Compile Include="Models\DTO\PagingModel.cs" />
+    <Compile Include="Models\Enum\DataType.cs" />
+    <Compile Include="Models\Migrations\StoriesContextModelSnapshot.cs" />
+    <Compile Include="Models\ViewModel\Accountant\AccountantRegister.cs" />
+    <Compile Include="Models\ViewModel\Accountant\LoginViewModel.cs" />
+    <Compile Include="Models\ViewModel\RestOutput.cs" />
+    <Compile Include="Models\ViewModel\RestPagingOutput.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Repositories\AccountantRepository.cs" />
+    <Compile Include="Repositories\Base\BaseRepository.cs" />
+    <Compile Include="Repositories\LogEntryRepository.cs" />
+    <Compile Include="Repositories\StoriesRepository.cs" />
+    <Compile Include="Services\AccoutantsService.cs" />
+    <Compile Include="Services\Base\BaseService.cs" />
+    <Compile Include="Services\LogEntryService.cs" />
+    <Compile Include="Services\StoriesService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.Development.json" />
+    <Content Include="appsettings.json" />
+    <Content Include="Properties\launchSettings.json" />
+    <Content Include="Stories.Postman.json" />
   </ItemGroup>
 
   <ItemGroup>

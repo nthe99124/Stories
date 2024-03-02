@@ -7,6 +7,57 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Common\Cache\DistributedCacheCustom.cs" />
+    <Compile Include="Common\Constant\CacheKeyConstant.cs" />
+    <Compile Include="Common\MiddleWare\LanguageMiddleware.cs" />
+    <Compile Include="Pages\Error.cshtml.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Services\ApiUrldefinition\AccountantApiUrlDef.cs" />
+    <Compile Include="Services\Base\BaseService.cs" />
+    <Compile Include="ViewModel\Accountant\LoginViewModel.cs" />
+    <Compile Include="ViewModel\RestOutput.cs" />
+    <Compile Include="ViewModel\RestPagingOutput.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="App.razor" />
+    <Content Include="appsettings.Development.json" />
+    <Content Include="appsettings.json" />
+    <Content Include="Pages\AuthorPages\AssignComicStep_1.razor" />
+    <Content Include="Pages\AuthorPages\AuthorHomepage.razor" />
+    <Content Include="Pages\AuthorPages\IdentifyAuthor.razor" />
+    <Content Include="Pages\Counter.razor" />
+    <Content Include="Pages\Error.cshtml" />
+    <Content Include="Pages\Index.razor" />
+    <Content Include="Pages\UserPages\BuyHistory.razor" />
+    <Content Include="Pages\UserPages\ChangePassword.razor" />
+    <Content Include="Pages\UserPages\ComicCollection.razor" />
+    <Content Include="Pages\UserPages\Homepage.razor" />
+    <Content Include="Pages\UserPages\Profile.razor" />
+    <Content Include="Pages\UserPages\ReadingHistory.razor" />
+    <Content Include="Pages\UserPages\UserHompage.razor" />
+    <Content Include="Pages\_Host.cshtml" />
+    <Content Include="Properties\launchSettings.json" />
+    <Content Include="Shared\MainLayout.razor" />
+    <Content Include="Shared\NavMenu.razor" />
+    <Content Include="Shared\SurveyPrompt.razor" />
+    <Content Include="wwwroot\css\bootstrap\bootstrap.min.css" />
+    <Content Include="wwwroot\css\bootstrap\bootstrap.min.css.map" />
+    <Content Include="wwwroot\css\open-iconic\FONT-LICENSE" />
+    <Content Include="wwwroot\css\open-iconic\font\css\open-iconic-bootstrap.min.css" />
+    <Content Include="wwwroot\css\open-iconic\font\fonts\open-iconic.eot" />
+    <Content Include="wwwroot\css\open-iconic\font\fonts\open-iconic.otf" />
+    <Content Include="wwwroot\css\open-iconic\font\fonts\open-iconic.svg" />
+    <Content Include="wwwroot\css\open-iconic\font\fonts\open-iconic.ttf" />
+    <Content Include="wwwroot\css\open-iconic\font\fonts\open-iconic.woff" />
+    <Content Include="wwwroot\css\open-iconic\ICON-LICENSE" />
+    <Content Include="wwwroot\css\open-iconic\README.md" />
+    <Content Include="wwwroot\css\site.css" />
+    <Content Include="wwwroot\favicon.png" />
+    <Content Include="_Imports.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.3.0" />
     <PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.2" />
@@ -14,6 +65,11 @@
 
   <ItemGroup>
     <Folder Include="Common\Constant\Enum\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Shared\MainLayout.razor.css" />
+    <None Include="Shared\NavMenu.razor.css" />
   </ItemGroup>
 
 </Project>
