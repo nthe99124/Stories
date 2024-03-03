@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
@@ -65,6 +64,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Pages\UserPages\Category.razor" />
+    <None Include="Pages\UserPages\ComicDetails.razor" />
+    <None Include="Pages\UserPages\Login.razor" />
+    <None Include="Pages\UserPages\NewUpdate.razor" />
+    <None Include="Pages\UserPages\ReadingChapter.razor" />
     <None Include="wwwroot\css\bootstrap\bootstrap.min.css.map" />
     <None Include="wwwroot\css\open-iconic\FONT-LICENSE" />
     <None Include="wwwroot\css\open-iconic\font\fonts\open-iconic.svg" />
@@ -75,6 +79,13 @@
   <ItemGroup>
     <ProjectReference Include="..\StoriesProject.Model\StoriesProject.Model.csproj" />
   </ItemGroup>
+	<Target Name="WebCompileExample" BeforeTargets="ResolveScopedCssInputs">
+		<!-- Create Scoped css files. e.g. compile less files etc. -->
 
+		<ItemGroup>
+			<None Remove="**/*.razor.css" />
+			<None Include="**/*.razor.css" />
+		</ItemGroup>
+	</Target>
   
 </Project>

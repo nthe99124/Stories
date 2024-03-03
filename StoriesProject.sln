@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoriesProject.API", "Stori
 		{6F8A132A-7EE5-4F83-BA74-5E293F9DAB3E} = {6F8A132A-7EE5-4F83-BA74-5E293F9DAB3E}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoriesProject.Model", "StoriesProject.Model\StoriesProject.Model.csproj", "{6F8A132A-7EE5-4F83-BA74-5E293F9DAB3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoriesProject.Model", "StoriesProject.Model\StoriesProject.Model.csproj", "{6F8A132A-7EE5-4F83-BA74-5E293F9DAB3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
