@@ -1,83 +1,88 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-	<EnableDefaultContentItems>false</EnableDefaultContentItems>
-	<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<EnableDefaultContentItems>false</EnableDefaultContentItems>
+		<EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Include="Common\Cache\DistributedCacheCustom.cs" />
-    <Compile Include="Common\Constant\CacheKeyConstant.cs" />
-    <Compile Include="Common\MiddleWare\LanguageMiddleware.cs" />
-    <Compile Include="Pages\Error.cshtml.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="Services\StoriesService.cs" />
-    <Compile Include="Services\ApiUrldefinition\StoriesApiUrlDef.cs" />
-    <Compile Include="Services\ApiUrldefinition\AccountantApiUrlDef.cs" />
-    <Compile Include="Services\Base\BaseService.cs" />
-    <Compile Include="Services\AccoutantsService.cs" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <None Remove="Shared\MainLayout.razor.css" />
-    <None Remove="Shared\NavMenu.razor.css" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Include="Common\Cache\DistributedCacheCustom.cs" />
+		<Compile Include="Common\Constant\CacheKeyConstant.cs" />
+		<Compile Include="Common\MiddleWare\LanguageMiddleware.cs" />
+		<Compile Include="Pages\Error.cshtml.cs" />
+		<Compile Include="Program.cs" />
+		<Compile Include="Services\StoriesService.cs" />
+		<Compile Include="Services\ApiUrldefinition\StoriesApiUrlDef.cs" />
+		<Compile Include="Services\ApiUrldefinition\AccountantApiUrlDef.cs" />
+		<Compile Include="Services\Base\BaseService.cs" />
+		<Compile Include="Services\AccoutantsService.cs" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Include="App.razor" />
-    <Content Include="appsettings.Development.json" />
-    <Content Include="appsettings.json" />
-    <Content Include="Pages\AuthorPages\AssignComicStep_1.razor" />
-    <Content Include="Pages\AuthorPages\AuthorHomepage.razor" />
-    <Content Include="Pages\AuthorPages\IdentifyAuthor.razor" />
-    <Content Include="Pages\Counter.razor" />
-    <Content Include="Pages\Error.cshtml" />
-    <Content Include="Pages\Index.razor" />
-    <Content Include="Pages\UserPages\BuyHistory.razor" />
-    <Content Include="Pages\UserPages\ChangePassword.razor" />
-    <Content Include="Pages\UserPages\ComicCollection.razor" />
-    <Content Include="Pages\UserPages\Homepage.razor" />
-    <Content Include="Pages\UserPages\Profile.razor" />
-    <Content Include="Pages\UserPages\ReadingHistory.razor" />
-    <Content Include="Pages\UserPages\UserHompage.razor" />
-    <Content Include="Pages\_Host.cshtml" />
-    <Content Include="Properties\launchSettings.json" />
-    <Content Include="Shared\MainLayout.razor" />
-    <Content Include="Shared\NavMenu.razor" />
-    <Content Include="Shared\SurveyPrompt.razor" />
-    <Content Include="_Imports.razor" />
-	<Content Include="Shared\MainLayout.razor.css" />
-    <Content Include="Shared\NavMenu.razor.css" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="Shared\MainLayout.razor.css" />
+		<None Remove="Shared\NavMenu.razor.css" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="13.0.1" />
-    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.3.0" />
-    <PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.2" />
-    <PackageReference Include="Microsoft.Web.Administration" Version="11.1.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="App.razor" />
+		<Content Include="appsettings.Development.json" />
+		<Content Include="appsettings.json" />
+		<Content Include="Pages\AuthorPages\AssignComicStep_1.razor" />
+		<Content Include="Pages\AuthorPages\AuthorHomepage.razor" />
+		<Content Include="Pages\AuthorPages\IdentifyAuthor.razor" />
+		<Content Include="Pages\Counter.razor" />
+		<Content Include="Pages\Error.cshtml" />
+		<Content Include="Pages\Index.razor" />
+		<Content Include="Pages\UserPages\BuyHistory.razor" />
+		<Content Include="Pages\UserPages\ChangePassword.razor" />
+		<Content Include="Pages\UserPages\ComicCollection.razor" />
+		<Content Include="Pages\UserPages\Homepage.razor" />
+		<Content Include="Pages\UserPages\Profile.razor" />
+		<Content Include="Pages\UserPages\ReadingHistory.razor" />
+		<Content Include="Pages\UserPages\UserHompage.razor" />
+		<Content Include="Pages\UserPages\ComicDetails.razor" />
+		<Content Include="Pages\UserPages\Login.razor" />
+		<Content Include="Pages\UserPages\ReadingChapter.razor" />
+		<Content Include="Pages\UserPages\Category.razor" />
+		<Content Include="Pages\UserPages\NewUpdate.razor" />
+		<Content Include="Pages\_Host.cshtml" />
+		<Content Include="Properties\launchSettings.json" />
+		<Content Include="Shared\MainLayout.razor" />
+		<Content Include="Shared\NavMenu.razor" />
+		<Content Include="Shared\SurveyPrompt.razor" />
+		<Content Include="_Imports.razor" />
+		<Content Include="Shared\MainLayout.razor.css" />
+		<Content Include="Shared\NavMenu.razor.css" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Common\Constant\Enum\" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="13.0.1" />
+		<PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.3.0" />
+		<PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.2" />
+		<PackageReference Include="Microsoft.Web.Administration" Version="11.1.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Include="Pages\UserPages\Category.razor" />
-    <None Include="Pages\UserPages\ComicDetails.razor" />
-    <None Include="Pages\UserPages\Login.razor" />
-    <None Include="Pages\UserPages\NewUpdate.razor" />
-    <None Include="Pages\UserPages\ReadingChapter.razor" />
-    <None Include="wwwroot\css\bootstrap\bootstrap.min.css.map" />
-    <None Include="wwwroot\css\open-iconic\FONT-LICENSE" />
-    <None Include="wwwroot\css\open-iconic\font\fonts\open-iconic.svg" />
-    <None Include="wwwroot\css\open-iconic\ICON-LICENSE" />
-    <None Include="wwwroot\css\open-iconic\README.md" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="Common\Constant\Enum\" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\StoriesProject.Model\StoriesProject.Model.csproj" />
-  </ItemGroup>
-  
+	<ItemGroup>
+		<None Include="Pages\UserPages\Category.razor" />
+		<None Include="Pages\UserPages\ComicDetails.razor" />
+		<None Include="Pages\UserPages\Login.razor" />
+		<None Include="Pages\UserPages\NewUpdate.razor" />
+		<None Include="Pages\UserPages\ReadingChapter.razor" />
+		<None Include="wwwroot\css\bootstrap\bootstrap.min.css.map" />
+		<None Include="wwwroot\css\open-iconic\FONT-LICENSE" />
+		<None Include="wwwroot\css\open-iconic\font\fonts\open-iconic.svg" />
+		<None Include="wwwroot\css\open-iconic\ICON-LICENSE" />
+		<None Include="wwwroot\css\open-iconic\README.md" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\StoriesProject.Model\StoriesProject.Model.csproj" />
+	</ItemGroup>
+
 </Project>
