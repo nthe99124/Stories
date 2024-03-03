@@ -1,5 +1,5 @@
 ﻿using StoriesProject.API.Common.Cache;
-using StoriesProject.API.Model.BaseEntity;
+using StoriesProject.Model.BaseEntity;
 using StoriesProject.API.Repositories;
 using StoriesProject.API.Services.Base;
 
@@ -7,7 +7,12 @@ namespace StoriesProject.API.Services
 {
     public interface IStoriesService
     {
-        Task<IEnumerable<Story>?> GetTop10StoryNew();
+        Task<IEnumerable<Story>?> GetTop10NewStory();
+        Task<IEnumerable<Story>?> GetTop10HotStory();
+        Task<IEnumerable<Story>?> GetTop10FreeStory();
+        Task<IEnumerable<Story>?> GetTop10PaidStory();
+
+        Task<IEnumerable<Story>?> GetTop10NewVervionStory();
     }
     public class StoriesService: BaseService, IStoriesService
     {
@@ -22,9 +27,50 @@ namespace StoriesProject.API.Services
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<Story>?> GetTop10StoryNew()
+        public async Task<IEnumerable<Story>?> GetTop10NewStory()
         {
-            return await _storiesRepository.GetTopStoryNew(10);
+            return await _storiesRepository.GetTopNewStory(10);
+        }
+
+
+        /// <summary>
+        /// Hàm xử lý lấy 10 truyện hot nhất
+        /// CreatedBy ntthe 28.02.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Story>?> GetTop10HotStory()
+        {
+            return await _storiesRepository.GetTopHotStory(10);
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy 10 truyện miễn phí
+        /// CreatedBy ntthe 28.02.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Story>?> GetTop10FreeStory()
+        {
+            return await _storiesRepository.GetTopFreeStory(10);
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy 10 truyện trả phí
+        /// CreatedBy ntthe 28.02.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Story>?> GetTop10PaidStory()
+        {
+            return await _storiesRepository.GetTopPaidStory(10);
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy 10 truyện mới cập nhật
+        /// CreatedBy ntthe 28.02.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Story>?> GetTop10NewVervionStory()
+        {
+            return await _storiesRepository.GetTopNewVervionStory(10);
         }
 
         #region Private Method

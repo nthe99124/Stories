@@ -1,21 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StoriesProject.API.Model.BaseEntity;
+using StoriesProject.Model.BaseEntity;
 using System.ComponentModel.DataAnnotations;
-using System.Configuration;
 
 namespace StoriesProject.API.Common.Repository;
 
 public partial class StoriesContext : DbContext
 {
-    private readonly IConfiguration _configuration;
     public StoriesContext()
     {
     }
 
-    public StoriesContext(DbContextOptions<StoriesContext> options, IConfiguration configuration)
+    public StoriesContext(DbContextOptions<StoriesContext> options)
         : base(options)
     {
-        _configuration = configuration;
+
     }
 
     public virtual DbSet<Accountant> Accountants { get; set; }

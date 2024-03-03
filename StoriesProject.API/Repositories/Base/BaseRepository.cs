@@ -1,12 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StoriesProject.API.Common.Repository;
-using StoriesProject.API.Models.DTO;
+using StoriesProject.Model.DTO;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing.Drawing2D;
-using System.Linq;
 using System.Linq.Expressions;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace StoriesProject.API.Repositories.Base
 {

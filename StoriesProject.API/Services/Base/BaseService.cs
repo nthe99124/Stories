@@ -1,6 +1,6 @@
 ﻿using StoriesProject.API.Common.Cache;
 using StoriesProject.API.Common.Constant;
-using StoriesProject.API.Models.DTO.Accountant;
+using StoriesProject.Model.DTO.Accountant;
 
 namespace StoriesProject.API.Services.Base
 {

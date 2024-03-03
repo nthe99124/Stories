@@ -1,7 +1,7 @@
 ﻿using StoriesProject.API.Common.Repository;
 using StoriesProject.API.Common.Ulti;
-using StoriesProject.API.Model.BaseEntity;
 using StoriesProject.API.Repositories.Base;
+using StoriesProject.Model.BaseEntity;
 
 namespace StoriesProject.API.Repositories
 {

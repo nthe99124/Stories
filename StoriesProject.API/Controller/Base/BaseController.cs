@@ -1,6 +1,5 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using StoriesProject.API.Model.ViewModel;
+﻿using Microsoft.AspNetCore.Mvc;
+using StoriesProject.Model.ViewModel;
 
 namespace StoriesProject.API.Controller.Base
 {

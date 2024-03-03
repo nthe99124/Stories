@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
+using StoriesProject.API.Services.Base;
 using StoriesProject.Common.Cache;
 using StoriesProject.Common.MiddleWare;
+using StoriesProject.Model.ViewModel;
+using StoriesProject.Services;
 using System.Globalization;
 
 #region Config service
@@ -20,6 +24,7 @@ services.AddSingleton(configuration);
 #region Razor page config
 services.AddRazorPages();
 services.AddServerSideBlazor();
+services.AddHttpClient();
 #endregion
 
 #region Localize
@@ -54,6 +59,13 @@ services.Configure<RequestLocalizationOptions>(options =>
 // cấu hình phiên 
 services.AddHttpContextAccessor();
 #endregion
+
+#region Config Service
+services.AddScoped(typeof(IResponseOutput<>), typeof(ResponseOutput<>));
+services.AddScoped<IBaseService, BaseService>();
+services.AddScoped<IAccoutantsService, AccoutantsService>();
+services.AddScoped<IStoriesService, StoriesService>();
+#endregion  
 
 #region Config cache
 //TODO: hiện tại đang làm cache distributed => sau có cần cache khác thì custom thêm
