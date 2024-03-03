@@ -7,6 +7,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="BaseEntity\Accountant.cs" />
+    <Compile Include="BaseEntity\CoinLog.cs" />
+    <Compile Include="BaseEntity\LogEntry.cs" />
+    <Compile Include="BaseEntity\Order.cs" />
+    <Compile Include="BaseEntity\OrderDetail.cs" />
+    <Compile Include="BaseEntity\Role.cs" />
+    <Compile Include="BaseEntity\RoleAccountant.cs" />
+    <Compile Include="BaseEntity\Story.cs" />
+    <Compile Include="BaseEntity\Topic.cs" />
+    <Compile Include="BaseEntity\TopicStory.cs" />
+    <Compile Include="DTO\Accountant\AccountAuthenDTO.cs" />
+    <Compile Include="DTO\Accountant\AccountGenericDTO.cs" />
+    <Compile Include="DTO\PagingModel.cs" />
+    <Compile Include="Enum\DataType.cs" />
+    <Compile Include="ViewModel\Accountant\AccountantRegister.cs" />
+    <Compile Include="ViewModel\Accountant\LoginViewModel.cs" />
+    <Compile Include="ViewModel\ResponseOutput.cs" />
+    <Compile Include="ViewModel\RestOutput.cs" />
+    <Compile Include="ViewModel\RestPagingOutput.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.16" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.16">
