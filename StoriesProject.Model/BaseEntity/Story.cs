@@ -62,4 +62,5 @@ public partial class Story
     public virtual Accountant? ModifiedByNavigation { get; set; }
 
     public virtual ICollection<TopicStory> TopicStories { get; set; } = new List<TopicStory>();
+    public virtual ICollection<StoryAccoutant> StoryIDByNavigations { get; set; } = new List<StoryAccoutant>();
 }

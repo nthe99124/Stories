@@ -13,6 +13,8 @@ namespace StoriesProject.API.Repositories.Base
         Task<IEnumerable<T>?> GetDataLimit(int limitValue = 0, List<SortedPaging>? sortList = null, Expression<Func<T, bool>>? predicateFilter = null);
         Task<IEnumerable<T>> GetAll();
         Task<IEnumerable<T>> FindBy(Expression<Func<T, bool>> predicate);
+        Task<T?> FirstOrDefault(Expression<Func<T, bool>> predicate);
+        Task<bool> CheckExitsByCondition(Expression<Func<T, bool>> predicate);
         Task<T> Create(T entity);
         Task<int> Delete(T entity);
         Task<int> BulkDelete(Expression<Func<T, bool>> predicate);
@@ -44,6 +46,7 @@ namespace StoriesProject.API.Repositories.Base
         #region Paging
         /// <summary>
         /// Hàm xử lý lấy dữ liệu paging - chỉ lấy trong model (lưu ý chỉ làm với dữ liệu nhỏ)
+        /// TODO: cần xử lý lại cái này, không dùng chung type T => như thế sẽ bị lấy all field
         /// CreaetedBy ntthe 29.02.2024
         /// </summary>
         /// <param name="pageSize"></param>
@@ -188,6 +191,15 @@ namespace StoriesProject.API.Repositories.Base
         public async Task<IEnumerable<T>> FindBy(Expression<Func<T, bool>> predicate)
         {
             return await Task.Run(() => _dbset.Where(predicate).AsEnumerable());
+        }
+        public async Task<T?> FirstOrDefault(Expression<Func<T, bool>> predicate)
+        {
+            return await Task.Run(() => _dbset.Where(predicate).AsEnumerable().FirstOrDefault());
+        }
+
+        public async Task<bool> CheckExitsByCondition(Expression<Func<T, bool>> predicate)
+        {
+            return await Task.Run(() => _dbset.Any(predicate));
         }
 
         public async Task<T> Create(T entity)

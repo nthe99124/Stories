@@ -7,11 +7,11 @@ namespace StoriesProject.Services
 {
     public interface IStoriesService : IBaseService
     {
-        Task<List<Story>> GetTop10NewStory();
-        Task<List<Story>> GetTop10HotStory();
-        Task<List<Story>> GetTop10FreeStory();
-        Task<List<Story>> GetTop10PaidStory();
-        Task<List<Story>> GetTop10NewVervionStory();
+        Task<List<StoryGeneric>> GetTop10NewStory();
+        Task<List<StoryGeneric>> GetTop10HotStory();
+        Task<List<StoryGeneric>> GetTop10FreeStory();
+        Task<List<StoryGeneric>> GetTop10PaidStory();
+        Task<List<StoryGeneric>> GetTop10NewVervionStory();
     }
     public class StoriesService : BaseService, IStoriesService
     {
@@ -25,10 +25,10 @@ namespace StoriesProject.Services
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Story>> GetTop10NewStory()
+        public async Task<List<StoryGeneric>> GetTop10NewStory()
         {
             var url = StoriesApiUrlDef.GetTop10NewStory();
-            return await RequestGetAsync<List<Story>>(url);
+            return await RequestGetAsync<List<StoryGeneric>>(url);
         }
 
 
@@ -37,10 +37,10 @@ namespace StoriesProject.Services
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Story>> GetTop10HotStory()
+        public async Task<List<StoryGeneric>> GetTop10HotStory()
         {
             var url = StoriesApiUrlDef.GetTop10HotStory();
-            return await RequestGetAsync<List<Story>>(url);
+            return await RequestGetAsync<List<StoryGeneric>>(url);
         }
 
         /// <summary>
@@ -48,10 +48,10 @@ namespace StoriesProject.Services
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Story>> GetTop10FreeStory()
+        public async Task<List<StoryGeneric>> GetTop10FreeStory()
         {
             var url = StoriesApiUrlDef.GetTop10FreeStory();
-            return await RequestGetAsync<List<Story>>(url);
+            return await RequestGetAsync<List<StoryGeneric>>(url);
         }
 
         /// <summary>
@@ -59,10 +59,10 @@ namespace StoriesProject.Services
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Story>> GetTop10PaidStory()
+        public async Task<List<StoryGeneric>> GetTop10PaidStory()
         {
             var url = StoriesApiUrlDef.GetTop10PaidStory();
-            return await RequestGetAsync<List<Story>>(url);
+            return await RequestGetAsync<List<StoryGeneric>>(url);
         }
 
         /// <summary>
@@ -70,10 +70,10 @@ namespace StoriesProject.Services
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Story>> GetTop10NewVervionStory()
+        public async Task<List<StoryGeneric>> GetTop10NewVervionStory()
         {
             var url = StoriesApiUrlDef.GetTop10NewVervionStory();
-            return await RequestGetAsync<List<Story>>(url);
+            return await RequestGetAsync<List<StoryGeneric>>(url);
         }
     }
 }

@@ -80,5 +80,45 @@ namespace StoriesProject.API.Controller.Base
             }
             return Ok(_res);
         }
+
+        /// <summary>
+        /// Hàm xử lý cập nhật thông tin user
+        /// CreatedBy ntthe 03.03.2024
+        /// </summary>
+        /// <param name="acc"></param>
+        /// <returns></returns>
+        [HttpPost("UpdateUserInfor")]
+        public async Task<IActionResult> UpdateUserInfor(AccountantUpdate acc)
+        {
+            _res = await _accoutantsService.UpdateUserInfor(acc);
+            return Ok(_res);
+        }
+
+        /// <summary>
+        /// Hàm xử lý cập nhật password
+        /// CreatedBy ntthe 03.03.2024
+        /// </summary>
+        /// <param name="acc"></param>
+        /// <returns></returns>
+        [HttpPost("ChangePassword")]
+        public async Task<IActionResult> ChangePassword(string newPassword, string oldPassword)
+        {
+            _res = await _accoutantsService.ChangePassword(newPassword, oldPassword);
+            return Ok(_res);
+        }
+
+        /// <summary>
+        /// Hàm xử lấy thông tin user
+        /// CreatedBy ntthe 28.02.2024
+        /// </summary>
+        /// <param name="acc"></param>
+        /// <returns></returns>
+        [HttpPost("GetUserInfor")]
+        public IActionResult GetUserInfor()
+        {
+            var userInfor = _accoutantsService.GetUserInfor();
+            _res.SuccessEventHandler(userInfor);
+            return Ok(_res);
+        }
     }
 }

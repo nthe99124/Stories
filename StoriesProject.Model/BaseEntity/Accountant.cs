@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using static StoriesProject.Model.Enum.DataType;
 
 namespace StoriesProject.Model.BaseEntity;
 
@@ -28,6 +29,25 @@ public partial class Accountant
     [Description("Cờ đánh dấu tài khoản có bị khóa không")]
     public bool IsLocked { get; set; }
 
+    [Description("Họ và tên")]
+    public string? Name { get; set; }
+
+    [Description("Email")]
+    [StringLength(50, ErrorMessage = "Password quá dài")]
+    public string Email { get; set; }
+
+    [Description("Giới tính")]
+    public GenderType Gender { get; set; } = GenderType.Other;
+
+    [Description("Ngày sinh")]
+    public DateTime? DateOfBirth { get; set; } = DateTime.UtcNow;
+
+    [Description("Giới thiệu bản thân")]
+    public string? Introduce { get; set; }
+
+    [Description("Link avatar")]
+    public string? ImgAvatar { get; set; }
+
     [Description("Số coin tài khoảng đang có")]
     public long Coin { get; set; }
 
@@ -45,4 +65,5 @@ public partial class Accountant
     public virtual ICollection<Story> StoryCreatedByNavigations { get; set; } = new List<Story>();
 
     public virtual ICollection<Story> StoryModifiedByNavigations { get; set; } = new List<Story>();
+    public virtual ICollection<StoryAccoutant> AccoutantIDByNavigations { get; set; } = new List<StoryAccoutant>();
 }

@@ -39,6 +39,10 @@
     <Compile Include="Migrations\20240302104921_update-table-story.Designer.cs" />
     <Compile Include="Migrations\20240303055553_add-colum-story.cs" />
     <Compile Include="Migrations\20240303055553_add-colum-story.Designer.cs" />
+    <Compile Include="Migrations\20240303073743_add-table-StoryAccoutant.cs" />
+    <Compile Include="Migrations\20240303073743_add-table-StoryAccoutant.Designer.cs" />
+    <Compile Include="Migrations\20240303160610_add-table-multi-story.cs" />
+    <Compile Include="Migrations\20240303160610_add-table-multi-story.Designer.cs" />
     <Compile Include="Migrations\StoriesContextModelSnapshot.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Repositories\AccountantRepository.cs" />

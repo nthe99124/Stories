@@ -7,7 +7,7 @@ namespace StoriesProject.API.Controller.Base
     [ApiController]
     public class BaseController : ControllerBase
     {
-        protected readonly IRestOutput _res;
+        protected IRestOutput _res;
         protected readonly IHttpContextAccessor _httpContextAccessor;
         public BaseController(IRestOutput res, IHttpContextAccessor httpContextAccessor)
         {

@@ -37,5 +37,15 @@ namespace StoriesProject.Model.Enum
             [Description("Truyện chữ kèm tranh")]
             TextComic,
         }
+
+        public enum GenderType : short
+        {
+            [Description("Nam")]
+            Male,
+            [Description("Nữ")]
+            Female,
+            [Description("Khác")]
+            Other,
+        }
     }
 }

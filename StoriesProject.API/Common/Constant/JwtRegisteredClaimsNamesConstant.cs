@@ -6,5 +6,6 @@
         public const string Sid = "Sid";
         public const string Sub = "Sub";
         public const string Jti = "Jti";
+        public const string AccId = "AccId";
     }
 }

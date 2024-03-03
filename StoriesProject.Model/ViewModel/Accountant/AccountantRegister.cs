@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace StoriesProject.Model.ViewModel.Accountant
+﻿namespace StoriesProject.Model.ViewModel.Accountant
 {
     public class AccountantRegister
     {

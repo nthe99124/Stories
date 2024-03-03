@@ -10,19 +10,26 @@
 
   <ItemGroup>
     <Compile Include="BaseEntity\Accountant.cs" />
+    <Compile Include="BaseEntity\ViewedChapterStories.cs" />
     <Compile Include="BaseEntity\CoinLog.cs" />
+    <Compile Include="BaseEntity\FavoriteStories.cs" />
     <Compile Include="BaseEntity\LogEntry.cs" />
     <Compile Include="BaseEntity\Order.cs" />
     <Compile Include="BaseEntity\OrderDetail.cs" />
     <Compile Include="BaseEntity\Role.cs" />
     <Compile Include="BaseEntity\RoleAccountant.cs" />
+    <Compile Include="BaseEntity\Chapter.cs" />
     <Compile Include="BaseEntity\Story.cs" />
+    <Compile Include="BaseEntity\StoryAccoutant.cs" />
     <Compile Include="BaseEntity\Topic.cs" />
     <Compile Include="BaseEntity\TopicStory.cs" />
     <Compile Include="DTO\Accountant\AccountAuthenDTO.cs" />
     <Compile Include="DTO\Accountant\AccountGenericDTO.cs" />
     <Compile Include="DTO\PagingModel.cs" />
+    <Compile Include="DTO\Story\StoryAccountGeneric.cs" />
+    <Compile Include="DTO\Story\StoryGeneric.cs" />
     <Compile Include="Enum\DataType.cs" />
+    <Compile Include="ViewModel\Accountant\AccountantUpdate.cs" />
     <Compile Include="ViewModel\Accountant\AccountantRegister.cs" />
     <Compile Include="ViewModel\Accountant\LoginViewModel.cs" />
     <Compile Include="ViewModel\ResponseOutput.cs" />

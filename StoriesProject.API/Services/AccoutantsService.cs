@@ -10,10 +10,12 @@ using StoriesProject.API.Repositories;
 using StoriesProject.API.Services.Base;
 using StoriesProject.Model.BaseEntity;
 using StoriesProject.Model.DTO.Accountant;
+using StoriesProject.Model.ViewModel;
 using StoriesProject.Model.ViewModel.Accountant;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using static StoriesProject.Model.Enum.DataType;
 
 namespace StoriesProject.API.Services
 {
@@ -22,6 +24,9 @@ namespace StoriesProject.API.Services
         Task<string?> Login(string userName, string password);
         Task<bool> Register(AccountantRegister account);
         void Logout();
+        AccountGenericDTO? GetUserInfor();
+        Task<RestOutput> UpdateUserInfor(AccountantUpdate account);
+        Task<RestOutput> ChangePassword(string newPassword, string oldPassword);
     }
     public class AccoutantsService: BaseService, IAccoutantsService
     {
@@ -104,6 +109,107 @@ namespace StoriesProject.API.Services
             _httpContextAccessor?.HttpContext?.Response?.Cookies.Delete("access_token");
         }
 
+        /// <summary>
+        /// Hàm lấy thông tin user
+        /// CreatedBy ntthe 25.02.2024
+        /// </summary>
+        /// <returns></returns>
+        public AccountGenericDTO? GetUserInfor()
+        {
+            return GetUserAuthen();
+        }
+
+        /// <summary>
+        /// Hàm xử lý cập nhật thông tin user
+        /// CreatedBy ntthe 03.03.2024
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="hasLogin"></param>
+        /// <returns></returns>
+        public async Task<RestOutput> UpdateUserInfor(AccountantUpdate account)
+        {
+            var res = new RestOutput();
+            if (account != null)
+            {
+                var isExistUser = await _accoutantsRepository.CheckExitsByCondition(item => item.UserName == account.UserName);
+                if (isExistUser)
+                {
+                    res.ErrorEventHandler("Username đã tồn tại");
+                }
+                else
+                {
+                    var userNameCurrent = GetUserAuthen()?.UserName;
+                    var accUserUpdate = await _accoutantsRepository.FirstOrDefault(item => item.UserName == userNameCurrent);
+                    if (accUserUpdate != null)
+                    {
+                        // update từng field của user
+                        accUserUpdate.UserName = account.UserName;
+                        accUserUpdate.Name = account.Name;
+                        accUserUpdate.Email = account.Email;
+                        accUserUpdate.Gender = account.Gender;
+                        accUserUpdate.DateOfBirth = account.DateOfBirth;
+                        accUserUpdate.Introduce = account.Introduce;
+                        accUserUpdate.ImgAvatar = account.ImgAvatar;
+
+                        // lưu acc
+                        await _accoutantsRepository.Save();
+                        res.SuccessEventHandler();
+                    }
+                }
+            }
+            
+            return res;
+            
+        }
+
+        /// <summary>
+        /// Hàm xử lý cập nhật password
+        /// CreatedBy ntthe 03.03.2024
+        /// </summary>
+        /// <param name="account"></param>
+        /// <param name="hasLogin"></param>
+        /// <returns></returns>
+        public async Task<RestOutput> ChangePassword(string newPassword, string oldPassword)
+        {
+            var res = new RestOutput();
+            if (string.IsNullOrEmpty(newPassword) && string.IsNullOrEmpty(oldPassword))
+            {
+                // nếu trùng là chửi
+                if (newPassword.Trim() == oldPassword.Trim())
+                {
+                    res.ErrorEventHandler("Password mới trùng với password cũ");
+                }
+                else
+                {
+                    var userNameCurrent = GetUserAuthen()?.UserName;
+                    var accUserUpdate = await _accoutantsRepository.FirstOrDefault(item => item.UserName == userNameCurrent);
+
+                    var oldPasswordHash = HashCodeUlti.EncodePassword(oldPassword);
+                    
+                    if (accUserUpdate != null && accUserUpdate.Password == oldPasswordHash)
+                    {
+                        res.ErrorEventHandler("Password cũ không chính xác");
+                    }
+                    else
+                    {
+                        var passWordHash = HashCodeUlti.EncodePassword(newPassword);
+                        // update từng field của user
+                        accUserUpdate.Password = passWordHash;
+
+                        // lưu acc
+                        await _accoutantsRepository.Save();
+                        res.SuccessEventHandler(true);
+                    }
+                }
+            }
+            else
+            {
+                res.ErrorEventHandler("Password không được để trống");
+            }
+            
+            return res;
+        }
+
         #region Private Method
 
         #region phần đăng nhập sử dụng BearToken
@@ -125,6 +231,7 @@ namespace StoriesProject.API.Services
                     new Claim(JwtRegisteredClaimsNamesConstant.Sid, Guid.NewGuid().ToString()),
                     new Claim(JwtRegisteredClaimsNamesConstant.Sub, account.UserName),
                     new Claim(JwtRegisteredClaimsNamesConstant.Coin, account.Coin.ToString()),
+                    new Claim(JwtRegisteredClaimsNamesConstant.AccId, account.Id.ToString()),
                     new Claim(JwtRegisteredClaimsNamesConstant.Jti, Guid.NewGuid().ToString())
                 }),
                     Expires = DateTime.UtcNow.AddMinutes(10),
@@ -137,9 +244,6 @@ namespace StoriesProject.API.Services
             {
                 return null;
             }
-            
-
-            
         }
         #endregion
 
