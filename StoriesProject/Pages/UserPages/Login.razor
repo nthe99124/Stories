@@ -1,4 +1,9 @@
 ﻿@page "/login"
+@using StoriesProject.Model.ViewModel.Accountant;
+@using StoriesProject.Services;
+@inject IAccoutantsService _accoutantsService;
+@inject IJSRuntime _js;
+@inject NavigationManager _navigationManager;
 <html class="mdl-js">
 
 <head>
@@ -103,23 +108,22 @@
                                         <h3>Đăng nhập</h3>
                                         <span>Chưa có (&gt;^ω^&lt;)？ </span>
                                         <a class="j-dialog-login-mode" @onclick="ToggleIsLogin" data-contentid="register">
-                                            Đăng kí>
+                                            Đăng kí
                                         </a>
                                     </div>
                                     <div class="form-item">
                                         <div class="input-block">
-                                            <input type="text" name="account" autocomplete="off" placeholder="Username/Phone" />
+                                            <input type="text" name="account" autocomplete="off" placeholder="Username" @bind="loginViewModel.UserName" />
                                         </div>
                                     </div>
                                     <div class="form-item">
                                         <div class="input-block">
-                                            <input type="password" name="password" placeholder="Password" autocomplete="off" />
+                                            <input type="password" name="password" placeholder="Password" autocomplete="off" @bind="loginViewModel.Password" />
                                         </div>
                                     </div>
-                                    <div class="form-item">
-                                        <div class="j-login-submit submit-btn disabled-select">
-                                            <i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop"
-                                               style="display: none"></i>
+                                    <div class="form-item" >
+                                        <div class="j-login-submit submit-btn disabled-select" @onclick="(() => LoginAction(loginViewModel))">
+                                            <i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop" style="@(isLogging ? "":"display:none")"></i>
                                             <span>Đăng nhập</span>
                                         </div>
                                     </div>
@@ -425,10 +429,33 @@
 
 </html>
 
+<script src="js/login.js"></script>
+
 @code {
-    bool isLogin = true;
+    private LoginViewModel loginViewModel { get; set; } = new LoginViewModel();
+    private bool isLogin = true;
+    private bool isLogging { get; set; } = false;
     private void ToggleIsLogin()
     {
         isLogin = !isLogin;
+    }
+    private async Task LoginAction(LoginViewModel loginViewModel)
+    {
+        isLogging = true;
+        var isValid = await _js.InvokeAsync<bool>("validateForm");
+        if (isValid)
+        {
+            var token = await _accoutantsService.Login(loginViewModel);
+
+            // Gọi hàm JavaScript để ghi token vào sessionStorage
+            await _js.InvokeVoidAsync("setSessionStorage", "token", token);
+            isLogging = false;
+            await _js.InvokeVoidAsync("showToast", "Thành công");
+            _navigationManager.NavigateTo($"/");
+        }
+        else
+        {
+            isLogging = false;
+        }
     }
 }

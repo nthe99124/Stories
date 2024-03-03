@@ -10,7 +10,7 @@ namespace StoriesProject.API.Services.Base
 {
     public interface IBaseService
     {
-        Task<T> RequestPostAsync<T>(string url, T model, string? accessToken = null);
+        Task<T> RequestPostAsync<T>(string url, object model, string? accessToken = null);
         Task<T> RequestGetAsync<T>(string url);
     }
 
@@ -26,7 +26,7 @@ namespace StoriesProject.API.Services.Base
             _remoteServiceBaseUrl = config.GetSection("BaseUrlApi").Value;
         }
 
-        public async Task<T> RequestPostAsync<T>(string url,T model, string? accessToken = null)
+        public async Task<T> RequestPostAsync<T>(string url,object model, string? accessToken = null)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace StoriesProject.API.Services.Base
                     // Giải mã phản hồi JSON
                     var responseObject = JsonConvert.DeserializeObject<ResponseOutput<T>>(responseStr);
 
-                    if (responseObject != null && responseObject.StatusCode == HttpStatusCode.OK)
+                    if (responseObject != null && responseObject.IsSuccess)
                     {
                         return responseObject.Data ?? default(T);
                     }
@@ -85,7 +85,7 @@ namespace StoriesProject.API.Services.Base
 
                     // Giải mã phản hồi JSON
                     var responseObject = JsonConvert.DeserializeObject<ResponseOutput<T>>(responseStr);
-                    if (responseObject != null && responseObject.StatusCode == HttpStatusCode.OK)
+                    if (responseObject != null && responseObject.IsSuccess)
                     {
                         return responseObject.Data ?? default(T);
                     }

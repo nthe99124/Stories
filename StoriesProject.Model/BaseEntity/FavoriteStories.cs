@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using static StoriesProject.Model.Enum.DataType;
 
 namespace StoriesProject.Model.BaseEntity;
 

@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using StoriesProject.API.Common.Repository;
 using StoriesProject.Model.DTO;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq.Expressions;
 
 namespace StoriesProject.API.Repositories.Base

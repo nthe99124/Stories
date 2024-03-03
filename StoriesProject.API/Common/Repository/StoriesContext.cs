@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StoriesProject.Model.BaseEntity;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StoriesProject.API.Common.Repository;
 
@@ -33,6 +34,13 @@ public partial class StoriesContext : DbContext
     public virtual DbSet<Topic> Topics { get; set; }
 
     public virtual DbSet<TopicStory> TopicStories { get; set; }
+    public virtual DbSet<FavoriteStories> FavoriteStories { get; set; }
+    public virtual DbSet<Chapter> Chapters { get; set; }
+    public virtual DbSet<ViewedChapterStories> ViewedChapterStories { get; set; }
+
+    #region Các model hứng dữ liệu
+    public virtual DbSet<StoryAccountGeneric> StoryAccountGeneric { get; set; }
+    #endregion
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -41,6 +49,7 @@ public partial class StoriesContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Ignore<StoryAccountGeneric>();
         modelBuilder.Entity<Accountant>(entity =>
         {
             entity.Property(e => e.Id).ValueGeneratedNever();

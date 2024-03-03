@@ -11,8 +11,9 @@ namespace StoriesProject.API.Services
         Task<IEnumerable<Story>?> GetTop10HotStory();
         Task<IEnumerable<Story>?> GetTop10FreeStory();
         Task<IEnumerable<Story>?> GetTop10PaidStory();
-
         Task<IEnumerable<Story>?> GetTop10NewVervionStory();
+        Task<IEnumerable<StoryAccountGeneric>?> GetHistoryStoryRead();
+        Task<IEnumerable<StoryAccountGeneric>?> GetFavoriteStory();
     }
     public class StoriesService: BaseService, IStoriesService
     {
@@ -73,6 +74,28 @@ namespace StoriesProject.API.Services
             return await _storiesRepository.GetTopNewVervionStory(10);
         }
 
+        /// <summary>
+        /// Hàm xử lý danh sách lịch sử đọc
+        /// CreatedBy ntthe 03.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<StoryAccountGeneric>?> GetHistoryStoryRead()
+        {
+            var userId = GetUserAuthen()?.AccoutantId;
+            return await _storiesRepository.GetHistoryStoryRead((Guid)userId);
+        }
+
+        /// <summary>
+        /// Hàm xử lý danh sách truyện yêu thích
+        /// CreatedBy ntthe 03.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<StoryAccountGeneric>?> GetFavoriteStory()
+        {
+            var userId = GetUserAuthen()?.AccoutantId;
+            return await _storiesRepository.GetFavoriteStory((Guid)userId);
+        }
+        
         #region Private Method
 
         #endregion

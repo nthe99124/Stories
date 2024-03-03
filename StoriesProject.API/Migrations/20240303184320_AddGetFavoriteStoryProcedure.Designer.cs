@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StoriesProject.API.Common.Repository;
 
@@ -11,9 +12,11 @@ using StoriesProject.API.Common.Repository;
 namespace StoriesProject.API.Migrations
 {
     [DbContext(typeof(StoriesContext))]
-    partial class StoriesContextModelSnapshot : ModelSnapshot
+    [Migration("20240303184320_AddGetFavoriteStoryProcedure")]
+    partial class AddGetFavoriteStoryProcedure
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

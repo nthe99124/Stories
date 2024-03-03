@@ -43,6 +43,12 @@
     <Compile Include="Migrations\20240303073743_add-table-StoryAccoutant.Designer.cs" />
     <Compile Include="Migrations\20240303160610_add-table-multi-story.cs" />
     <Compile Include="Migrations\20240303160610_add-table-multi-story.Designer.cs" />
+    <Compile Include="Migrations\20240303182237_add-table-multi-story-2.cs" />
+    <Compile Include="Migrations\20240303182237_add-table-multi-story-2.Designer.cs" />
+    <Compile Include="Migrations\20240303184320_AddGetFavoriteStoryProcedure.cs" />
+    <Compile Include="Migrations\20240303184320_AddGetFavoriteStoryProcedure.Designer.cs" />
+    <Compile Include="Migrations\20240303184507_AddGetHistoryStoryRead.cs" />
+    <Compile Include="Migrations\20240303184507_AddGetHistoryStoryRead.Designer.cs" />
     <Compile Include="Migrations\StoriesContextModelSnapshot.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Repositories\AccountantRepository.cs" />

@@ -174,16 +174,6 @@ app.UseIpRateLimiting();
 #endregion
 
 #region Authen, Author
-app.UseStatusCodePages(async context =>
-{
-    var response = context.HttpContext.Response;
-    if (response != null && response.StatusCode == 401)
-    {
-        await Task.Run(() => {
-            response.Redirect("/Account/Login");
-        });
-    }
-});
 app.UseAuthentication();
 app.UseAuthorization();
 #endregion

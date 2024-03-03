@@ -1,7 +1,9 @@
-﻿using StoriesProject.API.Common.Repository;
+﻿using Microsoft.Data.SqlClient;
+using StoriesProject.API.Common.Repository;
 using StoriesProject.API.Repositories.Base;
 using StoriesProject.Model.BaseEntity;
 using StoriesProject.Model.DTO;
+using System.Data;
 
 namespace StoriesProject.API.Repositories
 {
@@ -12,6 +14,8 @@ namespace StoriesProject.API.Repositories
         Task<IEnumerable<Story>?> GetTopFreeStory(int numberStory);
         Task<IEnumerable<Story>?> GetTopPaidStory(int numberStory);
         Task<IEnumerable<Story>?> GetTopNewVervionStory(int numberStory);
+        Task<IEnumerable<StoryAccountGeneric>?> GetHistoryStoryRead(Guid accId);
+        Task<IEnumerable<StoryAccountGeneric>?> GetFavoriteStory(Guid accId);
     }
     public class StoriesRepository : BaseRepository<Story>, IStoriesRepository
     {
@@ -106,7 +110,36 @@ namespace StoriesProject.API.Repositories
             return dataResult;
         }
 
-        
+        /// <summary>
+        /// Hàm xử lý lấy danh sách lịch sử truyện đã đọc
+        /// CreatedBy ntthe 03.03.2024
+        /// </summary>
+        /// <param name="accId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<StoryAccountGeneric>?> GetHistoryStoryRead(Guid accId)
+        {
+            var param = new SqlParameter[]
+            {
+                new SqlParameter("@AccountantID", accId)
+            };
+            var storyAccount = _entities.ExecuteStoredProcedureObject<StoryAccountGeneric>("GetHistoryStoryRead", param);
+            return storyAccount;
+        }
 
+        /// <summary>
+        /// Hàm xử lý lấy danh sách truyện yêu thích
+        /// CreatedBy ntthe 03.03.2024
+        /// </summary>
+        /// <param name="accId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<StoryAccountGeneric>?> GetFavoriteStory(Guid accId)
+        {
+            var param = new SqlParameter[]
+            {
+                new SqlParameter("@AccountantID", accId)
+            };
+            var storyAccount = _entities.ExecuteStoredProcedureObject<StoryAccountGeneric>("GetFavoriteStory", param);
+            return storyAccount;
+        }
     }
 }

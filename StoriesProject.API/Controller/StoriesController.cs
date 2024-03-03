@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StoriesProject.API.Services;
 using StoriesProject.Model.ViewModel;
 
@@ -74,6 +75,34 @@ namespace StoriesProject.API.Controller.Base
         public async Task<IActionResult> GetTop10NewVervionStory()
         {
             var dataResult = await _storiesService.GetTop10NewVervionStory();
+            _res.SuccessEventHandler(dataResult);
+            return Ok(_res);
+        }
+
+        /// <summary>
+        /// Hàm xử lý danh sách lịch sử đọc
+        /// CreatedBy ntthe 28.02.2024
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetHistoryStoryRead")]
+        [Authorize]
+        public async Task<IActionResult> GetHistoryStoryRead()
+        {
+            var dataResult = await _storiesService.GetHistoryStoryRead();
+            _res.SuccessEventHandler(dataResult);
+            return Ok(_res);
+        }
+
+        /// <summary>
+        /// Hàm xử lý danh sách truyện yêu thích
+        /// CreatedBy ntthe 28.02.2024
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetFavoriteStory")]
+        [Authorize]
+        public async Task<IActionResult> GetFavoriteStory()
+        {
+            var dataResult = await _storiesService.GetFavoriteStory();
             _res.SuccessEventHandler(dataResult);
             return Ok(_res);
         }

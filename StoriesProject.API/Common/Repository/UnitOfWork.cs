@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
-using System.Data.SqlClient;
 using System.Text;
 
 namespace StoriesProject.API.Common.Repository
