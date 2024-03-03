@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using StoriesProject.API.Model.BaseEntity;
-using StoriesProject.API.Models.ViewModel.Accountant;
+using StoriesProject.Model.BaseEntity;
+using StoriesProject.Model.ViewModel.Accountant;
 
 namespace StoriesProject.API.Common.Mappings
 {

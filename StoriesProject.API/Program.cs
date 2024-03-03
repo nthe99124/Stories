@@ -6,9 +6,9 @@ using Microsoft.OpenApi.Models;
 using StoriesProject.API.Common.Cache;
 using StoriesProject.API.Common.Mappings;
 using StoriesProject.API.Common.Repository;
-using StoriesProject.API.Model.ViewModel;
 using StoriesProject.API.Repositories;
 using StoriesProject.API.Services;
+using StoriesProject.Model.ViewModel;
 using System.Text;
 
 #region Config service

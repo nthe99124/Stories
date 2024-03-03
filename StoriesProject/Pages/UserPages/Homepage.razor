@@ -1,4 +1,9 @@
 ﻿@page "/"
+@using StoriesProject.Model.BaseEntity;
+@using StoriesProject.Services;
+
+@inject IStoriesService _storiesService;
+
 <html>
 <head>
   <title>国内原创在线漫画平台_好看的漫画大全 - 漫客栈</title>
@@ -336,132 +341,32 @@
       <div class="tempWrap" style="overflow:hidden; position:relative; width:1506px">
         <div class="slide-wrapper"
           style="width: 2510px; left: 0px; position: relative; overflow: hidden; padding: 0px; margin: 0px;">
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/213295/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20200717/5f111b00973b7-750x999.jpg!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20200717/5f111b00973b7-750x999.jpg!cover-400" alt="逆天邪神"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">Phát hành 500 Chapter</div>
-              <div class="cover__score">9.2</div>
-              <div class="cover__shadow"></div>
-            </div>
-            <p class="comic__title"><a href="/213295/" target="_blank">Tên truyện</a></p>
-            <p class="comic__feature">一代邪神出世，君临天下！ 第661话第661话第661话第661话第661话</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/208644/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20210707/60e567b94a6fb-750x999.png!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20210707/60e567b94a6fb-750x999.png!cover-400" alt="凤逆天下"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">第584话 绝地营救6</div>
-              <div class="cover__score">9.5</div>
-              <div class="cover__shadow"></div>
-            </div>
-            <p class="comic__title"><a href="/208644/" target="_blank">凤逆天下</a></p>
-            <p class="comic__feature">少女杀手魂穿飒爽复仇</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/208670/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20200110/5e182f3a506f3-743x991.jpg!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20200110/5e182f3a506f3-743x991.jpg!cover-400" alt="风起苍岚"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">2月24日请假条</div>
-              <div class="cover__score">9.6</div>
-              <div class="cover__shadow"></div>
-            </div>
-            <p class="comic__title"><a href="/208670/" target="_blank">风起苍岚</a></p>
-            <p class="comic__feature">菜鸟也能问鼎修真之巅</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/215003/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20200928/5f71977c0c611-750x999.jpg!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20200928/5f71977c0c611-750x999.jpg!cover-400" alt="仙武帝尊"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">第596话 与子偕老</div>
-              <div class="cover__score">9.3</div>
-              <div class="cover__shadow"></div>
-            </div>
-            <p class="comic__title"><a href="/215003/" target="_blank">仙武帝尊</a></p>
-            <p class="comic__feature">且看我置之死地而后生</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/214717/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20200927/5f7004e758cb6-750x999.png!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20200927/5f7004e758cb6-750x999.png!cover-400" alt="神武天尊"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">第769话 萧晨回归</div>
-              <div class="cover__score">9.4</div>
-              <div class="cover__shadow"></div>
-            </div>
-            <p class="comic__title"><a href="/214717/" target="_blank">神武天尊</a></p>
-            <p class="comic__feature">重生少年踏遍诸天万界</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/214331/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20190420/5cbaec4fd43f3-750x999.jpg!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20190420/5cbaec4fd43f3-750x999.jpg!cover-400" alt="绝世战魂"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">第654话 仙图雷劫</div>
-              <div class="cover__score">8.8</div>
-              <div class="cover__shadow"></div>
-            </div>
-            <p class="comic__title"><a href="/214331/" target="_blank">绝世战魂</a></p>
-            <p class="comic__feature">少年天才锻造绝世武魂</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/208646/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20181106/5be15681edc19-600x800.jpg!cover-400"
-                  src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="血族禁域"></a>
-              <div class="cover__tag">第435话 决裂3</div>
-              <div class="cover__score">9.2</div>
-              <div class="cover__shadow"></div>
-            </div>
-            <p class="comic__title"><a href="/208646/" target="_blank">血族禁域</a></p>
-            <p class="comic__feature">与命运抗争的三姐妹</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/214712/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20190717/5d2eb40d48465-750x999.jpg!cover-400"
-                  src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="妈咪快跑：爹地追来了"></a>
-              <div class="cover__tag">第463话 六大家庭齐聚</div>
-              <div class="cover__score">9.4</div>
-              <div class="cover__shadow"></div>
-            </div>
-            <p class="comic__title"><a href="/214712/" target="_blank">妈咪快跑：爹地追来了</a></p>
-            <p class="comic__feature">缘起十年前一场欢爱</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/208701/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20190222/5c6f6d8446c76-749x999.jpg!cover-400"
-                  src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="花千骨"></a>
-              <div class="cover__tag">第166话 无以为报(8)</div>
-              <div class="cover__score">9.0</div>
-              <div class="cover__shadow"></div>
-            </div>
-            <p class="comic__title"><a href="/208701/" target="_blank">花千骨</a></p>
-            <p class="comic__feature">跨越仙妖的师徒恋</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/215059/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20210607/60be053bd9418-750x1000.jpg!cover-400"
-                  src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="盖世帝尊"></a>
-              <div class="cover__tag">第441话 天地雷池</div>
-              <div class="cover__score">9.1</div>
-              <div class="cover__shadow"></div>
-            </div>
-            <p class="comic__title"><a href="/215059/" target="_blank">盖世帝尊</a></p>
-            <p class="comic__feature">废材少年因祸得福得逆天功法</p>
-          </div>
+            @if (listHotStory != null && listHotStory.Count > 0)
+            {
+                @for (int i = 0; i < listHotStory.Count; i++)
+                {
+                    var item = listHotStory[i];
+                    if (item != null)
+                    {
+                        var imgLink = $"Image/{item.ImageLink}";
+                        <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
+                            <div class="cover">
+                                <a href="/213295/" target="_blank">
+                                    <img class="lazy-carousel"
+                                            data-src="@imgLink"
+                                            src="@imgLink" alt="逆天邪神"
+                                            style="display: inline-block;">
+                                </a>
+                                <div class="cover__tag">@item.Name</div>
+                                <div class="cover__score">@item.RateScore</div>
+                                <div class="cover__shadow"></div>
+                            </div>
+                            <p class="comic__title"><a href="/213295/" target="_blank">@item.Name</a></p>
+                            <p class="comic__feature">@item.Description</p>
+                        </div>
+                    }
+                }
+            }
         </div>
       </div>
       <div class="prev"><i class="layui-icon layui-icon-left"></i></div>
@@ -478,122 +383,32 @@
       <div class="tempWrap" style="overflow:hidden; position:relative; width:1506px">
         <div class="slide-wrapper"
           style="width: 2510px; left: 0px; position: relative; overflow: hidden; padding: 0px; margin: 0px;">
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/216456/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20220714/62cf75a10c78a-750x999.jpg!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20220714/62cf75a10c78a-750x999.jpg!cover-400" alt="皇后很忙"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">最终话 完结章</div>
-            </div>
-            <span class="comic__rank rank--1">1</span>
-            <p class="comic__title"><a href="/216456/" target="_blank">皇后很忙</a></p>
-            <p class="comic__feature">穿越接了烂剧本也要加油呀</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/215641/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20200716/5f0ffcd549566-750x999.jpg!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20200716/5f0ffcd549566-750x999.jpg!cover-400" alt="就要宠坏你"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">最终话 我爱你</div>
-            </div>
-            <span class="comic__rank rank--2">2</span>
-            <p class="comic__title"><a href="/215641/" target="_blank">就要宠坏你</a></p>
-            <p class="comic__feature">不介意闪个婚体验一下人生吧</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/215768/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20200903/5f5089733a114-750x999.jpg!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20200903/5f5089733a114-750x999.jpg!cover-400" alt="主宰三界"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">最终话 再也不会分开</div>
-            </div>
-            <span class="comic__rank rank--3">3</span>
-            <p class="comic__title"><a href="/215768/" target="_blank">主宰三界</a></p>
-            <p class="comic__feature">废物庶子狂霸逆袭，这一世我要主宰三界</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/216184/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20210720/60f67b0f22440-750x999.jpg!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20210720/60f67b0f22440-750x999.jpg!cover-400" alt="惹火狂妃：王爷放肆宠"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">最终话 第一季完结</div>
-            </div>
-            <span class="comic__rank rank--4">4</span>
-            <p class="comic__title"><a href="/216184/" target="_blank">惹火狂妃：王爷放肆宠</a></p>
-            <p class="comic__feature">傲娇奶狗王爷的漫漫追妻路</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/216142/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20210623/60d2fb01230ee-748x998.jpg!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20210623/60d2fb01230ee-748x998.jpg!cover-400" alt="今天拒绝陆先生了吗？"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">最终话 我们的婚礼</div>
-            </div>
-            <span class="comic__rank rank--5">5</span>
-            <p class="comic__title"><a href="/216142/" target="_blank">今天拒绝陆先生了吗？</a></p>
-            <p class="comic__feature">腹黑邪性总裁X霸道冷酷御姐</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/213110/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20190617/5d075087451ca-750x999.jpg!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20190617/5d075087451ca-750x999.jpg!cover-400" alt="解离妖圣"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">最终话 决战望川崖 08</div>
-            </div>
-            <span class="comic__rank rank--6">6</span>
-            <p class="comic__title"><a href="/213110/" target="_blank">解离妖圣</a></p>
-            <p class="comic__feature">为解身世谜走上修道路</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/213984/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20230314/641043dbc9712-750x999.jpg!cover-400"
-                  src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="恶魔，别吻我"></a>
-              <div class="cover__tag">最终话 一切仿若初见</div>
-            </div>
-            <span class="comic__rank rank--7">7</span>
-            <p class="comic__title"><a href="/213984/" target="_blank">恶魔，别吻我</a></p>
-            <p class="comic__feature">吃土少女抓高富帅小三</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/215393/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20200330/5e81ab72008da-750x999.jpg!cover-400"
-                  src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="王妃的修仙指南"></a>
-              <div class="cover__tag">第121话 再起风波</div>
-            </div>
-            <span class="comic__rank rank--8">8</span>
-            <p class="comic__title"><a href="/215393/" target="_blank">王妃的修仙指南</a></p>
-            <p class="comic__feature">金牌女特工重生为修仙小师妹</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/214163/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20190306/5c7f301ced365-750x999.jpg!cover-400"
-                  src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="冷宫废后要逆天"></a>
-              <div class="cover__tag">第163话 生死之际</div>
-            </div>
-            <span class="comic__rank rank--9">9</span>
-            <p class="comic__title"><a href="/214163/" target="_blank">冷宫废后要逆天</a></p>
-            <p class="comic__feature">穿越异世智斗妖艳小贱货</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/213117/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20200910/5f59d68d6838f-750x999.png!cover-400"
-                  src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="狂女重生：纨绔七皇妃"></a>
-              <div class="cover__tag">最终话 久等了</div>
-            </div>
-            <span class="comic__rank rank--10">10</span>
-            <p class="comic__title"><a href="/213117/" target="_blank">狂女重生：纨绔七皇妃</a></p>
-            <p class="comic__feature">重生归来手撕渣男恶女</p>
-          </div>
+            @if (listNewStory != null && listNewStory.Count > 0)
+            {
+                @for (int i = 0; i < listNewStory.Count; i++)
+                {
+                    var item = listNewStory[i];
+                    if (item != null)
+                    {
+                        var imgLink = $"Image/{item.ImageLink}";
+                        <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
+                            <div class="cover">
+                                <a href="/216456/" target="_blank">
+                                    <img class="lazy-carousel"
+                                            data-src="@imgLink"
+                                            src="@imgLink" alt="皇后很忙"
+                                            style="display: inline-block;">
+                                </a>
+                                <div class="cover__tag">@item.Name</div>
+                            </div>
+                            <span class="comic__rank rank--1">@(i+1)</span>
+                            <p class="comic__title"><a href="/216456/" target="_blank">@item.Name</a></p>
+                            <p class="comic__feature">@item.Description</p>
+                        </div>
+                    }
+                }
+            }
+            
         </div>
       </div>
       <div class="prev"><i class="layui-icon layui-icon-left"></i></div>
@@ -610,112 +425,30 @@
       <div class="tempWrap" style="overflow:hidden; position:relative; width:1506px">
         <div class="slide-wrapper"
           style="width: 2510px; left: 0px; position: relative; overflow: hidden; padding: 0px; margin: 0px;">
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/216716/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20231205/656ecdba2c565-750x999.jpg!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20231205/656ecdba2c565-750x999.jpg!cover-400" alt="氪金玩家"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">最终话</div>
-            </div>
-            <p class="comic__title"><a href="/216716/" target="_blank">氪金玩家</a></p>
-            <p class="comic__feature">狂充300亿，目标是称霸游戏全服！</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/216734/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20240110/659e4b1fea996-748x997.jpg!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20240110/659e4b1fea996-748x997.jpg!cover-400" alt="烬芳华"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">新作推荐</div>
-            </div>
-            <p class="comic__title"><a href="/216734/" target="_blank">烬芳华</a></p>
-            <p class="comic__feature">且看一代女帝如何养成，创建霸业！</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/216713/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20231201/656937eff318c-750x999.jpg!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20231201/656937eff318c-750x999.jpg!cover-400" alt="手机女神"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">最终话 女神的决定！</div>
-            </div>
-            <p class="comic__title"><a href="/216713/" target="_blank">手机女神</a></p>
-            <p class="comic__feature">意外获得手机系统，坐拥各大女神</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/216733/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20240110/659e492bc7df6-750x999.jpg!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20240110/659e492bc7df6-750x999.jpg!cover-400" alt="我有霸总光环"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">第28话 你也来酒店开房吗？</div>
-            </div>
-            <p class="comic__title"><a href="/216733/" target="_blank">我有霸总光环</a></p>
-            <p class="comic__feature">万人迷事业女主杀疯了，霸总们都爱我！</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/216738/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20240123/65af863972bb5-750x999.jpg!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20240123/65af863972bb5-750x999.jpg!cover-400" alt="同居只为攻略你"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">第6话 怎样？你咬我啊？</div>
-            </div>
-            <p class="comic__title"><a href="/216738/" target="_blank">同居只为攻略你</a></p>
-            <p class="comic__feature">纯情小叔俏媳妇，小叔我们不约！</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/216741/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20240206/65c1d359eefb0-750x999.jpg!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20240206/65c1d359eefb0-750x999.jpg!cover-400" alt="剑起风云"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">第3话 八宝玲珑塔</div>
-            </div>
-            <p class="comic__title"><a href="/216741/" target="_blank">剑起风云</a></p>
-            <p class="comic__feature">剑帝重生，持极诣剑锋，斩天地星辰！</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/216722/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20231226/658a39d9de025-593x791.jpg!cover-400"
-                  src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="诀别"></a>
-              <div class="cover__tag">是第一话也是完结</div>
-            </div>
-            <p class="comic__title"><a href="/216722/" target="_blank">诀别</a></p>
-            <p class="comic__feature">十年未见，她还好吗？</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/216723/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20231228/658d3fdc97430-593x791.jpg!cover-400"
-                  src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="战铁世纪"></a>
-              <div class="cover__tag">第一话 危险的曼克鲁（2）</div>
-            </div>
-            <p class="comic__title"><a href="/216723/" target="_blank">战铁世纪</a></p>
-            <p class="comic__feature">璨星体与战铁一族再次对决</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/216732/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20240111/659f5c3eb6b1b-458x612.jpg!cover-400"
-                  src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="江湖挨刀录"></a>
-              <div class="cover__tag">金字招牌</div>
-            </div>
-            <p class="comic__title"><a href="/216732/" target="_blank">江湖挨刀录</a></p>
-            <p class="comic__feature">人在江湖飘，哪能不挨刀？</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/216718/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20231212/657827b0d7f15-600x800.jpg!cover-400"
-                  src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="青春回忆录"></a>
-              <div class="cover__tag">第一话</div>
-            </div>
-            <p class="comic__title"><a href="/216718/" target="_blank">青春回忆录</a></p>
-            <p class="comic__feature">与青春说“再见”。</p>
-          </div>
+            @if (listFreeStory != null && listFreeStory.Count > 0)
+            {
+                @for (int i = 0; i < listFreeStory.Count; i++)
+                {
+                    var item = listFreeStory[i];
+                    if (item != null)
+                    {
+                        var imgLink = $"Image/{item.ImageLink}";
+                        <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
+                            <div class="cover">
+                                <a href="/216716/" target="_blank">
+                                    <img class="lazy-carousel"
+                                            data-src="@imgLink"
+                                            src="@imgLink" alt="氪金玩家"
+                                            style="display: inline-block;">
+                                </a>
+                                <div class="cover__tag">@item.Name</div>
+                            </div>
+                            <p class="comic__title"><a href="/216716/" target="_blank">@item.Name</a></p>
+                            <p class="comic__feature">@item.Description</p>
+                        </div>
+                    }
+                }
+            }
         </div>
       </div>
       <div class="prev"><i class="layui-icon layui-icon-left"></i></div>
@@ -725,261 +458,38 @@
   <div class="in-sec-wr">
     <div class="in-sec__head">
       <i class="icon icon-in-hz"></i>
-      <span>Tác trả phí</span>
+      <span>Tác phẩm trả phí</span>
       <a class="more" href="/top/cooperation/">Xem thêm <i class="iconfont icon-ic_vip_switch_r"></i></a>
     </div>
     <div class="in-sec__box clearfix">
       <div class="tempWrap" style="overflow:hidden; position:relative; width:1506px">
         <div class="slide-wrapper"
           style="width: 2510px; left: 0px; position: relative; overflow: hidden; padding: 0px; margin: 0px;">
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/207622/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20230106/63b78ffa50572-750x999.jpg!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20230106/63b78ffa50572-750x999.jpg!cover-400" alt="妖神记"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">第464话1 黑炎大阵顶不住了</div>
-            </div>
-            <p class="comic__title"><a href="/207622/" target="_blank">妖神记</a></p>
-            <p class="comic__feature">一起修炼妖灵之书</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/216683/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20231023/65360b73c9116-750x999.jpg!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20231023/65360b73c9116-750x999.jpg!cover-400" alt="无尽吞噬"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">第182话 炼化神晶</div>
-            </div>
-            <p class="comic__title"><a href="/216683/" target="_blank">无尽吞噬</a></p>
-            <p class="comic__feature">一个天才少年的开挂崛起之路</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/216716/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20231205/656ecdba2c565-750x999.jpg!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20231205/656ecdba2c565-750x999.jpg!cover-400" alt="氪金玩家"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">最终话</div>
-            </div>
-            <p class="comic__title"><a href="/216716/" target="_blank">氪金玩家</a></p>
-            <p class="comic__feature">狂充300亿，目标是称霸游戏全服！</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/211685/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20200809/5f2f9f3d9a98f-750x999.jpg!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20200809/5f2f9f3d9a98f-750x999.jpg!cover-400" alt="星梦偶像计划"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">番外05话</div>
-            </div>
-            <p class="comic__title"><a href="/211685/" target="_blank">星梦偶像计划</a></p>
-            <p class="comic__feature">少女独自前行，为履约踏上星途</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/209405/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20191220/5dfc828aa67e2-420x560.jpg!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20191220/5dfc828aa67e2-420x560.jpg!cover-400" alt="非人哉"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">第989话 直播不仅有故事还有事故。</div>
-            </div>
-            <p class="comic__title"><a href="/209405/" target="_blank">非人哉</a></p>
-            <p class="comic__feature">建国后妖怪也要与时俱进才行</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/214062/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20230111/63be0be854f2b-750x999.jpg!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20230111/63be0be854f2b-750x999.jpg!cover-400" alt="武道独尊"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">最终话 一只王八？</div>
-            </div>
-            <p class="comic__title"><a href="/214062/" target="_blank">武道独尊</a></p>
-            <p class="comic__feature">我命在我不在天！</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/214678/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20220826/63085b9c0da1a-551x734.jpg!cover-400"
-                  src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="女帝的后宫"></a>
-              <div class="cover__tag">第二季第65话 他在外面偷看你</div>
-            </div>
-            <p class="comic__title"><a href="/214678/" target="_blank">女帝的后宫</a></p>
-            <p class="comic__feature">霸道女总的漫漫后宫路</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/215847/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20230106/63b7956ed4e8e-750x999.jpg!cover-400"
-                  src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="武逆"></a>
-              <div class="cover__tag">第504话 欺人太甚！</div>
-            </div>
-            <p class="comic__title"><a href="/215847/" target="_blank">武逆</a></p>
-            <p class="comic__feature">功法任选，丹药任吃！</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/207727/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20230106/63b795177413d-599x799.jpg!cover-400"
-                  src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="星武神诀"></a>
-              <div class="cover__tag">第730话</div>
-            </div>
-            <p class="comic__title"><a href="/207727/" target="_blank">星武神诀</a></p>
-            <p class="comic__feature">逆天强者的撼世之路</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/210640/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20230726/64c0c4876bed1.jpg!cover-400"
-                  src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="驭灵师"></a>
-              <div class="cover__tag">第31话22 真灵篇</div>
-            </div>
-            <p class="comic__title"><a href="/210640/" target="_blank">驭灵师</a></p>
-            <p class="comic__feature">斗天斗地斗鬼神</p>
-          </div>
-        </div>
-      </div>
-      <div class="prev"><i class="layui-icon layui-icon-left"></i></div>
-      <div class="next"><i class="layui-icon layui-icon-right"></i></div>
-    </div>
-  </div>
-  <div class="in-sec-wr">
-    <div class="in-sec__head">
-      <i class="icon icon-in-dj"></i>
-      <span>Tác phẩm đã hoàn thành</span>
-      <a class="more" href="/top/exclusive/">Xem thêm <i class="iconfont icon-ic_vip_switch_r"></i></a>
-    </div>
-    <div class="in-sec__box clearfix">
-      <div class="tempWrap" style="overflow:hidden; position:relative; width:1506px">
-        <div class="slide-wrapper"
-          style="width: 2510px; left: 0px; position: relative; overflow: hidden; padding: 0px; margin: 0px;">
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/213295/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20200717/5f111b00973b7-750x999.jpg!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20200717/5f111b00973b7-750x999.jpg!cover-400" alt="逆天邪神"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">第661话 死斗！君惜泪</div>
-              <div class="cover__score">9.2</div>
-              <div class="cover__shadow"></div>
-            </div>
-            <p class="comic__title"><a href="/213295/" target="_blank">逆天邪神</a></p>
-            <p class="comic__feature">一代邪神出世，君临天下！</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/208644/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20210707/60e567b94a6fb-750x999.png!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20210707/60e567b94a6fb-750x999.png!cover-400" alt="凤逆天下"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">第584话 绝地营救6</div>
-              <div class="cover__score">9.5</div>
-              <div class="cover__shadow"></div>
-            </div>
-            <p class="comic__title"><a href="/208644/" target="_blank">凤逆天下</a></p>
-            <p class="comic__feature">少女杀手魂穿飒爽复仇</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/208670/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20200110/5e182f3a506f3-743x991.jpg!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20200110/5e182f3a506f3-743x991.jpg!cover-400" alt="风起苍岚"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">2月24日请假条</div>
-              <div class="cover__score">9.6</div>
-              <div class="cover__shadow"></div>
-            </div>
-            <p class="comic__title"><a href="/208670/" target="_blank">风起苍岚</a></p>
-            <p class="comic__feature">菜鸟也能问鼎修真之巅</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/215003/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20200928/5f71977c0c611-750x999.jpg!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20200928/5f71977c0c611-750x999.jpg!cover-400" alt="仙武帝尊"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">第596话 与子偕老</div>
-              <div class="cover__score">9.3</div>
-              <div class="cover__shadow"></div>
-            </div>
-            <p class="comic__title"><a href="/215003/" target="_blank">仙武帝尊</a></p>
-            <p class="comic__feature">且看我置之死地而后生</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/214717/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20200927/5f7004e758cb6-750x999.png!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20200927/5f7004e758cb6-750x999.png!cover-400" alt="神武天尊"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">第769话 萧晨回归</div>
-              <div class="cover__score">9.4</div>
-              <div class="cover__shadow"></div>
-            </div>
-            <p class="comic__title"><a href="/214717/" target="_blank">神武天尊</a></p>
-            <p class="comic__feature">重生少年踏遍诸天万界</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/214331/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20190420/5cbaec4fd43f3-750x999.jpg!cover-400"
-                  src="https://oss.mkzcdn.com/comic/cover/20190420/5cbaec4fd43f3-750x999.jpg!cover-400" alt="绝世战魂"
-                  style="display: inline-block;"></a>
-              <div class="cover__tag">第654话 仙图雷劫</div>
-              <div class="cover__score">8.8</div>
-              <div class="cover__shadow"></div>
-            </div>
-            <p class="comic__title"><a href="/214331/" target="_blank">绝世战魂</a></p>
-            <p class="comic__feature">少年天才锻造绝世武魂</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/208646/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20181106/5be15681edc19-600x800.jpg!cover-400"
-                  src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="血族禁域"></a>
-              <div class="cover__tag">第435话 决裂3</div>
-              <div class="cover__score">9.2</div>
-              <div class="cover__shadow"></div>
-            </div>
-            <p class="comic__title"><a href="/208646/" target="_blank">血族禁域</a></p>
-            <p class="comic__feature">与命运抗争的三姐妹</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/214712/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20190717/5d2eb40d48465-750x999.jpg!cover-400"
-                  src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="妈咪快跑：爹地追来了"></a>
-              <div class="cover__tag">第463话 六大家庭齐聚</div>
-              <div class="cover__score">9.4</div>
-              <div class="cover__shadow"></div>
-            </div>
-            <p class="comic__title"><a href="/214712/" target="_blank">妈咪快跑：爹地追来了</a></p>
-            <p class="comic__feature">缘起十年前一场欢爱</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/208701/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20190222/5c6f6d8446c76-749x999.jpg!cover-400"
-                  src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="花千骨"></a>
-              <div class="cover__tag">第166话 无以为报(8)</div>
-              <div class="cover__score">9.0</div>
-              <div class="cover__shadow"></div>
-            </div>
-            <p class="comic__title"><a href="/208701/" target="_blank">花千骨</a></p>
-            <p class="comic__feature">跨越仙妖的师徒恋</p>
-          </div>
-          <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
-            <div class="cover">
-              <a href="/215059/" target="_blank"><img class="lazy-carousel"
-                  data-src="https://oss.mkzcdn.com/comic/cover/20210607/60be053bd9418-750x1000.jpg!cover-400"
-                  src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="盖世帝尊"></a>
-              <div class="cover__tag">第441话 天地雷池</div>
-              <div class="cover__score">9.1</div>
-              <div class="cover__shadow"></div>
-            </div>
-            <p class="comic__title"><a href="/215059/" target="_blank">盖世帝尊</a></p>
-            <p class="comic__feature">废材少年因祸得福得逆天功法</p>
-          </div>
+            @if (listPaidStory != null && listPaidStory.Count > 0)
+            {
+                @for (int i = 0; i < listPaidStory.Count; i++)
+                {
+                            var item = listPaidStory[i];
+                    if (item != null)
+                    {
+                        var imgLink = $"Image/{item.ImageLink}";
+                        <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
+                            <div class="cover">
+                                <a href="/207622/" target="_blank">
+                                    <img class="lazy-carousel"
+                                            data-src="@imgLink"
+                                            src="@imgLink" alt="妖神记"
+                                            style="display: inline-block;">
+                                </a>
+                                <div class="cover__tag">@item.Name</div>
+                            </div>
+                            <p class="comic__title"><a href="/207622/" target="_blank">@item.Name</a></p>
+                            <p class="comic__feature"> @item.Description</p>
+                        </div>
+                    }
+                }
+            }
+          
         </div>
       </div>
       <div class="prev"><i class="layui-icon layui-icon-left"></i></div>
@@ -999,119 +509,64 @@
         <a class="more" href="/update/">Xem thêm <i class="iconfont icon-ic_vip_switch_r"></i></a>
       </div>
       <div class="in-sec__box clearfix fl">
-        <div class="in-comic--type-b">
-          <div class="cover">
-            <a href="/216724/" target="_blank"><img class="lazy"
-                data-src="https://oss.mkzcdn.com/comic/cover/20231229/658e79a2b5c8f-750x999.png!cover-400"
-                src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="我躺着就变强"></a>
-            <div class="cover__tag">第30话 慕容云海的阴谋</div>
-          </div>
-          <p class="comic__title"><a href="/216724/" target="_blank">我躺着就变强</a></p>
-          <p class="comic__feature">
-            02-25 08:00 </p>
-        </div>
-        <div class="in-comic--type-b">
-          <div class="cover">
-            <a href="/212234/" target="_blank"><img class="lazy"
-                data-src="https://oss.mkzcdn.com/comic/cover/20230106/63b79116552c5-750x999.jpg!cover-400"
-                src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="元尊"></a>
-            <div class="cover__tag">第578话下 一战败龙</div>
-          </div>
-          <p class="comic__title"><a href="/212234/" target="_blank">元尊</a></p>
-          <p class="comic__feature">
-            02-25 11:00 </p>
-        </div>
-        <div class="in-comic--type-b">
-          <div class="cover">
-            <a href="/214351/" target="_blank"><img class="lazy"
-                data-src="https://oss.mkzcdn.com/comic/cover/20200820/5f3e5a80cbe77-750x999.png!cover-400"
-                src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="我是大仙尊"></a>
-            <div class="cover__tag">第697话</div>
-          </div>
-          <p class="comic__title"><a href="/214351/" target="_blank">我是大仙尊</a></p>
-          <p class="comic__feature">
-            02-25 08:00 </p>
-        </div>
-        <div class="in-comic--type-b">
-          <div class="cover">
-            <a href="/215003/" target="_blank"><img class="lazy"
-                data-src="https://oss.mkzcdn.com/comic/cover/20200928/5f71977c0c611-750x999.jpg!cover-400"
-                src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="仙武帝尊"></a>
-            <div class="cover__tag">第596话 与子偕老</div>
-          </div>
-          <p class="comic__title"><a href="/215003/" target="_blank">仙武帝尊</a></p>
-          <p class="comic__feature">
-            02-25 08:00 </p>
-        </div>
-        <div class="in-comic--type-b">
-          <div class="cover">
-            <a href="/216213/" target="_blank"><img class="lazy"
-                data-src="https://oss.mkzcdn.com/comic/cover/20210910/613b287575fb2-750x999.jpg!cover-400"
-                src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="重生之千金毒妃"></a>
-            <div class="cover__tag">第78话 妙手回春</div>
-          </div>
-          <p class="comic__title"><a href="/216213/" target="_blank">重生之千金毒妃</a></p>
-          <p class="comic__feature">
-            02-25 12:23 </p>
-        </div>
+            @if (listNewVersionStory != null && listNewVersionStory.Count > 0)
+            {
+                @for (int i = 0; i < listNewVersionStory.Count; i++)
+                {
+                    if (i < 4)
+                    {
+                        var item = listNewVersionStory[i];
+                        if (item != null)
+                        {
+                            var imgLink = $"Image/{item.ImageLink}";
+
+                            <div class="in-comic--type-b">
+                                <div class="cover">
+                                    <a href="/216724/" target="_blank">
+                                        <img class="lazy"
+                                                data-src="@imgLink"
+                                                src="@imgLink" alt="我躺着就变强">
+                                    </a>
+                                    <div class="cover__tag">@item.Name</div>
+                                </div>
+                                <p class="comic__title"><a href="/216724/" target="_blank">@item.Name</a></p>
+                                <p class="comic__feature">
+                                    @item.Description
+                                </p>
+                            </div>
+                        }
+                    }
+                }
+            }
       </div>
       <!-- 第二行 -->
       <div class="in-sec__box clearfix fl mt-20">
-        <div class="in-comic--type-b">
-          <div class="cover">
-            <a href="/211471/" target="_blank"><img class="lazy"
-                data-src="https://oss.mkzcdn.com/comic/cover/20230106/63b794d394842-599x799.jpg!cover-400"
-                src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="绝世武神"></a>
-            <div class="cover__tag">第256话3 谈话（3）</div>
-          </div>
-          <p class="comic__title"><a href="/211471/" target="_blank">绝世武神</a></p>
-          <p class="comic__feature">
-            02-25 12:00 </p>
-        </div>
-        <div class="in-comic--type-b">
-          <div class="cover">
-            <a href="/215847/" target="_blank"><img class="lazy"
-                data-src="https://oss.mkzcdn.com/comic/cover/20230106/63b7956ed4e8e-750x999.jpg!cover-400"
-                src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="武逆"></a>
-            <div class="cover__tag">第504话 欺人太甚！</div>
-          </div>
-          <p class="comic__title"><a href="/215847/" target="_blank">武逆</a></p>
-          <p class="comic__feature">
-            02-25 12:00 </p>
-        </div>
-        <div class="in-comic--type-b">
-          <div class="cover">
-            <a href="/215981/" target="_blank"><img class="lazy"
-                data-src="https://oss.mkzcdn.com/comic/cover/20230106/63b78c858fe73-750x999.jpg!cover-400"
-                src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="我被困在同一天十万年"></a>
-            <div class="cover__tag">第417话 诸位好久不见~</div>
-          </div>
-          <p class="comic__title"><a href="/215981/" target="_blank">我被困在同一天十万年</a></p>
-          <p class="comic__feature">
-            02-25 12:00 </p>
-        </div>
-        <div class="in-comic--type-b">
-          <div class="cover">
-            <a href="/216600/" target="_blank"><img class="lazy"
-                data-src="https://oss.mkzcdn.com/comic/cover/20230330/642546b014e66-750x999.jpg!cover-400"
-                src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="开局十个大帝都是我徒弟"></a>
-            <div class="cover__tag">第266话 这力度瘙痒都不够</div>
-          </div>
-          <p class="comic__title"><a href="/216600/" target="_blank">开局十个大帝都是我徒弟</a></p>
-          <p class="comic__feature">
-            02-25 12:00 </p>
-        </div>
-        <div class="in-comic--type-b">
-          <div class="cover">
-            <a href="/216648/" target="_blank"><img class="lazy"
-                data-src="https://oss.mkzcdn.com/comic/cover/20231019/6530a23275954-399x533.jpg!cover-400"
-                src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="快穿：宿主她一心求死"></a>
-            <div class="cover__tag">第79话 好一个尤物！</div>
-          </div>
-          <p class="comic__title"><a href="/216648/" target="_blank">快穿：宿主她一心求死</a></p>
-          <p class="comic__feature">
-            02-25 12:00 </p>
-        </div>
+        @if (listNewVersionStory != null && listNewVersionStory.Count > 5)
+        {
+            @for (int i = 4; i < listNewVersionStory.Count; i++)
+            {
+                var item = listNewVersionStory[i];
+                if (item != null)
+                {
+                    var imgLink = $"Image/{item.ImageLink}";
+
+                    <div class="in-comic--type-b">
+                        <div class="cover">
+                            <a href="/216724/" target="_blank">
+                                <img class="lazy"
+                                        data-src="@imgLink"
+                                        src="@imgLink" alt="我躺着就变强">
+                            </a>
+                            <div class="cover__tag">@item.Name</div>
+                        </div>
+                        <p class="comic__title"><a href="/216724/" target="_blank">@item.Name</a></p>
+                        <p class="comic__feature">
+                            @item.Description
+                        </p>
+                    </div>
+                }
+            }
+        }
       </div>
     </div>
     <div class="in-rank-box--aside">
@@ -1120,137 +575,10 @@
         <span>Phổ biến</span>
       </div>
       <div class="rank-list">
-        <!-- rank-item * 19 -->
         <div class="rank-item key-1">
           <span class="num num--1">1</span>
           <span class="comic-name">
             <a href="/207622/" target="_blank">妖神记</a>
-          </span>
-          <i class="iconfont icon-ic_phlist_up"></i>
-        </div>
-        <div class="rank-item key-2">
-          <span class="num num--2">2</span>
-          <span class="comic-name">
-            <a href="/216683/" target="_blank">无尽吞噬</a>
-          </span>
-          <i class="iconfont icon-ic_phlist_up"></i>
-        </div>
-        <div class="rank-item key-3">
-          <span class="num num--3">3</span>
-          <span class="comic-name">
-            <a href="/213295/" target="_blank">逆天邪神</a>
-          </span>
-          <i class="iconfont icon-ic_phlist_up"></i>
-        </div>
-        <div class="rank-item key-4">
-          <span class="num num--4">4</span>
-          <span class="comic-name">
-            <a href="/216716/" target="_blank">氪金玩家</a>
-          </span>
-          <i class="iconfont icon-ic_phlist_down"></i>
-        </div>
-        <div class="rank-item key-5">
-          <span class="num num--5">5</span>
-          <span class="comic-name">
-            <a href="/211685/" target="_blank">星梦偶像计划</a>
-          </span>
-          <i class="iconfont icon-ic_phlist_up"></i>
-        </div>
-        <div class="rank-item key-6">
-          <span class="num num--6">6</span>
-          <span class="comic-name">
-            <a href="/209405/" target="_blank">非人哉</a>
-          </span>
-          <i class="iconfont icon-ic_phlist_down"></i>
-        </div>
-        <div class="rank-item key-7">
-          <span class="num num--7">7</span>
-          <span class="comic-name">
-            <a href="/214062/" target="_blank">武道独尊</a>
-          </span>
-          <i class="iconfont icon-ic_phlist_down"></i>
-        </div>
-        <div class="rank-item key-8">
-          <span class="num num--8">8</span>
-          <span class="comic-name">
-            <a href="/208644/" target="_blank">凤逆天下</a>
-          </span>
-          <i class="iconfont icon-ic_phlist_up"></i>
-        </div>
-        <div class="rank-item key-9">
-          <span class="num num--9">9</span>
-          <span class="comic-name">
-            <a href="/208670/" target="_blank">风起苍岚</a>
-          </span>
-          <i class="iconfont icon-ic_phlist_up"></i>
-        </div>
-        <div class="rank-item key-10">
-          <span class="num num--10">10</span>
-          <span class="comic-name">
-            <a href="/214678/" target="_blank">女帝的后宫</a>
-          </span>
-          <i class="iconfont icon-ic_phlist_down"></i>
-        </div>
-        <div class="rank-item key-11">
-          <span class="num num--11">11</span>
-          <span class="comic-name">
-            <a href="/215003/" target="_blank">仙武帝尊</a>
-          </span>
-          <i class="iconfont icon-ic_phlist_up"></i>
-        </div>
-        <div class="rank-item key-12">
-          <span class="num num--12">12</span>
-          <span class="comic-name">
-            <a href="/215847/" target="_blank">武逆</a>
-          </span>
-          <i class="iconfont icon-ic_phlist_down"></i>
-        </div>
-        <div class="rank-item key-13">
-          <span class="num num--13">13</span>
-          <span class="comic-name">
-            <a href="/215599/" target="_blank">她来了，请趴下</a>
-          </span>
-          <i class="iconfont icon-ic_phlist_down"></i>
-        </div>
-        <div class="rank-item key-14">
-          <span class="num num--14">14</span>
-          <span class="comic-name">
-            <a href="/207727/" target="_blank">星武神诀</a>
-          </span>
-          <i class="iconfont icon-ic_phlist_up"></i>
-        </div>
-        <div class="rank-item key-15">
-          <span class="num num--15">15</span>
-          <span class="comic-name">
-            <a href="/208645/" target="_blank">寻找前世之旅</a>
-          </span>
-          <i class="iconfont icon-ic_phlist_up"></i>
-        </div>
-        <div class="rank-item key-16">
-          <span class="num num--16">16</span>
-          <span class="comic-name">
-            <a href="/214717/" target="_blank">神武天尊</a>
-          </span>
-          <i class="iconfont icon-ic_phlist_up"></i>
-        </div>
-        <div class="rank-item key-17">
-          <span class="num num--17">17</span>
-          <span class="comic-name">
-            <a href="/210640/" target="_blank">驭灵师</a>
-          </span>
-          <i class="iconfont icon-ic_phlist_down"></i>
-        </div>
-        <div class="rank-item key-18">
-          <span class="num num--18">18</span>
-          <span class="comic-name">
-            <a href="/212234/" target="_blank">元尊</a>
-          </span>
-          <i class="iconfont icon-ic_phlist_up"></i>
-        </div>
-        <div class="rank-item key-19">
-          <span class="num num--19">19</span>
-          <span class="comic-name">
-            <a href="/214331/" target="_blank">绝世战魂</a>
           </span>
           <i class="iconfont icon-ic_phlist_up"></i>
         </div>
@@ -1441,8 +769,6 @@
       </div>
     </div>
   </div>
-
-
 
 
   <div class="in-friends">
@@ -1741,5 +1067,19 @@
 </html>
 
 @code {
+    private List<Story> listNewStory { get; set; }
+    private List<Story> listHotStory { get; set; }
+    private List<Story> listFreeStory { get; set; }
+    private List<Story> listPaidStory { get; set; }
+    private List<Story> listNewVersionStory { get; set; }
 
+    protected override async Task OnInitializedAsync()
+    {
+        //TODO: ntthe cái náy sẽ xử lý lại chỉ request 1 lần, và cache lại, request này sập server
+        listNewStory = await _storiesService.GetTop10NewStory();
+        listHotStory = await _storiesService.GetTop10HotStory();
+        listFreeStory = await _storiesService.GetTop10FreeStory();
+        listPaidStory = await _storiesService.GetTop10PaidStory();
+        listNewVersionStory = await _storiesService.GetTop10NewVervionStory();
+    }
 }

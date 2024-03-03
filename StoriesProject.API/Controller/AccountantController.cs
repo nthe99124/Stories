@@ -1,16 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using StoriesProject.API.Model.BaseEntity;
-using StoriesProject.API.Model.ViewModel;
-using StoriesProject.API.Models.ViewModel.Accountant;
 using StoriesProject.API.Services;
+using StoriesProject.Model.ViewModel;
+using StoriesProject.Model.ViewModel.Accountant;
 
 namespace StoriesProject.API.Controller.Base
 {
     public class AccountantController : BaseController
     {
         private IAccoutantsService _accoutantsService;
-        public AccountantController(IRestOutput res, 
-                                    IHttpContextAccessor httpContextAccessor,
+        public AccountantController(IRestOutput res, IHttpContextAccessor httpContextAccessor,
                                     IAccoutantsService accoutantsService): base(res, httpContextAccessor)
         {
             _accoutantsService = accoutantsService;

@@ -1,8 +1,8 @@
 ﻿using StoriesProject.API.Common.Cache;
 using StoriesProject.API.Common.Constant;
-using StoriesProject.API.Model.BaseEntity;
 using StoriesProject.API.Repositories;
 using StoriesProject.API.Services.Base;
+using StoriesProject.Model.BaseEntity;
 using System.Text.Json;
 
 namespace StoriesProject.API.Services
