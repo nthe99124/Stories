@@ -1,4 +1,5 @@
 ﻿@page "/Category" 
+
 <html>
 
 <head>
@@ -383,99 +384,39 @@
   <div class="cate-top-wr">
     <div class="cate-selector">
       <div class="cate-col clearfix">
-        <p class="fl cate-title">题材：</p>
+        <p class="fl cate-title">Chủ đề：</p>
+
         <ul class="cate-list clearfix">
           <li class="cate-item active">
-            <a rel="nofollow" href="/category/?audience=1">全部</a>
-          </li>
-          <li class="cate-item ">
-            <a rel="nofollow" href="/category/?audience=1&amp;theme_id=1">霸总</a>
-          </li>
-          <li class="cate-item ">
-            <a rel="nofollow" href="/category/?audience=1&amp;theme_id=2">修真</a>
-          </li>
-          <li class="cate-item ">
-            <a rel="nofollow" href="/category/?audience=1&amp;theme_id=3">恋爱</a>
-          </li>
-          <li class="cate-item ">
-            <a rel="nofollow" href="/category/?audience=1&amp;theme_id=4">校园</a>
-          </li>
-          <li class="cate-item ">
-            <a rel="nofollow" href="/category/?audience=1&amp;theme_id=5">冒险</a>
-          </li>
-          <li class="cate-item ">
-            <a rel="nofollow" href="/category/?audience=1&amp;theme_id=6">搞笑</a>
-          </li>
-          <li class="cate-item ">
-            <a rel="nofollow" href="/category/?audience=1&amp;theme_id=7">生活</a>
-          </li>
-          <li class="cate-item ">
-            <a rel="nofollow" href="/category/?audience=1&amp;theme_id=8">热血</a>
-          </li>
-          <li class="cate-item ">
-            <a rel="nofollow" href="/category/?audience=1&amp;theme_id=9">架空</a>
-          </li>
-          <li class="cate-item ">
-            <a rel="nofollow" href="/category/?audience=1&amp;theme_id=10">后宫</a>
-          </li>
-          <li class="cate-item ">
-            <a rel="nofollow" href="/category/?audience=1&amp;theme_id=12">玄幻</a>
-          </li>
-          <li class="cate-item ">
-            <a rel="nofollow" href="/category/?audience=1&amp;theme_id=13">悬疑</a>
-          </li>
-          <li class="cate-item ">
-            <a rel="nofollow" href="/category/?audience=1&amp;theme_id=14">恐怖</a>
-          </li>
-          <li class="cate-item ">
-            <a rel="nofollow" href="/category/?audience=1&amp;theme_id=15">灵异</a>
-          </li>
-          <li class="cate-item ">
-            <a rel="nofollow" href="/category/?audience=1&amp;theme_id=16">动作</a>
-          </li>
-          <li class="cate-item ">
-            <a rel="nofollow" href="/category/?audience=1&amp;theme_id=17">科幻</a>
-          </li>
-          <li class="cate-item ">
-            <a rel="nofollow" href="/category/?audience=1&amp;theme_id=18">战争</a>
-          </li>
-          <li class="cate-item ">
-            <a rel="nofollow" href="/category/?audience=1&amp;theme_id=19">古风</a>
-          </li>
-          <li class="cate-item ">
-            <a rel="nofollow" href="/category/?audience=1&amp;theme_id=20">穿越</a>
-          </li>
-          <li class="cate-item ">
-            <a rel="nofollow" href="/category/?audience=1&amp;theme_id=21">竞技</a>
-          </li>
-          <li class="cate-item ">
-            <a rel="nofollow" href="/category/?audience=1&amp;theme_id=23">励志</a>
-          </li>
-          <li class="cate-item ">
-            <a rel="nofollow" href="/category/?audience=1&amp;theme_id=24">同人</a>
-          </li>
-          <li class="cate-item ">
-            <a rel="nofollow" href="/category/?audience=1&amp;theme_id=26">真人</a>
-          </li>
+            <a rel="nofollow" href="/category/?audience=1">Label 0</a>
+         </li>
+            @for (int i = 1; i <= 15; i++)
+            {
+                int currentIndex = i; // Tạo một biến cục bộ chứa giá trị hiện tại của i
+                <li class="cate-item @(i == activeIndex ? "active" : "")">
+                    <a rel="nofollow" href="/category/?audience=@i" @onclick="() => SetActiveIndex(currentIndex)" >Label @i</a>
+                </li>
+            } 
+
         </ul>
       </div>
       <div class="cate-col clearfix">
-        <p class="fl cate-title">受众：</p>
+        <p class="fl cate-title">Độc giả：</p>
         <ul class="cate-list clearfix">
           <li class="cate-item ">
-            <a rel="nofollow" href="/category/">全部</a>
+            <a rel="nofollow" href="/category/"></a>
           </li>
           <li class="cate-item active">
-            <a rel="nofollow" href="/category/?audience=1">少年</a>
+            <a rel="nofollow" href="/category/?audience=1">Nam</a>
           </li>
           <li class="cate-item ">
-            <a rel="nofollow" href="/category/?audience=2">少女</a>
+            <a rel="nofollow" href="/category/?audience=2">Nữ</a>
           </li>
           <li class="cate-item ">
-            <a rel="nofollow" href="/category/?audience=3">青年</a>
+            <a rel="nofollow" href="/category/?audience=3">Vị thành niên</a>
           </li>
           <li class="cate-item ">
-            <a rel="nofollow" href="/category/?audience=4">少儿</a>
+            <a rel="nofollow" href="/category/?audience=4">Thiếu nhi</a>
           </li>
         </ul>
       </div>
@@ -1154,3 +1095,14 @@
   </div>
 </body>
 </html>
+@code {
+    int activeIndex = -1;
+    protected override void OnInitialized()
+    {
+        SetActiveIndex(0);
+    }
+    private void SetActiveIndex(int index)
+    {
+        activeIndex = index;
+    }
+}

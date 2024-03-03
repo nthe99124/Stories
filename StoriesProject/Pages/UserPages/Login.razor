@@ -97,12 +97,12 @@
                         <!-- 登录/注册 -->
                         <div class="tab-content">
                             <!-- 登录 -->
-                            <div class="j-tab-item tab-item active" data-contentid="login">
+                            <div class="j-tab-item tab-item @(isLogin ? "active" : "")" data-contentid="login">
                                 <div class="dialog-login_form">
                                     <div class="form-title">
                                         <h3>Đăng nhập</h3>
                                         <span>Chưa có (&gt;^ω^&lt;)？ </span>
-                                        <a class="j-dialog-login-mode" data-contentid="register">
+                                        <a class="j-dialog-login-mode" @onclick="ToggleIsLogin" data-contentid="register">
                                             Đăng kí>
                                         </a>
                                     </div>
@@ -134,11 +134,11 @@
                                 </div>
                             </div>
                             <!-- 注册 -->
-                            <div class="j-tab-item tab-item" data-contentid="register">
+                            <div class="j-tab-item tab-item @(!isLogin ? "active" : "")" data-contentid="register">
                                 <div class="dialog-login_form">
                                     <div class="form-title">
                                         <h3>Đăng kí</h3>
-                                        <a class="j-dialog-login-mode" data-contentid="login">Đăng nhập>></a>
+                                        <a class="j-dialog-login-mode" @onclick="ToggleIsLogin" data-contentid="login">Đăng nhập>></a>
                                     </div>
                                     <div class="form-item">
                                         <div class="input-block">
@@ -204,7 +204,7 @@
                             </div>
                         </div>
                         <!-- 第三方登录 -->
-                        <div class="j-dialog-other-login other-login">
+                        @*<div class="j-dialog-other-login other-login">
                             <h3 class="j-dialog-other-title title">
                                 <div class="title-line"></div>
                                 <div class="title-text">其他登录方式</div>
@@ -230,7 +230,7 @@
                                     <span class="other-link__qr--text">账号登录</span>
                                 </div>
                             </div>
-                        </div>
+                        </div>*@
                     </div>
                 </div>
 
@@ -426,5 +426,9 @@
 </html>
 
 @code {
-
+    bool isLogin = true;
+    private void ToggleIsLogin()
+    {
+        isLogin = !isLogin;
+    }
 }
