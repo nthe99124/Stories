@@ -79,13 +79,5 @@
   <ItemGroup>
     <ProjectReference Include="..\StoriesProject.Model\StoriesProject.Model.csproj" />
   </ItemGroup>
-	<Target Name="WebCompileExample" BeforeTargets="ResolveScopedCssInputs">
-		<!-- Create Scoped css files. e.g. compile less files etc. -->
-
-		<ItemGroup>
-			<None Remove="**/*.razor.css" />
-			<None Include="**/*.razor.css" />
-		</ItemGroup>
-	</Target>
   
 </Project>
