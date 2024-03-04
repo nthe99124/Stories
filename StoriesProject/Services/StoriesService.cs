@@ -14,6 +14,8 @@ namespace StoriesProject.Services
         Task<List<StoryGeneric>> GetTop10PaidStory();
         Task<List<StoryGeneric>> GetTop10NewVervionStory();
         Task<List<StoryGeneric>> GetFavoriteStory();
+        Task<List<StoryGeneric>> GetAllStoryByTopic(Guid topicId);
+        Task<List<StoryGeneric>> GetNewVervionStoryByDay(DateTime dateTime);
     }
     public class StoriesService : BaseService, IStoriesService
     {
@@ -88,5 +90,29 @@ namespace StoriesProject.Services
             var url = StoriesApiUrlDef.GetFavoriteStory();
             return await RequestAuthenGetAsync<List<StoryGeneric>>(url);
         }
+
+        /// <summary>
+        /// Hàm xử lý lấy danh sách truyện theo chủ đề
+        /// CreatedBy ntthe 28.02.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<StoryGeneric>> GetAllStoryByTopic(Guid topicId)
+        {
+            var url = StoriesApiUrlDef.GetAllStoryByTopic(topicId);
+            return await RequestAuthenGetAsync<List<StoryGeneric>>(url);
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy danh sách truyện cập nhật theo ngày
+        /// CreatedBy ntthe 28.02.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<StoryGeneric>> GetNewVervionStoryByDay(DateTime dateTime)
+        {
+            var url = StoriesApiUrlDef.GetNewVervionStoryByDay(dateTime);
+            return await RequestAuthenGetAsync<List<StoryGeneric>>(url);
+        }
+
+        
     }
 }

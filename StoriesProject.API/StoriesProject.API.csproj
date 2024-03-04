@@ -35,6 +35,7 @@
     <Compile Include="Controller\AccountantController.cs" />
     <Compile Include="Controller\Base\BaseController.cs" />
     <Compile Include="Controller\StoriesController.cs" />
+    <Compile Include="Controller\TopicController.cs" />
     <Compile Include="Migrations\20240302104921_update-table-story.cs" />
     <Compile Include="Migrations\20240302104921_update-table-story.Designer.cs" />
     <Compile Include="Migrations\20240303055553_add-colum-story.cs" />
@@ -59,10 +60,12 @@
     <Compile Include="Repositories\Base\BaseRepository.cs" />
     <Compile Include="Repositories\LogEntryRepository.cs" />
     <Compile Include="Repositories\StoriesRepository.cs" />
+    <Compile Include="Repositories\TopicRepository.cs" />
     <Compile Include="Services\AccoutantsService.cs" />
     <Compile Include="Services\Base\BaseService.cs" />
     <Compile Include="Services\LogEntryService.cs" />
     <Compile Include="Services\StoriesService.cs" />
+    <Compile Include="Services\TopicService.cs" />
   </ItemGroup>
 
   <ItemGroup>

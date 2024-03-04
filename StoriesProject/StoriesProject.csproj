@@ -13,6 +13,8 @@
 		<Compile Include="Common\MiddleWare\LanguageMiddleware.cs" />
 		<Compile Include="Pages\Error.cshtml.cs" />
 		<Compile Include="Program.cs" />
+		<Compile Include="Services\ApiUrldefinition\TopicApiUrlDef.cs" />
+		<Compile Include="Services\TopicService.cs" />
 		<Compile Include="Services\StoriesService.cs" />
 		<Compile Include="Services\ApiUrldefinition\StoriesApiUrlDef.cs" />
 		<Compile Include="Services\ApiUrldefinition\AccountantApiUrlDef.cs" />

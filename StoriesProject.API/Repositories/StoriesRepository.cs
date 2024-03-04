@@ -16,6 +16,8 @@ namespace StoriesProject.API.Repositories
         Task<IEnumerable<Story>?> GetTopNewVervionStory(int numberStory);
         Task<IEnumerable<StoryAccountGeneric>?> GetHistoryStoryRead(Guid accId);
         Task<IEnumerable<StoryAccountGeneric>?> GetFavoriteStory(Guid accId);
+        Task<IEnumerable<StoryAccountGeneric>?> GetAllStoryByTopic(Guid topicId);
+        Task<IEnumerable<Story>?> GetNewVervionStoryByDay(DateTime dateTime);
     }
     public class StoriesRepository : BaseRepository<Story>, IStoriesRepository
     {
@@ -140,6 +142,35 @@ namespace StoriesProject.API.Repositories
             };
             var storyAccount = _entities.ExecuteStoredProcedureObject<StoryAccountGeneric>("GetFavoriteStory", param);
             return storyAccount;
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy danh sách truyện theo chủ đề
+        /// CreatedBy ntthe 03.03.2024
+        /// </summary>
+        /// <param name="accId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<StoryAccountGeneric>?> GetAllStoryByTopic(Guid topicId)
+        {
+            var param = new SqlParameter[]
+            {
+                new SqlParameter("@TopicID", topicId)
+            };
+            var storyAccount = _entities.ExecuteStoredProcedureObject<StoryAccountGeneric>("GetAllStoryByTopic", param);
+            return storyAccount;
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy danh sách truyện cập nhật theo ngày
+        /// CreatedBy ntthe 28.02.2024
+        /// </summary>
+        /// <param name="numberStory"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<Story>?> GetNewVervionStoryByDay(DateTime dateTime)
+        {
+            var dataResult = await FindBy(item => (item.CreatedDate.HasValue && item.CreatedDate.Value.Date == dateTime.Date)
+                                                    || (item.ModifiedDate.HasValue && item.ModifiedDate.Value.Date == dateTime.Date));
+            return dataResult;
         }
     }
 }

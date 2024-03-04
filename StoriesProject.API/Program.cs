@@ -140,12 +140,14 @@ services.AddScoped<IUnitOfWork, UnitOfWork>();
 services.AddTransient<ILogEntryRepository, LogEntryRepository>();
 services.AddTransient<IAccountantsRepository, AccountantRepository>();
 services.AddTransient<IStoriesRepository, StoriesRepository>();
+services.AddTransient<ITopicRepository, TopicRepository>();
 
 
 //Service
 services.AddTransient<ILogEntryService, LogEntryService>();
 services.AddTransient<IAccoutantsService, AccoutantsService>();
 services.AddTransient<IStoriesService, StoriesService>();
+services.AddTransient<ITopicService, TopicService>();
 
 #endregion
 

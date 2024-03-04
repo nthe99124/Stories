@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StoriesProject.API.Services;
+using StoriesProject.Model.BaseEntity;
 using StoriesProject.Model.ViewModel;
 
 namespace StoriesProject.API.Controller.Base
@@ -103,6 +104,32 @@ namespace StoriesProject.API.Controller.Base
         public async Task<IActionResult> GetFavoriteStory()
         {
             var dataResult = await _storiesService.GetFavoriteStory();
+            _res.SuccessEventHandler(dataResult);
+            return Ok(_res);
+        }
+
+        /// <summary>
+        /// Hàm xử lý danh sách truyện theo chủ đề
+        /// CreatedBy ntthe 28.02.2024
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetAllStoryByTopic")]
+        public async Task<IActionResult> GetAllStoryByTopic(Guid topicId)
+        {
+            var dataResult = await _storiesService.GetAllStoryByTopic(topicId);
+            _res.SuccessEventHandler(dataResult);
+            return Ok(_res);
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy danh sách truyện cập nhật theo ngày
+        /// CreatedBy ntthe 28.02.2024
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetNewVervionStoryByDay")]
+        public async Task<IActionResult> GetNewVervionStoryByDay(DateTime dateTime)
+        {
+            var dataResult = await _storiesService.GetNewVervionStoryByDay(dateTime);
             _res.SuccessEventHandler(dataResult);
             return Ok(_res);
         }

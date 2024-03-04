@@ -1,12 +1,9 @@
-﻿using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.JSInterop;
+﻿using Microsoft.JSInterop;
 using Newtonsoft.Json;
 using StoriesProject.Common.Cache;
 using StoriesProject.Model.ViewModel;
 using StoriesProject.Services.ApiUrldefinition;
-using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Security.Claims;
 using System.Text;
 
 namespace StoriesProject.API.Services.Base

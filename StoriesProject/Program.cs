@@ -65,6 +65,7 @@ services.AddScoped(typeof(IResponseOutput<>), typeof(ResponseOutput<>));
 services.AddScoped<IBaseService, BaseService>();
 services.AddScoped<IAccoutantsService, AccoutantsService>();
 services.AddScoped<IStoriesService, StoriesService>();
+services.AddScoped<ITopicService, TopicService>();
 #endregion  
 
 #region Config cache

@@ -2,6 +2,7 @@
 using StoriesProject.Model.BaseEntity;
 using StoriesProject.API.Repositories;
 using StoriesProject.API.Services.Base;
+using System;
 
 namespace StoriesProject.API.Services
 {
@@ -14,6 +15,8 @@ namespace StoriesProject.API.Services
         Task<IEnumerable<Story>?> GetTop10NewVervionStory();
         Task<IEnumerable<StoryAccountGeneric>?> GetHistoryStoryRead();
         Task<IEnumerable<StoryAccountGeneric>?> GetFavoriteStory();
+        Task<IEnumerable<StoryAccountGeneric>?> GetAllStoryByTopic(Guid topicId);
+        Task<IEnumerable<Story>?> GetNewVervionStoryByDay(DateTime dateTime);
     }
     public class StoriesService: BaseService, IStoriesService
     {
@@ -95,7 +98,28 @@ namespace StoriesProject.API.Services
             var userId = GetUserAuthen()?.AccoutantId;
             return await _storiesRepository.GetFavoriteStory((Guid)userId);
         }
-        
+
+        /// <summary>
+        /// Hàm xử lý danh sách truyện theo chủ đề
+        /// CreatedBy ntthe 03.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<StoryAccountGeneric>?> GetAllStoryByTopic(Guid topicId)
+        {
+            var userId = GetUserAuthen()?.AccoutantId;
+            return await _storiesRepository.GetAllStoryByTopic(topicId);
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy danh sách truyện cập nhật theo ngày
+        /// CreatedBy ntthe 28.02.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Story>?> GetNewVervionStoryByDay(DateTime dateTime)
+        {
+            return await _storiesRepository.GetNewVervionStoryByDay(dateTime);
+        }
+
         #region Private Method
 
         #endregion

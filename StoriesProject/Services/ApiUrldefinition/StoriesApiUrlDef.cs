@@ -63,6 +63,28 @@
         {
             return @$"{pathController}/GetFavoriteStory";
         }
+
+        /// <summary>
+        /// Tạo url lấy 10 truyện theo chủ đề
+        /// CreatedBy ntthe 28.02.2024
+        /// </summary>
+        /// <returns></returns>
+        public static string GetAllStoryByTopic(Guid topicId)
+        {
+            return @$"{pathController}/GetAllStoryByTopic?topicId={topicId}";
+        }
+
+        /// <summary>
+        /// Tạo url lấy danh sách truyện cập nhật theo ngày
+        /// CreatedBy ntthe 28.02.2024
+        /// </summary>
+        /// <returns></returns>
+        public static string GetNewVervionStoryByDay(DateTime dateTime)
+        {
+            string formattedDateTime = dateTime.ToString("yyyy-MM-ddTHH:mm:ss");
+            string encodedDateTime = Uri.EscapeDataString(formattedDateTime);
+            return @$"{pathController}/GetNewVervionStoryByDay?dateTime={encodedDateTime}";
+        }
         
     }
 }
