@@ -50,6 +50,12 @@
 		<Content Include="Pages\_Host.cshtml" />
 		<Content Include="Properties\launchSettings.json" />
 		<Content Include="Shared\MainLayout.razor" />
+		<Content Include="Shared\FooterLayout.razor" />
+		<Content Include="Shared\HeaderLayout.razor" />
+		<Content Include="Shared\UserHeader.razor" />
+		<Content Include="Shared\UserSideBar.razor" />
+		<Content Include="Shared\AuthorSideBar.razor" />
+		<Content Include="Shared\AuthorHeader.razor" />
 		<Content Include="Shared\NavMenu.razor" />
 		<Content Include="Shared\SurveyPrompt.razor" />
 		<Content Include="_Imports.razor" />
@@ -66,6 +72,7 @@
 
 	<ItemGroup>
 		<Folder Include="Common\Constant\Enum\" />
+		<Folder Include="Components\Layout\" />
 	</ItemGroup>
 
 	<ItemGroup>
