@@ -2,7 +2,6 @@
 using StoriesProject.Common.Cache;
 using StoriesProject.Model.ViewModel;
 using StoriesProject.Services.ApiUrldefinition;
-using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 
@@ -11,6 +10,7 @@ namespace StoriesProject.API.Services.Base
     public interface IBaseService
     {
         Task<T> RequestPostAsync<T>(string url, object model, string? accessToken = null);
+        Task<ResponseOutput<T>> RequestFullPostAsync<T>(string url, object model, string? accessToken = null);
         Task<T> RequestGetAsync<T>(string url);
     }
 
@@ -32,27 +32,8 @@ namespace StoriesProject.API.Services.Base
             {
                 using (var httpClient = _httpClientFactory.CreateClient())
                 {
-                    var jsonContent = JsonConvert.SerializeObject(model);
-                    var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-                    // nếu có accessToken thì mới đưa Bearer Token vào
-                    if (accessToken != null)
-                    {
-                        httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-                    }
-
-                    // Thực hiện cuộc gọi API POST
-                    var response = await httpClient.PostAsync(_remoteServiceBaseUrl + url, content);
-
-                    // Kiểm tra xem cuộc gọi API có thành công không
-                    response.EnsureSuccessStatusCode();
-
-                    // Đọc nội dung phản hồi
-                    var responseStr = await response.Content.ReadAsStringAsync();
-
-                    // Giải mã phản hồi JSON
-                    var responseObject = JsonConvert.DeserializeObject<ResponseOutput<T>>(responseStr);
-
+                    var responseObject = await PostAsync<T>(httpClient, url, model, accessToken);
                     if (responseObject != null && responseObject.IsSuccess)
                     {
                         return responseObject.Data ?? default(T);
@@ -64,6 +45,24 @@ namespace StoriesProject.API.Services.Base
             catch (Exception ex)
             {
                 return default(T);
+            }
+        }
+
+        public async Task<ResponseOutput<T>> RequestFullPostAsync<T>(string url, object model, string? accessToken = null)
+        {
+            try
+            {
+                using (var httpClient = _httpClientFactory.CreateClient())
+                {
+
+                    var responseObject = await PostAsync<T>(httpClient, url, model, accessToken);
+
+                    return responseObject;
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ResponseOutput<T>();
             }
         }
 
@@ -97,6 +96,32 @@ namespace StoriesProject.API.Services.Base
             {
                 return default(T);
             }
+        }
+
+        private async Task<ResponseOutput<T>> PostAsync<T>(HttpClient? httpClient, string url, object model, string? accessToken = null)
+        {
+            var jsonContent = JsonConvert.SerializeObject(model);
+            var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+            // nếu có accessToken thì mới đưa Bearer Token vào
+            if (accessToken != null)
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+            }
+
+            // Thực hiện cuộc gọi API POST
+            var response = await httpClient.PostAsync(_remoteServiceBaseUrl + url, content);
+
+            // Kiểm tra xem cuộc gọi API có thành công không
+            response.EnsureSuccessStatusCode();
+
+            // Đọc nội dung phản hồi
+            var responseStr = await response.Content.ReadAsStringAsync();
+
+            // Giải mã phản hồi JSON
+            var responseObject = JsonConvert.DeserializeObject<ResponseOutput<T>>(responseStr);
+
+            return responseObject;
         }
     }
 }

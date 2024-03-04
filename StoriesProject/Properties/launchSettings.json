@@ -5,7 +5,6 @@
       "executablePath": "dotnet.exe",
       "commandLineArgs": "watch run",
       "workingDirectory": "$(ProjectDir)",
-      "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
@@ -13,6 +12,7 @@
     },
     "IIS Express": {
       "commandName": "IISExpress",
+      "commandLineArgs": "watch run",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

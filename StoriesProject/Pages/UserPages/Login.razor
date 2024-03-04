@@ -103,12 +103,12 @@
                         <div class="tab-content">
                             <!-- 登录 -->
                             <div class="j-tab-item tab-item @(isLogin ? "active" : "")" data-contentid="login">
-                                <div class="dialog-login_form">
+                                <div class="dialog-login_form login-form">
                                     <div class="form-title">
                                         <h3>Đăng nhập</h3>
-                                        <span>Chưa có (&gt;^ω^&lt;)？ </span>
+                                        <span>Chưa có tài khoản？ </span>
                                         <a class="j-dialog-login-mode" @onclick="ToggleIsLogin" data-contentid="register">
-                                            Đăng kí
+                                            Đăng kí>
                                         </a>
                                     </div>
                                     <div class="form-item">
@@ -121,8 +121,8 @@
                                             <input type="password" name="password" placeholder="Password" autocomplete="off" @bind="loginViewModel.Password" />
                                         </div>
                                     </div>
-                                    <div class="form-item" >
-                                        <div class="j-login-submit submit-btn disabled-select" @onclick="(() => LoginAction(loginViewModel))">
+                                    <div class="form-item" @onclick="(() => LoginAction(loginViewModel))">
+                                        <div class="j-login-submit submit-btn disabled-select" >
                                             <i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop" style="@(isLogging ? "":"display:none")"></i>
                                             <span>Đăng nhập</span>
                                         </div>
@@ -139,37 +139,38 @@
                             </div>
                             <!-- 注册 -->
                             <div class="j-tab-item tab-item @(!isLogin ? "active" : "")" data-contentid="register">
-                                <div class="dialog-login_form">
+                                <div class="dialog-login_form register-form">
                                     <div class="form-title">
                                         <h3>Đăng kí</h3>
                                         <a class="j-dialog-login-mode" @onclick="ToggleIsLogin" data-contentid="login">Đăng nhập>></a>
                                     </div>
                                     <div class="form-item">
                                         <div class="input-block">
-                                            <input type="text" name="phone" placeholder="Số điện thoại" maxlength="10" autocomplete="off" />
+                                            <input type="text" name="account" autocomplete="off" placeholder="Username" @bind="accRegister.UserName" />
                                         </div>
                                     </div>
                                     <div class="form-item">
+                                        <div class="input-block">
+                                            <input type="text" name="phone" placeholder="Số điện thoại" maxlength="10" autocomplete="off" @bind="accRegister.PhoneNumber" />
+                                        </div>
+                                    </div>
+                                    @* <div class="form-item">
                                         <div class="input-block--inline">
                                             <input type="text" name="verifycode" placeholder="Mã xác nhận" autocomplete="off" />
                                             <div class="j-sms-btn sms-btn" data-status="false">
                                                 Gửi mã
                                             </div>
-                                            <!-- <div class="j-sms-btn sms-btn disabled" data-status="false">
-                                              短信验证
-                                            </div> -->
                                         </div>
-                                    </div>
+                                    </div> *@
                                     <div class="form-item">
                                         <div class="input-block">
                                             <input type="password" name="setpassword" placeholder="Mật khẩu (6-16 kí tự)"
-                                                   autocomplete="off" />
+                                                   autocomplete="off" @bind="accRegister.Password" />
                                         </div>
                                     </div>
-                                    <div class="form-item">
+                                    <div class="form-item" @onclick="(() => RegisterAction(accRegister))">
                                         <div class="j-register-submit submit-btn disabled-select">
-                                            <i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop"
-                                               style="display: none"></i>Đăng ký
+                                            <i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop" style="@(isLogging ? "":"display:none")"></i>Đăng ký
                                         </div>
                                     </div>
                                     <div class="tip-protocol">
@@ -433,29 +434,57 @@
 
 @code {
     private LoginViewModel loginViewModel { get; set; } = new LoginViewModel();
+    private AccountantRegister accRegister { get; set; } = new AccountantRegister();
     private bool isLogin = true;
     private bool isLogging { get; set; } = false;
     private void ToggleIsLogin()
     {
         isLogin = !isLogin;
+        loginViewModel = new LoginViewModel();
+        accRegister = new AccountantRegister();
     }
     private async Task LoginAction(LoginViewModel loginViewModel)
     {
         isLogging = true;
-        var isValid = await _js.InvokeAsync<bool>("validateForm");
+        var isValid = await _js.InvokeAsync<bool>("validateLoginForm");
         if (isValid)
         {
-            var token = await _accoutantsService.Login(loginViewModel);
+            var res = await _accoutantsService.Login(loginViewModel);
+            if (res != null && res.IsSuccess)
+            {
+                // Gọi hàm JavaScript để ghi token vào sessionStorage
+                await _js.InvokeVoidAsync("setSessionStorage", "token", res.Data);
+                await _js.InvokeVoidAsync("showToast", "Đăng nhập thành công");
+                await Task.Delay(2000);
+                _navigationManager.NavigateTo($"/");
+            }
+            else
+            {
+                await _js.InvokeVoidAsync("showToast", res?.Message);
+            }
+        }
+        isLogging = false;
+    }
 
-            // Gọi hàm JavaScript để ghi token vào sessionStorage
-            await _js.InvokeVoidAsync("setSessionStorage", "token", token);
-            isLogging = false;
-            await _js.InvokeVoidAsync("showToast", "Thành công");
-            _navigationManager.NavigateTo($"/");
-        }
-        else
+    private async Task RegisterAction(AccountantRegister accRegister)
+    {
+        isLogging = true;
+        var isValid = await _js.InvokeAsync<bool>("validateRegisterForm");
+        if (isValid)
         {
-            isLogging = false;
+            var res = await _accoutantsService.Register(accRegister);
+            if (res != null && res.IsSuccess)
+            {
+                await _js.InvokeVoidAsync("showToast", res.Data);
+                await Task.Delay(2000);
+                _navigationManager.NavigateTo($"/Login");
+            }
+            else
+            {
+                await _js.InvokeVoidAsync("showToast", res?.Message);
+            }
         }
+        isLogging = false;
+
     }
 }

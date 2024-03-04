@@ -1,5 +1,6 @@
 ﻿using StoriesProject.API.Services.Base;
 using StoriesProject.Common.Cache;
+using StoriesProject.Model.ViewModel;
 using StoriesProject.Model.ViewModel.Accountant;
 using StoriesProject.Services.ApiUrldefinition;
 
@@ -7,7 +8,8 @@ namespace StoriesProject.Services
 {
     public interface IAccoutantsService: IBaseService
     {
-        Task<string> Login(LoginViewModel loginViewModel);
+        Task<ResponseOutput<string>> Login(LoginViewModel loginViewModel);
+        Task<ResponseOutput<string>> Register(AccountantRegister loginViewModel);
     }
     public class AccoutantsService: BaseService, IAccoutantsService
     {
@@ -21,10 +23,21 @@ namespace StoriesProject.Services
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<string> Login(LoginViewModel loginViewModel)
+        public async Task<ResponseOutput<string>> Login(LoginViewModel loginViewModel)
         {
             var url = AccountantApiUrlDef.Login();
-            return await RequestPostAsync<string>(url, loginViewModel);
+            return await RequestFullPostAsync<string>(url, loginViewModel);
+        }
+
+        /// <summary>
+        /// Hàm xử lý đăng ký
+        /// CreatedBy ntthe 04.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ResponseOutput<string>> Register(AccountantRegister loginViewModel)
+        {
+            var url = AccountantApiUrlDef.Register();
+            return await RequestFullPostAsync<string>(url, loginViewModel);
         }
     }
 }

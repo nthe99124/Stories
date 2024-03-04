@@ -32,9 +32,12 @@ public partial class Accountant
     [Description("Họ và tên")]
     public string? Name { get; set; }
 
+    [Description("Số điện thoại")]
+    [StringLength(20, ErrorMessage = "Số điện thoại quá dài")]
+    public string? PhoneNumber { get; set; }
+
     [Description("Email")]
-    [StringLength(50, ErrorMessage = "Password quá dài")]
-    public string Email { get; set; }
+    public string? Email { get; set; }
 
     [Description("Giới tính")]
     public GenderType Gender { get; set; } = GenderType.Other;

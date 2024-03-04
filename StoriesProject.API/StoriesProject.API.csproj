@@ -49,6 +49,10 @@
     <Compile Include="Migrations\20240303184320_AddGetFavoriteStoryProcedure.Designer.cs" />
     <Compile Include="Migrations\20240303184507_AddGetHistoryStoryRead.cs" />
     <Compile Include="Migrations\20240303184507_AddGetHistoryStoryRead.Designer.cs" />
+    <Compile Include="Migrations\20240304071844_add-colum-Phone.cs" />
+    <Compile Include="Migrations\20240304071844_add-colum-Phone.Designer.cs" />
+    <Compile Include="Migrations\20240304072442_update-colum-email.cs" />
+    <Compile Include="Migrations\20240304072442_update-colum-email.Designer.cs" />
     <Compile Include="Migrations\StoriesContextModelSnapshot.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Repositories\AccountantRepository.cs" />

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StoriesProject.API.Common.Repository;
 
@@ -11,9 +12,11 @@ using StoriesProject.API.Common.Repository;
 namespace StoriesProject.API.Migrations
 {
     [DbContext(typeof(StoriesContext))]
-    partial class StoriesContextModelSnapshot : ModelSnapshot
+    [Migration("20240304071844_add-colum-Phone")]
+    partial class addcolumPhone
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,6 +40,7 @@ namespace StoriesProject.API.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<short>("Gender")

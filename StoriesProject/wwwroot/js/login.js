@@ -15,9 +15,9 @@
     }
 }
 
-function validateForm() {
-    let account = $('input[name=account]'),
-        password = $('input[name=password]');
+function validateLoginForm() {
+    let account = $('.login-form input[name=account]'),
+        password = $('.login-form input[name=password]');
     clearAllErrInfo();
     if (!account.val()) {
         addErrInfo(account, 'UserName không được trống');
@@ -29,6 +29,27 @@ function validateForm() {
     }
     return true;
 }
+
+function validateRegisterForm() {
+    let account = $('.register-form input[name=account]'),
+        phone = $('.register-form input[name=phone]'),
+        password = $('.register-form input[name=setpassword]');
+    clearAllErrInfo();
+    if (!account.val()) {
+        addErrInfo(account, 'UserName không được trống');
+        return false;
+    }
+    if (!phone.val()) {
+        addErrInfo(phone, 'Số điện thoại không được trống');
+        return false;
+    }
+    if (!password.val()) {
+        addErrInfo(password, 'Password không được trống');
+        return false;
+    }
+    return true;
+}
+
 function clearAllErrInfo() {
     $('.dialog-login_form input')
         .parents('.form-item')
