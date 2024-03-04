@@ -1,0 +1,39 @@
+﻿<div class="aside-user">
+
+    <dl class="aside-user--first">
+        <dt class="@(isSelected == 0 ? "aside-user__dt--selected" : "")">
+            <i class="iconfont icon-door"></i>
+            <a rel="nofollow" href="/user/">Trung tâm độc giả</a>
+        </dt>
+    </dl>
+    <dl>
+        <dt>
+            <i class="iconfont icon-book"></i>Thông tin truyện
+        </dt>
+        <dd class="@(isSelected == 1 ? "aside-user--selected" : "")">
+            <a rel="nofollow" href="/user/collection/">Bộ sưu tập</a>
+        </dd>
+        <dd class="@(isSelected == 2 ? "aside-user--selected" : "")">
+            <a rel="nofollow" href="/user/history/">Lịch sử</a>
+        </dd>
+        <dd class="@(isSelected == 3 ? "aside-user--selected" : "")">
+            <a rel="nofollow" href="/user/bill/">Mua</a>
+        </dd>
+    </dl>
+    <dl>
+        <dt>
+            <i class="iconfont icon-data"></i>Cài đặt tài khoản
+        </dt>
+        <dd class="@(isSelected == 4 ? "aside-user--selected" : "")">
+            <a rel="nofollow" href="/user/profile/">Thông tin</a>
+        </dd>
+        <dd class="@(isSelected == 5 ? "aside-user--selected" : "")">
+            <a rel="nofollow" href="/user/password/">Đổi mật khẩu</a>
+        </dd>
+    </dl>
+</div>
+
+@code {
+    [Parameter]
+    public int isSelected { get; set; }
+}

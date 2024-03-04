@@ -1,0 +1,173 @@
+﻿<style>
+    /*# Thêm vào*/
+    .in-header__nav .nav-item {
+        width: auto;
+        font-size: 16px;
+    }
+
+    .in-header__nav .underline {
+        display: none;
+        position: absolute;
+        left: 7px;
+        bottom: -3px;
+        width: 50px;
+        height: 3px;
+        background: #ff620e;
+        border-radius: 9px;
+    }
+
+    .button_config {
+        float: left;
+        width: 80px;
+        height: 40px;
+        font-size: 13px;
+        text-align: center;
+        line-height: 40px;
+        color: #fff;
+        border-radius: 0 20px 20px 0;
+        cursor: pointer;
+        background-color: #ff620e;
+        font-weight: bold;
+    }
+</style>
+<div class="in-header">
+    <div class="in-header__wrap container--response">
+        <a class="in-header__logo" href="/"></a>
+        <div class="in-header__nav">
+            <ul class="clearfix">
+                <li class="nav-item @(isSelected == 1 ? "active" : "")">
+                    <a href="/">TRANG CHỦ</a>
+                    <div class="underline"></div>
+                </li>
+                <li class="nav-item @(isSelected == 2 ? "active" : "")">
+                    <a href="/update/">MỚI CẬP NHẬT</a>
+                    <div class="underline"></div>
+                </li>
+                <li class="nav-item @(isSelected == 3 ? "active" : "")">
+                    <a href="/category/">PHÂN LOẠI</a>
+                    <div class="underline"></div>
+                </li>
+            </ul>
+        </div>
+      <div class="in-header__search">
+        <input class="input j-header-input" type="text" placeholder="Tìm truyện">
+        <span class="button_config">Search</span>
+        <i class="iconfont icon-ic_head_search"></i>
+        <div class="in-dialog--search hide">
+          <div class="search-his-wr">
+            <div class="dialog-title">
+              <span>历史记录</span>
+              <div class="search-his__clear">
+                <i class="iconfont icon-ic_head_searchnull"></i>
+                <a href="javascript:;">删除</a>
+              </div>
+            </div>
+            <div class="search-his clearfix"></div>
+          </div>
+          <div class="search-hot-wr">
+            <p class="dialog-title">今日热搜</p>
+            <div class="search-hot">
+
+
+            </div>
+          </div>
+
+          <!-- 搜索关键字弹出框 -->
+          <div class="keyword-box clearfix hide">
+
+
+          </div>
+        </div>
+      </div>
+      <div class="in-header__user">
+        <ul class="fl clearfix">
+          <li class="user-item j-user-msg">
+            <a href="/user/message/" rel="nofollow">
+              <i class="iconfont icon-ic_head_inform"></i>
+              <span class="item-text">消息</span>
+            </a>
+          </li>
+          <li class="user-item j-header-his">
+            <a href="/user/history/" rel="nofollow">
+              <i class="iconfont icon-ic_head_footprint"></i>
+              <span class="item-text">Lịch sử</span>
+            </a>
+          </li>
+          <li class="user-item j-header-coll">
+            <a href="/user/collection/" rel="nofollow">
+              <i class="iconfont icon-ic_head_coll"></i>
+              <span class="item-text">Đánh dấu</span>
+            </a>
+          </li>
+          <li class="user-item">
+            <a href="/author/comic_add_step1/">
+              <i class="iconfont icon-ic_head_tg"></i>
+              <span class="item-text">Tác giả</span>
+            </a>
+          </li>
+        </ul>
+        <div class="j-header-avatar in-header__avatar fl">
+          <a href="/user/"><img class="j-user-avatar"
+              src="//static.mkzcdn.com/home/assets/images/home/pic_login_defaulthead.png?v=5b80a2f" alt="用户头像">
+          </a>
+          <div class="j-dialog-avatar dialog__header-avatar">
+            <div class="in-dialog--avatar">
+              <span class="triangle">
+                <i class="iconfont icon-ic_nav_toast_sj"></i>
+              </span>
+              <!-- 游客 -->
+              <!-- <div class="j-dialog-tourist row-1 hide">
+                <p class="base-info">
+                  <a class="j-user-name nickname" href="/login/">Tên user</a>
+                  <i class="vip-tag icon icon-vip-tag"></i>
+                  <a class="j-user-logout logout" href="/login/">Chưa đăng nhập</a>
+                </p>
+                <p style="font-size: 16px;">Username</p>
+              </div> -->
+              <!-- 游客-end -->
+              <!-- 登录用户 -->
+              <div class="j-dialog-user row-1">
+                <p class="base-info">
+                  <a class="j-user-name nickname" href="/user/"></a>
+                  <i class="j-user-vip vip-tag icon-vip-tag"></i>
+                  <a class="j-user-logout logout" href="javascript:;">Đăng xuất</a>
+                </p>
+                <p style="font-size: 16px;">Username</p>
+              </div>
+              <!-- 登录用户-end -->
+              <div class="row-2">
+                <div class="fund-item">
+                  <div class="fund-item__icon">
+                    <i class="icon-user-yb"></i>
+                  </div>
+                  <div class="fund-item__info">Vàng<br>
+                    <span class="j-user-gold">0</span>
+                  </div>
+                </div>
+                <div class="fund-item">
+                  <div class="fund-item__icon">
+                    <i class="icon-user-yp"></i>
+                  </div>
+                  <div class="fund-item__info">Đã mua<br>
+                    <span class="j-user-ticket">0</span>
+                  </div>
+                </div>
+                <div class="fund-item">
+                  <div class="fund-item__icon">
+                    <i class="icon-user-kq"></i>
+                  </div>
+                  <div class="fund-item__info">Đang đọc<br>
+                    <span class="j-user-coupon">0</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+@code {
+    [Parameter]
+    public int isSelected { get; set; }
+}
