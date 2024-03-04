@@ -37,7 +37,7 @@ namespace StoriesProject.API.Controller.Base
             }
             else
             {
-                _res.SuccessEventHandler("Sai tài khoản hoặc mật khẩu");
+                _res.ErrorEventHandler("Sai tài khoản hoặc mật khẩu");
             }
             
             return Ok(_res);

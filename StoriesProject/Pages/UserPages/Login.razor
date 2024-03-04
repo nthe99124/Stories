@@ -430,7 +430,7 @@
 
 </html>
 
-<script src="js/login.js"></script>
+<script src="js/login.js" suppress-error="BL9992"></script>
 
 @code {
     private LoginViewModel loginViewModel { get; set; } = new LoginViewModel();
@@ -454,6 +454,7 @@
             {
                 // Gọi hàm JavaScript để ghi token vào sessionStorage
                 await _js.InvokeVoidAsync("setSessionStorage", "token", res.Data);
+                await _js.InvokeVoidAsync("setSessionStorage", "userName", loginViewModel.UserName);
                 await _js.InvokeVoidAsync("showToast", "Đăng nhập thành công");
                 await Task.Delay(2000);
                 _navigationManager.NavigateTo($"/");

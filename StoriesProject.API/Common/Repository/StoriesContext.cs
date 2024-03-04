@@ -49,7 +49,7 @@ public partial class StoriesContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Ignore<StoryAccountGeneric>();
+        //modelBuilder.Ignore<StoryAccountGeneric>();
         modelBuilder.Entity<Accountant>(entity =>
         {
             entity.Property(e => e.Id).ValueGeneratedNever();

@@ -3,6 +3,9 @@
 @using StoriesProject.Services;
 
 @inject IStoriesService _storiesService;
+@inject IJSRuntime _js;
+
+@inject NavigationManager _navigationManager;
 
 <html>
 <head>
@@ -709,7 +712,8 @@
           </li>
         </ul>
         <div class="j-header-avatar in-header__avatar fl">
-          <a href="/user/"><img class="j-user-avatar"
+                    <a @onclick="GoToUserPage">
+                <img class="j-user-avatar"
               src="//static.mkzcdn.com/home/assets/images/home/pic_login_defaulthead.png?v=5b80a2f" alt="用户头像">
           </a>
           <div class="j-dialog-avatar dialog__header-avatar">
@@ -1072,6 +1076,7 @@
     private List<StoryGeneric> listFreeStory { get; set; }
     private List<StoryGeneric> listPaidStory { get; set; }
     private List<StoryGeneric> listNewVersionStory { get; set; }
+    private string token { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -1081,5 +1086,25 @@
         listFreeStory = await _storiesService.GetTop10FreeStory();
         listPaidStory = await _storiesService.GetTop10PaidStory();
         listNewVersionStory = await _storiesService.GetTop10NewVervionStory();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            token = await _js.InvokeAsync<string>("getSessionStorage", "token");
+        }
+    }
+
+    private void GoToUserPage()
+    {
+        if (!string.IsNullOrEmpty(token))
+        {
+            _navigationManager.NavigateTo($"/user");
+        }
+        else
+        {
+            _navigationManager.NavigateTo($"/login");
+        }
     }
 }

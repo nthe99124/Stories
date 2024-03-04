@@ -53,5 +53,16 @@
         {
             return @$"{pathController}/GetTop10NewVervionStory";
         }
+
+        /// <summary>
+        /// Tạo url lấy 10 truyện yêu thích
+        /// CreatedBy ntthe 28.02.2024
+        /// </summary>
+        /// <returns></returns>
+        public static string GetFavoriteStory()
+        {
+            return @$"{pathController}/GetFavoriteStory";
+        }
+        
     }
 }

@@ -1,4 +1,8 @@
 ﻿@page "/user/collection"
+@using StoriesProject.Model.BaseEntity;
+@using StoriesProject.Services;
+@inject IStoriesService _storiesService;
+@inject IJSRuntime _js;
 <html>
 <head>
   <title>我的收藏 - 漫客栈</title>
@@ -143,40 +147,39 @@
       <div class="j-collection-list main-content__comic-list">
         <!-- <script id="user_collection_list" type="text/html"> -->
         <ul class="user-comic-list">
-          <!-- {{# layui.each(d, function(i, item){ }} -->
-          <li class="user-comic-item" data-comic={{d[i].comic_id}}>
-            <div class="j-item-select user-comic-item__select" data-comic={{d[i].comic_id}}>
-              <i class="pic-select"></i>
-            </div>
-            <a class="user-comic-item__cover" href="/{{d[i].comic_id}}/" target="_blank">
-              <!-- {{# if(d[i].is_update == 1 && d[i].status != 0) { }} -->
-              <i class="pic-comic-update"></i>
-              <!-- {{# } }} -->
-              <!-- {{# if (d[i].status == 0) { }} -->
-              <i class="pic-comic-off"></i>
-              <!-- {{# } }} -->
-              <img src="https://oss.mkzcdn.com/comic/cover/20231019/6530a23275954-399x533.jpg!cover-400">
-            </a>
-            <div class="user-comic-item__detail">
-              <p class="user-comic-item--name">
-                <a class="text-overflow" href="/{{d[i].comic_id}}/" target="_blank">Tên truyện</a>
-              </p>
-              <p class="user-comic-item--text user-comic-item--latest">
-                <a class="text-overflow--gray" href="/{{d[i].comic_id}}/{{d[i].chapter_id}}.html"
-                  target="_blank">Chapter x：Title của chapter</a>
-              </p>
-              <p class="user-comic-item--text">
-                <a class="text-overflow--gray" href="/{{d[i].comic_id}}/{{d[i].read_chapter_id}}.html"
-                  target="_blank">Đang đọc: Title của chapter</a>
-              </p>
-            </div>
-          </li>
-          <!-- {{#  }); }}   -->
-          <!-- {{#  if(d.length === 0){ }} -->
+            @if (listFavoritesStory != null && listFavoritesStory.Count > 0)
+            {
+                @foreach (var item in listFavoritesStory)
+                {
+                    <li class="user-comic-item" data-comic="@item.Id">
+                        <div class="j-item-select user-comic-item__select" data-comic="@item.Id">
+                            <i class="pic-select"></i>
+                        </div>
+                        <a class="user-comic-item__cover" href="" target="_blank">
+                            <i class="pic-comic-update"></i>
+                            <i class="pic-comic-off"></i>
+                            <img src="@item.ImageLink">
+                        </a>
+                        <div class="user-comic-item__detail">
+                            <p class="user-comic-item--name">
+                                <a class="text-overflow" href="" target="_blank">@item.Name</a>
+                            </p>
+                            @* <p class="user-comic-item--text user-comic-item--latest">
+                    <a class="text-overflow--gray" href="/{{d[i].comic_id}}/{{d[i].chapter_id}}.html"
+                    target="_blank">Chapter x：Title của chapter</a>
+                    </p> *@
+                            @* <p class="user-comic-item--text">
+                    <a class="text-overflow--gray" href="/{{d[i].comic_id}}/{{d[i].read_chapter_id}}.html"
+                    target="_blank">Đang đọc: Title của chapter</a>
+                    </p> *@
+                        </div>
+                    </li>
+                }
+            }
+                    
+          
           <div class="no-collection"></div>
-          <!-- {{#  } }} -->
         </ul>
-        <!-- </> -->
       </div>
 
 
@@ -573,5 +576,16 @@
 
 </html>
 @code {
+    private List<StoryGeneric> listFavoritesStory { get; set; }
+    private string token { get; set; }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            listFavoritesStory = await _storiesService.GetFavoriteStory();
+            StateHasChanged();
+        }
+        
+    }
 }

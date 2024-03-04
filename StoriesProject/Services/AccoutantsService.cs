@@ -1,8 +1,14 @@
-﻿using StoriesProject.API.Services.Base;
+﻿using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.JSInterop;
+using Newtonsoft.Json.Linq;
+using StoriesProject.API.Services.Base;
 using StoriesProject.Common.Cache;
 using StoriesProject.Model.ViewModel;
 using StoriesProject.Model.ViewModel.Accountant;
 using StoriesProject.Services.ApiUrldefinition;
+using System.Security.Claims;
 
 namespace StoriesProject.Services
 {
@@ -13,7 +19,10 @@ namespace StoriesProject.Services
     }
     public class AccoutantsService: BaseService, IAccoutantsService
     {
-        public AccoutantsService(IDistributedCacheCustom cache, IHttpClientFactory httpClientFactory, IConfiguration config) : base(cache, httpClientFactory, config)
+        private readonly SignInManager<IdentityUser> _signInManager;
+        
+
+        public AccoutantsService(IDistributedCacheCustom cache, IHttpClientFactory httpClientFactory, IConfiguration config, IJSRuntime js) : base(cache, httpClientFactory, config, js)
         {
             
         }
@@ -26,7 +35,8 @@ namespace StoriesProject.Services
         public async Task<ResponseOutput<string>> Login(LoginViewModel loginViewModel)
         {
             var url = AccountantApiUrlDef.Login();
-            return await RequestFullPostAsync<string>(url, loginViewModel);
+            var res = await RequestFullPostAsync<string>(url, loginViewModel);
+            return res;
         }
 
         /// <summary>
@@ -39,5 +49,7 @@ namespace StoriesProject.Services
             var url = AccountantApiUrlDef.Register();
             return await RequestFullPostAsync<string>(url, loginViewModel);
         }
+
+        
     }
 }

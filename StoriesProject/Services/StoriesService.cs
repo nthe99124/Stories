@@ -1,4 +1,5 @@
-﻿using StoriesProject.API.Services.Base;
+﻿using Microsoft.JSInterop;
+using StoriesProject.API.Services.Base;
 using StoriesProject.Common.Cache;
 using StoriesProject.Model.BaseEntity;
 using StoriesProject.Services.ApiUrldefinition;
@@ -12,10 +13,11 @@ namespace StoriesProject.Services
         Task<List<StoryGeneric>> GetTop10FreeStory();
         Task<List<StoryGeneric>> GetTop10PaidStory();
         Task<List<StoryGeneric>> GetTop10NewVervionStory();
+        Task<List<StoryGeneric>> GetFavoriteStory();
     }
     public class StoriesService : BaseService, IStoriesService
     {
-        public StoriesService(IDistributedCacheCustom cache, IHttpClientFactory httpClientFactory, IConfiguration config) : base(cache, httpClientFactory, config)
+        public StoriesService(IDistributedCacheCustom cache, IHttpClientFactory httpClientFactory, IConfiguration config, IJSRuntime js) : base(cache, httpClientFactory, config, js)
         {
             
         }
@@ -74,6 +76,17 @@ namespace StoriesProject.Services
         {
             var url = StoriesApiUrlDef.GetTop10NewVervionStory();
             return await RequestGetAsync<List<StoryGeneric>>(url);
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy danh sách truyện yêu thích
+        /// CreatedBy ntthe 28.02.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<StoryGeneric>> GetFavoriteStory()
+        {
+            var url = StoriesApiUrlDef.GetFavoriteStory();
+            return await RequestAuthenGetAsync<List<StoryGeneric>>(url);
         }
     }
 }
