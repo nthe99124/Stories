@@ -119,8 +119,6 @@ namespace StoriesProject.API.Services.Base
         {
             try
             {
-                var uri = _remoteServiceBaseUrl + AccountantApiUrlDef.Login();
-
                 using (var httpClient = _httpClientFactory.CreateClient())
                 {
                     httpClient.DefaultRequestHeaders.Clear();
