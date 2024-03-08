@@ -1,0 +1,445 @@
+﻿@page "/admin/comic_management"
+@inject IJSRuntime JSRuntime
+<body>
+    <div class="wrapper">
+        <AdminSidebar />
+        <div class="main">
+            <nav class="navbar navbar-expand px-4 py-3">
+                <form action="#" class="d-none d-sm-inline-block">
+                </form>
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item dropdown">
+                            <a href="#" data-bs-toggle="dropdown" class="nav-icon pe-md-0">
+                                <img src="/account.png" class="avatar img-fluid" alt="">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end rounded">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <main class="content px-3 py-4">
+                <div class="container-fluid">
+                    <div class="mb-3">
+                        <h3 class="fw-bold fs-4 mb-5">Author Management</h3>
+
+                        <ul class="nav nav-tabs mb-5" id="myTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class=@(selectedTab==1 ? "nav-link active": "nav-link") id="active-tab" data-bs-toggle="tab" data-bs-target="#active"
+                                        type="button" role="tab" aria-controls="active" aria-selected=@(selectedTab==1 ? "true": "false") @onclick="() => SetSelectedTab(1)">
+                                    Đang hoạt động
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class=@(selectedTab==2 ? "nav-link active": "nav-link") id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button"
+                                        role="tab" aria-controls="pending" aria-selected=@(selectedTab==2 ? "true": "false") @onclick="() => SetSelectedTab(2)">
+                                    Chờ xét duyệt
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class=@(selectedTab==3 ? "nav-link active": "nav-link") id="blocked-tab" data-bs-toggle="tab" data-bs-target="#blocked" type="button"
+                                        role="tab" aria-controls="blocked" aria-selected=@(selectedTab==3 ? "true": "false") @onclick="() => SetSelectedTab(3)">
+                                    Đang bị chặn
+                                </button>
+                            </li>
+                        </ul>
+
+
+                        <div class="tab-content" id="myTabsContent">
+                            @if (selectedTab == 1)
+                            {
+                                <div class="tab-pane fade show active" id="active" role="tabpanel" aria-labelledby="active-tab">
+                                    <h3 class="fw-bold fs-5 mb-4" style="color: #1f6b0a;">Đang hoạt động</h3>
+                                    <div class="mb-3" style="width: 80%;">
+                                        <strong>Thể loại:</strong>
+                                        <div class="form-check form-check-inline" style="margin-left: 10px;">
+                                            <input class="form-check-input" type="checkbox" id="genre-action" value="action">
+                                            <label class="form-check-label" for="genre-action">Hành động</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="genre-family" value="family">
+                                            <label class="form-check-label" for="genre-family">Gia đình</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="genre-comedy" value="comedy">
+                                            <label class="form-check-label" for="genre-comedy">Hài hước</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-5" style="width: 30%;">
+                                        <div class="col-md-6">
+                                            <strong>Giá từ:</strong>
+                                            <input type="text" class="form-control" id="price-from" placeholder="Nhập giá từ...">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <strong>Đến:</strong>
+                                            <input type="text" class="form-control" id="price-to" placeholder="Nhập giá đến...">
+                                        </div>
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-hover custom-table" style="width: 150%;">
+                                            <caption>10/12 bản ghi</caption>
+                                            <thead>
+                                            <th scope="col" style="width: 2%;">#</th>
+                                            <th scope="col" style="width: 14%;">Tác phẩm</th>
+                                            <th scope="col" style="width: 5%;">Mã</th>
+                                            <th scope="col" style="width: 8%;">Tác giả</th>
+                                            <th scope="col" style="width: 6%;">Giá (vnd)</th>
+                                            <th scope="col" style="width: 18%;">Mô tả</th>
+                                            <th scope="col" style="width: 18%;">Thể loại</th>
+                                            <th scope="col" style="width: 4%;">Đã bán</th>
+                                            <th scope="col" style="width: 7%;">Doanh thu (vnd)</th>
+                                            <th scope="col" style="width: 7%;">Ngày cập nhật</th>
+                                            <th scope="col" style="width: 8%;">Lượng truy cập (người)</th>
+                                            <th scope="col" style="width: 5%;">Chi tiết</th>
+                                            </thead>
+                                            <tbody class="table-group-divider">
+                                                <tr>
+                                                    <th scope="row">1</th>
+                                                    <td>Tác phẩm 1</td>
+                                                    <td>MSL134</td>
+                                                    <td>
+                                                        <a href="#" style="color: black;text-decoration: underline;text-decoration: underline;">
+                                                            Trần
+                                                            Vinh
+                                                        </a>
+                                                    </td>
+                                                    <td>200,000</td>
+                                                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget felis nulla. </td>
+                                                    <td>Hành động </td>
+                                                    <td>50 </td>
+                                                    <td>10,000,000</td>
+                                                    <td>20/12/2023</td>
+                                                    <td>15,000</td>
+                                                    <td>
+                                                        <a href="#">
+                                                            <i class="lni lni-eye"></i>
+                                                            Xem
+                                                        </a>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <div class="show-comic__on-hover" id="showComicInfo">
+                                                        <div style="display: flex;">
+                                                            <img src="https://cdnnvd.com/nettruyen/thumb/ngay-toi-sinh-ra-bach-quy-da-hanh-tuyet-thi-ho-dao.jpg"
+                                                                 height="150px" />
+                                                            <div style="display: flex;flex-direction: column;margin-left: 10px;">
+                                                                <strong style="font-size: 16px;">Tên truyện</strong>
+                                                                <p style="font-size: 13px;">Ngày tôi sinh ra, bạch quỷ đã hành tuyết thị hồ đao</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <th scope="row">2</th>
+                                                    <td>Tác phẩm 2</td>
+                                                    <td>MSL134</td>
+                                                    <td><a href="#" style="color: black;text-decoration: underline;">Trần Vinh</a></td>
+                                                    <td>200,000</td>
+                                                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget felis nulla. </td>
+                                                    <td>Hành động </td>
+                                                    <td>50 </td>
+                                                    <td>10,000,000</td>
+                                                    <td>20/12/2023</td>
+                                                    <td>15,000</td>
+                                                    <td>
+                                                        <a href="#">
+                                                            <i class="lni lni-eye"></i>
+                                                            Xem
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">3</th>
+                                                    <td>Tác phẩm 3</td>
+                                                    <td>MSL134</td>
+                                                    <td><a href="#" style="color: black;text-decoration: underline;">Trần Vinh</a></td>
+                                                    <td>200,000</td>
+                                                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget felis nulla. </td>
+                                                    <td>Hành động </td>
+                                                    <td>50 </td>
+                                                    <td>10,000,000</td>
+                                                    <td>20/12/2023</td>
+                                                    <td>15,000</td>
+                                                    <td>
+                                                        <a href="#">
+                                                            <i class="lni lni-eye"></i>
+                                                            Xem
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+
+                            @if(selectedTab == 2)
+                            {
+                                <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab">
+                                    <h3 class="fw-bold fs-5 mb-5" style="color: rgb(53, 70, 145);">Chờ xét duyệt</h3>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover custom-table" style="width: 150%;">
+                                            <caption>10/12 bản ghi</caption>
+                                            <thead>
+                                            <th scope="col" style="width: 2%;">#</th>
+                                            <th scope="col" style="width: 14%;">Tác phẩm</th>
+                                            <th scope="col" style="width: 5%;">Mã</th>
+                                            <th scope="col" style="width: 8%;">Tác giả</th>
+                                            <th scope="col" style="width: 6%;">Giá (vnd)</th>
+                                            <th scope="col" style="width: 18%;">Mô tả</th>
+                                            <th scope="col" style="width: 18%;">Thể loại</th>
+                                            <th scope="col" style="width: 7%;">Ngày cập nhật</th>
+                                            <th scope="col" style="width: 5%;">Chi tiết</th>
+                                            <th scope="col" style="width: 5%;">Action</th>
+                                            </thead>
+                                            <tbody class="table-group-divider">
+                                                <tr>
+                                                    <th scope="row">1</th>
+                                                    <td>Tác phẩm 1</td>
+                                                    <td>MSL134</td>
+                                                    <td><a href="#" style="color: black;text-decoration: underline;">Trần Vinh</a></td>
+                                                    <td>200,000</td>
+                                                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget felis nulla. </td>
+                                                    <td>Hành động </td>
+                                                    <td>20/12/2023</td>
+                                                    <td>
+                                                        <a href="#">
+                                                            <i class="lni lni-eye"></i>
+                                                            Preview
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" style="color: green;text-decoration: underline;margin-right: 15px;">Duyệt </a>
+                                                        <a href="#" style="color: red;text-decoration: underline;">Từ chối</a>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <div class="show-comic__on-hover" id="showComicInfo">
+                                                        <div style="display: flex;">
+                                                            <img src="https://cdnnvd.com/nettruyen/thumb/ngay-toi-sinh-ra-bach-quy-da-hanh-tuyet-thi-ho-dao.jpg"
+                                                                 height="150px" />
+                                                            <div style="display: flex;flex-direction: column;margin-left: 10px;">
+                                                                <strong style="font-size: 16px;">Tên truyện</strong>
+                                                                <p style="font-size: 13px;">Ngày tôi sinh ra, bạch quỷ đã hành tuyết thị hồ đao</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <th scope="row">2</th>
+                                                    <td>Tác phẩm 2</td>
+                                                    <td>MSL134</td>
+                                                    <td><a href="#" style="color: black;text-decoration: underline;">Trần Vinh</a></td>
+                                                    <td>200,000</td>
+                                                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget felis nulla. </td>
+                                                    <td>Hành động </td>
+                                                    <td>20/12/2023</td>
+                                                    <td>
+                                                        <a href="#">
+                                                            <i class="lni lni-eye"></i>
+                                                            Preview
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" style="color: green;text-decoration: underline;margin-right: 15px;">Duyệt </a>
+                                                        <a href="#" style="color: red;text-decoration: underline;">Từ chối</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">3</th>
+                                                    <td>Tác phẩm 3</td>
+                                                    <td>MSL134</td>
+                                                    <td><a href="#" style="color: black;text-decoration: underline;">Trần Vinh</a></td>
+                                                    <td>200,000</td>
+                                                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget felis nulla. </td>
+                                                    <td>Hành động </td>
+                                                    <td>20/12/2023</td>
+                                                    <td>
+                                                        <a href="#">
+                                                            <i class="lni lni-eye"></i>
+                                                            Preview
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="#" style="color: green;text-decoration: underline;margin-right: 15px;">Duyệt </a>
+                                                        <a href="#" style="color: red;text-decoration: underline;">Từ chối</a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
+                            @if(selectedTab == 3)
+                            {
+                                <div class="tab-pane fade show active" id="blocked" role="tabpanel" aria-labelledby="blocked-tab">
+                                    <h3 class="fw-bold fs-5 mb-4" style="color: #9e2828;">Đang bị chặn</h3>
+                                    <div class="mb-3" style="width: 80%;">
+                                        <strong>Thể loại:</strong>
+                                        <div class="form-check form-check-inline" style="margin-left: 10px;">
+                                            <input class="form-check-input" type="checkbox" id="genre-action" value="action">
+                                            <label class="form-check-label" for="genre-action">Hành động</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="genre-family" value="family">
+                                            <label class="form-check-label" for="genre-family">Gia đình</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="genre-comedy" value="comedy">
+                                            <label class="form-check-label" for="genre-comedy">Hài hước</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-5" style="width: 30%;">
+                                        <div class="col-md-6">
+                                            <strong>Giá từ:</strong>
+                                            <input type="text" class="form-control" id="price-from" placeholder="Nhập giá từ...">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <strong>Đến:</strong>
+                                            <input type="text" class="form-control" id="price-to" placeholder="Nhập giá đến...">
+                                        </div>
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-hover custom-table" style="width: 150%;">
+                                            <caption>10/12 bản ghi</caption>
+                                            <thead>
+                                            <th scope="col" style="width: 2%;">#</th>
+                                            <th scope="col" style="width: 14%;">Tác phẩm</th>
+                                            <th scope="col" style="width: 5%;">Mã</th>
+                                            <th scope="col" style="width: 8%;">Tác giả</th>
+                                            <th scope="col" style="width: 6%;">Giá (vnd)</th>
+                                            <th scope="col" style="width: 18%;">Mô tả</th>
+                                            <th scope="col" style="width: 18%;">Thể loại</th>
+                                            <th scope="col" style="width: 4%;">Đã bán</th>
+                                            <th scope="col" style="width: 7%;">Doanh thu (vnd)</th>
+                                            <th scope="col" style="width: 7%;">Ngày cập nhật</th>
+                                            <th scope="col" style="width: 8%;">Lượng truy cập (người)</th>
+                                            <th scope="col" style="width: 5%;">Chi tiết</th>
+                                            </thead>
+                                            <tbody class="table-group-divider">
+                                                <tr>
+                                                    <th scope="row">1</th>
+                                                    <td>Tác phẩm 1</td>
+                                                    <td>MSL134</td>
+                                                    <td><a href="#" style="color: black;text-decoration: underline;">Trần Vinh</a></td>
+                                                    <td>200,000</td>
+                                                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget felis nulla. </td>
+                                                    <td>Hành động </td>
+                                                    <td>50 </td>
+                                                    <td>10,000,000</td>
+                                                    <td>20/12/2023</td>
+                                                    <td>15,000</td>
+                                                    <td>
+                                                        <a href="#">
+                                                            <i class="lni lni-eye"></i>
+                                                            Xem
+                                                        </a>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <div class="show-comic__on-hover" id="showComicInfo">
+                                                        <div style="display: flex;">
+                                                            <img src="https://cdnnvd.com/nettruyen/thumb/ngay-toi-sinh-ra-bach-quy-da-hanh-tuyet-thi-ho-dao.jpg"
+                                                                 height="150px" />
+                                                            <div style="display: flex;flex-direction: column;margin-left: 10px;">
+                                                                <strong style="font-size: 16px;">Tên truyện</strong>
+                                                                <p style="font-size: 13px;">Ngày tôi sinh ra, bạch quỷ đã hành tuyết thị hồ đao</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <th scope="row">2</th>
+                                                    <td>Tác phẩm 2</td>
+                                                    <td>MSL134</td>
+                                                    <td><a href="#" style="color: black;text-decoration: underline;">Trần Vinh</a></td>
+
+                                                    <td>200,000</td>
+                                                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget felis nulla. </td>
+                                                    <td>Hành động </td>
+                                                    <td>50 </td>
+                                                    <td>10,000,000</td>
+                                                    <td>20/12/2023</td>
+                                                    <td>15,000</td>
+                                                    <td>
+                                                        <a href="#">
+                                                            <i class="lni lni-eye"></i>
+                                                            Xem
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">3</th>
+                                                    <td>Tác phẩm 3</td>
+                                                    <td>MSL134</td>
+                                                    <td><a href="#" style="color: black;text-decoration: underline;">Trần Vinh</a></td>
+                                                    <td>200,000</td>
+                                                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget felis nulla. </td>
+                                                    <td>Hành động </td>
+                                                    <td>50 </td>
+                                                    <td>10,000,000</td>
+                                                    <td>20/12/2023</td>
+                                                    <td>15,000</td>
+                                                    <td>
+                                                        <a href="#">
+                                                            <i class="lni lni-eye"></i>
+                                                            Xem
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            }
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row text-body-secondary">
+                        <div class="col-6 text-start ">
+                            <a class="text-body-secondary" href=" #">
+                                <strong>ComicHub</strong>
+                            </a>
+                        </div>
+                        <div class="col-6 text-end text-body-secondary d-none d-md-block">
+                            <ul class="list-inline mb-0">
+                                <li class="list-inline-item">
+                                    <a class="text-body-secondary" href="#">Contact</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-body-secondary" href="#">About Us</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-body-secondary" href="#">Terms & Conditions</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+</body>
+
+@code {
+    private int selectedTab = 1;
+    private void SetSelectedTab(int tab)
+    {
+        selectedTab = tab;
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("registerMouseEvents");
+        }
+    }
+
+}
+

@@ -47,6 +47,12 @@
 		<Content Include="Pages\UserPages\ReadingChapter.razor" />
 		<Content Include="Pages\UserPages\Category.razor" />
 		<Content Include="Pages\UserPages\NewUpdate.razor" />
+		<Content Include="Pages\AdminPages\AuthorDetail.razor" />
+		<Content Include="Pages\AdminPages\AuthorManagement.razor" />
+		<Content Include="Pages\AdminPages\CategoryManagement.razor" />
+		<Content Include="Pages\AdminPages\ComicManagement.razor" />
+		<Content Include="Pages\AdminPages\Dashboard.razor" />
+		<Content Include="Pages\AdminPages\PreviewComic.razor" />
 		<Content Include="Pages\_Host.cshtml" />
 		<Content Include="Properties\launchSettings.json" />
 		<Content Include="Shared\MainLayout.razor" />
@@ -57,6 +63,7 @@
 		<Content Include="Shared\AuthorSideBar.razor" />
 		<Content Include="Shared\AuthorHeader.razor" />
 		<Content Include="Shared\NavMenu.razor" />
+		<Content Include="Shared\AdminSidebar.razor" />
 		<Content Include="Shared\SurveyPrompt.razor" />
 		<Content Include="_Imports.razor" />
 		<Content Include="Shared\MainLayout.razor.css" />
@@ -65,6 +72,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="13.0.1" />
+		<PackageReference Include="Blazorise.Bootstrap" Version="1.4.2" />
 		<PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.3.0" />
 		<PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.2" />
 		<PackageReference Include="Microsoft.Web.Administration" Version="11.1.0" />
