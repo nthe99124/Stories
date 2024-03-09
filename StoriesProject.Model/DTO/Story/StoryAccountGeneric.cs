@@ -4,6 +4,9 @@ namespace StoriesProject.Model.BaseEntity;
 
 public class StoryAccountGeneric
 {
+    /// <summary>
+    /// id
+    /// </summary>
     public Guid Id { get; set; }
     public string? Name { get; set; }
     public string? Code { get; set; }
