@@ -3,6 +3,8 @@
 @using StoriesProject.Services;
 @inject IStoriesService _storiesService;
 @inject IJSRuntime _js;
+
+@layout LayoutComponent
 <html>
 <head>
     <title>我的收藏 - 漫客栈</title>
@@ -370,7 +372,7 @@
     private List<StoryGeneric> listFavoritesStory { get; set; }
     private string token { get; set; }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task HandleAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {

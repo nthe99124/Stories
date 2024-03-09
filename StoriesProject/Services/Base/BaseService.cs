@@ -51,7 +51,7 @@ namespace StoriesProject.API.Services.Base
             }
             catch (Exception ex)
             {
-                return default(T);
+                throw ex;
             }
         }
 
@@ -69,7 +69,7 @@ namespace StoriesProject.API.Services.Base
             }
             catch (Exception ex)
             {
-                return new ResponseOutput<T>();
+                throw ex;
             }
         }
 
@@ -92,7 +92,7 @@ namespace StoriesProject.API.Services.Base
             }
             catch (Exception ex)
             {
-                return default(T);
+                throw ex;
             }
         }
 
@@ -111,7 +111,7 @@ namespace StoriesProject.API.Services.Base
             }
             catch (Exception ex)
             {
-                return new ResponseOutput<T>();
+                throw ex;
             }
         }
 
@@ -121,6 +121,7 @@ namespace StoriesProject.API.Services.Base
             {
                 using (var httpClient = _httpClientFactory.CreateClient())
                 {
+                    httpClient.DefaultRequestHeaders.Accept.Clear();
                     httpClient.DefaultRequestHeaders.Clear();
                     httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     var accessToken = await GetItemAsync("token");
@@ -150,7 +151,7 @@ namespace StoriesProject.API.Services.Base
             }
             catch (Exception ex)
             {
-                return default(T);
+                throw ex;
             }
         }
 
@@ -183,7 +184,7 @@ namespace StoriesProject.API.Services.Base
             }
             catch (Exception ex)
             {
-                return default(T);
+                throw ex;
             }
         }
 

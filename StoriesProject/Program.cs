@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Localization;
+﻿using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Localization;
 using StoriesProject.API.Services.Base;
 using StoriesProject.Common.Cache;
@@ -7,6 +6,8 @@ using StoriesProject.Common.MiddleWare;
 using StoriesProject.Model.ViewModel;
 using StoriesProject.Services;
 using System.Globalization;
+using Microsoft.Extensions.DependencyInjection;
+using StoriesProject.Common.Handler;
 
 #region Config service
 var builder = WebApplication.CreateBuilder(args);
@@ -24,7 +25,7 @@ services.AddSingleton(configuration);
 #region Razor page config
 services.AddRazorPages();
 services.AddServerSideBlazor();
-services.AddHttpClient();
+services.AddHttpClient("MyHttpClient").AddHttpMessageHandler<RequestHttpHandler>();
 #endregion
 
 #region Localize
@@ -62,6 +63,7 @@ services.AddHttpContextAccessor();
 
 #region Config Service
 services.AddScoped(typeof(IResponseOutput<>), typeof(ResponseOutput<>));
+services.AddScoped<RequestHttpHandler>();
 services.AddScoped<IBaseService, BaseService>();
 services.AddScoped<IAccoutantsService, AccoutantsService>();
 services.AddScoped<IStoriesService, StoriesService>();
