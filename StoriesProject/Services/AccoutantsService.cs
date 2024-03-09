@@ -49,7 +49,5 @@ namespace StoriesProject.Services
             var url = AccountantApiUrlDef.Register();
             return await RequestFullPostAsync<string>(url, loginViewModel);
         }
-
-        
     }
 }
