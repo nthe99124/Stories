@@ -6,3 +6,7 @@ function getSessionStorage(key) {
     var value = sessionStorage.getItem(key);
     return value;
 }
+
+function removeSessionStorage(key) {
+    var value = sessionStorage.removeItem(key);
+}

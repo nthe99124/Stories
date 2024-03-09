@@ -1,0 +1,23 @@
+﻿@using Microsoft.JSInterop;
+@using System.Net;
+@inject NavigationManager _navigationManager;
+@inject IJSRuntime _js;
+
+@code {
+    #region TODO: các hàm dùng chung cho các form từ js => nên tách ra dạng mixin
+    protected async Task<string> GetSessionStorage(string key)
+    {
+        return await _js.InvokeAsync<string>("getSessionStorage", key);
+    }
+
+    protected async Task SetSessionStorage(string key, object value)
+    {
+        await _js.InvokeAsync<string>("setSessionStorage", key, value);
+    }
+
+    protected async Task RemoveSessionStorage(string key)
+    {
+        await _js.InvokeAsync<string>("removeSessionStorage", key);
+    }
+    #endregion
+}

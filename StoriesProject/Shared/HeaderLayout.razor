@@ -1,4 +1,6 @@
-﻿<style>
+﻿@inject NavigationManager _navigationManager;
+@inject IJSRuntime _js;
+<style>
     /*# Thêm vào*/
     .in-header__nav .nav-item {
         width: auto;
@@ -107,7 +109,8 @@
           </li>
         </ul>
         <div class="j-header-avatar in-header__avatar fl">
-          <a href="/user/"><img class="j-user-avatar"
+                <a @onclick="GoToUserPage">
+                    <img class="j-user-avatar"
               src="//static.mkzcdn.com/home/assets/images/home/pic_login_defaulthead.png?v=5b80a2f" alt="用户头像">
           </a>
           <div class="j-dialog-avatar dialog__header-avatar">
@@ -170,4 +173,30 @@
 @code {
     [Parameter]
     public int isSelected { get; set; }
+    private string token { get; set; }
+    
+    private void GoToUserPage()
+    {
+        if (!string.IsNullOrEmpty(token))
+        {
+            _navigationManager.NavigateTo($"/user");
+        }
+        else
+        {
+            _navigationManager.NavigateTo($"/login");
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            token = await GetSessionStorage("token");
+        }
+    }
+
+    protected async Task<string> GetSessionStorage(string key)
+    {
+        return await _js.InvokeAsync<string>("getSessionStorage", key);
+    }
 }

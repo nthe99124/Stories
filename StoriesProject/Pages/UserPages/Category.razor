@@ -1,831 +1,529 @@
-﻿@page "/Category" 
-
+﻿@page "/Category"
+@using StoriesProject.Model.BaseEntity;
+@using StoriesProject.Services;
+@inject ITopicService _topicService;
+@inject IStoriesService _storiesService;
 <html>
 
 <head>
-  <title> 少年_ 漫画检索 - 漫客栈</title>
-  <meta charset="utf-8">
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-  <meta name="keywords" content="漫画大全,好看的漫画,漫画图片,在线漫画,斗破苍穹漫画,斗罗大陆漫画,2018好看的漫画">
-  <meta name="description" content="漫客栈漫画大全，倾心为您推荐2018最好看的漫画，看漫画，就来漫客栈！">
-  <link rel="shortcut icon" href="https://static.mkzcdn.com/common/favicon.ico" type="image/x-icon">
-  <link rel="Bookmark" href="https://static.mkzcdn.com/common/favicon.ico">
+    <title> 少年_ 漫画检索 - 漫客栈</title>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="keywords" content="漫画大全,好看的漫画,漫画图片,在线漫画,斗破苍穹漫画,斗罗大陆漫画,2018好看的漫画">
+    <meta name="description" content="漫客栈漫画大全，倾心为您推荐2018最好看的漫画，看漫画，就来漫客栈！">
+    <link rel="shortcut icon" href="https://static.mkzcdn.com/common/favicon.ico" type="image/x-icon">
+    <link rel="Bookmark" href="https://static.mkzcdn.com/common/favicon.ico">
 
-  <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/script/libs/layui/css/layui.css?v=0b3cd68">
-  <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/style/common/common_home.css?v=a75a636">
+    <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/script/libs/layui/css/layui.css?v=0b3cd68">
+    <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/style/common/common_home.css?v=a75a636">
 
-  <link rel="stylesheet" href="/Static/home/assets/style/bundle/home.css?v=7d38053">
+    <link rel="stylesheet" href="/Static/home/assets/style/bundle/home.css?v=7d38053">
 
-  <!-- start Dplus -->
-  <!-- end Dplus -->
-  <!--[if lt IE 9]>
-<script src="//static.mkzcdn.com/home/assets/script/libs/respond/respond.js?v=afc1984"></script>
-<![endif]-->
-  <link rel="stylesheet" href="https://static.mkzcdn.com/home/assets/script/libs/layer/theme/default/layer.css?v=3.1.1"
-    id="layuicss-layer">
-  <link rel="stylesheet"
-    href="//static.mkzcdn.com/home/assets/script/libs/share/static/api/css/share_style0_16.css?v=6aba13f0.css">
-  <style>
-    .cate-top-wr {
-      float: left;
-      width: 100%;
-      background: #f8f8f8;
-    }
+    <!-- start Dplus -->
+    <!-- end Dplus -->
+    <!--[if lt IE 9]>
+    <script src="//static.mkzcdn.com/home/assets/script/libs/respond/respond.js?v=afc1984"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="https://static.mkzcdn.com/home/assets/script/libs/layer/theme/default/layer.css?v=3.1.1"
+          id="layuicss-layer">
+    <link rel="stylesheet"
+          href="//static.mkzcdn.com/home/assets/script/libs/share/static/api/css/share_style0_16.css?v=6aba13f0.css">
+    <style>
+        .cate-top-wr {
+            float: left;
+            width: 100%;
+            background: #f8f8f8;
+        }
 
-    .cate-selector {
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-      padding: 20px 20px 3px 20px;
-      margin: 30px auto;
-      font-size: 13px;
-      line-height: 22px;
-      background: #fff;
-      border-top: 2px solid #ff620e;
-      box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
-    }
+        .cate-selector {
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 20px 20px 3px 20px;
+            margin: 30px auto;
+            font-size: 13px;
+            line-height: 22px;
+            background: #fff;
+            border-top: 2px solid #ff620e;
+            box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
+        }
 
-    .clearfix:after {
-      content: ".";
-      display: block;
-      height: 0;
-      clear: both;
-      visibility: hidden;
-    }
+        .clearfix:after {
+            content: ".";
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden;
+        }
 
-    .cate-selector .cate-title {
-      padding-bottom: 18px;
-    }
+        .cate-selector .cate-title {
+            padding-bottom: 18px;
+        }
 
-    .cate-selector .cate-item.active {
-      background: #ff620e;
-    }
+        .cate-selector .cate-item.active {
+            background: #ff620e;
+        }
 
-    .cate-selector .cate-item {
-      float: left;
-      padding: 0 10px;
-      margin-left: 10px;
-      margin-bottom: 8px;
-      border-radius: 11px;
-      color: #666;
-      cursor: pointer;
-    }
+        .cate-selector .cate-item {
+            float: left;
+            padding: 0 10px;
+            margin-left: 10px;
+            margin-bottom: 8px;
+            border-radius: 11px;
+            color: #666;
+            cursor: pointer;
+        }
 
-    .cate-selector .cate-item.active a {
-      color: #fff;
-    }
+            .cate-selector .cate-item.active a {
+                color: #fff;
+            }
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
 
-    .cate-container {
-      padding-top: 15px;
-      margin: 0 auto;
-      clear: both;
-    }
+        .cate-container {
+            padding-top: 15px;
+            margin: 0 auto;
+            clear: both;
+        }
 
-    .cate-container__title {
-      width: 100%;
-      height: 26px;
-      font-size: 14px;
-      line-height: 26px;
-      color: #666;
-    }
+        .cate-container__title {
+            width: 100%;
+            height: 26px;
+            font-size: 14px;
+            line-height: 26px;
+            color: #666;
+        }
 
-    .cate-container__title .btn {
-      float: left;
-      margin-right: 30px;
-      cursor: pointer;
-    }
+            .cate-container__title .btn {
+                float: left;
+                margin-right: 30px;
+                cursor: pointer;
+            }
 
-    .cate-container__title .btn.active {
-      color: #ff620e;
-      border-bottom: 2px px solid #ff620e;
-    }
+                .cate-container__title .btn.active {
+                    color: #ff620e;
+                    border-bottom: 2px px solid #ff620e;
+                }
 
-    .cate-container__title .btn.active {
-      color: #ff620e;
-      border-bottom: 2px solid #ff620e;
-    }
+                .cate-container__title .btn.active {
+                    color: #ff620e;
+                    border-bottom: 2px solid #ff620e;
+                }
 
-    .fr {
-      float: right;
-    }
+        .fr {
+            float: right;
+        }
 
-    .hl {
-      color: #ff620e;
-    }
+        .hl {
+            color: #ff620e;
+        }
 
-    .cate-comic-list {
-      margin-top: 30px;
-    }
+        .cate-comic-list {
+            margin-top: 30px;
+        }
 
-    .common-comic-item {
-      float: left;
-      margin-bottom: 30px;
-      font-size: 12px;
-      line-height: 18px;
-      color: #999;
-    }
-
-
-    .common-comic-item .cover {
-      position: relative;
-      display: block;
-      width: 100%;
-      margin-bottom: 5px;
-    }
-
-    .cover>img {
-      width: 100%;
-      height: 100%;
-    }
-
-    img {
-      max-width: 100%;
-      border: none;
-      overflow-clip-margin: content-box;
-      overflow: clip;
-    }
-
-    .common-comic-item .comic-feature {
-      position: absolute;
-      bottom: 8px;
-      left: 0;
-      right: 0;
-      padding: 0 8px;
-      font-size: 14px;
-      line-height: 22px;
-      color: #fff;
-      z-index: 999;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-
-    .cover__shadow {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 40px;
-      background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), color-stop(13%, rgba(0, 0, 0, 0.05)), color-stop(80%, rgba(0, 0, 0, 0.66)), to(rgba(0, 0, 0, 0.75)));
-      background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.05) 13%, rgba(0, 0, 0, 0.66) 80%, rgba(0, 0, 0, 0.75) 100%);
-      background-image: linear-gradient(-180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.05) 13%, rgba(0, 0, 0, 0.66) 80%, rgba(0, 0, 0, 0.75) 100%);
-      opacity: 0.83;
-      z-index: 666;
-    }
-
-    .comic__title {
-      max-width: 100%;
-      font-size: 15px;
-      line-height: 26px;
-      font-weight: 600;
-      color: #28292d;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-
-    .common-comic-item .comic-update {
-      width: 100%;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-
-    .in-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 999;
-      width: 100%;
-      background: #fff;
-      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
-    }
-
-    .in-header__logo {
-      float: left;
-      width: 106px;
-      height: 44px;
-      margin-top: 8px;
-      background: url(//static.mkzcdn.com/home/assets/images/header/pic_nav_logo.png?v=0504b75) no-repeat center center;
-    }
-
-    .in-header__nav {
-      float: left;
-      height: 30px;
-      margin-top: 17px;
-      line-height: 27px;
-      font-size: 18px;
-    }
+        .common-comic-item {
+            float: left;
+            margin-bottom: 30px;
+            font-size: 12px;
+            line-height: 18px;
+            color: #999;
+        }
 
 
-    .in-header__nav {
-      float: left;
-      height: 30px;
-      margin-top: 17px;
-      line-height: 27px;
-      font-size: 18px;
-    }
+            .common-comic-item .cover {
+                position: relative;
+                display: block;
+                width: 100%;
+                margin-bottom: 5px;
+            }
 
-    .clearfix:after {
-      content: ".";
-      display: block;
-      height: 0;
-      clear: both;
-      visibility: hidden;
-    }
+        .cover > img {
+            width: 100%;
+            height: 100%;
+        }
+
+        img {
+            max-width: 100%;
+            border: none;
+            overflow-clip-margin: content-box;
+            overflow: clip;
+        }
+
+        .common-comic-item .comic-feature {
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            right: 0;
+            padding: 0 8px;
+            font-size: 14px;
+            line-height: 22px;
+            color: #fff;
+            z-index: 999;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .cover__shadow {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), color-stop(13%, rgba(0, 0, 0, 0.05)), color-stop(80%, rgba(0, 0, 0, 0.66)), to(rgba(0, 0, 0, 0.75)));
+            background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.05) 13%, rgba(0, 0, 0, 0.66) 80%, rgba(0, 0, 0, 0.75) 100%);
+            background-image: linear-gradient(-180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.05) 13%, rgba(0, 0, 0, 0.66) 80%, rgba(0, 0, 0, 0.75) 100%);
+            opacity: 0.83;
+            z-index: 666;
+        }
+
+        .comic__title {
+            max-width: 100%;
+            font-size: 15px;
+            line-height: 26px;
+            font-weight: 600;
+            color: #28292d;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .common-comic-item .comic-update {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .in-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999;
+            width: 100%;
+            background: #fff;
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .in-header__logo {
+            float: left;
+            width: 106px;
+            height: 44px;
+            margin-top: 8px;
+            background: url(//static.mkzcdn.com/home/assets/images/header/pic_nav_logo.png?v=0504b75) no-repeat center center;
+        }
+
+        .in-header__nav {
+            float: left;
+            height: 30px;
+            margin-top: 17px;
+            line-height: 27px;
+            font-size: 18px;
+        }
 
 
-    .in-header__nav .nav-item {
-      width: auto;
-      font-size: 16px;
-      position: relative;
-      float: left;
-      text-align: center;
-    }
+        .in-header__nav {
+            float: left;
+            height: 30px;
+            margin-top: 17px;
+            line-height: 27px;
+            font-size: 18px;
+        }
 
-    .in-header__nav .active a {
-      color: #ff620e;
-    }
+        .clearfix:after {
+            content: ".";
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden;
+        }
 
-    .in-header__nav .active .underline {
-      display: block;
-      position: absolute;
-      left: 7px;
-      bottom: -3px;
-      width: 50px;
-      height: 3px;
-      background: #ff620e;
-      border-radius: 9px;
-    }
 
-    .in-header__search {
-      position: relative;
-      float: left;
-      height: 40px;
-      margin-top: 12px;
-      margin-bottom: 12px;
-    }
+        .in-header__nav .nav-item {
+            width: auto;
+            font-size: 16px;
+            position: relative;
+            float: left;
+            text-align: center;
+        }
 
-    .in-header__search .input {
-      float: left;
-      height: 38px;
-      font-size: 14px;
-      text-indent: 36px;
-      border: 1px solid #ff620e;
-      border-radius: 20px 0 0 20px;
-      border-right-width: 0;
-    }
+        .in-header__nav .active a {
+            color: #ff620e;
+        }
 
-    .button_config {
-      float: left;
-      width: 80px;
-      height: 40px;
-      font-size: 13px;
-      text-align: center;
-      line-height: 40px;
-      color: #fff;
-      border-radius: 0 20px 20px 0;
-      cursor: pointer;
-      background-color: #ff620e;
-      font-weight: bold;
-    }
+        .in-header__nav .active .underline {
+            display: block;
+            position: absolute;
+            left: 7px;
+            bottom: -3px;
+            width: 50px;
+            height: 3px;
+            background: #ff620e;
+            border-radius: 9px;
+        }
 
-    .in-header__search>.iconfont {
-      position: absolute;
-      left: 10px;
-      top: 0;
-      line-height: 38px;
-      font-size: 16px;
-      color: #ff620e;
-    }
+        .in-header__search {
+            position: relative;
+            float: left;
+            height: 40px;
+            margin-top: 12px;
+            margin-bottom: 12px;
+        }
 
-    .in-dialog--search {
-      position: absolute;
-      top: 40px;
-      left: 50%;
-      width: 360px;
-      margin-left: -180px;
-      background: #fff;
-      box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.15);
-      z-index: 9999;
-    }
+            .in-header__search .input {
+                float: left;
+                height: 38px;
+                font-size: 14px;
+                text-indent: 36px;
+                border: 1px solid #ff620e;
+                border-radius: 20px 0 0 20px;
+                border-right-width: 0;
+            }
 
-    .in-header__user {
-      float: right;
-      height: 64px;
-    }
+        .button_config {
+            float: left;
+            width: 80px;
+            height: 40px;
+            font-size: 13px;
+            text-align: center;
+            line-height: 40px;
+            color: #fff;
+            border-radius: 0 20px 20px 0;
+            cursor: pointer;
+            background-color: #ff620e;
+            font-weight: bold;
+        }
 
-    .fl {
-      float: left;
-    }
+        .in-header__search > .iconfont {
+            position: absolute;
+            left: 10px;
+            top: 0;
+            line-height: 38px;
+            font-size: 16px;
+            color: #ff620e;
+        }
 
-    .in-header__user .user-item {
-      position: relative;
-      float: left;
-      text-align: center;
-      color: #999;
-      padding-bottom: 8px;
-    }
+        .in-dialog--search {
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            width: 360px;
+            margin-left: -180px;
+            background: #fff;
+            box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.15);
+            z-index: 9999;
+        }
 
-    .in-header__avatar {
-      width: 40px;
-      height: 40px;
-      margin-top: 12px;
-      position: relative;
-      padding-bottom: 12px;
-    }
+        .in-header__user {
+            float: right;
+            height: 64px;
+        }
 
-    .fl {
-      float: left;
-    }
+        .fl {
+            float: left;
+        }
 
-    .in-header__nav .nav-item {
-      width: auto;
-      font-size: 16px;
-    }
+        .in-header__user .user-item {
+            position: relative;
+            float: left;
+            text-align: center;
+            color: #999;
+            padding-bottom: 8px;
+        }
 
-    .in-header__nav .underline {
-      display: none;
-      position: absolute;
-      left: 7px;
-      bottom: -3px;
-      width: 50px;
-      height: 3px;
-      background: #ff620e;
-      border-radius: 9px;
-    }
+        .in-header__avatar {
+            width: 40px;
+            height: 40px;
+            margin-top: 12px;
+            position: relative;
+            padding-bottom: 12px;
+        }
 
-    .button_config {
-      float: left;
-      width: 80px;
-      height: 40px;
-      font-size: 13px;
-      text-align: center;
-      line-height: 40px;
-      color: #fff;
-      border-radius: 0 20px 20px 0;
-      cursor: pointer;
-      background-color: #ff620e;
-      font-weight: bold;
-    }
-  </style>
+        .fl {
+            float: left;
+        }
+
+        .in-header__nav .nav-item {
+            width: auto;
+            font-size: 16px;
+        }
+
+        .in-header__nav .underline {
+            display: none;
+            position: absolute;
+            left: 7px;
+            bottom: -3px;
+            width: 50px;
+            height: 3px;
+            background: #ff620e;
+            border-radius: 9px;
+        }
+
+        .button_config {
+            float: left;
+            width: 80px;
+            height: 40px;
+            font-size: 13px;
+            text-align: center;
+            line-height: 40px;
+            color: #fff;
+            border-radius: 0 20px 20px 0;
+            cursor: pointer;
+            background-color: #ff620e;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body class="p-category" data-feed="" data-new-gr-c-s-check-loaded="14.1157.0" data-gr-ext-installed="">
-  <div style="display:none;">
-    <img src="https://static.mkzcdn.com/home/assets/images/common/app_logo.png">
-  </div>
+    <div style="display:none;">
+        <img src="https://static.mkzcdn.com/home/assets/images/common/app_logo.png">
+    </div>
 
-  <div class="cate-top-wr">
-    <div class="cate-selector">
-      <div class="cate-col clearfix">
-        <p class="fl cate-title">Chủ đề：</p>
+    <div class="cate-top-wr">
+        <div class="cate-selector">
+            <div class="cate-col clearfix">
+                <p class="fl cate-title">Chủ đề：</p>
 
-        <ul class="cate-list clearfix">
-          <li class="cate-item active">
-            <a rel="nofollow" href="/category/?audience=1">Label 0</a>
-         </li>
-            @for (int i = 1; i <= 15; i++)
-            {
-                int currentIndex = i; // Tạo một biến cục bộ chứa giá trị hiện tại của i
-                <li class="cate-item @(i == activeIndex ? "active" : "")">
-                    <a rel="nofollow" href="/category/?audience=@i" @onclick="() => SetActiveIndex(currentIndex)" >Label @i</a>
-                </li>
-            } 
-
-        </ul>
-      </div>
-      <div class="cate-col clearfix">
-        <p class="fl cate-title">Độc giả：</p>
-        <ul class="cate-list clearfix">
-          <li class="cate-item ">
+                <ul class="cate-list clearfix">
+                    @if (listTopic != null && listTopic.Count() > 0)
+                    {
+                        @for (int i = 0; i < listTopic.Count; i++)
+                        {
+                            var item = listTopic[i];
+                            int currentIndex = i + 1; // Tạo một biến cục bộ chứa giá trị hiện tại của i
+                            <li class="cate-item @(i == activeIndex ? "active" : "")">
+                                <a rel="nofollow" @onclick="() => ChangeTopic(i, item.Id)">@item.Name</a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+            @* <div class="cate-col clearfix">
+            <p class="fl cate-title">Độc giả：</p>
+            <ul class="cate-list clearfix">
+            <li class="cate-item ">
             <a rel="nofollow" href="/category/"></a>
-          </li>
-          <li class="cate-item active">
+            </li>
+            <li class="cate-item active">
             <a rel="nofollow" href="/category/?audience=1">Nam</a>
-          </li>
-          <li class="cate-item ">
+            </li>
+            <li class="cate-item ">
             <a rel="nofollow" href="/category/?audience=2">Nữ</a>
-          </li>
-          <li class="cate-item ">
+            </li>
+            <li class="cate-item ">
             <a rel="nofollow" href="/category/?audience=3">Vị thành niên</a>
-          </li>
-          <li class="cate-item ">
+            </li>
+            <li class="cate-item ">
             <a rel="nofollow" href="/category/?audience=4">Thiếu nhi</a>
-          </li>
-        </ul>
-      </div>
+            </li>
+            </ul>
+            </div> *@
+        </div>
     </div>
-  </div>
-  <div class="cate-container">
-    <div class="cate-container__title clearfix">
-      <a class="btn btn--hot active" rel="nofollow" href="/category/?audience=1&amp;order=1">Phổ biến
+    <div class="cate-container">
+        <div class="cate-container__title clearfix">
+            <a class="btn btn--hot active" rel="nofollow" href="/category/?audience=1&amp;order=1">
+                Phổ biến
+            </a>
+            @*      <a class="btn btn--time " rel="nofollow" href="/category/?audience=1&amp;order=2">更新时间
+            </a>*@
+            <p class="fr">Tổng <span class="hl">@(listStoryByTopic != null ? listStoryByTopic.Count() : 0)</span> Tác phẩm</p>
+        </div>
+        <div class="cate-comic-list clearfix">
 
-      </a>
-@*      <a class="btn btn--time " rel="nofollow" href="/category/?audience=1&amp;order=2">更新时间
-      </a>*@
-      <p class="fr">Tổng <span class="hl">808</span> Tác phẩm</p>
-    </div>
-    <div class="cate-comic-list clearfix">
-      <div class="common-comic-item">
-        <a class="cover" href="/207622/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20230106/63b78ffa50572-750x999.jpg!cover-400"
-            src="https://oss.mkzcdn.com/comic/cover/20230106/63b78ffa50572-750x999.jpg!cover-400" alt="妖神记漫画"
-            style="display: inline-block;">
-          <p class="comic-feature">一起修炼妖灵之书</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/207622/" target="_blank">妖神记</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/207622/1036351.html" target="_blank">第465话1 烛龙的实力</a></p>
-        <p class="comic-count">人气：50.46亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/208670/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20200110/5e182f3a506f3-743x991.jpg!cover-400"
-            src="https://oss.mkzcdn.com/comic/cover/20200110/5e182f3a506f3-743x991.jpg!cover-400" alt="风起苍岚漫画"
-            style="display: inline-block;">
-          <p class="comic-feature">菜鸟也能问鼎修真之巅</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/208670/" target="_blank">风起苍岚</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/208670/1035639.html" target="_blank">第2季222话 又被追杀2</a></p>
-        <p class="comic-count">人气：28.99亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/211189/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20181218/5c18b62d4a78a-750x999.jpg!cover-400"
-            src="https://oss.mkzcdn.com/comic/cover/20181218/5c18b62d4a78a-750x999.jpg!cover-400" alt="姻缘宝典漫画"
-            style="display: inline-block;">
-          <p class="comic-feature">手握宝典走天下</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/211189/" target="_blank">姻缘宝典</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/211189/980657.html" target="_blank">第453话</a></p>
-        <p class="comic-count">人气：26.82亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/207727/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20230106/63b795177413d-599x799.jpg!cover-400"
-            src="https://oss.mkzcdn.com/comic/cover/20230106/63b795177413d-599x799.jpg!cover-400" alt="星武神诀漫画"
-            style="display: inline-block;">
-          <p class="comic-feature">逆天强者的撼世之路</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/207727/" target="_blank">星武神诀</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/207727/1036366.html" target="_blank">第732话</a></p>
-        <p class="comic-count">人气：24.40亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/213295/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20200717/5f111b00973b7-750x999.jpg!cover-400"
-            src="https://oss.mkzcdn.com/comic/cover/20200717/5f111b00973b7-750x999.jpg!cover-400" alt="逆天邪神漫画"
-            style="display: inline-block;">
-          <p class="comic-feature">一代邪神出世，君临天下！</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/213295/" target="_blank">逆天邪神</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/213295/1035702.html" target="_blank">第662话 云澈连胜</a></p>
-        <p class="comic-count">人气：23.97亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/211471/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20230106/63b794d394842-599x799.jpg!cover-400"
-            src="https://oss.mkzcdn.com/comic/cover/20230106/63b794d394842-599x799.jpg!cover-400" alt="绝世武神漫画"
-            style="display: inline-block;">
-          <p class="comic-feature">武道，决定命运</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/211471/" target="_blank">绝世武神</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/211471/1036159.html" target="_blank">第257话3 闯石窟（3）</a></p>
-        <p class="comic-count">人气：23.94亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/211872/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20230106/63b79bf1aad19-744x992.jpg!cover-400"
-            src="https://oss.mkzcdn.com/comic/cover/20230106/63b79bf1aad19-744x992.jpg!cover-400" alt="武神主宰漫画"
-            style="display: inline-block;">
-          <p class="comic-feature">震惊大陆的惊世之旅</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/211872/" target="_blank">武神主宰</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/211872/973463.html" target="_blank">第548话</a></p>
-        <p class="comic-count">人气：21.88亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/212234/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20230106/63b79116552c5-750x999.jpg!cover-400"
-            src="https://oss.mkzcdn.com/comic/cover/20230106/63b79116552c5-750x999.jpg!cover-400" alt="元尊漫画"
-            style="display: inline-block;">
-          <p class="comic-feature">天生我才必有用</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/212234/" target="_blank">元尊</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/212234/1036345.html" target="_blank">第580话下 祖魂山现</a></p>
-        <p class="comic-count">人气：20.00亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/214160/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20231017/652e5834d7435-750x999.jpg!cover-400"
-            src="https://oss.mkzcdn.com/comic/cover/20231017/652e5834d7435-750x999.jpg!cover-400" alt="最强枭雄系统漫画"
-            style="display: inline-block;">
-          <p class="comic-feature">闪亮之路从穿越开始！</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/214160/" target="_blank">最强枭雄系统</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/214160/924838.html" target="_blank">第362话 和叶倾国同行</a></p>
-        <p class="comic-count">人气：19.89亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/208645/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20210203/601a09656b366-750x999.jpg!cover-400"
-            src="https://oss.mkzcdn.com/comic/cover/20210203/601a09656b366-750x999.jpg!cover-400" alt="寻找前世之旅漫画"
-            style="display: inline-block;">
-          <p class="comic-feature">承接各类前世的委托</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/208645/" target="_blank">寻找前世之旅</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/208645/1031063.html" target="_blank">第2季第236话 装睡1</a></p>
-        <p class="comic-count">人气：16.55亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/209412/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20230106/63b793c3a184c-750x999.jpg!cover-400"
-            src="https://oss.mkzcdn.com/comic/cover/20230106/63b793c3a184c-750x999.jpg!cover-400" alt="灵剑尊漫画"
-            style="display: inline-block;">
-          <p class="comic-feature">天地三界我为至尊</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/209412/" target="_blank">灵剑尊</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/209412/1004107.html" target="_blank">最终话 你终于回来了</a></p>
-        <p class="comic-count">人气：16.32亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/208707/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20230106/63b792f92790a-750x999.jpg!cover-400"
-            src="https://oss.mkzcdn.com/comic/cover/20230106/63b792f92790a-750x999.jpg!cover-400" alt="网游之近战法师漫画"
-            style="display: inline-block;">
-          <p class="comic-feature">法师外表武斗魂</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/208707/" target="_blank">网游之近战法师</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/208707/1025628.html" target="_blank">第486话 大势所趋</a></p>
-        <p class="comic-count">人气：16.01亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/212886/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20180705/5b3dc9da27696-600x800.jpg!cover-400"
-            src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="我的微信连三界漫画">
-          <p class="comic-feature">神仙也用微信群</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/212886/" target="_blank">我的微信连三界</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/212886/1003484.html" target="_blank">第539话 来战吧！怪物</a></p>
-        <p class="comic-count">人气：15.39亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/214233/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20200810/5f3119b634c96-750x999.jpg!cover-400"
-            src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="逆天剑神漫画">
-          <p class="comic-feature">称霸诸天的强者之路！</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/214233/" target="_blank">逆天剑神</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/214233/1024449.html" target="_blank">第633话 破魂梭出，神器争锋</a></p>
-        <p class="comic-count">人气：13.61亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/214717/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20200927/5f7004e758cb6-750x999.png!cover-400"
-            src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="神武天尊漫画">
-          <p class="comic-feature">重生少年踏遍诸天万界</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/214717/" target="_blank">神武天尊</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/214717/1036139.html" target="_blank">第772话 寻找圣尊(下)</a></p>
-        <p class="comic-count">人气：13.60亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/212350/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20221107/636861ca3eaad-750x999.jpg!cover-400"
-            src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="万界仙踪漫画">
-          <p class="comic-feature">儿女情长？血染万界！</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/212350/" target="_blank">万界仙踪</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/212350/1023661.html" target="_blank">第550话</a></p>
-        <p class="comic-count">人气：12.09亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/214351/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20200820/5f3e5a80cbe77-750x999.png!cover-400"
-            src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="我是大仙尊漫画">
-          <p class="comic-feature">惹本天尊者，灰飞烟灭</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/214351/" target="_blank">我是大仙尊</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/214351/1036126.html" target="_blank">第699话</a></p>
-        <p class="comic-count">人气：12.08亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/213612/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20230927/6513da4673a7e-600x800.jpg!cover-400"
-            src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="龙隐者漫画">
-          <p class="comic-feature">带着骷髅宝宝纵横都市</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/213612/" target="_blank">龙隐者</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/213612/884149.html" target="_blank">最终话 鹿死谁手？</a></p>
-        <p class="comic-count">人气：12.04亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/213693/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20181210/5c0e324da5752-750x999.jpg!cover-400"
-            src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="九阳神王漫画">
-          <p class="comic-feature">落魄皇子觉醒惊世武魂</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/213693/" target="_blank">九阳神王</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/213693/917153.html" target="_blank">第239话 萧月玫与小皮鞭</a></p>
-        <p class="comic-count">人气：11.65亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/212495/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20220114/61e0cd257f39e-750x999.jpg!cover-400"
-            src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="地府我开的漫画">
-          <p class="comic-feature">业障不除三生七世永堕阎罗</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/212495/" target="_blank">地府我开的</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/212495/1024005.html" target="_blank">第791话 还会影分身之术？</a></p>
-        <p class="comic-count">人气：11.59亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/214062/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20230111/63be0be854f2b-750x999.jpg!cover-400"
-            src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="武道独尊漫画">
-          <p class="comic-feature">我命在我不在天！</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/214062/" target="_blank">武道独尊</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/214062/1025745.html" target="_blank">最终话 一只王八？</a></p>
-        <p class="comic-count">人气：11.29亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/212062/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20230106/63b792d8e841d-600x800.jpg!cover-400"
-            src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="修真四万年（别名：星域四万年）漫画">
-          <p class="comic-feature">边境少年的修真之路，为了主宰银河！</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/212062/" target="_blank">修真四万年（别名：星域四万年）</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/212062/932940.html" target="_blank">第1季最终话</a></p>
-        <p class="comic-count">人气：10.71亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/214331/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20190420/5cbaec4fd43f3-750x999.jpg!cover-400"
-            src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="绝世战魂漫画">
-          <p class="comic-feature">少年天才锻造绝世武魂</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/214331/" target="_blank">绝世战魂</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/214331/1036085.html" target="_blank">第656话 护送秦南？</a></p>
-        <p class="comic-count">人气：10.65亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/210745/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/zymkcover/999/mh/101886.jpg!cover-400"
-            src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="惹上首席总裁漫画">
-          <p class="comic-feature">只因一个唇印，她惹上霸道总裁</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/210745/" target="_blank">惹上首席总裁</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/210745/953477.html" target="_blank">第2季最终话</a></p>
-        <p class="comic-count">人气：10.63亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/208316/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20170607/5937d79b7e83b-600x800.jpg!cover-400"
-            src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="龙符之王道天下漫画">
-          <p class="comic-feature">谁是真龙，谁又是蟒蛇</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/208316/" target="_blank">龙符之王道天下</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/208316/872700.html" target="_blank">联动宣传活动</a></p>
-        <p class="comic-count">人气：10.19亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/213692/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20191121/5dd62dc4890ce-750x1000.jpg!cover-400"
-            src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="天才高手漫画">
-          <p class="comic-feature">高手领略不同助理人生</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/213692/" target="_blank">天才高手</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/213692/913955.html" target="_blank">第242话 陪我</a></p>
-        <p class="comic-count">人气：10.14亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/214238/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20190830/5d68cabea0b20-750x999.jpg!cover-400"
-            src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="至尊神级系统漫画">
-          <p class="comic-feature">穿越异世，知天下万事，占夺宝先机</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/214238/" target="_blank">至尊神级系统</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/214238/1003905.html" target="_blank">完结公告</a></p>
-        <p class="comic-count">人气：9.78亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/211847/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20181207/5c0a1f24cbdd3-618x824.jpg!cover-400"
-            src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="仙侠世界漫画">
-          <p class="comic-feature">强者才能生存的世界！</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/211847/" target="_blank">仙侠世界</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/211847/901061.html" target="_blank">第二季最终话</a></p>
-        <p class="comic-count">人气：8.80亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/212816/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20230106/63b79979295ea-750x999.jpg!cover-400"
-            src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="妖道至尊漫画">
-          <p class="comic-feature">变成妖皇的励志路</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/212816/" target="_blank">妖道至尊</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/212816/1028300.html" target="_blank">第2季第160话 火鹰皇陨落</a></p>
-        <p class="comic-count">人气：8.47亿</p>
-      </div>
-      <div class="common-comic-item">
-        <a class="cover" href="/213024/" target="_blank">
-          <img class="lazy" data-src="https://oss.mkzcdn.com/comic/cover/20190123/5c483ba3732c8-750x999.jpg!cover-400"
-            src="//static.mkzcdn.com/home/assets/images/home/bg_loadimg_3x4.png?v=2b369c8" alt="我本废柴漫画">
-          <p class="comic-feature">修仙本无道，废柴也逆天！</p>
-          <div class="cover__shadow"></div>
-        </a>
-        <p class="comic__title"><a href="/213024/" target="_blank">我本废柴</a></p>
-        <p class="comic-update">更至：<a class="hl" href="/213024/891137.html" target="_blank">第一季最终话 拭目以待</a></p>
-        <p class="comic-count">人气：8.44亿</p>
-      </div>
-    </div>
-    <div id="Pagination">
-      <div> <span class="current">1</span><a class="num" href="/category/?audience=1&amp;page=2" rel="nofollow">2</a><a
-          class="num" href="/category/?audience=1&amp;page=3" rel="nofollow">3</a><a class="num"
-          href="/category/?audience=1&amp;page=4" rel="nofollow">4</a><a class="num"
-          href="/category/?audience=1&amp;page=5" rel="nofollow">5</a><a class="num"
-          href="/category/?audience=1&amp;page=6" rel="nofollow">6</a><a class="num"
-          href="/category/?audience=1&amp;page=7" rel="nofollow">7</a><a class="num"
-          href="/category/?audience=1&amp;page=8" rel="nofollow">8</a><a class="num"
-          href="/category/?audience=1&amp;page=9" rel="nofollow">9</a><a class="num"
-          href="/category/?audience=1&amp;page=10" rel="nofollow">10</a><a class="num"
-          href="/category/?audience=1&amp;page=11" rel="nofollow">11</a> <a>...</a><a class="end"
-          href="/category/?audience=1&amp;page=27" rel="nofollow">27</a> <a class="next"
-          href="/category/?audience=1&amp;page=2" rel="nofollow">Next</a></div>
-    </div>
-  </div>
+            @if (listStoryByTopic != null && listStoryByTopic.Count > 0)
+            {
+                @foreach (var item in listStoryByTopic)
+                {
+                    <div class="common-comic-item">
+                        <a class="cover" href="/207622/" target="_blank">
+                            <img class="lazy" data-src="@item.ImageLink"
+                                 src="@item.ImageLink"
+                                 style="display: inline-block;">
+                            @* <p class="comic-feature">@item.Description</p> *@
+                            <div class="cover__shadow"></div>
+                        </a>
+                        <p class="comic__title"><a href="/207622/" target="_blank">@item.Name</a></p>
+                        <p class="comic-update">更至：<a class="hl" href="/207622/1036351.html" target="_blank">@item.Description</a></p>
+                        @* <p class="comic-count">人气：50.46亿</p> *@
+                    </div>
+                }
+            }
 
-  <div class="in-aside-handle">
-    <div class="aside__item qr-code">
-      <i class="iconfont icon-ic_float_ewm"></i>
-      <div class="qr-code-pic hide"></div>
+        </div>
+        @*  <div id="Pagination">
+        <div> <span class="current">1</span><a class="num" href="/category/?audience=1&amp;page=2" rel="nofollow">2</a><a
+        class="num" href="/category/?audience=1&amp;page=3" rel="nofollow">3</a><a class="num"
+        href="/category/?audience=1&amp;page=4" rel="nofollow">4</a><a class="num"
+        href="/category/?audience=1&amp;page=5" rel="nofollow">5</a><a class="num"
+        href="/category/?audience=1&amp;page=6" rel="nofollow">6</a><a class="num"
+        href="/category/?audience=1&amp;page=7" rel="nofollow">7</a><a class="num"
+        href="/category/?audience=1&amp;page=8" rel="nofollow">8</a><a class="num"
+        href="/category/?audience=1&amp;page=9" rel="nofollow">9</a><a class="num"
+        href="/category/?audience=1&amp;page=10" rel="nofollow">10</a><a class="num"
+        href="/category/?audience=1&amp;page=11" rel="nofollow">11</a> <a>...</a><a class="end"
+        href="/category/?audience=1&amp;page=27" rel="nofollow">27</a> <a class="next"
+        href="/category/?audience=1&amp;page=2" rel="nofollow">Next</a></div>
+        </div> *@
     </div>
-    <div class="aside__item share">
-      <i class="iconfont icon-ic_float_fx"></i>
-      <ul class="share-full clearfix hide bdsharebuttonbox bdshare-button-style0-16" id="bdshare" data-tag="share_1"
-        data-bd-bind="1709450036805">
-        <a class="aside-share__item qq" data-cmd="sqq" title="分享到QQ好友"></a>
-        <a class="aside-share__item wx" data-cmd="weixin" title="分享到微信"></a>
-        <a class="aside-share__item wb" data-cmd="tsina" title="分享到新浪微博"></a>
-        <a class="aside-share__item kj" data-cmd="qzone" title="分享到QQ空间"></a>
-      </ul>
+
+    <div class="in-aside-handle">
+        <div class="aside__item qr-code">
+            <i class="iconfont icon-ic_float_ewm"></i>
+            <div class="qr-code-pic hide"></div>
+        </div>
+        <div class="aside__item share">
+            <i class="iconfont icon-ic_float_fx"></i>
+            <ul class="share-full clearfix hide bdsharebuttonbox bdshare-button-style0-16" id="bdshare" data-tag="share_1"
+                data-bd-bind="1709450036805">
+                <a class="aside-share__item qq" data-cmd="sqq" title="分享到QQ好友"></a>
+                <a class="aside-share__item wx" data-cmd="weixin" title="分享到微信"></a>
+                <a class="aside-share__item wb" data-cmd="tsina" title="分享到新浪微博"></a>
+                <a class="aside-share__item kj" data-cmd="qzone" title="分享到QQ空间"></a>
+            </ul>
+        </div>
+        <div class="aside__item feedback j-home-feed">
+            <i class="iconfont icon-ic_float_fk"></i>
+            <p class="feed-full hide">在线反馈</p>
+        </div>
+        <div class="aside__item back-top hide">
+            <i class="iconfont icon-ic_float_top"></i>
+            <p class="back-full hide">返回顶部</p>
+        </div>
     </div>
-    <div class="aside__item feedback j-home-feed">
-      <i class="iconfont icon-ic_float_fk"></i>
-      <p class="feed-full hide">在线反馈</p>
-    </div>
-    <div class="aside__item back-top hide">
-      <i class="iconfont icon-ic_float_top"></i>
-      <p class="back-full hide">返回顶部</p>
-    </div>
-  </div>
     <HeaderLayout isSelected=3></HeaderLayout>
 </body>
 </html>
 @code {
     int activeIndex = -1;
-    protected override void OnInitialized()
+    private List<Topic> listTopic { get; set; }
+    private List<StoryGeneric> listStoryByTopic { get; set; }
+    protected override async Task OnInitializedAsync()
     {
         SetActiveIndex(0);
+        listTopic = await _topicService.GetAllTopic();
+        if (listTopic != null && listTopic.Count() > 0)
+        {
+            var firstTopicId = listTopic[0].Id;
+            listStoryByTopic = await _storiesService.GetAllStoryByTopic(firstTopicId);
+        }
     }
     private void SetActiveIndex(int index)
     {
         activeIndex = index;
     }
+
+    private async Task ChangeTopic(int index, Guid topicId)
+    {
+        SetActiveIndex(index);
+        listStoryByTopic = await _storiesService.GetAllStoryByTopic(topicId);
+        StateHasChanged();
+    }
+
+
 }

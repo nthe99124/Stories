@@ -99,7 +99,7 @@ namespace StoriesProject.Services
         public async Task<List<StoryGeneric>> GetAllStoryByTopic(Guid topicId)
         {
             var url = StoriesApiUrlDef.GetAllStoryByTopic(topicId);
-            return await RequestAuthenGetAsync<List<StoryGeneric>>(url);
+            return await RequestGetAsync<List<StoryGeneric>>(url);
         }
 
         /// <summary>

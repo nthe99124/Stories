@@ -1,0 +1,54 @@
+﻿@using Microsoft.JSInterop;
+@using System.Net;
+@inject NavigationManager _navigationManager;
+@inject IJSRuntime _js;
+
+@code {
+    protected async Task HandleUnauthorizedException(bool firstRender)
+    {
+        try
+        {
+            await HandleAfterRenderAsync(firstRender);
+        }
+        catch (Exception ex)
+        {
+            if (ex is HttpRequestException httpException && httpException.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                // Nếu là lỗi 401, chuyển hướng đến trang home
+                _navigationManager.NavigateTo("/");
+                // đồng thời xóa token
+                await RemoveSessionStorage("token");
+                await RemoveSessionStorage("userName");
+            }
+        }
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        await HandleUnauthorizedException(firstRender);
+    }
+
+    /// <summary>
+    /// Hàm xử lý nghiệp vụ cho phần afterRender
+    /// </summary>
+    /// <param name="firstRender"></param>
+    /// <returns></returns>
+    protected virtual async Task HandleAfterRenderAsync(bool firstRender) { }
+
+    #region TODO: các hàm dùng chung cho các form từ js => nên tách ra dạng mixin
+    protected async Task<string> GetSessionStorage(string key)
+    {
+        return await _js.InvokeAsync<string>("getSessionStorage", key);
+    }
+
+    protected async Task SetSessionStorage(string key, object value)
+    {
+        await _js.InvokeAsync<string>("setSessionStorage", key, value);
+    }
+
+    protected async Task RemoveSessionStorage(string key)
+    {
+        await _js.InvokeAsync<string>("removeSessionStorage", key);
+    }
+    #endregion
+}

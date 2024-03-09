@@ -2,11 +2,11 @@
 @using StoriesProject.Model.BaseEntity;
 @using StoriesProject.Services;
 @using StoriesProject.Shared;
+@using StoriesProject.Shared.ComponentBase;
 
 @inject IStoriesService _storiesService;
-@inject IJSRuntime _js;
 
-@inject NavigationManager _navigationManager;
+@inherits BaseComponentCustom
 
 <html>
 <head>
@@ -940,8 +940,6 @@
     private List<StoryGeneric> listFreeStory { get; set; }
     private List<StoryGeneric> listPaidStory { get; set; }
     private List<StoryGeneric> listNewVersionStory { get; set; }
-    private string token { get; set; }
-
     protected override async Task OnInitializedAsync()
     {
         //TODO: ntthe cái náy sẽ xử lý lại chỉ request 1 lần, và cache lại, request này sập server
@@ -950,25 +948,5 @@
         listFreeStory = await _storiesService.GetTop10FreeStory();
         listPaidStory = await _storiesService.GetTop10PaidStory();
         listNewVersionStory = await _storiesService.GetTop10NewVervionStory();
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            token = await _js.InvokeAsync<string>("getSessionStorage", "token");
-        }
-    }
-
-    private void GoToUserPage()
-    {
-        if (!string.IsNullOrEmpty(token))
-        {
-            _navigationManager.NavigateTo($"/user");
-        }
-        else
-        {
-            _navigationManager.NavigateTo($"/login");
-        }
     }
 }

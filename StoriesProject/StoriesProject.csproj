@@ -24,6 +24,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Remove="Shared\ComponentBase\BaseComponentCustom.razor" />
 		<None Remove="Shared\MainLayout.razor.css" />
 		<None Remove="Shared\NavMenu.razor.css" />
 	</ItemGroup>
@@ -58,9 +59,11 @@
 		<Content Include="Pages\AdminPages\PreviewComic.razor" />
 		<Content Include="Pages\_Host.cshtml" />
 		<Content Include="Properties\launchSettings.json" />
+		<Content Include="Shared\ComponentBase\BaseComponentCustom.razor" />
 		<Content Include="Shared\MainLayout.razor" />
 		<Content Include="Shared\FooterLayout.razor" />
 		<Content Include="Shared\HeaderLayout.razor" />
+		<Content Include="Shared\ComponentBase\AuthorBaseComponent.razor" />
 		<Content Include="Shared\UserHeader.razor" />
 		<Content Include="Shared\UserSideBar.razor" />
 		<Content Include="Shared\AuthorSideBar.razor" />
@@ -84,6 +87,7 @@
 	<ItemGroup>
 		<Folder Include="Common\Constant\Enum\" />
 		<Folder Include="Components\Layout\" />
+		<Folder Include="Shared\ComponentMixin\" />
 	</ItemGroup>
 
 	<ItemGroup>

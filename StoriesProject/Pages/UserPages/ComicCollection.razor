@@ -1,10 +1,10 @@
 ﻿@page "/user/collection"
 @using StoriesProject.Model.BaseEntity;
 @using StoriesProject.Services;
+@using StoriesProject.Shared.ComponentBase;
 @inject IStoriesService _storiesService;
 @inject IJSRuntime _js;
-
-@layout LayoutComponent
+@inherits AuthorBaseComponent
 <html>
 <head>
     <title>我的收藏 - 漫客栈</title>
@@ -379,6 +379,5 @@
             listFavoritesStory = await _storiesService.GetFavoriteStory();
             StateHasChanged();
         }
-        
     }
 }
