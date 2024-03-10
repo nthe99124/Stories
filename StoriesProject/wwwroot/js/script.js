@@ -29,3 +29,41 @@ window.registerMouseEvents = () => {
         showComicInfo.style.display = 'none';
     });
 };
+
+window.autoIncrease = {
+    startAutoIncrease: function () {
+        let valueDisplay = document.querySelectorAll(".auto_increase");
+        let duration = 2000;
+
+        valueDisplay.forEach((item, index) => {
+            let start = 0;
+            let end = parseInt(item.getAttribute("data-val"));
+            let increment = Math.ceil((end / duration) * 50);
+            let stepCount = Math.ceil(end / increment);
+            let currentStep = 0;
+            let isLastItem = index === valueDisplay.length - 1;
+            let timer = setInterval(() => {
+                start += increment;
+                currentStep++;
+                if (currentStep >= stepCount) {
+                    item.textContent = isLastItem
+                        ? formatNumber(end)
+                        : formatCurrencyVND(end);
+                    clearInterval(timer);
+                } else {
+                    item.textContent = isLastItem
+                        ? formatNumber(start)
+                        : formatCurrencyVND(start);
+                }
+            }, 50);
+        });
+    }
+};
+
+function formatCurrencyVND(number) {
+    return number.toLocaleString("vi-VN", { style: "currency", currency: "VND" });
+}
+
+function formatNumber(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " cuốn";
+}

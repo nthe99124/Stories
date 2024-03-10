@@ -27,7 +27,7 @@
                         <div style="display: flex; justify-content: space-around; align-items: center;">
                             <div class="sumery-order" style="background-color: #236bde;">
                                 <div class="sumery-order__left">
-                                    <h2 class="username">99,000,000 vnd</h2>
+                                    <h2 class="username auto_increase" data-val="99000000"></h2>
                                     <h3 class="fs-5">Doanh thu</h3>
                                     <h3 class="fs-6 mt-2" style="font-style: italic;">*Tổng doanh thu tháng này</h3>
                                 </div>
@@ -39,7 +39,7 @@
                             </div>
                             <div class="sumery-order" style="background-color: #d4a12a;">
                                 <div class="sumery-order__left">
-                                    <h2 class="username">15,000,000 vnd</h2>
+                                    <h2 class="username auto_increase" data-val="15000000"></h2>
                                     <h3 class="fs-5">Lợi nhuận</h3>
                                     <h3 class="fs-6 mt-2" style="font-style: italic;">*Sau thanh toán tác giả</h3>
                                 </div>
@@ -51,7 +51,7 @@
                             </div>
                             <div class="sumery-order" style="background-color: #de45d9;">
                                 <div class="sumery-order__left">
-                                    <h2 class="username">2500 cuốn</h2>
+                                    <h2 class="username auto_increase" data-val="2500"></h2>
                                     <h3 class="fs-5">Đã bán</h3>
                                     <h3 class="fs-6 mt-2" style="font-style: italic;">*Số truyện đã bán trong tháng này</h3>
                                 </div>
@@ -177,6 +177,7 @@
         if (firstRender)
         {
             await JSRuntime.InvokeVoidAsync("registerMouseEvents");
+            await JSRuntime.InvokeVoidAsync("autoIncrease.startAutoIncrease");
         }
     }
 }
