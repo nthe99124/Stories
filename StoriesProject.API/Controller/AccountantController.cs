@@ -131,6 +131,18 @@ namespace StoriesProject.API.Controller.Base
         }
 
         /// <summary>
+        /// Lấy toàn bộ danh sách user 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll()
+        {
+            var userInfor = await _accoutantsService.GetAll();
+            _res.SuccessEventHandler(userInfor);
+            return Ok(_res);
+        }
+
+        /// <summary>
         /// Lấy danh sách user theo role
         /// </summary>
         /// <returns></returns>

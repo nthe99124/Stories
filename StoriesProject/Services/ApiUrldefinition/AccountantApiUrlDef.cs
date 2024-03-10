@@ -50,5 +50,25 @@
         {
             return @$"{pathController}/DeniedAccountant";
         }
+
+        /// <summary>
+        /// Lấy toàn bộ danh sách người dùng
+        /// </summary>
+        /// <returns></returns>
+        public static string GetAllAccountants()
+        {
+            return @$"{pathController}/GetAll";
+        }
+
+        /// <summary>
+        /// Cập nhật trạng thái khóa tài khoản
+        /// </summary>
+        /// <returns></returns>
+        public static string UpdateLockedAccountant()
+        {
+            return @$"{pathController}/UpdateLockedAccountant";
+        }
+        
+
     }
 }

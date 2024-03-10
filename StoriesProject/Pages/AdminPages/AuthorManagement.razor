@@ -1,7 +1,9 @@
 ﻿@page "/admin/author_management"
 @using StoriesProject.Services;
-@inject IAccoutantsService _accoutantsService;
+@using StoriesProject.Model.ViewModel.Accountant
 @using StoriesProject.Model.BaseEntity;
+
+@inject IAccoutantsService _accoutantsService;
 @inject IJSRuntime _js;
 
 <body>
@@ -150,11 +152,11 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @if (lstAccountants != null && lstAccountants.Count() > 0)
+                                                    @if (lstRegisterAccountants != null && lstRegisterAccountants.Count() > 0)
                                                     {
-                                                        @for (int i = 0; i < lstAccountants.Count; i++)
+                                                        @for (int i = 0; i < lstRegisterAccountants.Count; i++)
                                                         {
-                                                            var item = lstAccountants[i];
+                                                            var item = lstRegisterAccountants[i];
                                                             int currentIndex = i + 1;
                                                             <tr>
                                                                 <th scope="row">@currentIndex</th>
@@ -212,52 +214,46 @@
                                                     <tr class="highlight">
                                                         <th scope="col">#</th>
                                                         <th scope="col">Họ tên</th>
-                                                        <th scope="col">Số tác phẩm</th>
-                                                        <th scope="col">Tổng số đã bán</th>
-                                                        <th scope="col" style="width: 400px;">Doanh số (vnd)</th>
-                                                        <th scope="col">Chi tiết</th>
+                                                        <th scope="col">Username</th>
+                                                        <th scope="col">Email</th>
+                                                        <th scope="col">Trạng thái</th>
+                                                        <th scope="col">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Trần Vinh</td>
-                                                        <td>50</td>
-                                                        <td>200</td>
-                                                        <td>2,000,000 </td>
-                                                        <td>
-                                                            <a href="#">
-                                                                <i class="lni lni-eye"></i>
-                                                                Xem
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">2</th>
-                                                        <td>Trần Vinh</td>
-                                                        <td>50</td>
-                                                        <td>200</td>
-                                                        <td>2,000,000 </td>
-                                                        <td>
-                                                            <a href="#">
-                                                                <i class="lni lni-eye"></i>
-                                                                Xem
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">3</th>
-                                                        <td>Trần Vinh</td>
-                                                        <td>50</td>
-                                                        <td>200</td>
-                                                        <td>2,000,000 </td>
-                                                        <td>
-                                                            <a href="#">
-                                                                <i class="lni lni-eye"></i>
-                                                                Xem
-                                                            </a>
-                                                        </td>
-                                                    </tr>
+                                                    @if (lstLockedAccountant != null && lstLockedAccountant.Count() > 0)
+                                                    {
+                                                        @for (int i = 0; i < lstLockedAccountant.Count; i++)
+                                                        {
+                                                            var item = lstLockedAccountant[i];
+                                                            int currentIndex = i + 1;
+                                                            var state = item.IsLocked ? "Bị chặn" : "Hoạt động";
+                                                            <tr>
+                                                                <th scope="row">@currentIndex</th>
+                                                                <td>@item.Name</td>
+                                                                <td>@item.UserName</td>
+                                                                <td>@item.Email</td>
+                                                                <td>@state</td>
+                                                                <td>
+                                                                    @if (item.IsLocked)
+                                                                    {
+                                                                        <button type="button" class="btn btn-success"
+                                                                                style="background-color: #1f6b0a;"
+                                                                                @onclick="() => UpdateLockedAccountant(item.Id, false)">
+                                                                            Bỏ chặn
+                                                                        </button>
+                                                                    } else
+                                                                    {
+                                                                        <button type="button" class="btn btn-danger" style="background-color: #9e2828;"
+                                                                                @onclick="() => UpdateLockedAccountant(item.Id, true)">
+                                                                            Chặn
+                                                                        </button>
+                                                                    }
+                                                                    
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    }
                                                 </tbody>
                                             </table>
                                         </div>
@@ -308,10 +304,16 @@
         selectedTab = tab;
     }
 
-    private List<AuthorRegister> lstAccountants { get; set; }
-    protected override async Task OnInitializedAsync()
+    private List<AuthorRegister> lstRegisterAccountants { get; set; }
+    private List<Accountant> lstLockedAccountant { get; set; } // danh sách user tab đang bị chặn
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        lstAccountants = await _accoutantsService.GetRegisterAccountantsByRole();
+        if (firstRender)
+        {
+            lstRegisterAccountants = await _accoutantsService.GetRegisterAccountantsByRole();
+            lstLockedAccountant = await _accoutantsService.GetAllAccountants();
+        }
     }
 
     private async Task ApprovedAccountant(Guid regiserId)
@@ -320,7 +322,7 @@
         if (res != null && res.IsSuccess)
         {
             await _js.InvokeVoidAsync("showToast", res?.Data);
-            lstAccountants = await _accoutantsService.GetRegisterAccountantsByRole();
+            lstRegisterAccountants = await _accoutantsService.GetRegisterAccountantsByRole();
             StateHasChanged();
 
         }
@@ -336,7 +338,28 @@
         if (res != null && res.IsSuccess)
         {
             await _js.InvokeVoidAsync("showToast", res?.Data);
-            lstAccountants = await _accoutantsService.GetRegisterAccountantsByRole();
+            lstRegisterAccountants = await _accoutantsService.GetRegisterAccountantsByRole();
+            StateHasChanged();
+        }
+        else
+        {
+            await _js.InvokeVoidAsync("showToast", res?.Message);
+        }
+    }
+
+    private async Task UpdateLockedAccountant(Guid userId, bool isLocked)
+    {
+        var param = new LockedAccountantParam()
+            {
+                AccountantId = userId,
+                IsLocked = isLocked
+            };
+
+        var res = await _accoutantsService.UpdateLockedAccountant(param);
+        if (res != null && res.IsSuccess)
+        {
+            await _js.InvokeVoidAsync("showToast", res?.Data);
+            lstLockedAccountant = await _accoutantsService.GetAllAccountants();
             StateHasChanged();
         }
         else

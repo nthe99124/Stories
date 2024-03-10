@@ -28,6 +28,7 @@ namespace StoriesProject.API.Services
         Task<RestOutput> UpdateUserInfor(AccountantUpdate account);
         Task<RestOutput> ChangePassword(string newPassword, string oldPassword);
         Task<IEnumerable<AuthorRegister>?> GetRegisterAccountantsByRole(Guid roleID);
+        Task<IEnumerable<Accountant>?> GetAll();
         Task<bool?> ApprovedAccountant(Guid regiserId);
         Task<bool?> DeniedAccountant(Guid regiserId);
         Task<bool?> UpdateLockedAccountant(LockedAccountantParam param);
@@ -233,6 +234,17 @@ namespace StoriesProject.API.Services
         public async Task<IEnumerable<AuthorRegister>?> GetRegisterAccountantsByRole(Guid roleID)
         {
             var result = await _accoutantsRepository.GetRegisterAccountantsByRole(roleID);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Lấy toàn bộ danh sách user
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Accountant>?> GetAll()
+        {
+            var result = await _accoutantsRepository.GetAll();
 
             return result;
         }
