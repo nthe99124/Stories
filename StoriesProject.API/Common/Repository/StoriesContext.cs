@@ -69,6 +69,16 @@ public partial class StoriesContext : DbContext
                  .HasConstraintName("FK_Accountants_AuthorRegister");
         });
 
+        modelBuilder.Entity<AuthorRegister>(entity =>
+        {
+            entity.Property(e => e.AuthorRegisterId).ValueGeneratedNever();
+            entity.Property(e => e.AccountantType).HasDefaultValue(1);
+            entity.Property(e => e.PaymentType).HasDefaultValue(1);
+            entity.Property(e => e.BankName).HasMaxLength(255);
+            entity.Property(e => e.BankNumber).HasMaxLength(50);
+            entity.Property(e => e.BankAccount).HasMaxLength(50);
+        });
+
         modelBuilder.Entity<CoinLog>(entity =>
         {
             entity.ToTable("CoinLog");

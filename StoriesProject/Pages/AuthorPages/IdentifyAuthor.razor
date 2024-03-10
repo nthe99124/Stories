@@ -1,4 +1,11 @@
 ﻿@page "/author/identify"
+
+@using StoriesProject.Model.ViewModel.Accountant;
+@using StoriesProject.Services;
+@using StoriesProject.Model.BaseEntity;
+
+@inject IJSRuntime _js;
+@inject IAccoutantsService _accoutantsService;
 <html>
 
 <head>
@@ -174,6 +181,12 @@
             color: #00B798;
         }
 
+        .accountant-type[type="radio"]:checked + label a,
+        .payment-type[type="radio"]:checked + label a {
+            border: 1px solid #00B798;
+            color: #00B798;
+        }
+
         .identity-box .input-box .layui-input-block a {
             display: block;
             width: 150px;
@@ -340,7 +353,7 @@
                 <span class="identify-yes hide">审核通过</span>
                 <span class="identify-no hide"></span>
             </div>
-            <div class="identity-box">
+            <div class="identity-box identity-form">
 
                 <div class="caption">
                     Bằng cách điền thông tin chi tiết hơn và trình bày các tác phẩm có thể chứng minh tính độc đáo của bạn, bạn có
@@ -352,8 +365,14 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label"><i>*</i>Loại: </label>
                         <div class="layui-input-block">
-                            <a class="subject-on person-btn" data-atype="person">Cá nhân<i></i></a>
-                            <a class="company-btn" data-atype="company">Doanh nghiệp<i></i></a>
+                            <input @onclick="() => authorRegister.AccountantType = 1" value="1" checked type="radio" id="accountant-type-person" class="accountant-type" name="AccountantType" hidden>
+                            <label for="accountant-type-person">
+                                <a class="person-btn" data-atype="person">Cá nhân<i></i></a>
+                            </label>
+                            <input @onclick="() => authorRegister.AccountantType = 2" value="2" type="radio" id="accountant-type-company" class="accountant-type" name="AccountantType" hidden>
+                            <label for="accountant-type-company">
+                                <a class="company-btn" data-atype="company">Doanh nghiệp<i></i></a>
+                            </label>
                         </div>
                     </div>
                     <!-- 个人 -->
@@ -361,7 +380,7 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label"><i>*</i>Họ tên: </label>
                             <div class="layui-input-block">
-                                <input id="pName" type="text" name="title" required="" lay-verify="required"
+                                <input @bind="authorRegister.Name" id="pName" type="text" name="Name" required="" lay-verify="required"
                                        placeholder="Nhập họ và tên thật của bạn" autocomplete="off" class="layui-input">
                             </div>
                         </div>
@@ -375,7 +394,7 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label"><i>*</i>Email: </label>
                             <div class="layui-input-block">
-                                <input id="pQQ" type="text" name="title" required="" lay-verify="required"
+                                <input @bind="authorRegister.Email" id="pQQ" type="text" name="Email" required="" lay-verify="required"
                                        placeholder="Nhập email liên lạc của bạn" autocomplete="off" class="layui-input">
                             </div>
                         </div>
@@ -383,26 +402,32 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label"><i>*</i>Số điện thoại: </label>
                             <div class="layui-input-block">
-                                <input id="pTel" type="text" name="title" required="" lay-verify="required"
+                                <input @bind="authorRegister.PhoneNumber" id="pTel" type="text" name="PhoneNumber" required="" lay-verify="required"
                                        placeholder="Vui lòng nhập số điện thoại" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label"><i>*</i>Thanh toán</label>
                             <div class="layui-input-block">
-                                <a class="subject-on ali-btn">Viettel Money</a>
-                                <a class="bank-btn">Thẻ ngân hàng</a>
+                                <input @onclick="() => authorRegister.PaymentType = 1" value="1" checked type="radio" id="payment-type-1" class="payment-type" name="PaymentType" hidden>
+                                <label for="payment-type-1">
+                                    <a class="li-btn">Viettel Money</a>
+                                </label>
+                                <input @onclick="() => authorRegister.AccountantType = 2" value="2" type="radio" id="payment-type-2" class="payment-type" name="PaymentType" hidden>
+                                <label for="payment-type-2">
+                                    <a class="bank-btn">Thẻ ngân hàng</a>
+                                </label>
                             </div>
                         </div>
                         <div class="bank-box">
                             <div class="layui-form-item">
                                 <label class="layui-form-label"><i>*</i>Tên ngân hàng</label>
                                 <div class="layui-input-block">
-                                    <select id="pBank" name="bank" lay-verify="required" class="bank">
+                                    <select @bind="authorRegister.BankName" id="pBank" name="BankName" lay-verify="required" class="bank">
                                         <option value="">--Vui lòng chọn ngân hàng--</option>
-                                        <option value="1">VP Bank</option>
-                                        <option value="2">SCB Bank</option>
-                                        <option value="3">MB Bank</option>
+                                        <option value="VP Bank">VP Bank</option>
+                                        <option value="SCB Bank">SCB Bank</option>
+                                        <option value="MB Bank">MB Bank</option>
 
                                     </select>
                                 </div>
@@ -410,14 +435,14 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label"><i>*</i>Số thẻ</label>
                                 <div class="layui-input-block">
-                                    <input id="pSubBank" type="text" name="title" required="" lay-verify="required"
+                                    <input @bind="authorRegister.BankNumber" id="pSubBank" type="text" name="BankNumber" required="" lay-verify="required"
                                            placeholder="Vui lòng nhập số thẻ của bạn" autocomplete="off" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <label class="layui-form-label"><i>*</i>Tài khoản</label>
                                 <div class="layui-input-block">
-                                    <input id="pBankNum" type="text" name="title" required="" lay-verify="required"
+                                    <input @bind="authorRegister.BankAccount" id="pBankNum" type="text" name="BankAccount" required="" lay-verify="required"
                                            placeholder="Vui lòng nhập số tài khoản của bạn" autocomplete="off" class="layui-input">
                                 </div>
                             </div>
@@ -511,7 +536,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label"></label>
                         <div class="layui-input-block">
-                            <a id="submit">Xác nhận</a>
+                            <a id="submit" @onclick="(() => RegisterAuthorAccountant(authorRegister))">Xác nhận</a>
                             <!-- <a id="modi">修改</a> -->
                         </div>
 
@@ -555,11 +580,28 @@
 
 </html>
 
-@code {
 
-}
-
+<script src="js/identityauthor.js" suppress-error="BL9992"></script>
 
 @code {
+    private AuthorRegisterModel authorRegister { get; set; } = new AuthorRegisterModel();
 
+    private async Task RegisterAuthorAccountant(AuthorRegisterModel register)
+    {
+        var isValid = await _js.InvokeAsync<bool>("validateRegisterForm");
+        if (isValid)
+        {
+            var res = await _accoutantsService.RegisterAuthorAccountant(register);
+            // TODO: tạm thời xử lý show toast
+            if (res != null && res.IsSuccess)
+            {
+                await _js.InvokeVoidAsync("showToast", res.Data);
+            }
+            else
+            {
+                await _js.InvokeVoidAsync("showToast", res?.Message);
+            }
+        }
+        
+    }
 }

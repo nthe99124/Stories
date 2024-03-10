@@ -23,6 +23,7 @@ namespace StoriesProject.API.Services
     {
         Task<string?> Login(string userName, string password);
         Task<bool> Register(AccountantRegister account);
+        Task<bool> RegisterAuthorAccountant(AuthorRegisterModel account);
         void Logout();
         AccountGenericDTO? GetUserInfor();
         Task<RestOutput> UpdateUserInfor(AccountantUpdate account);
@@ -113,6 +114,32 @@ namespace StoriesProject.API.Services
             {
                 return false;
             }
+        }
+        /// <summary>
+        /// Đăng ký tác giả
+        /// </summary>
+        public async Task<bool> RegisterAuthorAccountant(AuthorRegisterModel register)
+        {
+            // lưu dữ liệu vào bảng AuthorRegister
+            try
+            {
+                var userId = GetUserAuthen()?.AccoutantId;
+                if (register != null && userId != null)
+                {
+                    var registerMapping = _mapper.Map<AuthorRegister>(register);
+                    registerMapping.AccountantId = userId.Value;
+                    await _authorRegisterRepository.Create(registerMapping);
+                } else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         /// <summary>

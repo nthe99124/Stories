@@ -23,7 +23,15 @@
         {
             return @$"{pathController}/Register";
         }
-        
+
+        /// <summary>
+        /// Đăng ký tác giả
+        /// </summary>
+        public static string RegisterAuthorAccountant()
+        {
+            return @$"{pathController}/RegisterAuthorAccountant";
+        }
+
         /// <summary>
         /// Lấy danh sách user theo role
         /// </summary>

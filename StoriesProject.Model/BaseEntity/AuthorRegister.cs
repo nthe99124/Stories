@@ -26,6 +26,16 @@ namespace StoriesProject.Model.BaseEntity
         public string? PhoneNumber { get; set; }
         [Description("Ngày đăng ký")]
         public DateTime? CreatedDate { get; set; } = DateTime.UtcNow;
+        [Description("Loại hình đăng ký")]
+        public int AccountantType { get; set; } = 1; // 1 - Cá nhân, 2 - Doanh nghiệp
+        [Description("Hình thức thanh toán")]
+        public int PaymentType { get; set; } = 1; // 1 - Viettel Money, 2 - Thẻ ngân hàng
+        [Description("Tên ngân hàng")]
+        public string BankName { get; set; }
+        [Description("Số thẻ")]
+        public string BankNumber { get; set; }
+        [Description("Số tài khoản")]
+        public string BankAccount { get; set; }
 
         public virtual Accountant Accountant { get; set; } = null;
     }

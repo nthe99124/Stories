@@ -32,6 +32,7 @@
     <Compile Include="Enum\DataType.cs" />
     <Compile Include="ViewModel\Accountant\AccountantUpdate.cs" />
     <Compile Include="ViewModel\Accountant\AccountantRegister.cs" />
+    <Compile Include="ViewModel\Accountant\AuthorRegisterModel.cs" />
     <Compile Include="ViewModel\Accountant\LockedAccountantParam.cs" />
     <Compile Include="ViewModel\Accountant\LoginViewModel.cs" />
     <Compile Include="ViewModel\ResponseOutput.cs" />

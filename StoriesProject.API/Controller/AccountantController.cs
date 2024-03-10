@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StoriesProject.API.Services;
+using StoriesProject.Model.BaseEntity;
 using StoriesProject.Model.ViewModel;
 using StoriesProject.Model.ViewModel.Accountant;
 
@@ -86,6 +88,30 @@ namespace StoriesProject.API.Controller.Base
                     _res.ErrorEventHandler();
                 }
                 
+            }
+            return Ok(_res);
+        }
+
+        /// <summary>
+        /// Đăng ký tác giả
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("RegisterAuthorAccountant")]
+        [Authorize]
+        public async Task<IActionResult> RegisterAuthorAccountant(AuthorRegisterModel register)
+        {
+            if (register != null)
+            {
+                var isSuccess = await _accoutantsService.RegisterAuthorAccountant(register);
+                if (isSuccess)
+                {
+                    _res.SuccessEventHandler("Đăng ký thành công");
+                }
+                else
+                {
+                    _res.ErrorEventHandler();
+                }
+
             }
             return Ok(_res);
         }

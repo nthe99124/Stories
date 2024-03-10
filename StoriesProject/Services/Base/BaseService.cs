@@ -167,7 +167,7 @@ namespace StoriesProject.API.Services.Base
                     var response = await httpClient.GetAsync(_remoteServiceBaseUrl + url);
 
                     // Kiểm tra xem cuộc gọi API có thành công không
-                    response.EnsureSuccessStatusCode();
+                     response.EnsureSuccessStatusCode();
 
                     // Đọc nội dung phản hồi
                     var responseStr = await response.Content.ReadAsStringAsync();

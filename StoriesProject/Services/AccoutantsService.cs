@@ -14,6 +14,7 @@ namespace StoriesProject.Services
     {
         Task<ResponseOutput<string>> Login(LoginViewModel loginViewModel);
         Task<ResponseOutput<string>> Register(AccountantRegister loginViewModel);
+        Task<ResponseOutput<string>> RegisterAuthorAccountant(AuthorRegisterModel register);
         Task<List<AuthorRegister>> GetRegisterAccountantsByRole();
         Task<List<Accountant>> GetAllAccountants();
         Task<ResponseOutput<string>> ApprovedAccountant(Guid regiserId);
@@ -81,6 +82,16 @@ namespace StoriesProject.Services
             {
                 var url = AccountantApiUrlDef.Register();
                 return await RequestFullPostAsync<string>(url, loginViewModel);
+            }
+            /// <summary>
+            /// Đăng ký tác giả
+            /// </summary>
+            /// <param name="loginViewModel"></param>
+            /// <returns></returns>
+            public async Task<ResponseOutput<string>> RegisterAuthorAccountant(AuthorRegisterModel register)
+            {
+                var url = AccountantApiUrlDef.RegisterAuthorAccountant();
+                return await RequestFullPostAsync<string>(url, register) ;
             }
         }
     }

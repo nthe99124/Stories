@@ -9,6 +9,7 @@ namespace StoriesProject.API.Common.Mappings
         public MappingProfile()
         {
             CreateMap<AccountantRegister, Accountant>();
+            CreateMap<AuthorRegisterModel, AuthorRegister>();
         }
     }
 }

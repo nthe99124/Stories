@@ -20,7 +20,12 @@ namespace StoriesProject.API.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    AccountantType = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
+                    PaymentType = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
+                    BankName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    BankNumber = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    BankAccount = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,23 +35,6 @@ namespace StoriesProject.API.Migrations
                         column: x => x.AccountantId,
                         principalTable: "Accountants",
                         principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "StoryAccountGeneric",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImageLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VideoLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TypeOfStory = table.Column<short>(type: "smallint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StoryAccountGeneric", x => x.Id);
                 });
 
             migrationBuilder.CreateIndex(
@@ -61,9 +49,6 @@ namespace StoriesProject.API.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AuthorRegister");
-
-            migrationBuilder.DropTable(
-                name: "StoryAccountGeneric");
         }
     }
 }
