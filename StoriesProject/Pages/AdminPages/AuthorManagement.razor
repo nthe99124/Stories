@@ -49,6 +49,12 @@
                                     Đang bị chặn
                                 </button>
                             </li>
+                            <li class="nav-item" role="presentation">
+                                <button class=@(selectedTab==3 ? "nav-link active": "nav-link") id="payment-tab" data-bs-toggle="tab" data-bs-target="#payment" type="button"
+                                        role="tab" aria-controls="payment" aria-selected=@(selectedTab==4 ? "true": "false") @onclick="() => SetSelectedTab(4)">
+                                    Yêu cầu thanh toán
+                                </button>
+                            </li>
                         </ul>
 
 
@@ -132,7 +138,6 @@
                                     </div>
                                 </div>
                             }
-
                             @if(selectedTab == 2)
                             {
                                 <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab">
@@ -260,6 +265,60 @@
                                     </div>
                                 </div>
 
+                            }
+                            @if(selectedTab == 4){
+                                <div class="tab-pane fade" id="payment" role="tabpanel" aria-labelledby="payment-tab">
+                                    <h3 class="fw-bold fs-5 mb-4" style="color: #751759;">Yêu cầu thanh toán</h3>
+                                    <div style="display: flex;align-items: center;" class="mb-5">
+                                        <strong>Thống kê theo: </strong>
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                                    data-bs-toggle="dropdown" aria-expanded="false" style="width: 200px; margin-left: 10px;">
+                                                All of time
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <li><a class="dropdown-item" href="#">Theo tháng</a></li>
+                                                <li><a class="dropdown-item" href="#">Theo tuần</a></li>
+                                                <li><a class="dropdown-item" href="#">Theo năm</a></li>
+                                                <li><a class="dropdown-item" href="#">All of time</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div style="display: flex; flex-direction: column;background-color: rgb(245, 245, 239); padding: 15px;border-radius: 5px; box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.222); margin: 30px 30px"
+                                             class="col-md-3">
+                                            <div style="display: flex;">
+                                                <div style="display: flex; flex-direction: column;">
+                                                    <img src="https://images.pexels.com/photos/20440051/pexels-photo-20440051/free-photo-of-th-i-trang-nh-ng-ng-i-dan-ba-th-gian.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"
+                                                         alt="" style="width: 80px; height: 80px;border-radius: 50%;">
+                                                    <h3 style="  margin-top: 0;font-size: 18px;">Trần vinh</h3>
+                                                    <h3 style="  margin-top: 0;font-size: 12px;">@((MarkupString)"@vinh_127")</h3>
+                                                </div>
+                                                <div style="display: flex; flex-direction: column;margin-left: 30px;">
+                                                    <strong>*Yêu cầu rút:</strong>
+                                                    <p>2,000,000 vnd</p>
+                                                    <strong>*Số dư trong ví:</strong>
+                                                    <p>2,000,000 vnd</p>
+                                                    <p><strong>Ngân hàng: </strong>VPBank</p>
+                                                    <p><strong>STK: </strong>0394589324</p>
+                                                    <p><strong>Ngày rút: </strong>20/1/2024</p>
+                                                    <p style="color: #e47e7e; font-style: italic;"><strong>Mã: </strong>#15039405345</p>
+                                                </div>
+
+                                            </div>
+                                            <div style="display: flex;margin-top: 10px;justify-content: flex-end;">
+                                                <button type="button" class="btn btn-outline-dark">
+                                                    Thanh
+                                                    toán
+                                                </button>
+                                                <button type="button" class="btn btn-outline-dark" style="margin-left: 10px;">
+                                                    Từ
+                                                    chối
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             }
                         </div>
                     </div>

@@ -57,6 +57,7 @@
 		<Content Include="Pages\AdminPages\ComicManagement.razor" />
 		<Content Include="Pages\AdminPages\Dashboard.razor" />
 		<Content Include="Pages\AdminPages\PreviewComic.razor" />
+		<Content Include="Pages\AdminPages\OrderManagement.razor" />
 		<Content Include="Pages\_Host.cshtml" />
 		<Content Include="Properties\launchSettings.json" />
 		<Content Include="Shared\ComponentBase\BaseComponentCustom.razor" />

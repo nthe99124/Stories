@@ -221,6 +221,50 @@ a.sidebar-link:hover {
     z-index: 999;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+.sumery-order {
+    display: flex;
+    /* align-items: center; */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    width: auto;
+    margin-bottom: 20px;
+    box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.2);
+    justify-content: space-between;
+    width: 400px;
+}
+
+.sumery-order__left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: white;
+    width: 80%;
+}
+
+.sumery-order__right {
+    position: relative;
+    width: 10%;
+}
+
+.circle {
+    position: absolute; /* Đặt vị trí tuyệt đối để hình tròn sẽ căn chỉnh đối với phần tử cha */
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    /* top: 80%; */
+    /* transform: translateY(
+    -50%
+  ); */
+    right: 0; /* Đặt hình tròn ở bên phải của phần tử cha */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .circle i {
+        font-size: 24px;
+    }
 
 /* .table-responsive {
   overflow-x: auto;
