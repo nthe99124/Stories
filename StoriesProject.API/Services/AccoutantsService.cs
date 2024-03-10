@@ -27,17 +27,28 @@ namespace StoriesProject.API.Services
         AccountGenericDTO? GetUserInfor();
         Task<RestOutput> UpdateUserInfor(AccountantUpdate account);
         Task<RestOutput> ChangePassword(string newPassword, string oldPassword);
+        Task<IEnumerable<AuthorRegister>?> GetRegisterAccountantsByRole(Guid roleID);
+        Task<bool?> ApprovedAccountant(Guid regiserId);
+        Task<bool?> DeniedAccountant(Guid regiserId);
+        Task<bool?> UpdateLockedAccountant(LockedAccountantParam param);
     }
     public class AccoutantsService: BaseService, IAccoutantsService
     {
         private readonly IAccountantsRepository _accoutantsRepository;
+        private readonly IAuthorRegisterRepository _authorRegisterRepository;
+        private readonly IRoleAccountantRepository _roleAccountantRepository;
+        private readonly IRoleRepository _roleRepository;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
-        public AccoutantsService(IHttpContextAccessor httpContextAccessor, IDistributedCacheCustom cache, IAccountantsRepository accoutantsRepository, IConfiguration configuration, IMapper mapper) : base(httpContextAccessor, cache)
+        public AccoutantsService(IHttpContextAccessor httpContextAccessor, IDistributedCacheCustom cache, IAccountantsRepository accoutantsRepository, IConfiguration configuration, IMapper mapper, IRoleRepository roleRepository, IRoleAccountantRepository roleAccountantRepository, IAuthorRegisterRepository authorRegisterRepository) : base(httpContextAccessor, cache)
         {
             _accoutantsRepository = accoutantsRepository;
             _configuration = configuration;
+            _authorRegisterRepository = authorRegisterRepository;
+            _roleAccountantRepository = roleAccountantRepository;
+            _roleRepository = roleRepository;
             _mapper = mapper;
+            _roleRepository = roleRepository;
         }
 
         /// <summary>
@@ -53,6 +64,11 @@ namespace StoriesProject.API.Services
             var account = await _accoutantsRepository.GetUserByUserNameAndPass(userName, password);
             if (account != null)
             {
+                if(account.IsLocked)
+                {
+                    throw new Exception("Tài khoản đã bị khóa");
+
+                }
                 var token = HandleSignInAndGenerateToken(account);
 
                 if (token != null)
@@ -210,6 +226,111 @@ namespace StoriesProject.API.Services
             return res;
         }
 
+        /// <summary>
+        /// Lấy danh sách user
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<AuthorRegister>?> GetRegisterAccountantsByRole(Guid roleID)
+        {
+            var result = await _accoutantsRepository.GetRegisterAccountantsByRole(roleID);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Cấp quyền người dùng
+        /// </summary>
+        /// <param name="accountantId"></param>
+        /// <returns></returns>
+        public async Task<bool?> ApprovedAccountant(Guid regiserId)
+        {
+            // Lấy thông tin đăng ký
+            var registerData = await _authorRegisterRepository.FirstOrDefault(f => f.AuthorRegisterId == regiserId);
+
+            if(registerData == null) 
+            {
+                return false;
+            }
+
+            // Lấy role của tác giả
+            // tạm fix cứng quyền tác giả
+            var authorRole = await _roleRepository.FirstOrDefault(f => f.RoleName == "Author");
+
+            if(authorRole != null)
+            {
+                try
+                {
+                    // insert dữ liệu vào roleaccountant
+                    var userRole = new RoleAccountant()
+                    {
+                        AccountId = registerData.AccountantId,
+                        RoleId = authorRole.Id
+                    };
+                    await _roleAccountantRepository.Create(userRole);
+                    // xóa dữ liệu đăng ký
+                    await _authorRegisterRepository.Delete(registerData);
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
+
+            }
+            return true;
+        }
+        /// <summary>
+        /// Từ chối phê duyệt quyền tác giả
+        /// </summary>
+        /// <param name="regiserId"></param>
+        /// <returns></returns>
+        public async Task<bool?> DeniedAccountant(Guid regiserId)
+        {
+            // Lấy thông tin đăng ký
+            var registerData = await _authorRegisterRepository.FirstOrDefault(f => f.AuthorRegisterId == regiserId);
+
+            if (registerData == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                // xóa dữ liệu đăng ký
+                await _authorRegisterRepository.Delete(registerData);
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Cập nhật trạng thái khóa tài khoản
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        public async Task<bool?> UpdateLockedAccountant(LockedAccountantParam param)
+        {
+            var user = await _accoutantsRepository.FirstOrDefault(f => f.Id == param.AccountantId);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                user.IsLocked = param.IsLocked;
+                await _accoutantsRepository.Save();
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return true;
+        }
+
         #region Private Method
 
         #region phần đăng nhập sử dụng BearToken
@@ -330,6 +451,8 @@ namespace StoriesProject.API.Services
             await _httpContextAccessor?.HttpContext?.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             _httpContextAccessor?.HttpContext?.Session.Clear();
         }
+
+        
         #endregion
         #endregion
     }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StoriesProject.Model.BaseEntity;
+using StoriesProject.Model.DTO.Accountant;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,6 +19,7 @@ public partial class StoriesContext : DbContext
     }
 
     public virtual DbSet<Accountant> Accountants { get; set; }
+    public virtual DbSet<AuthorRegister> AuthorRegister { get; set; }
 
     public virtual DbSet<CoinLog> CoinLogs { get; set; }
 
@@ -60,6 +62,11 @@ public partial class StoriesContext : DbContext
                 .HasForeignKey<Accountant>(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Accountants_CoinLog");
+
+            entity.HasOne(d => d.AuthorRegister).WithOne(p => p.Accountant)
+                 .HasForeignKey<AuthorRegister>(d => d.AccountantId)
+                 .OnDelete(DeleteBehavior.ClientSetNull)
+                 .HasConstraintName("FK_Accountants_AuthorRegister");
         });
 
         modelBuilder.Entity<CoinLog>(entity =>
@@ -123,6 +130,7 @@ public partial class StoriesContext : DbContext
         {
             entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Price).HasColumnType("money");
+            entity.Property(e => e.RateScore).HasColumnType("decimal(18, 2)");
 
             entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.StoryCreatedByNavigations)
                 .HasForeignKey(d => d.CreatedBy)

@@ -8,6 +8,7 @@ using StoriesProject.Services;
 using System.Globalization;
 using Microsoft.Extensions.DependencyInjection;
 using StoriesProject.Common.Handler;
+using static StoriesProject.Services.IAccoutantsService;
 
 #region Config service
 var builder = WebApplication.CreateBuilder(args);

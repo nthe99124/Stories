@@ -8,6 +8,7 @@ using StoriesProject.API.Common.Mappings;
 using StoriesProject.API.Common.Repository;
 using StoriesProject.API.Repositories;
 using StoriesProject.API.Services;
+using StoriesProject.Model.BaseEntity;
 using StoriesProject.Model.ViewModel;
 using System.Text;
 
@@ -141,6 +142,9 @@ services.AddTransient<ILogEntryRepository, LogEntryRepository>();
 services.AddTransient<IAccountantsRepository, AccountantRepository>();
 services.AddTransient<IStoriesRepository, StoriesRepository>();
 services.AddTransient<ITopicRepository, TopicRepository>();
+services.AddTransient<IRoleAccountantRepository, RoleAccountantRepository>();
+services.AddTransient<IRoleRepository, RoleRepository>();
+services.AddTransient<IAuthorRegisterRepository, AuthorRegisterRepository>();
 
 
 //Service

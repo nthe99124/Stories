@@ -23,24 +23,33 @@ namespace StoriesProject.API.Controller.Base
         [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginViewModel loginInfor)
         {
-            var token = await _accoutantsService.Login(loginInfor.UserName, loginInfor.Password);
-            if (token != null)
+            try
             {
-                _res.SuccessEventHandler(token);
-                Response.Cookies.Append("access_token", token, new CookieOptions
+                var token = await _accoutantsService.Login(loginInfor.UserName, loginInfor.Password);
+                if (token != null)
                 {
-                    HttpOnly = true, // Set HttpOnly to true for security
-                    Secure = true,   // Set Secure to true if your site uses HTTPS
-                    SameSite = SameSiteMode.Strict, // Set SameSite to Strict for added security
-                    Expires = DateTimeOffset.UtcNow.AddMinutes(15) // Set the expiration time
-                });
+                    _res.SuccessEventHandler(token);
+                    Response.Cookies.Append("access_token", token, new CookieOptions
+                    {
+                        HttpOnly = true, // Set HttpOnly to true for security
+                        Secure = true,   // Set Secure to true if your site uses HTTPS
+                        SameSite = SameSiteMode.Strict, // Set SameSite to Strict for added security
+                        Expires = DateTimeOffset.UtcNow.AddMinutes(15) // Set the expiration time
+                    });
+                }
+                else
+                {
+                    _res.ErrorEventHandler("Sai tài khoản hoặc mật khẩu");
+                }
+
             }
-            else
+            catch (Exception ex)
             {
-                _res.ErrorEventHandler("Sai tài khoản hoặc mật khẩu");
+                _res.ErrorEventHandler(ex.Message);
             }
-            
+
             return Ok(_res);
+
         }
 
         /// <summary>
@@ -118,6 +127,68 @@ namespace StoriesProject.API.Controller.Base
         {
             var userInfor = _accoutantsService.GetUserInfor();
             _res.SuccessEventHandler(userInfor);
+            return Ok(_res);
+        }
+
+        /// <summary>
+        /// Lấy danh sách user theo role
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetRegisterAccountantsByRole")]
+        public async Task<IActionResult> GetRegisterAccountantsByRole(Guid roleID)
+        {
+            var lstAccountants = await _accoutantsService.GetRegisterAccountantsByRole(roleID);
+            _res.SuccessEventHandler(lstAccountants);
+            return Ok(_res);
+        }
+
+        [HttpPost("ApprovedAccountant")]
+        public async Task<IActionResult> ApprovedAccountant([FromBody]
+        Guid regiserId)
+        {
+            var result = await _accoutantsService.ApprovedAccountant(regiserId);
+            if (result != null && result.Value)
+            {
+                _res.SuccessEventHandler("Phê duyệt thành công");
+            }
+            else
+            {
+                _res.ErrorEventHandler("Phê duyệt thất bại");
+            }
+
+            return Ok(_res);
+        }
+
+        [HttpPost("DeniedAccountant")]
+        public async Task<IActionResult> DeniedAccountant([FromBody]
+        Guid regiserId)
+        {
+            var result = await _accoutantsService.DeniedAccountant(regiserId);
+            if (result != null && result.Value)
+            {
+                _res.SuccessEventHandler("Từ chối thành công");
+            }
+            else
+            {
+                _res.ErrorEventHandler("Phê duyệt thất bại");
+            }
+
+            return Ok(_res);
+        }
+
+        [HttpPost("UpdateLockedAccountant")]
+        public async Task<IActionResult> UpdateLockedAccountant(LockedAccountantParam param)
+        {
+            var result = await _accoutantsService.UpdateLockedAccountant(param);
+            if (result != null && result.Value)
+            {
+                _res.SuccessEventHandler("Cập nhật trạng thái khóa tài khoản thành công");
+            }
+            else
+            {
+                _res.ErrorEventHandler("Cập nhật trạng thái khóa tài khoản thất bại");
+            }
+
             return Ok(_res);
         }
     }

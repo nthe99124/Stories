@@ -54,11 +54,16 @@
     <Compile Include="Migrations\20240304071844_add-colum-Phone.Designer.cs" />
     <Compile Include="Migrations\20240304072442_update-colum-email.cs" />
     <Compile Include="Migrations\20240304072442_update-colum-email.Designer.cs" />
+    <Compile Include="Migrations\20240310032002_AuthorRegister.cs" />
+    <Compile Include="Migrations\20240310032002_AuthorRegister.Designer.cs" />
     <Compile Include="Migrations\StoriesContextModelSnapshot.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Repositories\AccountantRepository.cs" />
+    <Compile Include="Repositories\AuthorRegisterRepository.cs" />
     <Compile Include="Repositories\Base\BaseRepository.cs" />
     <Compile Include="Repositories\LogEntryRepository.cs" />
+    <Compile Include="Repositories\RoleAccountantRepository.cs" />
+    <Compile Include="Repositories\RoleRepository.cs" />
     <Compile Include="Repositories\StoriesRepository.cs" />
     <Compile Include="Repositories\TopicRepository.cs" />
     <Compile Include="Services\AccoutantsService.cs" />

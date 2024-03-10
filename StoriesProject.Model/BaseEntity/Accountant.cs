@@ -69,4 +69,6 @@ public partial class Accountant
 
     public virtual ICollection<Story> StoryModifiedByNavigations { get; set; } = new List<Story>();
     public virtual ICollection<StoryAccoutant> AccoutantIDByNavigations { get; set; } = new List<StoryAccoutant>();
+
+    public virtual AuthorRegister AuthorRegister { get; set; } = null;
 }

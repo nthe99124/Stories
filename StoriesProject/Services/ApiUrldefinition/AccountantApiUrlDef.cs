@@ -23,5 +23,32 @@
         {
             return @$"{pathController}/Register";
         }
+        
+        /// <summary>
+        /// Lấy danh sách user theo role
+        /// </summary>
+        /// <returns></returns>
+        public static string GetRegisterAccountantsByRole()
+        {
+            return @$"{pathController}/GetRegisterAccountantsByRole";
+        }
+
+        /// <summary>
+        /// Phê duyệt quyền tác giả
+        /// </summary>
+        /// <returns></returns>
+        public static string ApprovedAccountant()
+        {
+            return @$"{pathController}/ApprovedAccountant";
+        }
+
+        /// <summary>
+        /// Từ chối phê duyệt quyền tác giả
+        /// </summary>
+        /// <returns></returns>
+        public static string DeniedAccountant()
+        {
+            return @$"{pathController}/DeniedAccountant";
+        }
     }
 }
