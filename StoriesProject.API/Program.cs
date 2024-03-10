@@ -86,7 +86,8 @@ if (secretKey != null)
             //sign token
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(secretKeyBytes),
-            ClockSkew = TimeSpan.Zero
+            ClockSkew = TimeSpan.Zero,
+            RoleClaimType = "Role"
         };
     });
 }

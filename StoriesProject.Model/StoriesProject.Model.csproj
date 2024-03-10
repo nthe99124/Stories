@@ -26,14 +26,17 @@
     <Compile Include="BaseEntity\TopicStory.cs" />
     <Compile Include="DTO\Accountant\AccountAuthenDTO.cs" />
     <Compile Include="DTO\Accountant\AccountGenericDTO.cs" />
+    <Compile Include="DTO\Accountant\AuthorRegisterGenericDTO.cs" />
     <Compile Include="DTO\PagingModel.cs" />
     <Compile Include="DTO\Story\StoryAccountGeneric.cs" />
+    <Compile Include="DTO\Story\StoryDetailDTO.cs" />
     <Compile Include="DTO\Story\StoryGeneric.cs" />
     <Compile Include="Enum\DataType.cs" />
     <Compile Include="ViewModel\Accountant\AccountantUpdate.cs" />
     <Compile Include="ViewModel\Accountant\AccountantRegister.cs" />
     <Compile Include="ViewModel\Accountant\AuthorRegisterModel.cs" />
     <Compile Include="ViewModel\Accountant\LockedAccountantParam.cs" />
+    <Compile Include="ViewModel\Accountant\LoginResponse.cs" />
     <Compile Include="ViewModel\Accountant\LoginViewModel.cs" />
     <Compile Include="ViewModel\ResponseOutput.cs" />
     <Compile Include="ViewModel\RestOutput.cs" />

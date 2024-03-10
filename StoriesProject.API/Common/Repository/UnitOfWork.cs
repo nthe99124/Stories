@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Dapper;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Text;
@@ -16,6 +17,7 @@ namespace StoriesProject.API.Common.Repository
         DataTable SqlQuery(string query, SqlParameter[]? array = null);
         Task BulkInsert<T>(IEnumerable<T> listEntity) where T : class;
         Task<int> SqlCommand(string query, SqlParameter[]? array = null);
+        (List<T1>, List<T2>, List<T3>) ExecuteStoredProcedureMultiObject<T1, T2, T3>(string nameProcedure, DynamicParameters? array);
     }
 
     public class UnitOfWork : IUnitOfWork
@@ -87,6 +89,20 @@ namespace StoriesProject.API.Common.Repository
                 Console.WriteLine(e);
                 throw;
             }
+        }
+
+        //TODO: ntthe nghiên cứu tối ưu lại k chơi cứng thế này
+        public (List<T1>, List<T2>, List<T3>) ExecuteStoredProcedureMultiObject<T1, T2, T3>(string nameProcedure, DynamicParameters? array)   
+        {
+            using var connection = _context.Database.GetDbConnection();
+            connection.Open();
+            using (var results = connection.QueryMultiple(nameProcedure, array, commandType: CommandType.StoredProcedure))
+            {
+                var list1 = results.Read<T1>().ToList();
+                var list2 = results.Read<T2>().ToList();
+                var list3 = results.Read<T3>().ToList();
+                return (list1, list2, list3);
+            };
         }
 
         /// <summary>

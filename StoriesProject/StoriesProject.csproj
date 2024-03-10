@@ -10,6 +10,7 @@
 	<ItemGroup>
 		<Compile Include="Common\Cache\DistributedCacheCustom.cs" />
 		<Compile Include="Common\Constant\CacheKeyConstant.cs" />
+		<Compile Include="Common\Constant\RoleConstant.cs" />
 		<Compile Include="Common\Handler\RequestHttpHandler.cs" />
 		<Compile Include="Common\MiddleWare\LanguageMiddleware.cs" />
 		<Compile Include="Pages\Error.cshtml.cs" />

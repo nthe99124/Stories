@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using StoriesProject.API.Common.Attribute;
+using StoriesProject.API.Common.Constant;
 using StoriesProject.API.Services;
 using StoriesProject.Model.BaseEntity;
 using StoriesProject.Model.ViewModel;
@@ -27,11 +29,11 @@ namespace StoriesProject.API.Controller.Base
         {
             try
             {
-                var token = await _accoutantsService.Login(loginInfor.UserName, loginInfor.Password);
-                if (token != null)
+                var userResult = await _accoutantsService.Login(loginInfor.UserName, loginInfor.Password);
+                if (userResult != null && !string.IsNullOrEmpty(userResult.Token))
                 {
-                    _res.SuccessEventHandler(token);
-                    Response.Cookies.Append("access_token", token, new CookieOptions
+                    _res.SuccessEventHandler(userResult);
+                    Response.Cookies.Append("access_token", userResult.Token, new CookieOptions
                     {
                         HttpOnly = true, // Set HttpOnly to true for security
                         Secure = true,   // Set Secure to true if your site uses HTTPS
@@ -39,19 +41,13 @@ namespace StoriesProject.API.Controller.Base
                         Expires = DateTimeOffset.UtcNow.AddMinutes(15) // Set the expiration time
                     });
                 }
-                else
-                {
-                    _res.ErrorEventHandler("Sai tài khoản hoặc mật khẩu");
-                }
-
             }
             catch (Exception ex)
             {
-                _res.ErrorEventHandler(ex.Message);
+                _res.ErrorEventHandler(null, ex.Message);
             }
 
             return Ok(_res);
-
         }
 
         /// <summary>
@@ -161,6 +157,7 @@ namespace StoriesProject.API.Controller.Base
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetAll")]
+        [Roles(RoleConstant.Employee, RoleConstant.Admin)]
         public async Task<IActionResult> GetAll()
         {
             var userInfor = await _accoutantsService.GetAll();
@@ -173,14 +170,16 @@ namespace StoriesProject.API.Controller.Base
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetRegisterAccountantsByRole")]
-        public async Task<IActionResult> GetRegisterAccountantsByRole(Guid roleID)
+        [Roles(RoleConstant.Employee, RoleConstant.Admin)]
+        public async Task<IActionResult> GetRegisterAccountantsByRole()
         {
-            var lstAccountants = await _accoutantsService.GetRegisterAccountantsByRole(roleID);
+            var lstAccountants = await _accoutantsService.GetRegisterAccountantsByRole();
             _res.SuccessEventHandler(lstAccountants);
             return Ok(_res);
         }
 
         [HttpPost("ApprovedAccountant")]
+        [Roles(RoleConstant.Employee, RoleConstant.Admin)]
         public async Task<IActionResult> ApprovedAccountant([FromBody]
         Guid regiserId)
         {
@@ -198,6 +197,7 @@ namespace StoriesProject.API.Controller.Base
         }
 
         [HttpPost("DeniedAccountant")]
+        [Roles(RoleConstant.Employee, RoleConstant.Admin)]
         public async Task<IActionResult> DeniedAccountant([FromBody]
         Guid regiserId)
         {
@@ -215,6 +215,7 @@ namespace StoriesProject.API.Controller.Base
         }
 
         [HttpPost("UpdateLockedAccountant")]
+        [Roles(RoleConstant.Employee, RoleConstant.Admin)]
         public async Task<IActionResult> UpdateLockedAccountant(LockedAccountantParam param)
         {
             var result = await _accoutantsService.UpdateLockedAccountant(param);

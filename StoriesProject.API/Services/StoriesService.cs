@@ -3,6 +3,7 @@ using StoriesProject.Model.BaseEntity;
 using StoriesProject.API.Repositories;
 using StoriesProject.API.Services.Base;
 using System;
+using StoriesProject.Model.DTO.Story;
 
 namespace StoriesProject.API.Services
 {
@@ -17,6 +18,7 @@ namespace StoriesProject.API.Services
         Task<IEnumerable<StoryAccountGeneric>?> GetFavoriteStory();
         Task<IEnumerable<StoryAccountGeneric>?> GetAllStoryByTopic(Guid topicId);
         Task<IEnumerable<Story>?> GetNewVervionStoryByDay(DateTime dateTime);
+        Task<StoryDetailFullDTO?> GetStoryById(Guid id);
     }
     public class StoriesService: BaseService, IStoriesService
     {
@@ -118,6 +120,16 @@ namespace StoriesProject.API.Services
         public async Task<IEnumerable<Story>?> GetNewVervionStoryByDay(DateTime dateTime)
         {
             return await _storiesRepository.GetNewVervionStoryByDay(dateTime);
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy truyện theo id
+        /// CreatedBy ntthe 28.02.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<StoryDetailFullDTO?> GetStoryById(Guid id)
+        {
+            return await _storiesRepository.GetStoryById(id);
         }
 
         #region Private Method

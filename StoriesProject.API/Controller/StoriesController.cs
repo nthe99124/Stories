@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using StoriesProject.API.Common.Attribute;
+using StoriesProject.API.Common.Constant;
 using StoriesProject.API.Services;
 using StoriesProject.Model.BaseEntity;
 using StoriesProject.Model.ViewModel;
@@ -86,7 +88,7 @@ namespace StoriesProject.API.Controller.Base
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetHistoryStoryRead")]
-        [Authorize]
+        [Roles(RoleConstant.Customer, RoleConstant.Author)]
         public async Task<IActionResult> GetHistoryStoryRead()
         {
             var dataResult = await _storiesService.GetHistoryStoryRead();
@@ -100,7 +102,7 @@ namespace StoriesProject.API.Controller.Base
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetFavoriteStory")]
-        [Authorize]
+        [Roles(RoleConstant.Customer, RoleConstant.Author)]
         public async Task<IActionResult> GetFavoriteStory()
         {
             var dataResult = await _storiesService.GetFavoriteStory();
@@ -130,6 +132,19 @@ namespace StoriesProject.API.Controller.Base
         public async Task<IActionResult> GetNewVervionStoryByDay(DateTime dateTime)
         {
             var dataResult = await _storiesService.GetNewVervionStoryByDay(dateTime);
+            _res.SuccessEventHandler(dataResult);
+            return Ok(_res);
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy truyện theo id
+        /// CreatedBy ntthe 28.02.2024
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetStoryById")]
+        public async Task<IActionResult> GetStoryById(Guid id)
+        {
+            var dataResult = await _storiesService.GetStoryById(id);
             _res.SuccessEventHandler(dataResult);
             return Ok(_res);
         }

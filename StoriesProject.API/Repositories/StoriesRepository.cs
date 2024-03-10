@@ -1,8 +1,12 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Dapper;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using StoriesProject.API.Common.Repository;
 using StoriesProject.API.Repositories.Base;
 using StoriesProject.Model.BaseEntity;
 using StoriesProject.Model.DTO;
+using StoriesProject.Model.DTO.Story;
 using System.Data;
 
 namespace StoriesProject.API.Repositories
@@ -18,6 +22,7 @@ namespace StoriesProject.API.Repositories
         Task<IEnumerable<StoryAccountGeneric>?> GetFavoriteStory(Guid accId);
         Task<IEnumerable<StoryAccountGeneric>?> GetAllStoryByTopic(Guid topicId);
         Task<IEnumerable<Story>?> GetNewVervionStoryByDay(DateTime dateTime);
+        Task<StoryDetailFullDTO?> GetStoryById(Guid topicId);
     }
     public class StoriesRepository : BaseRepository<Story>, IStoriesRepository
     {
@@ -142,6 +147,28 @@ namespace StoriesProject.API.Repositories
             };
             var storyAccount = _entities.ExecuteStoredProcedureObject<StoryAccountGeneric>("GetFavoriteStory", param);
             return storyAccount;
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy detail truyện
+        /// CreatedBy ntthe 03.03.2024
+        /// </summary>
+        /// <param name="accId"></param>
+        /// <returns></returns>
+        public async Task<StoryDetailFullDTO?> GetStoryById(Guid topicId)
+        {
+            var param = new DynamicParameters();
+            param.Add("@TopicID", topicId);
+
+            //TODO: ntthe nghiên cứu dựng base cho thằng này
+            var storyAccount = _entities.ExecuteStoredProcedureMultiObject<StoryDetailDTO, ChapterslDTO, TopicslDTO>("GetAllStoryByTopic", param);
+            var detailData = new StoryDetailFullDTO()
+            {
+                DetailStory = storyAccount.Item1.FirstOrDefault(),
+                Chapter = storyAccount.Item2,
+                Topic = storyAccount.Item3,
+            };
+            return detailData;
         }
 
         /// <summary>

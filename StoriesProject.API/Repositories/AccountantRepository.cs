@@ -3,7 +3,6 @@ using StoriesProject.API.Common.Repository;
 using StoriesProject.API.Common.Ulti;
 using StoriesProject.API.Repositories.Base;
 using StoriesProject.Model.BaseEntity;
-using StoriesProject.Model.DTO.Accountant;
 
 namespace StoriesProject.API.Repositories
 {
@@ -11,7 +10,7 @@ namespace StoriesProject.API.Repositories
     {
         Task<Accountant?> GetUserByUserNameAndPass(string userName, string password);
 
-        Task<IEnumerable<AuthorRegister>?> GetRegisterAccountantsByRole(Guid roleID);
+        Task<IEnumerable<Role>?> GetListRoleByAccId(Guid accId);
     }
     public class AccountantRepository : BaseRepository<Accountant>, IAccountantsRepository
     {
@@ -19,22 +18,22 @@ namespace StoriesProject.API.Repositories
         {
             
         }
-        // TODO: tạm thời lấy hết danh sách user ở bảng Accountants, sau lấy ở bảng đăng ký
-        public async Task<IEnumerable<AuthorRegister>?> GetRegisterAccountantsByRole(Guid roleID)
-        {
-            var param = new SqlParameter[]
-            {
-                new SqlParameter("@RoleID", roleID)
-            };
-            var lstAccountants = _entities.ExecuteStoredProcedureObject<AuthorRegister>("GetRegisterAccountantsByRole", param);
-            return lstAccountants;
-        }
 
         public async Task<Accountant?> GetUserByUserNameAndPass(string userName, string password)
         {
             var passwordEncode = HashCodeUlti.EncodePassword(password);
             var user = await FindBy(a => a.UserName == userName && a.Password == passwordEncode);
             return user.FirstOrDefault();
+        }
+
+        public async Task<IEnumerable<Role>?> GetListRoleByAccId(Guid accId)
+        {
+            var param = new SqlParameter[]
+            {
+                new SqlParameter("@AccID", accId)
+            };
+            var roleList = _entities.ExecuteStoredProcedureObject<Role>("GetRoleByAccId", param);
+            return roleList;
         }
     }
 }

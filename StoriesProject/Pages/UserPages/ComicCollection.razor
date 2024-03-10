@@ -4,6 +4,7 @@
 @using StoriesProject.Shared.ComponentBase;
 @inject IStoriesService _storiesService;
 @inject IJSRuntime _js;
+@inject NavigationManager _navigationManager;
 @inherits AuthorBaseComponent
 <html>
 <head>
@@ -53,7 +54,7 @@
             <div class="main-content_title">
                 <h3>Bộ sưu tập</h3>
                 <div class="main-content_subtitle">
-                    Tổng cộng<strong class="j-collection-count">1</strong>Tác phẩm
+                    Tổng cộng<strong class="j-collection-count">@(listFavoritesStory != null ? listFavoritesStory.Count : 0)</strong>Tác phẩm
                 </div>
                 <!-- toolbox -->
                 <div class="main-content__title--toolbox">
@@ -75,40 +76,40 @@
             <div class="j-collection-list main-content__comic-list">
                 <!-- <script id="user_collection_list" type="text/html"> -->
                 <ul class="user-comic-list">
-                    <!-- {{# layui.each(d, function(i, item){ }} -->
-                    <li class="user-comic-item" data-comic={{d[i].comic_id}}>
-                        <div class="j-item-select user-comic-item__select" data-comic={{d[i].comic_id}}>
-                            <i class="pic-select"></i>
-                        </div>
-                        <a class="user-comic-item__cover" href="/{{d[i].comic_id}}/" target="_blank">
-                            <!-- {{# if(d[i].is_update == 1 && d[i].status != 0) { }} -->
-                            <i class="pic-comic-update"></i>
-                            <!-- {{# } }} -->
-                            <!-- {{# if (d[i].status == 0) { }} -->
-                            <i class="pic-comic-off"></i>
-                            <!-- {{# } }} -->
-                            <img src="https://oss.mkzcdn.com/comic/cover/20231019/6530a23275954-399x533.jpg!cover-400">
-                        </a>
-                        <div class="user-comic-item__detail">
-                            <p class="user-comic-item--name">
-                                <a class="text-overflow" href="/{{d[i].comic_id}}/" target="_blank">Tên truyện</a>
-                            </p>
-                            <p class="user-comic-item--text user-comic-item--latest">
-                                <a class="text-overflow--gray" href="/{{d[i].comic_id}}/{{d[i].chapter_id}}.html"
-                                   target="_blank">Chapter x：Title của chapter</a>
-                            </p>
-                            <p class="user-comic-item--text">
-                                <a class="text-overflow--gray" href="/{{d[i].comic_id}}/{{d[i].read_chapter_id}}.html"
-                                   target="_blank">Đang đọc: Title của chapter</a>
-                            </p>
-                        </div>
-                    </li>
-                    <!-- {{#  }); }}   -->
-                    <!-- {{#  if(d.length === 0){ }} -->
-                    <div class="no-collection"></div>
-                    <!-- {{#  } }} -->
+                    @if (listFavoritesStory != null && listFavoritesStory.Count > 0)
+                    {
+                        @foreach (var item in listFavoritesStory)
+                        {
+                            <li class="user-comic-item" @onclick="(() => NavigateToDetails(item.Id))">
+                                <div class="j-item-select user-comic-item__select">
+                                    <i class="pic-select"></i>
+                                </div>
+                                <a class="user-comic-item__cover" href="#">
+                                    <i class="pic-comic-update"></i>
+                                    <i class="pic-comic-off"></i>
+                                    <img src="https://oss.mkzcdn.com/comic/cover/20231019/6530a23275954-399x533.jpg!cover-400">
+                                </a>
+                                <div class="user-comic-item__detail">
+                                    <p class="user-comic-item--name">
+                                        <a class="text-overflow" >@item.Name</a>
+                                    </p>
+                                    <p class="user-comic-item--text user-comic-item--latest">
+                                        <a class="text-overflow--gray">@item.Description</a>
+                                    </p>
+                                    @* <p class="user-comic-item--text">
+                                        <a class="text-overflow--gray" href="/{{d[i].comic_id}}/{{d[i].read_chapter_id}}.html"
+                                           target="_blank">Đang đọc: Title của chapter</a>
+                                    </p> *@
+                                </div>
+                            </li>
+                        }
+                        
+                    }
+                    else
+                    {
+                        <div class="no-collection"></div>
+                    }
                 </ul>
-                <!-- </> -->
             </div>
 
 
@@ -370,7 +371,7 @@
 </html>
 @code {
     private List<StoryGeneric> listFavoritesStory { get; set; }
-    private string token { get; set; }
+    private Guid detailID { get; set; }
 
     protected override async Task HandleAfterRenderAsync(bool firstRender)
     {
@@ -379,5 +380,10 @@
             listFavoritesStory = await _storiesService.GetFavoriteStory();
             StateHasChanged();
         }
+    }
+
+    private void NavigateToDetails(Guid detailId)
+    {
+        _navigationManager.NavigateTo($"/details/{detailId}");
     }
 }

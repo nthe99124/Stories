@@ -1,5 +1,11 @@
-﻿@page "/detail"
-
+﻿@page "/details/{id}"
+@page "/details"
+@using StoriesProject.Model.BaseEntity;
+@using StoriesProject.Services;
+@using StoriesProject.Shared.ComponentBase;
+@inject IStoriesService _storiesService;
+@inject IJSRuntime _js;
+@inherits BaseComponentCustom
 <html>
 
 <head>
@@ -119,7 +125,7 @@
                          data-src="https://oss.mkzcdn.com/comic/cover/20210624/60d3da10819ac-750x999.png!cover-400" alt="她来了，请趴下"
                          style="display: inline-block;">
                 </div>
-                <p class="comic-title j-comic-title">Quay về quá khứ</p>
+                <p class="comic-title j-comic-title">@storyDetail.Name</p>
                 <div class="comic-author">
                     <a href="/author/12527029.html">
                         <img class="avatar"
@@ -137,22 +143,11 @@
                 <div class="comic-intro">
                     <span class="title">Giói thiệu: </span>
                     <p class="intro">
-
-                        Một nữ diễn viên tầm thường từng bị vùi dập, trở về với tinh thần biến đổi. Từ một người dễ bị bắt nạt, cô
-                        bất ngờ trở thành một kẻ tàn nhẫn đáng sợ. Từ diễn xuất kém cỏi đến trở thành nữ hoàng điện ảnh, các quý tửu
-                        phải tôn trọng cô... Đấu trí? Chỉ cần hỏi xem ông muốn mua công ty của bạn với giá bao nhiêu; nữ hoàng? Chỉ
-                        là trò chơi, cô ta vô tình giành được giải thưởng lớn; trừng phạt kẻ xấu? Đó là điều cô ta tốt nhất, nhưng
-                        đừng quá yếu đuối. Trở lại dưới danh xưng của Thần Chết, nữ hoàng điện ảnh sẽ dẫn dắt bạn trong cuộc trừng
-                        phạt và bay lượn! Psst, cô ấy đang đến, hãy nằm xuống.
+                        @storyDetail.Description
                     </p>
                     <p class="show"><span class="txt">Chi tiết</span> <i class="iconfont"></i></p>
                     <p class="intro-total">
-                        Một nữ diễn viên tầm thường từng bị vùi dập, trở về với tinh thần biến đổi. Từ một người dễ bị bắt nạt, cô
-                        bất ngờ trở thành một kẻ tàn nhẫn đáng sợ. Từ diễn xuất kém cỏi đến trở thành nữ hoàng điện ảnh, các quý tửu
-                        phải tôn trọng cô... Đấu trí? Chỉ cần hỏi xem ông muốn mua công ty của bạn với giá bao nhiêu; nữ hoàng? Chỉ
-                        là trò chơi, cô ta vô tình giành được giải thưởng lớn; trừng phạt kẻ xấu? Đó là điều cô ta tốt nhất, nhưng
-                        đừng quá yếu đuối. Trở lại dưới danh xưng của Thần Chết, nữ hoàng điện ảnh sẽ dẫn dắt bạn trong cuộc trừng
-                        phạt và bay lượn! Psst, cô ấy đang đến, hãy nằm xuống.
+                        @storyDetail.Description
                     </p>
                     <p></p>
                 </div>
@@ -1210,9 +1205,22 @@
 </html>
 
 @code {
+    [Parameter]
+    public string Id { get; set; }
+
+    private Story storyDetail { get; set; }
     bool isShow = false;
     void handleShow()
     {
         isShow = !isShow;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!string.IsNullOrEmpty(Id))
+        {
+            var storyId = Guid.Parse(Id);
+            storyDetail = await _storiesService.GetStoryById(storyId);
+        }
     }
 }

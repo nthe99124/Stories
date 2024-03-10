@@ -34,7 +34,7 @@ namespace StoriesProject.API.Repositories.Base
     }
     public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
     {
-        private readonly DbSet<T> _dbset;
+        protected readonly DbSet<T> _dbset;
         protected readonly IUnitOfWork _entities;
 
         protected BaseRepository(IUnitOfWork entities)

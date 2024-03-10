@@ -15,20 +15,21 @@ using StoriesProject.Model.ViewModel.Accountant;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 using static StoriesProject.Model.Enum.DataType;
 
 namespace StoriesProject.API.Services
 {
     public interface IAccoutantsService
     {
-        Task<string?> Login(string userName, string password);
+        Task<LoginResponse?> Login(string userName, string password);
         Task<bool> Register(AccountantRegister account);
         Task<bool> RegisterAuthorAccountant(AuthorRegisterModel account);
         void Logout();
         AccountGenericDTO? GetUserInfor();
         Task<RestOutput> UpdateUserInfor(AccountantUpdate account);
         Task<RestOutput> ChangePassword(string newPassword, string oldPassword);
-        Task<IEnumerable<AuthorRegister>?> GetRegisterAccountantsByRole(Guid roleID);
+        Task<IEnumerable<AuthorRegister>?> GetRegisterAccountantsByRole();
         Task<IEnumerable<Accountant>?> GetAll();
         Task<bool?> ApprovedAccountant(Guid regiserId);
         Task<bool?> DeniedAccountant(Guid regiserId);
@@ -61,7 +62,7 @@ namespace StoriesProject.API.Services
         /// <param name="password"></param>
         /// <param name="ipAddress"></param>
         /// <returns></returns>
-        public async Task<string?> Login(string userName, string password)
+        public async Task<LoginResponse?> Login(string userName, string password)
         {
             var account = await _accoutantsRepository.GetUserByUserNameAndPass(userName, password);
             if (account != null)
@@ -69,9 +70,11 @@ namespace StoriesProject.API.Services
                 if(account.IsLocked)
                 {
                     throw new Exception("Tài khoản đã bị khóa");
-
                 }
-                var token = HandleSignInAndGenerateToken(account);
+
+                // lấy role
+                var listRole = await _accoutantsRepository.GetListRoleByAccId(account.Id);
+                var token = HandleSignInAndGenerateToken(account, listRole);
 
                 if (token != null)
                 {
@@ -83,9 +86,15 @@ namespace StoriesProject.API.Services
                         SameSite = SameSiteMode.Strict, // Set SameSite to Strict for added security
                         Expires = DateTimeOffset.UtcNow.AddMinutes(15) // Set the expiration time
                     });
-
-                    return token;
+                    var result = new LoginResponse();
+                    result.Token = token;
+                    result.RoleList = listRole.Select(item => item.RoleName).ToList();
+                    return result;
                 }
+            }
+            else
+            {
+                throw new Exception("Sai tài khoản hoặc mật khẩu");
             }
             return null;
         }
@@ -258,11 +267,15 @@ namespace StoriesProject.API.Services
         /// Lấy danh sách user
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<AuthorRegister>?> GetRegisterAccountantsByRole(Guid roleID)
+        public async Task<IEnumerable<AuthorRegister>?> GetRegisterAccountantsByRole()
         {
-            var result = await _accoutantsRepository.GetRegisterAccountantsByRole(roleID);
-
-            return result;
+            var roleMax = GetMaxRoleAuthen();
+            if (roleMax != null)
+            {
+                var result = await _authorRegisterRepository.GetAll();
+                return result;
+            }
+            return null;
         }
 
         /// <summary>
@@ -378,7 +391,7 @@ namespace StoriesProject.API.Services
         /// </summary>
         /// <param name="account"></param>
         /// <returns></returns>
-        private string? HandleSignInAndGenerateToken(Accountant account)
+        private string? HandleSignInAndGenerateToken(Accountant account, IEnumerable<Role> listRole)
         {
             if (_configuration != null)
             {
@@ -388,15 +401,31 @@ namespace StoriesProject.API.Services
                 {
                     Subject = new ClaimsIdentity(new[]
                     {
-                    new Claim(JwtRegisteredClaimsNamesConstant.Sid, Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimsNamesConstant.Sub, account.UserName),
-                    new Claim(JwtRegisteredClaimsNamesConstant.Coin, account.Coin.ToString()),
-                    new Claim(JwtRegisteredClaimsNamesConstant.AccId, account.Id.ToString()),
-                    new Claim(JwtRegisteredClaimsNamesConstant.Jti, Guid.NewGuid().ToString())
-                }),
+                        new Claim(JwtRegisteredClaimsNamesConstant.Sid, Guid.NewGuid().ToString()),
+                        new Claim(JwtRegisteredClaimsNamesConstant.Sub, account.UserName),
+                        new Claim(JwtRegisteredClaimsNamesConstant.Coin, account.Coin.ToString()),
+                        new Claim(JwtRegisteredClaimsNamesConstant.AccId, account.Id.ToString()),
+                        new Claim(JwtRegisteredClaimsNamesConstant.Jti, Guid.NewGuid().ToString()),
+                    }),
                     Expires = DateTime.UtcNow.AddMinutes(10),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKeyByte), SecurityAlgorithms.HmacSha256)
                 };
+
+                // xử lý add Role
+
+                if (listRole != null && listRole.Count() > 0)
+                {
+                    foreach (var role in listRole)
+                    {
+                        if (role != null && !string.IsNullOrEmpty(role.RoleName))
+                        {
+                            tokenDescription?.Subject.AddClaim(new Claim(JwtRegisteredClaimsNamesConstant.Role, role.RoleName));
+                            tokenDescription?.Subject.AddClaim(new Claim(JwtRegisteredClaimsNamesConstant.RoleInfor, JsonSerializer.Serialize(role)));
+                            
+                        }
+                    }
+                }
+
                 var token = jwtToken.CreateToken(tokenDescription);
                 return jwtToken.WriteToken(token);
             }

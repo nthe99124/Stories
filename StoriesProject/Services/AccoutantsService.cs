@@ -3,7 +3,6 @@ using Microsoft.JSInterop;
 using StoriesProject.API.Services.Base;
 using StoriesProject.Common.Cache;
 using StoriesProject.Model.BaseEntity;
-using StoriesProject.Model.DTO.Accountant;
 using StoriesProject.Model.ViewModel;
 using StoriesProject.Model.ViewModel.Accountant;
 using StoriesProject.Services.ApiUrldefinition;
@@ -12,7 +11,7 @@ namespace StoriesProject.Services
 {
     public interface IAccoutantsService: IBaseService
     {
-        Task<ResponseOutput<string>> Login(LoginViewModel loginViewModel);
+        Task<ResponseOutput<LoginResponse>> Login(LoginViewModel loginViewModel);
         Task<ResponseOutput<string>> Register(AccountantRegister loginViewModel);
         Task<ResponseOutput<string>> RegisterAuthorAccountant(AuthorRegisterModel register);
         Task<List<AuthorRegister>> GetRegisterAccountantsByRole();
@@ -35,41 +34,41 @@ namespace StoriesProject.Services
             public async Task<ResponseOutput<string>> ApprovedAccountant(Guid regiserId)
             {
                 var url = AccountantApiUrlDef.ApprovedAccountant();
-                return await RequestFullPostAsync<string>(url, regiserId);
+                return await RequestFullAuthenPostAsync<string>(url, regiserId);
             }
 
             public async Task<ResponseOutput<string>> DeniedAccountant(Guid regiserId)
             {
                 var url = AccountantApiUrlDef.DeniedAccountant();
-                return await RequestFullPostAsync<string>(url, regiserId);
+                return await RequestFullAuthenPostAsync<string>(url, regiserId);
             }
 
             public async Task<List<AuthorRegister>> GetRegisterAccountantsByRole()
             {
                 var url = AccountantApiUrlDef.GetRegisterAccountantsByRole();
-                return await RequestGetAsync<List<AuthorRegister>>(url);
+                return await RequestAuthenGetAsync<List<AuthorRegister>>(url);
             }
 
             public async Task<List<Accountant>> GetAllAccountants()
             {
                 var url = AccountantApiUrlDef.GetAllAccountants();
-                return await RequestGetAsync<List<Accountant>>(url);
+                return await RequestAuthenGetAsync<List<Accountant>>(url);
             }
 
             public async Task<ResponseOutput<string>> UpdateLockedAccountant(LockedAccountantParam param)
             {
                 var url = AccountantApiUrlDef.UpdateLockedAccountant();
-                return await RequestFullPostAsync<string>(url, param);
+                return await RequestFullAuthenPostAsync<string>(url, param);
             }
             /// <summary>
             /// Hàm xử lý login
             /// CreatedBy ntthe 28.02.2024
             /// </summary>
             /// <returns></returns>
-            public async Task<ResponseOutput<string>> Login(LoginViewModel loginViewModel)
+            public async Task<ResponseOutput<LoginResponse>> Login(LoginViewModel loginViewModel)
             {
                 var url = AccountantApiUrlDef.Login();
-                var res = await RequestFullPostAsync<string>(url, loginViewModel);
+                var res = await RequestFullPostAsync<LoginResponse>(url, loginViewModel);
                 return res;
             }
 
@@ -91,7 +90,7 @@ namespace StoriesProject.Services
             public async Task<ResponseOutput<string>> RegisterAuthorAccountant(AuthorRegisterModel register)
             {
                 var url = AccountantApiUrlDef.RegisterAuthorAccountant();
-                return await RequestFullPostAsync<string>(url, register) ;
+                return await RequestFullAuthenPostAsync<string>(url, register) ;
             }
         }
     }

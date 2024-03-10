@@ -1,4 +1,5 @@
 ﻿@page "/login"
+@using StoriesProject.API.Common.Constant;
 @using StoriesProject.Model.ViewModel.Accountant;
 @using StoriesProject.Services;
 @inject IAccoutantsService _accoutantsService;
@@ -309,14 +310,22 @@
         if (isValid)
         {
             var res = await _accoutantsService.Login(loginViewModel);
-            if (res != null && res.IsSuccess)
+            if (res != null && res.IsSuccess && res.Data != null)
             {
                 // Gọi hàm JavaScript để ghi token vào sessionStorage
-                await _js.InvokeVoidAsync("setSessionStorage", "token", res.Data);
+                await _js.InvokeVoidAsync("setSessionStorage", "token", res.Data.Token);
                 await _js.InvokeVoidAsync("setSessionStorage", "userName", loginViewModel.UserName);
                 await _js.InvokeVoidAsync("showToast", "Đăng nhập thành công");
                 await Task.Delay(2000);
-                _navigationManager.NavigateTo($"/");
+                if (res.Data.RoleList.Contains(RoleConstant.Admin) || res.Data.RoleList.Contains(RoleConstant.Employee))
+                {
+                    // là nhân viên hoặc admin thì bay luôn sang admin
+                    _navigationManager.NavigateTo($"/admin");
+                }
+                else
+                {
+                    _navigationManager.NavigateTo($"/");
+                }
             }
             else
             {

@@ -33,23 +33,18 @@
     return true;
 }
 
-function showToast(message) {
-    // tạm thời show alert
-    alert(message);
-}
-
 function addErrInfo($ele, msg) {
     var err_tpl =
         '<div class="j-verify-err"><i class="iconfont icon-ic-safe-off"></i><span></span></div>';
-    if ($ele.parents('.layui-form-item').find('.j-verify-err').length == 0) {
+    if ($ele.parents('.layui-input-block').find('.j-verify-err').length == 0) {
         var $err_tpl = $(err_tpl)
             .find('span')
             .text(msg)
             .end();
-        $ele.parents('.layui-form-item').append($err_tpl);
+        $ele.parents('.layui-input-block').append($err_tpl);
     } else {
         $ele
-            .parents('.layui-form-item')
+            .parents('.layui-input-block')
             .find('.j-verify-err span')
             .text(msg);
     }
@@ -58,7 +53,7 @@ function addErrInfo($ele, msg) {
 
 function clearAllErrInfo() {
     $('.identity-form input')
-        .parents('.layui-form-item')
+        .parents('.layui-input-block')
         .find('.j-verify-err')
         .remove();
 }

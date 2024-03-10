@@ -1,4 +1,10 @@
 ﻿@page "/user/history"
+@using StoriesProject.Model.BaseEntity;
+@using StoriesProject.Services;
+@using StoriesProject.Shared.ComponentBase;
+@inject IStoriesService _storiesService;
+@inject IJSRuntime _js;
+@inherits AuthorBaseComponent
 <html>
 <head>
   <title>阅读历史 - 漫客栈</title>
@@ -12,15 +18,6 @@
   <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/script/libs/layui/css/layui.css?v=0b3cd68">
   <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/style/common/common_user.css?v=a19b47d">
   <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/style/bundle/user.css?v=b5db955">
-
-  <!-- start Dplus -->
-  <!-- end Dplus -->
-  <!--[if lt IE 9]>
-  <script src="//static.mkzcdn.com/home/assets/script/libs/respond/respond.js?v=afc1984"></>
-<![endif]-->
-  <!--[if lt IE 9]>
-    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-  <![endif]-->
 </head>
 <style>
   .header-user-wrapper .search-box input {
@@ -93,7 +90,7 @@
                 <h3>Lịch sử đọc</h3>
         <div class="main-content_subtitle">
           Tổng
-          <strong class="j-collection-count">0</strong>tác phẩm
+          <strong class="j-collection-count">@(listReadedStory != null ? listReadedStory.Count : 0)</strong>tác phẩm
         </div>
         <!-- toolbox -->
         <div class="main-content__title--toolbox">
@@ -112,7 +109,44 @@
         </div>
       </div>
       <!-- comic-list -->
-      <div class="j-comic-list main-content__comic-list"></div>
+      <div class="j-comic-list main-content__comic-list">
+                <ul class="user-comic-list">
+                    @if (listReadedStory != null && listReadedStory.Count > 0)
+                    {
+                        @foreach (var item in listReadedStory)
+                        {
+                            <li class="user-comic-item" data-comic={{d[i].comic_id}}>
+                                <div class="j-item-select user-comic-item__select" data-comic={{d[i].comic_id}}>
+                                    <i class="pic-select"></i>
+                                </div>
+                                <a class="user-comic-item__cover" href="/{{d[i].comic_id}}/" target="_blank">
+                                    <i class="pic-comic-update"></i>
+                                    <i class="pic-comic-off"></i>
+                                    <img src="https://oss.mkzcdn.com/comic/cover/20231019/6530a23275954-399x533.jpg!cover-400">
+                                </a>
+                                <div class="user-comic-item__detail">
+                                    <p class="user-comic-item--name">
+                                        <a class="text-overflow" href="/{{d[i].comic_id}}/" target="_blank">@item.Name</a>
+                                    </p>
+                                    <p class="user-comic-item--text user-comic-item--latest">
+                                        <a class="text-overflow--gray" href="/{{d[i].comic_id}}/{{d[i].chapter_id}}.html"
+                                           target="_blank">@item.Description</a>
+                                    </p>
+                                    @* <p class="user-comic-item--text">
+                            <a class="text-overflow--gray" href="/{{d[i].comic_id}}/{{d[i].read_chapter_id}}.html"
+                            target="_blank">Đang đọc: Title của chapter</a>
+                            </p> *@
+                                </div>
+                            </li>
+                        }
+
+                    }
+                    else
+                    {
+                        <div class="no-collection"></div>
+                    }
+                </ul>
+      </div>
 @*      <script id="user_collection_list" type="text/html">
   <ul class="user-comic-list">
     {{# layui.each(d, function(i, item){ }}
@@ -188,5 +222,14 @@
 </html>
 
 @code {
+    private List<StoryGeneric> listReadedStory { get; set; }
 
+    protected override async Task HandleAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            listReadedStory = await _storiesService.GetHistoryStoryRead();
+            StateHasChanged();
+        }
+    }
 }

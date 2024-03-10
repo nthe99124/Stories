@@ -65,6 +65,16 @@
         }
 
         /// <summary>
+        /// Tạo url lấy 10 truyện đã đọc
+        /// CreatedBy ntthe 28.02.2024
+        /// </summary>
+        /// <returns></returns>
+        public static string GetHistoryStoryRead()
+        {
+            return @$"{pathController}/GetHistoryStoryRead";
+        }
+
+        /// <summary>
         /// Tạo url lấy 10 truyện theo chủ đề
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
@@ -84,6 +94,16 @@
             string formattedDateTime = dateTime.ToString("yyyy-MM-ddTHH:mm:ss");
             string encodedDateTime = Uri.EscapeDataString(formattedDateTime);
             return @$"{pathController}/GetNewVervionStoryByDay?dateTime={encodedDateTime}";
+        }
+
+        /// <summary>
+        /// Tạo url lấy detail truyện theo id
+        /// CreatedBy ntthe 28.02.2024
+        /// </summary>
+        /// <returns></returns>
+        public static string GetStoryById(Guid? id)
+        {
+            return @$"{pathController}/GetStoryById?id={id}";
         }
         
     }
