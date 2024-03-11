@@ -1,5 +1,62 @@
-﻿<h3>AuthorSideBar</h3>
+﻿<style>
+    .user-selecteds a {
+        border-left: 4px solid #00B798;
+        padding-left: 43px !important;
+        background: #F8F8F8 !important;
+        color: #00B798 !important;
+    }
+
+    a:hover {
+        color: #00b798;
+    }
+
+    dl dd a:hover {
+        border-left: 4px solid #00B798 !important;
+        padding-left: 43px !important;
+        background: #F8F8F8 !important;
+        color: #00B798 !important;
+    }
+
+    .center_selected {
+        color: #00b798;
+    }
+</style>
+<div class="aside-user">
+
+    <dl class="aside-user--first">
+        <dt class="@(isSelected == 0 ? "center_selected" : "")">
+            <i class="iconfont icon-door"></i>
+            <a rel="nofollow" href="/author/">Trung tâm tác giả</a>
+        </dt>
+    </dl>
+    <dl>
+        <dt>
+            <i class="iconfont icon-book"></i>Quản lý công việc
+        </dt>
+        <dd class="@(isSelected == 1 ? "user-selecteds" : "")">
+            <a rel="nofollow" href="/author/identify">Đăng kí tác giả</a>
+        </dd>
+        <dd class="@(isSelected == 2 ? "user-selecteds" : "")">
+            <a rel="nofollow" href="/author/mycomic">Tác phẩm của tôi</a>
+        </dd>
+        <dd class="@(isSelected == 3 ? "user-selecteds" : "")">
+            <a rel="nofollow" href="/author/assigncomicstep1">Tạo tác phẩm mới</a>
+        </dd>
+    </dl>
+    <dl>
+        <dt>
+            <i class="iconfont icon-data"></i>Thống kê
+        </dt>
+        <dd class="@(isSelected == 4 ? "user-selecteds" : "")">
+            <a rel="nofollow" href="/user/task/">Thu nhập</a>
+        </dd>
+        <dd class="@(isSelected == 5 ? "user-selecteds" : "")">
+            <a rel="nofollow" href="/shop/integral/">Khách hàng</a>
+        </dd>
+    </dl>
+</div>
 
 @code {
-
+    [Parameter]
+    public int isSelected { get; set; }
 }

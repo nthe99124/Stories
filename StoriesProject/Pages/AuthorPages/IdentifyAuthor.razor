@@ -20,15 +20,6 @@
     <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/script/libs/layui/css/layui.css?v=0b3cd68">
     <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/style/common/common_user.css?v=a19b47d">
     <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/style/bundle/user.css?v=b5db955">
-
-    <!-- start Dplus -->
-    <!-- end Dplus -->
-    <!--[if lt IE 9]>
-      <script src="//static.mkzcdn.com/home/assets/script/libs/respond/respond.js?v=afc1984"></>
-    <![endif]-->
-    <!--[if lt IE 9]>
-      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
 <style>
     .header-user-wrapper .search-box input {
@@ -272,79 +263,12 @@
 <body class="page-history">
     <!-- 头部 -->
 
-    <div class="header-user-wrapper author">
-        <div class="main-container clearfix">
-            <!-- logo -->
-            <a href="/user/" class="header-logo">
-                <img src="//static.mkzcdn.com/home/assets/images/header/pic_dzzx_logo.png?v=5d2ae5c" />
-            </a>
-            <!-- link -->
-            <!-- <div class="nav-link"> -->
-            <!-- <div class="sub-text">我是读者</div> -->
-            <!-- <a href="/">返回客栈首页</a> -->
-            <!-- </div> -->
-            <!-- menu -->
-            <ul class="nav-menu">
-                <li><a rel="nofollow" href="/">Trang chủ truyện tranh</a></li>
-                <li><a rel="nofollow" href="https://www.xiaoshuohui.com.cn/">Trung tâm tác giả</a></li>
-            </ul>
-            <!-- search -->
-            <div class="fr">
-                <!-- switch -->
-                <ul class="switch-tab reader">
-                    <!-- <a class="hl" rel="nofollow" href="/user/">读者</a> -->
-                    <a rel="nofollow" href="/author/">Cá nhân</a>
-                </ul>
-                <!-- user-box -->
-                <div class="j-header-avatar user-box">
-                    <div class="user-avatar">
-                        <a href="/user/">
-                            <img class="j-user-avatar"
-                                 src="//static.mkzcdn.com/home/assets/images/common/pic_login_defaulthead.png?v=83881ca" />
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <AuthorHeader />
 
 
     <!-- 内容 -->
     <div class="main-container">
-        <div class="aside-user">
-
-            <dl class="aside-user--first">
-                <dt class="center_selected">
-                    <i class="iconfont icon-door"></i>
-                    <a rel="nofollow" href="/user/">Trung tâm tác giả</a>
-                </dt>
-            </dl>
-            <dl>
-                <dt>
-                    <i class="iconfont icon-book"></i>Quản lý công việc
-                </dt>
-                <dd class="user-selecteds">
-                    <a rel="nofollow" href="/author/identify">Đăng kí tác giả</a>
-                </dd>
-                <dd>
-                    <a rel="nofollow" href="/author/">Tác phẩm của tôi</a>
-                </dd>
-                <dd>
-                    <a rel="nofollow" href="/author/assigncomicstep1">Tạo tác phẩm mới</a>
-                </dd>
-            </dl>
-            <dl>
-                <dt>
-                    <i class="iconfont icon-data"></i>Thống kê
-                </dt>
-                <dd>
-                    <a rel="nofollow" href="/user/task/">Thu nhập</a>
-                </dd>
-                <dd>
-                    <a rel="nofollow" href="/shop/integral/">Khách hàng</a>
-                </dd>
-            </dl>
-        </div>
+        <AuthorSideBar isSelected="1" />
 
         <!-- main-content -->
         <div class="user-right">

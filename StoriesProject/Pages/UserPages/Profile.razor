@@ -29,6 +29,21 @@
         line-height: 14px;
         height: 40px !important;
     }
+
+    .layui-form-label {
+        float: left;
+        display: block;
+        padding: 9px 15px;
+        width: auto;
+        font-weight: 400;
+        line-height: 20px;
+        text-align: right;
+    }
+
+    .main-content__profile--right {
+        float: right;
+        margin-right: 40px;
+    }
 </style>
 
 <body class="page-collection">
@@ -104,8 +119,8 @@
                         <!-- 生日 -->
                         <div class="layui-form-item">
                             <label class="layui-form-label">Năm sinh</label>
-                            <div class="layui-input-inline form__profile-input--city">
-                                <input type="text" name="birthday" id="date" lay-verify="date" placeholder="yyyy-MM-dd"
+                            <div class="layui-input-block">
+                                <input type="date" name="birthday" id="date" lay-verify="date" placeholder="yyyy-MM-dd"
                                        autocomplete="off" class="layui-input" value="1970-01-01" lay-key="1">
                             </div>
                         </div>

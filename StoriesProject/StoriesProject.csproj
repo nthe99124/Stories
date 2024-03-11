@@ -37,6 +37,7 @@
 		<Content Include="Pages\AuthorPages\AssignComicStep_1.razor" />
 		<Content Include="Pages\AuthorPages\AuthorHomepage.razor" />
 		<Content Include="Pages\AuthorPages\IdentifyAuthor.razor" />
+		<Content Include="Pages\AuthorPages\MyComic.razor" />
 		<Content Include="Pages\Counter.razor" />
 		<Content Include="Pages\Error.cshtml" />
 		<Content Include="Pages\Index.razor" />

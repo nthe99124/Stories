@@ -1,0 +1,209 @@
+﻿@page "/author/mycomic"
+<html>
+<head>
+    <title>阅读历史 - 漫客栈</title>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="keywords" content="关键词">
+    <meta name="description" content="描述">
+    <link rel="shortcut icon" href="https://static.mkzcdn.com/common/favicon.ico" type="image/x-icon" />
+
+    <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/script/libs/layui/css/layui.css?v=0b3cd68">
+    <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/style/common/common_user.css?v=a19b47d">
+    <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/style/bundle/user.css?v=b5db955">
+</head>
+<style>
+    .g-au-wrap {
+        box-sizing: border-box;
+        float: right;
+        width: 840px;
+        padding: 30px 25px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+    }
+
+    .g-au-info {
+        position: relative;
+        width: 100%;
+        height: 120px;
+        border-bottom: 1px solid #ddd;
+    }
+
+        .g-au-info .m-avatar {
+            float: left;
+            width: 88px;
+            height: 88px;
+            margin-right: 22px;
+            background: #ff620e;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+            .g-au-info .m-avatar > img {
+                width: 100%;
+                height: 100%;
+            }
+
+    .g-ai-box {
+        float: left;
+        margin-top: 20px;
+    }
+
+        .g-ai-box .name {
+            font-size: 18px;
+            line-height: 18px;
+        }
+
+        .g-ai-box .penname {
+            margin-top: 10px;
+            margin-bottom: 14px;
+            font-size: 12px;
+            color: #666;
+            line-height: 12px;
+        }
+
+    .g-au-info .m-create {
+        box-sizing: border-box;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 86px;
+        height: 28px;
+        line-height: 26px;
+        text-align: center;
+        border-radius: 14px;
+        color: #00b798;
+        border: 2px solid #00b798;
+    }
+
+    .g-ac-box {
+        padding-top: 25px;
+    }
+
+        .g-ac-box .m-title {
+            font-size: 15px;
+            line-height: 16px;
+            color: #666;
+        }
+
+        .g-ac-box .m-empty {
+            width: 204px;
+            height: 204px;
+            margin: 60px auto;
+            text-align: center;
+            font-size: 16px;
+            line-height: 16px;
+        }
+
+            .g-ac-box .m-empty .tip {
+                margin: 20px 0;
+                font-size: 12px;
+                line-height: 40px;
+                color: #ccc;
+            }
+
+    .main-content__comic-list {
+        position: relative;
+        min-height: 346px;
+    }
+
+    .user-comic-list {
+        margin-top: 25px;
+        margin-left: 25px;
+        overflow: hidden;
+    }
+
+        .user-comic-list .user-comic-item {
+            width: 138px;
+            float: left;
+            margin-right: 25px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+    li {
+        display: list-item;
+        text-align: -webkit-match-parent;
+    }
+</style>
+<body class="page-history">
+    <!-- 头部 -->
+
+    <AuthorHeader/>
+
+
+    <!-- 内容 -->
+    <div class="main-container">
+        <AuthorSideBar isSelected="2" />
+        <!-- main-content -->
+        <div class="g-au-wrap">
+            <div class="g-au-info" style="height: auto;">
+                <p style="font-size: 16px;margin-bottom: 18px;">
+                    <strong style="font-size: 20px;">Sáng tạo của tôi</strong> tổng
+                    cộng 10 tác phẩm
+                </p>
+                <a href="/author/comic_add_step1/" class="m-create">
+                    Tạo tác phẩm
+                </a>
+            </div>
+            <div class="g-ac-box">
+
+                <!-- <div class="m-empty">
+                  <p>
+                    Bạn chưa có tác phẩm nào
+                  </p>
+                  <a href="/author/comic_add_step1/" class="tip">
+                    Hãy thêm tác phẩm nào
+                  </a>
+                  <a href="/author/comic_add_step1/"><img src="https://static.mkzcdn.com/home/img/user/empty.png" alt=""></a>
+                </div> -->
+                <div class="j-collection-list main-content__comic-list">
+                    <ul class="user-comic-list">
+                        <li class="user-comic-item" data-comic="215003">
+                            <div class="j-item-select user-comic-item__select" data-comic="215003"> <i class="pic-select"></i> </div>
+                            <a class="user-comic-item__cover" href="/215003/" target="_blank">
+                                <img src="https://cdnnvd.com/nettruyen/thumb/tien-vo-de-ton.jpg">
+                            </a>
+                            <div class="user-comic-item__detail">
+                                <p class="user-comic-item--name">
+                                    <a class="text-overflow" href="/215003/" target="_blank">
+                                        Tiên võ đế
+                                        tôn
+                                    </a>
+                                </p>
+                                <p class="user-comic-item--text user-comic-item--latest">
+                                    <a class="text-overflow--gray"
+                                       href="/215003/1036339.html" target="_blank">Chapter 202: Chắc là đúng</a>
+                                </p>
+                            </div>
+                        </li>
+                        <li class="user-comic-item" data-comic="211685">
+                            <div class="j-item-select user-comic-item__select" data-comic="211685"> <i class="pic-select"></i> </div>
+                            <a class="user-comic-item__cover" href="/211685/" target="_blank">
+                                <img src="https://cdnnvd.com/nettruyen/thumb/boss-nha-giau-lai-la-nu-sinh-trung-hoc.jpg">
+                            </a>
+                            <div class="user-comic-item__detail">
+                                <p class="user-comic-item--name">
+                                    <a class="text-overflow" href="/211685/" target="_blank">
+                                        Boss nhà giàu
+                                        là nữ sinh trung học
+                                    </a>
+                                </p>
+                                <p class="user-comic-item--text user-comic-item--latest">
+                                    <a class="text-overflow--gray"
+                                       href="/211685/1036258.html" target="_blank">Chapter 165：Chắc là sai</a>
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+@code {
+
+}
