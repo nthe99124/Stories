@@ -5,6 +5,7 @@
 @using StoriesProject.Shared.ComponentBase;
 
 @inject IStoriesService _storiesService;
+@inject NavigationManager _navigationManager;
 
 @inherits BaseComponentCustom
 
@@ -355,7 +356,7 @@
                         var imgLink = $"Image/{item.ImageLink}";
                         <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
                             <div class="cover">
-                                <a href="/213295/" target="_blank">
+                                <a target="_blank" @onclick="(() => NavigateToDetails(item.Id))">
                                     <img class="lazy-carousel"
                                             data-src="@imgLink"
                                             src="@imgLink" alt="逆天邪神"
@@ -397,7 +398,7 @@
                         var imgLink = $"Image/{item.ImageLink}";
                         <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
                             <div class="cover">
-                                <a href="/216456/" target="_blank">
+                                <a target="_blank" @onclick="(() => NavigateToDetails(item.Id))">
                                     <img class="lazy-carousel"
                                             data-src="@imgLink"
                                             src="@imgLink" alt="皇后很忙"
@@ -439,7 +440,7 @@
                         var imgLink = $"Image/{item.ImageLink}";
                         <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
                             <div class="cover">
-                                <a href="/216716/" target="_blank">
+                                <a target="_blank" @onclick="(() => NavigateToDetails(item.Id))">
                                     <img class="lazy-carousel"
                                             data-src="@imgLink"
                                             src="@imgLink" alt="氪金玩家"
@@ -479,7 +480,7 @@
                         var imgLink = $"Image/{item.ImageLink}";
                         <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
                             <div class="cover">
-                                <a href="/207622/" target="_blank">
+                                <a target="_blank" @onclick="(() => NavigateToDetails(item.Id))">
                                     <img class="lazy-carousel"
                                             data-src="@imgLink"
                                             src="@imgLink" alt="妖神记"
@@ -526,7 +527,7 @@
 
                             <div class="in-comic--type-b">
                                 <div class="cover">
-                                    <a href="/216724/" target="_blank">
+                                    <a target="_blank" @onclick="(() => NavigateToDetails(item.Id))">
                                         <img class="lazy"
                                                 data-src="@imgLink"
                                                 src="@imgLink" alt="我躺着就变强">
@@ -556,7 +557,7 @@
 
                     <div class="in-comic--type-b">
                         <div class="cover">
-                            <a href="/216724/" target="_blank">
+                            <a target="_blank" @onclick="(() => NavigateToDetails(item.Id))"> 
                                 <img class="lazy"
                                         data-src="@imgLink"
                                         src="@imgLink" alt="我躺着就变强">
@@ -948,5 +949,10 @@
         listFreeStory = await _storiesService.GetTop10FreeStory();
         listPaidStory = await _storiesService.GetTop10PaidStory();
         listNewVersionStory = await _storiesService.GetTop10NewVervionStory();
+    }
+
+    private void NavigateToDetails(Guid detailId)
+    {
+        _navigationManager.NavigateTo($"/details/{detailId}");
     }
 }

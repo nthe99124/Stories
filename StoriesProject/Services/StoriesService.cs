@@ -2,6 +2,7 @@
 using StoriesProject.API.Services.Base;
 using StoriesProject.Common.Cache;
 using StoriesProject.Model.BaseEntity;
+using StoriesProject.Model.DTO.Story;
 using StoriesProject.Services.ApiUrldefinition;
 
 namespace StoriesProject.Services
@@ -17,7 +18,7 @@ namespace StoriesProject.Services
         Task<List<StoryGeneric>> GetHistoryStoryRead();
         Task<List<StoryGeneric>> GetAllStoryByTopic(Guid topicId);
         Task<List<StoryGeneric>> GetNewVervionStoryByDay(DateTime dateTime);
-        Task<Story> GetStoryById(Guid? id);
+        Task<StoryDetailFullDTO> GetStoryById(Guid? id);
     }
     public class StoriesService : BaseService, IStoriesService
     {
@@ -131,10 +132,10 @@ namespace StoriesProject.Services
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<Story> GetStoryById(Guid? id)
+        public async Task<StoryDetailFullDTO> GetStoryById(Guid? id)
         {
             var url = StoriesApiUrlDef.GetStoryById(id);
-            return await RequestGetAsync<Story>(url);
+            return await RequestGetAsync<StoryDetailFullDTO>(url);
         }
     }
 }

@@ -36,7 +36,8 @@ namespace StoriesProject.API.Migrations
 					s.ViewAccess
 				FROM 
 					Stories s 
-					inner join Accountants a on s.CreatedBy = a.Id;
+					inner join Accountants a on s.CreatedBy = a.Id
+				WHERE s.Id = @StoryId;
 
 				SELECT 
 					c.Content,
@@ -53,8 +54,7 @@ namespace StoriesProject.API.Migrations
 					inner join TopicStory ts on t.Id = ts.TopicId
 					inner join Stories s on ts.StoryId = s.Id
 				where StoryId = @StoryId;
-			END
-			GO");
+			END;");
         }
 
         /// <inheritdoc />

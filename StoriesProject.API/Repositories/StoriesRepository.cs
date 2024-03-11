@@ -22,7 +22,7 @@ namespace StoriesProject.API.Repositories
         Task<IEnumerable<StoryAccountGeneric>?> GetFavoriteStory(Guid accId);
         Task<IEnumerable<StoryAccountGeneric>?> GetAllStoryByTopic(Guid topicId);
         Task<IEnumerable<Story>?> GetNewVervionStoryByDay(DateTime dateTime);
-        Task<StoryDetailFullDTO?> GetStoryById(Guid topicId);
+        Task<StoryDetailFullDTO?> GetStoryById(Guid storyId);
     }
     public class StoriesRepository : BaseRepository<Story>, IStoriesRepository
     {
@@ -153,15 +153,15 @@ namespace StoriesProject.API.Repositories
         /// Hàm xử lý lấy detail truyện
         /// CreatedBy ntthe 03.03.2024
         /// </summary>
-        /// <param name="accId"></param>
+        /// <param name="storyId"></param>
         /// <returns></returns>
-        public async Task<StoryDetailFullDTO?> GetStoryById(Guid topicId)
+        public async Task<StoryDetailFullDTO?> GetStoryById(Guid storyId)
         {
             var param = new DynamicParameters();
-            param.Add("@TopicID", topicId);
+            param.Add("@StoryId", storyId);
 
             //TODO: ntthe nghiên cứu dựng base cho thằng này
-            var storyAccount = _entities.ExecuteStoredProcedureMultiObject<StoryDetailDTO, ChapterslDTO, TopicslDTO>("GetAllStoryByTopic", param);
+            var storyAccount = _entities.ExecuteStoredProcedureMultiObject<StoryDetailDTO, ChapterslDTO, TopicslDTO>("GetStoryDetailById", param);
             var detailData = new StoryDetailFullDTO()
             {
                 DetailStory = storyAccount.Item1.FirstOrDefault(),
