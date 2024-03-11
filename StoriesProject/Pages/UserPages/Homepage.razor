@@ -397,9 +397,9 @@
                     if (item != null)
                     {
                         var imgLink = $"Image/{item.ImageLink}";
-                        <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
+                                <div class="in-comic--type-b cs-item" style="float: left; width: 245px;" @onclick="(() => NavigateToDetails(item.Id))">
                             <div class="cover">
-                                <a target="_blank" @onclick="(() => NavigateToDetails(item.Id))">
+                                <a>
                                     <img class="lazy-carousel"
                                             data-src="@imgLink"
                                             src="@imgLink" alt="皇后很忙"
@@ -408,7 +408,7 @@
                                 <div class="cover__tag">@item.Name</div>
                             </div>
                             <span class="comic__rank rank--1">@(i+1)</span>
-                            <p class="comic__title"><a href="/216456/" target="_blank">@item.Name</a></p>
+                            <p class="comic__title"><a>@item.Name</a></p>
                             <p class="comic__feature">@item.Description</p>
                         </div>
                     }
@@ -439,9 +439,9 @@
                     if (item != null)
                     {
                         var imgLink = $"Image/{item.ImageLink}";
-                        <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
+                                <div class="in-comic--type-b cs-item" style="float: left; width: 245px;" @onclick="(() => NavigateToDetails(item.Id))">
                             <div class="cover">
-                                <a target="_blank" @onclick="(() => NavigateToDetails(item.Id))">
+                                <a >
                                     <img class="lazy-carousel"
                                             data-src="@imgLink"
                                             src="@imgLink" alt="氪金玩家"
@@ -449,7 +449,7 @@
                                 </a>
                                 <div class="cover__tag">@item.Name</div>
                             </div>
-                            <p class="comic__title"><a href="/216716/" target="_blank">@item.Name</a></p>
+                            <p class="comic__title"><a target="_blank">@item.Name</a></p>
                             <p class="comic__feature">@item.Description</p>
                         </div>
                     }
@@ -479,9 +479,9 @@
                     if (item != null)
                     {
                         var imgLink = $"Image/{item.ImageLink}";
-                        <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
+                                <div class="in-comic--type-b cs-item" style="float: left; width: 245px;" @onclick="(() => NavigateToDetails(item.Id))">
                             <div class="cover">
-                                <a target="_blank" @onclick="(() => NavigateToDetails(item.Id))">
+                                <a>
                                     <img class="lazy-carousel"
                                             data-src="@imgLink"
                                             src="@imgLink" alt="妖神记"
@@ -489,7 +489,7 @@
                                 </a>
                                 <div class="cover__tag">@item.Name</div>
                             </div>
-                            <p class="comic__title"><a href="/207622/" target="_blank">@item.Name</a></p>
+                            <p class="comic__title"><a>@item.Name</a></p>
                             <p class="comic__feature"> @item.Description</p>
                         </div>
                     }
@@ -526,16 +526,16 @@
                         {
                             var imgLink = $"Image/{item.ImageLink}";
 
-                            <div class="in-comic--type-b">
+                                <div class="in-comic--type-b" @onclick="(() => NavigateToDetails(item.Id))">
                                 <div class="cover">
-                                    <a target="_blank" @onclick="(() => NavigateToDetails(item.Id))">
+                                    <a>
                                         <img class="lazy"
                                                 data-src="@imgLink"
                                                 src="@imgLink" alt="我躺着就变强">
                                     </a>
                                     <div class="cover__tag">@item.Name</div>
                                 </div>
-                                <p class="comic__title"><a href="/216724/" target="_blank">@item.Name</a></p>
+                                <p class="comic__title"><a>@item.Name</a></p>
                                 <p class="comic__feature">
                                     @item.Description
                                 </p>
@@ -556,16 +556,16 @@
                 {
                     var imgLink = $"Image/{item.ImageLink}";
 
-                    <div class="in-comic--type-b">
+                            <div class="in-comic--type-b" @onclick="(() => NavigateToDetails(item.Id))">
                         <div class="cover">
-                            <a target="_blank" @onclick="(() => NavigateToDetails(item.Id))"> 
+                            <a> 
                                 <img class="lazy"
                                         data-src="@imgLink"
                                         src="@imgLink" alt="我躺着就变强">
                             </a>
                             <div class="cover__tag">@item.Name</div>
                         </div>
-                        <p class="comic__title"><a href="/216724/" target="_blank">@item.Name</a></p>
+                        <p class="comic__title"><a>@item.Name</a></p>
                         <p class="comic__feature">
                             @item.Description
                         </p>

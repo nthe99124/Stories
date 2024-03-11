@@ -113,12 +113,31 @@ namespace StoriesProject.API.Controller.Base
         }
 
         /// <summary>
+        /// Hàm xử lý lấy thông tin user
+        /// CreatedBy ntthe 03.03.2024
+        /// </summary>
+        /// <param name="acc"></param>
+        /// <returns></returns>
+        [HttpGet("GetUserInforGeneric")]
+        [Roles(RoleConstant.Customer, RoleConstant.Author)]
+        public async Task<IActionResult> GetUserInforGeneric()
+        {
+            var userData = await _accoutantsService.GetUserInforGeneric();
+            if (userData != null)
+            {
+                _res.SuccessEventHandler(userData);
+            }
+            return Ok(_res);
+        }
+
+        /// <summary>
         /// Hàm xử lý cập nhật thông tin user
         /// CreatedBy ntthe 03.03.2024
         /// </summary>
         /// <param name="acc"></param>
         /// <returns></returns>
         [HttpPost("UpdateUserInfor")]
+        [Roles(RoleConstant.Customer, RoleConstant.Author)]
         public async Task<IActionResult> UpdateUserInfor(AccountantUpdate acc)
         {
             _res = await _accoutantsService.UpdateUserInfor(acc);
@@ -132,9 +151,10 @@ namespace StoriesProject.API.Controller.Base
         /// <param name="acc"></param>
         /// <returns></returns>
         [HttpPost("ChangePassword")]
-        public async Task<IActionResult> ChangePassword(string newPassword, string oldPassword)
+        [Roles(RoleConstant.Customer, RoleConstant.Author)]
+        public async Task<IActionResult> ChangePassword(ChangPasswordVM password)
         {
-            _res = await _accoutantsService.ChangePassword(newPassword, oldPassword);
+            _res = await _accoutantsService.ChangePassword(password.NewPassword, password.OldPassword);
             return Ok(_res);
         }
 
@@ -145,6 +165,7 @@ namespace StoriesProject.API.Controller.Base
         /// <param name="acc"></param>
         /// <returns></returns>
         [HttpPost("GetUserInfor")]
+        [Roles(RoleConstant.Customer, RoleConstant.Author)]
         public IActionResult GetUserInfor()
         {
             var userInfor = _accoutantsService.GetUserInfor();

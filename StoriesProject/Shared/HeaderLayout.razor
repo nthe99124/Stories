@@ -31,6 +31,11 @@
         background-color: #ff620e;
         font-weight: bold;
     }
+
+    .p-detail, .p-index {
+        padding-top: unset !important;
+    }
+    
 </style>
 <div class="in-header">
     <div class="in-header__wrap container--response">
@@ -41,10 +46,10 @@
                     <a href="/">TRANG CHỦ</a>
                     <div class="underline"></div>
                 </li>
-                <li class="nav-item @(isSelected == 2 ? "active" : "")">
-                    <a href="/update/">MỚI CẬP NHẬT</a>
+                @* <li class="nav-item @(isSelected == 2 ? "active" : "")">
+                    <a href="/Newupdate/">MỚI CẬP NHẬT</a>
                     <div class="underline"></div>
-                </li>
+                </li> *@
                 <li class="nav-item @(isSelected == 3 ? "active" : "")">
                     <a href="/category/">PHÂN LOẠI</a>
                     <div class="underline"></div>

@@ -36,7 +36,7 @@ namespace StoriesProject.API.Migrations
 					s.ViewAccess
 				FROM 
 					Stories s 
-					inner join Accountants a on s.CreatedBy = a.Id
+					left join Accountants a on s.CreatedBy = a.Id
 				WHERE s.Id = @StoryId;
 
 				SELECT 

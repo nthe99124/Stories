@@ -3,6 +3,7 @@
 @using StoriesProject.Services;
 @inject ITopicService _topicService;
 @inject IStoriesService _storiesService;
+@inject NavigationManager _navigationManager;
 <html>
 
 <head>
@@ -395,9 +396,9 @@
                         @for (int i = 0; i < listTopic.Count; i++)
                         {
                             var item = listTopic[i];
-                            int currentIndex = i + 1; // Tạo một biến cục bộ chứa giá trị hiện tại của i
+                            int currentIndex = i; // Tạo một biến cục bộ chứa giá trị hiện tại của i
                             <li class="cate-item @(i == activeIndex ? "active" : "")">
-                                <a rel="nofollow" @onclick="() => ChangeTopic(i, item.Id)">@item.Name</a>
+                                <a rel="nofollow" @onclick="() => ChangeTopic(currentIndex, item.Id)">@item.Name</a>
                             </li>
                         }
                     }
@@ -435,21 +436,20 @@
             <p class="fr">Tổng <span class="hl">@(listStoryByTopic != null ? listStoryByTopic.Count() : 0)</span> Tác phẩm</p>
         </div>
         <div class="cate-comic-list clearfix">
-
             @if (listStoryByTopic != null && listStoryByTopic.Count > 0)
             {
                 @foreach (var item in listStoryByTopic)
                 {
-                    <div class="common-comic-item">
-                        <a class="cover" href="/207622/" target="_blank">
+                    <div class="common-comic-item" @onclick="(() => NavigateToDetails(item.Id))">
+                        <a class="cover">
                             <img class="lazy" data-src="@item.ImageLink"
                                  src="@item.ImageLink"
                                  style="display: inline-block;">
                             @* <p class="comic-feature">@item.Description</p> *@
                             <div class="cover__shadow"></div>
                         </a>
-                        <p class="comic__title"><a href="/207622/" target="_blank">@item.Name</a></p>
-                        <p class="comic-update">更至：<a class="hl" href="/207622/1036351.html" target="_blank">@item.Description</a></p>
+                        <p class="comic__title"><a>@item.Name</a></p>
+                        <p class="comic-update">更至：<a>@item.Description</a></p>
                         @* <p class="comic-count">人气：50.46亿</p> *@
                     </div>
                 }
@@ -525,5 +525,8 @@
         StateHasChanged();
     }
 
-
+    private void NavigateToDetails(Guid detailId)
+    {
+        _navigationManager.NavigateTo($"/details/{detailId}");
+    }
 }

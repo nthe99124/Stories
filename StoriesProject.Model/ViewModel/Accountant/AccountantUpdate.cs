@@ -10,6 +10,6 @@ namespace StoriesProject.Model.ViewModel.Accountant
         public GenderType Gender { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public string? Introduce { get; set; }
-        public string? ImgAvatar { get; set; } = "vi-VN";
+        public string? ImgAvatar { get; set; }
     }
 }

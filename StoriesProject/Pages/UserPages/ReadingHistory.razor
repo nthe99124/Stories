@@ -4,6 +4,7 @@
 @using StoriesProject.Shared.ComponentBase;
 @inject IStoriesService _storiesService;
 @inject IJSRuntime _js;
+@inject NavigationManager _navigationManager;
 @inherits AuthorBaseComponent
 <html>
 <head>
@@ -115,18 +116,18 @@
                     {
                         @foreach (var item in listReadedStory)
                         {
-                            <li class="user-comic-item" data-comic={{d[i].comic_id}}>
-                                <div class="j-item-select user-comic-item__select" data-comic={{d[i].comic_id}}>
+                            <li class="user-comic-item" @onclick="(() => NavigateToDetails(item.Id))">
+                                <div class="j-item-select user-comic-item__select" >
                                     <i class="pic-select"></i>
                                 </div>
-                                <a class="user-comic-item__cover" href="/{{d[i].comic_id}}/" target="_blank">
+                                <a class="user-comic-item__cover">
                                     <i class="pic-comic-update"></i>
                                     <i class="pic-comic-off"></i>
                                     <img src="https://oss.mkzcdn.com/comic/cover/20231019/6530a23275954-399x533.jpg!cover-400">
                                 </a>
                                 <div class="user-comic-item__detail">
                                     <p class="user-comic-item--name">
-                                        <a class="text-overflow" href="/{{d[i].comic_id}}/" target="_blank">@item.Name</a>
+                                        <a class="text-overflow">@item.Name</a>
                                     </p>
                                     <p class="user-comic-item--text user-comic-item--latest">
                                         <a class="text-overflow--gray" href="/{{d[i].comic_id}}/{{d[i].chapter_id}}.html"
@@ -231,5 +232,10 @@
             listReadedStory = await _storiesService.GetHistoryStoryRead();
             StateHasChanged();
         }
+    }
+
+    private void NavigateToDetails(Guid detailId)
+    {
+        _navigationManager.NavigateTo($"/details/{detailId}");
     }
 }

@@ -1,4 +1,9 @@
 ﻿@page "/author/assigncomicstep1"
+@using StoriesProject.Model.BaseEntity;
+@using StoriesProject.Shared.ComponentBase;
+@inject NavigationManager _navigationManager;
+@inject IJSRuntime _js;
+@inherits AuthorBaseComponent
 <html>
 
 <head>
@@ -344,7 +349,7 @@
             <label class="layui-form-label"><i>*</i>Tên truyện: </label>
             <div class="layui-input-block">
               <input type="text" name="title" required="" lay-verify="required"
-                placeholder="Không cần có số, tối đa 15 từ" autocomplete="off" class="layui-input">
+                placeholder="Không cần có số, tối đa 15 từ" autocomplete="off" class="layui-input" @bind="story.Name">
             </div>
           </div>
           <div class="layui-form-item">
@@ -363,9 +368,9 @@
             <label class="layui-form-label"><i>*</i>Tác giả: </label>
             <div class="layui-input-block">
               <input type="text" name="title" required="" lay-verify="required"
-                placeholder="Không cần có số, tối đa 15 từ" autocomplete="off" class="layui-input">
+                placeholder="Không cần có số, tối đa 15 từ" autocomplete="off" class="layui-input" @bind="story.CreatedBy">
             </div>
-          </div>
+          </div> 
           <div class="layui-form-item">
             <label class="layui-form-label"><i>*</i>Giới thiệu ngắn: </label>
             <div class="layui-input-block">
@@ -378,7 +383,7 @@
             <div class="layui-input-block">
               <textarea name="content" required="" lay-verify="required"
                 placeholder="Giới thiệt qua về tác phẩm để độc giả có thể hiểu được nội dung truyện"
-                class="layui-textarea"></textarea>
+                class="layui-textarea" @bind="story.Description"></textarea>
             </div>
           </div>
           <div class="layui-form-item">
@@ -551,5 +556,13 @@
 </html>
 
 @code {
-
+    private Story story { get; set; } = new Story();
+    // protected override async Task HandleAfterRenderAsync(bool firstRender)
+    // {
+    //     if (firstRender)
+    //     {
+    //         accInfor = await _accoutantsService.GetUserInforGeneric();
+    //         StateHasChanged();
+    //     }
+    // }
 }

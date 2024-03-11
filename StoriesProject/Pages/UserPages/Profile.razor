@@ -1,4 +1,13 @@
 ﻿@page "/user/profile"
+@using StoriesProject.Model.ViewModel.Accountant;
+@using StoriesProject.Services;
+@using StoriesProject.Shared.ComponentBase;
+@using static StoriesProject.Model.Enum.DataType;
+
+@inject IAccoutantsService _accoutantsService;
+@inject IJSRuntime _js;
+@inject NavigationManager _navigationManager;
+@inherits AuthorBaseComponent
 <html>
 <head>
     <title>我的收藏 - 漫客栈</title>
@@ -72,7 +81,7 @@
                             </label>
                             <div class="layui-input-block">
                                 <input type="text" name="username" class="user-name layui-input" lay-verify="required|username"
-                                       autocomplete="off" value="mk_65ddb6932cf83">
+                                       autocomplete="off" @bind="accInfor.UserName" />
                                 <div class="label-tips">
                                     Tên người dùng có thể được sử dụng làm tên đăng nhập và chỉ được sửa đổi một
                                     lần. Vui lòng thận trọng khi sửa đổi.
@@ -83,14 +92,14 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">Họ tên</label>
                             <div class="layui-input-block">
-                                <input type="text" class="layui-input" name="nickname" value="Trần thế vinh">
+                                <input type="text" class="layui-input" name="nickname" @bind="accInfor.Name">
                             </div>
                         </div>
                         <!-- QQ -->
                         <div class="layui-form-item">
                             <label class="layui-form-label">Email</label>
                             <div class="layui-input-block">
-                                <input type="text" class="layui-input" name="qq" value="0">
+                                <input type="text" class="layui-input" name="qq" @bind="accInfor.Email">
                             </div>
                         </div>
                         <!-- 性别 -->
@@ -99,17 +108,17 @@
                                 <em class="label-required-symbol">*</em>Giới tính
                             </label>
                             <div class="layui-input-block">
-                                <input type="radio" name="sex" value="1" title="Name">
+                                <input type="radio" name="sex" title="Name" @onclick="(() => UpdateGender(GenderType.Male))" />
                                 <div class="layui-unselect layui-form-radio">
                                     <i class="layui-anim layui-icon"></i>
                                     <div>Name</div>
                                 </div>
-                                <input type="radio" name="sex" value="2" title="Nữ">
+                                <input type="radio" name="sex" title="Nữ" @onclick="(() => UpdateGender(GenderType.Female))" />
                                 <div class="layui-unselect layui-form-radio">
                                     <i class="layui-anim layui-icon"></i>
                                     <div>nữ</div>
                                 </div>
-                                <input type="radio" name="sex" value="0" title="Khác" checked="checked">
+                                <input type="radio" name="sex" value="0" title="Khác" checked="checked" @onclick="(() => UpdateGender(GenderType.Other))" />
                                 <div class="layui-unselect layui-form-radio layui-form-radioed">
                                     <i class="layui-anim layui-icon"></i>
                                     <div>Khác</div>
@@ -121,7 +130,7 @@
                             <label class="layui-form-label">Năm sinh</label>
                             <div class="layui-input-block">
                                 <input type="date" name="birthday" id="date" lay-verify="date" placeholder="yyyy-MM-dd"
-                                       autocomplete="off" class="layui-input" value="1970-01-01" lay-key="1">
+                                       autocomplete="off" class="layui-input" lay-key="1" @bind="accInfor.DateOfBirth">
                             </div>
                         </div>
                         <div class="layui-form-item layui-form-text">
@@ -129,13 +138,13 @@
                             <div class="layui-input-block">
                                 <textarea maxlength="100" name="description"
                                           placeholder="Giới thiệu bản thân với những người dùng khác, lưu ý không quá 200 từ"
-                                          class="layui-textarea"></textarea>
+                                          class="layui-textarea" @bind="accInfor.Introduce"></textarea>
                             </div>
                         </div>
                         <!-- 保存资料 -->
                         <div class="layui-form-item layui-form-text">
                             <div class="layui-input-block">
-                                <button class="layui-btn layui-btn-danger" lay-submit="">Cập nhật</button>
+                                <button class="layui-btn layui-btn-danger" lay-submit="" @onclick="(() => UpdateAccInfor())">Cập nhật</button>
                             </div>
                         </div>
                         <!-- avatar -->
@@ -409,5 +418,39 @@
 </html>
 
 @code {
+    private AccountantUpdate accInfor { get; set; } = new AccountantUpdate();
+    private Guid detailID { get; set; }
 
+    protected override async Task HandleAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            accInfor = await _accoutantsService.GetUserInforGeneric();
+            StateHasChanged();
+        }
+    }
+
+    private async Task UpdateAccInfor()
+    {
+        if (accInfor != null)
+        {
+            var res = await _accoutantsService.UpdateUserInfor(accInfor);
+            if (res != null && res.IsSuccess)
+            {
+                await _js.InvokeVoidAsync("setSessionStorage", "userName", accInfor.UserName);
+                await _js.InvokeVoidAsync("showToast", "Cập nhật thành công");
+            }
+            else
+            {
+                await _js.InvokeVoidAsync("showToast", res?.Message);
+            }
+        }
+        
+        
+    }
+
+    private void UpdateGender(GenderType genderType)
+    {
+        accInfor.Gender = genderType;
+    }
 }

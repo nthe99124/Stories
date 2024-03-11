@@ -34,6 +34,7 @@ namespace StoriesProject.API.Services
         Task<bool?> ApprovedAccountant(Guid regiserId);
         Task<bool?> DeniedAccountant(Guid regiserId);
         Task<bool?> UpdateLockedAccountant(LockedAccountantParam param);
+        Task<AccountantUpdate?> GetUserInforGeneric();
     }
     public class AccoutantsService: BaseService, IAccoutantsService
     {
@@ -163,13 +164,41 @@ namespace StoriesProject.API.Services
         }
 
         /// <summary>
-        /// Hàm lấy thông tin user
+        /// Hàm lấy thông tin user theo authen
         /// CreatedBy ntthe 25.02.2024
         /// </summary>
         /// <returns></returns>
         public AccountGenericDTO? GetUserInfor()
         {
             return GetUserAuthen();
+        }
+
+        /// <summary>
+        /// Hàm lấy thông tin user
+        /// CreatedBy ntthe 25.02.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<AccountantUpdate?> GetUserInforGeneric()
+        {
+            var userName = GetUserAuthen()?.UserName;
+            if (!string.IsNullOrEmpty(userName))
+            {
+                var userFull = await _accoutantsRepository.FirstOrDefault(item => item.UserName == userName);
+                if (userFull != null)
+                {
+                    return new AccountantUpdate
+                    {
+                        UserName = userFull.UserName,
+                        Name = userFull.Name,
+                        Email = userFull.Email,
+                        Gender = userFull.Gender,
+                        DateOfBirth = userFull.DateOfBirth,
+                        Introduce = userFull.Introduce,
+                        ImgAvatar = userFull.ImgAvatar
+                    };
+                }
+            }
+            return null;
         }
 
         /// <summary>
@@ -185,7 +214,7 @@ namespace StoriesProject.API.Services
             if (account != null)
             {
                 var isExistUser = await _accoutantsRepository.CheckExitsByCondition(item => item.UserName == account.UserName);
-                if (isExistUser)
+                if (false)
                 {
                     res.ErrorEventHandler("Username đã tồn tại");
                 }
@@ -225,7 +254,7 @@ namespace StoriesProject.API.Services
         public async Task<RestOutput> ChangePassword(string newPassword, string oldPassword)
         {
             var res = new RestOutput();
-            if (string.IsNullOrEmpty(newPassword) && string.IsNullOrEmpty(oldPassword))
+            if (!string.IsNullOrEmpty(newPassword) && !string.IsNullOrEmpty(oldPassword))
             {
                 // nếu trùng là chửi
                 if (newPassword.Trim() == oldPassword.Trim())
@@ -239,7 +268,7 @@ namespace StoriesProject.API.Services
 
                     var oldPasswordHash = HashCodeUlti.EncodePassword(oldPassword);
                     
-                    if (accUserUpdate != null && accUserUpdate.Password == oldPasswordHash)
+                    if (accUserUpdate != null && accUserUpdate.Password != oldPasswordHash)
                     {
                         res.ErrorEventHandler("Password cũ không chính xác");
                     }

@@ -25,6 +25,30 @@
         }
 
         /// <summary>
+        /// Lấy thông tin user
+        /// </summary>
+        public static string GetUserInforGeneric()
+        {
+            return @$"{pathController}/GetUserInforGeneric";
+        }
+
+        /// <summary>
+        /// Lấy thông tin user
+        /// </summary>
+        public static string UpdateUserInfor()
+        {
+            return @$"{pathController}/UpdateUserInfor";
+        }
+
+        /// <summary>
+        /// Cập nhật mật khẩu
+        /// </summary>
+        public static string ChangePassword()
+        {
+            return @$"{pathController}/ChangePassword";
+        }
+
+        /// <summary>
         /// Đăng ký tác giả
         /// </summary>
         public static string RegisterAuthorAccountant()
