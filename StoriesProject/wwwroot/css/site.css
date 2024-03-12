@@ -89,3 +89,14 @@ a, .btn-link {
         top: 1px;
     }
 
+.footer-wrapper{
+    width: 100% !important;
+}
+main{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+html {
+    flex: 1;
+}

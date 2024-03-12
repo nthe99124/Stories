@@ -24,7 +24,7 @@ namespace StoriesProject.Model.Enum
         {
             [Description("Tiền chuyển khoản, Momo")]
             Momo,
-            [Description("Tiền chuyển khoản, Momo")]
+            [Description("Tiền chuyển khoản, VNpay")]
             VNPay,
         }
 

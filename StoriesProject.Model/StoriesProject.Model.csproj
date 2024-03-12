@@ -35,6 +35,7 @@
     <Compile Include="ViewModel\Accountant\AccountantUpdate.cs" />
     <Compile Include="ViewModel\Accountant\AccountantRegister.cs" />
     <Compile Include="ViewModel\Accountant\AuthorRegisterModel.cs" />
+    <Compile Include="ViewModel\Accountant\ChangPasswordVM.cs" />
     <Compile Include="ViewModel\Accountant\LockedAccountantParam.cs" />
     <Compile Include="ViewModel\Accountant\LoginResponse.cs" />
     <Compile Include="ViewModel\Accountant\LoginViewModel.cs" />
