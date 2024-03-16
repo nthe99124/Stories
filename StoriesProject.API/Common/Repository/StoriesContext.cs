@@ -30,6 +30,7 @@ public partial class StoriesContext : DbContext
     public virtual DbSet<ViewedChapterStories> ViewedChapterStories { get; set; }
 
     #region Các model hứng dữ liệu
+    public virtual DbSet<StoryAccountGeneric> StoryAccountGeneric { get; set; }
     #endregion
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

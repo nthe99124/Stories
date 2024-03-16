@@ -14,7 +14,7 @@ namespace StoriesProject.API.Controller.Base
         }
 
         /// <summary>
-        /// Hàm xử lý lấy all chủ đề mới nhất
+        /// Hàm xử lý lấy all chủ đề
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
@@ -22,6 +22,19 @@ namespace StoriesProject.API.Controller.Base
         public async Task<IActionResult> GetAllTopic()
         {
             var dataResult = await _topicService.GetAllTopic();
+            _res.SuccessEventHandler(dataResult);
+            return Ok(_res);
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy all chủ đề sort theo số lượng truyện
+        /// CreatedBy ntthe 16.03.2024
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetAllTopicSortByStory")]
+        public IActionResult GetAllTopicSortByStory()
+        {
+            var dataResult = _topicService.GetAllTopicSortByStory();
             _res.SuccessEventHandler(dataResult);
             return Ok(_res);
         }

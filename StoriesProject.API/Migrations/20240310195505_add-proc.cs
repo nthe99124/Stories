@@ -33,7 +33,8 @@ namespace StoriesProject.API.Migrations
 					s.RateScore,
 					s.TypeOfStory,
 					s.VideoLink,
-					s.ViewAccess
+					s.ViewAccess,
+					s.ShortDescription
 				FROM 
 					Stories s 
 					left join Accountants a on s.CreatedBy = a.Id

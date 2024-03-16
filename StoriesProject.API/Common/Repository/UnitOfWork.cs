@@ -1,23 +1,26 @@
-﻿using Dapper;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using StoriesProject.API.Repositories;
 using System.Data;
-using System.Text;
 
 namespace StoriesProject.API.Common.Repository
 {
     public interface IUnitOfWork : IDisposable
     {
+        public IAccountantsRepository AccountantsRepository { get; }
+        public IAuthorRegisterRepository AuthorRegisterRepository { get; }
+        public ILogEntryRepository LogEntryRepository { get; }
+        public IRoleAccountantRepository RoleAccountantRepository { get; }
+        public IRoleRepository RoleRepository { get; }
+        public IStoriesRepository StoriesRepository { get; }
+        public ITopicRepository TopicRepository { get; }
+        public ITopicStoryRepository TopicStoryRepository { get; }
         DbSet<T> Set<T>() where T : class;
         int Commit();
         Task<int> CommitAsync();
-        IEnumerable<T> ExecuteStoredProcedureObject<T>(string nameProcedure, SqlParameter[]? array)
-            where T : class, new();
         IEnumerable<T> SqlQuery<T>(string query, SqlParameter[]? array = null) where T : class, new();
         DataTable SqlQuery(string query, SqlParameter[]? array = null);
-        Task BulkInsert<T>(IEnumerable<T> listEntity) where T : class;
         Task<int> SqlCommand(string query, SqlParameter[]? array = null);
-        (List<T1>, List<T2>, List<T3>) ExecuteStoredProcedureMultiObject<T1, T2, T3>(string nameProcedure, DynamicParameters? array);
     }
 
     public class UnitOfWork : IUnitOfWork
@@ -25,10 +28,119 @@ namespace StoriesProject.API.Common.Repository
         readonly StoriesContext _context;
         private bool _isDisposed;
 
+        
         public UnitOfWork(StoriesContext context)
         {
             _context = context;
         }
+
+        #region Khai repository (không inject qua ctor nữa mà xử lý new theo từng lần sử dụng tránh cấp phát quá nhiều trong 1 lần khởi tạo UnitOfWork)
+
+        private IAccountantsRepository _accountantsRepository;
+        public IAccountantsRepository AccountantsRepository
+        {
+            get
+            {
+                if (_accountantsRepository == null)
+                {
+                    _accountantsRepository = new AccountantsRepository(_context);
+                }
+                return _accountantsRepository;
+            }
+        }
+
+        private IAuthorRegisterRepository _authorRegisterRepository;
+        public IAuthorRegisterRepository AuthorRegisterRepository
+        {
+            get
+            {
+                if (_authorRegisterRepository == null)
+                {
+                    _authorRegisterRepository = new AuthorRegisterRepository(_context);
+                }
+                return _authorRegisterRepository;
+            }
+        }
+
+        private ILogEntryRepository _logEntryRepository;
+        public ILogEntryRepository LogEntryRepository
+        {
+            get
+            {
+                if (_logEntryRepository == null)
+                {
+                    _logEntryRepository = new LogEntryRepository(_context);
+                }
+                return _logEntryRepository;
+            }
+        }
+
+        private IRoleAccountantRepository _roleAccountantRepository;
+        public IRoleAccountantRepository RoleAccountantRepository
+        {
+            get
+            {
+                if (_roleAccountantRepository == null)
+                {
+                    _roleAccountantRepository = new RoleAccountantRepository(_context);
+                }
+                return _roleAccountantRepository;
+            }
+        }
+
+        private IRoleRepository _roleRepository;
+        public IRoleRepository RoleRepository
+        {
+            get
+            {
+                if (_roleRepository == null)
+                {
+                    _roleRepository = new RoleRepository(_context);
+                }
+                return _roleRepository;
+            }
+        }
+
+        private IStoriesRepository _storiesRepository;
+        public IStoriesRepository StoriesRepository
+        {
+            get
+            {
+                if (_storiesRepository == null)
+                {
+                    _storiesRepository = new StoriesRepository(_context);
+                }
+                return _storiesRepository;
+            }
+        }
+
+        private ITopicRepository _topicRepository;
+        public ITopicRepository TopicRepository
+        {
+            get
+            {
+                if (_topicRepository == null)
+                {
+                    _topicRepository = new TopicRepository(_context);
+                }
+                return _topicRepository;
+            }
+        }
+
+        private ITopicStoryRepository _topicStoryRepository;
+        public ITopicStoryRepository TopicStoryRepository
+        {
+            get
+            {
+                if (_topicStoryRepository == null)
+                {
+                    _topicStoryRepository = new TopicStoryRepository(_context);
+                }
+                return _topicStoryRepository;
+            }
+        }
+
+        #endregion
 
         public DbSet<T> Set<T>() where T : class
         {
@@ -44,8 +156,6 @@ namespace StoriesProject.API.Common.Repository
         {
             return await _context.SaveChangesAsync();
         }
-
-
         public void Dispose()
         {
             if (_isDisposed)
@@ -53,56 +163,6 @@ namespace StoriesProject.API.Common.Repository
 
             _isDisposed = true;
             _context.Dispose();
-        }
-
-        public IEnumerable<T> ExecuteStoredProcedureObject<T>(string nameProcedure, SqlParameter[]? array) where T : class, new()
-        {
-            try
-            {
-                //Duyệt array sqlparameter để lấy tên tạo câu query
-                var sb = new StringBuilder();
-                sb.Append("exec ").Append(nameProcedure);
-                for (var i = 0; i < array.Length; i++)
-                {
-                    if (i != 0)
-                    {
-                        sb.Append(",").Append(array[i].ParameterName);
-                    }
-                    else
-                    {
-                        sb.Append(" ").Append(array[i].ParameterName);
-                    }
-                }
-
-                var sqlRaw = sb.ToString();
-
-                //execute StoredProcedure 
-                //query là câu lệnh query, 
-                //array là mảng tham số truyền vào theo kiểu dữ liệu SqlParameter
-                _context.Database.SetCommandTimeout(1800);
-                var obj = Set<T>().FromSqlRaw(sqlRaw, array).ToList();
-                return obj;
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-        }
-
-        //TODO: ntthe nghiên cứu tối ưu lại k chơi cứng thế này
-        public (List<T1>, List<T2>, List<T3>) ExecuteStoredProcedureMultiObject<T1, T2, T3>(string nameProcedure, DynamicParameters? array)   
-        {
-            using var connection = _context.Database.GetDbConnection();
-            connection.Open();
-            using (var results = connection.QueryMultiple(nameProcedure, array, commandType: CommandType.StoredProcedure))
-            {
-                var list1 = results.Read<T1>().ToList();
-                var list2 = results.Read<T2>().ToList();
-                var list3 = results.Read<T3>().ToList();
-                return (list1, list2, list3);
-            };
         }
 
         /// <summary>
@@ -182,11 +242,6 @@ namespace StoriesProject.API.Common.Repository
                 Console.WriteLine(e);
                 throw;
             }
-        }
-
-        public async Task BulkInsert<T>(IEnumerable<T> listEntity) where T : class
-        {
-            await _context.BulkInsertAsync(listEntity);
         }
 
         public async Task<int> SqlCommand(string query, SqlParameter[]? array = null)

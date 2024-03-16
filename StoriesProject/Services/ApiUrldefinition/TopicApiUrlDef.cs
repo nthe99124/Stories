@@ -13,5 +13,15 @@
         {
             return @$"{pathController}/GetAllTopic";
         }
+
+        /// <summary>
+        /// Hàm xử lý lấy all chủ đề sort theo số lượng truyện
+        /// CreatedBy ntthe 16.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public static string GetAllTopicSortByStory()
+        {
+            return @$"{pathController}/GetAllTopicSortByStory";
+        }
     }
 }

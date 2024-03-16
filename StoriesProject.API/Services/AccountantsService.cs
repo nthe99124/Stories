@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
-using Azure;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.IdentityModel.Tokens;
 using StoriesProject.API.Common.Cache;
 using StoriesProject.API.Common.Constant;
+using StoriesProject.API.Common.Repository;
 using StoriesProject.API.Common.Ulti;
-using StoriesProject.API.Repositories;
 using StoriesProject.API.Services.Base;
 using StoriesProject.Model.BaseEntity;
 using StoriesProject.Model.DTO.Accountant;
@@ -16,11 +15,10 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
-using static StoriesProject.Model.Enum.DataType;
 
 namespace StoriesProject.API.Services
 {
-    public interface IAccoutantsService
+    public interface IAccountantsService
     {
         Task<LoginResponse?> Login(string userName, string password);
         Task<bool> Register(AccountantRegister account);
@@ -31,28 +29,17 @@ namespace StoriesProject.API.Services
         Task<RestOutput> ChangePassword(string newPassword, string oldPassword);
         Task<IEnumerable<AuthorRegister>?> GetRegisterAccountantsByRole();
         Task<IEnumerable<Accountant>?> GetAll();
-        Task<bool?> ApprovedAccountant(Guid regiserId);
-        Task<bool?> DeniedAccountant(Guid regiserId);
+        Task<bool?> ApprovedAccountant(Guid registerId);
+        Task<bool?> DeniedAccountant(Guid registerId);
         Task<bool?> UpdateLockedAccountant(LockedAccountantParam param);
         Task<AccountantUpdate?> GetUserInforGeneric();
     }
-    public class AccoutantsService: BaseService, IAccoutantsService
+    public class AccountantsService: BaseService, IAccountantsService
     {
-        private readonly IAccountantsRepository _accoutantsRepository;
-        private readonly IAuthorRegisterRepository _authorRegisterRepository;
-        private readonly IRoleAccountantRepository _roleAccountantRepository;
-        private readonly IRoleRepository _roleRepository;
         private readonly IConfiguration _configuration;
-        private readonly IMapper _mapper;
-        public AccoutantsService(IHttpContextAccessor httpContextAccessor, IDistributedCacheCustom cache, IAccountantsRepository accoutantsRepository, IConfiguration configuration, IMapper mapper, IRoleRepository roleRepository, IRoleAccountantRepository roleAccountantRepository, IAuthorRegisterRepository authorRegisterRepository) : base(httpContextAccessor, cache)
+        public AccountantsService(IHttpContextAccessor httpContextAccessor, IDistributedCacheCustom cache, IUnitOfWork unitOfWork, IConfiguration configuration, IMapper mapper) : base(httpContextAccessor, cache, unitOfWork, mapper)
         {
-            _accoutantsRepository = accoutantsRepository;
             _configuration = configuration;
-            _authorRegisterRepository = authorRegisterRepository;
-            _roleAccountantRepository = roleAccountantRepository;
-            _roleRepository = roleRepository;
-            _mapper = mapper;
-            _roleRepository = roleRepository;
         }
 
         /// <summary>
@@ -65,7 +52,7 @@ namespace StoriesProject.API.Services
         /// <returns></returns>
         public async Task<LoginResponse?> Login(string userName, string password)
         {
-            var account = await _accoutantsRepository.GetUserByUserNameAndPass(userName, password);
+            var account = await _unitOfWork.AccountantsRepository.GetUserByUserNameAndPass(userName, password);
             if (account != null)
             {
                 if(account.IsLocked)
@@ -74,7 +61,7 @@ namespace StoriesProject.API.Services
                 }
 
                 // lấy role
-                var listRole = await _accoutantsRepository.GetListRoleByAccId(account.Id);
+                var listRole = await _unitOfWork.AccountantsRepository.GetListRoleByAccId(account.Id);
                 var token = HandleSignInAndGenerateToken(account, listRole);
 
                 if (token != null)
@@ -109,15 +96,15 @@ namespace StoriesProject.API.Services
         /// <returns></returns>
         public async Task<bool> Register(AccountantRegister account)
         {
-            var acc = await _accoutantsRepository.GetUserByUserNameAndPass(account.UserName, account.Password);
+            var acc = await _unitOfWork.AccountantsRepository.GetUserByUserNameAndPass(account.UserName, account.Password);
             if (acc == null)
             {
                 // encode pass trước khi cất
                 account.Password = HashCodeUlti.EncodePassword(account.Password);
                 var accountInsert = _mapper.Map<Accountant>(account);
                 // cất
-                await _accoutantsRepository.Create(accountInsert);
-
+                _unitOfWork.AccountantsRepository.Create(accountInsert);
+                _unitOfWork.Commit();
                 return true;
             }
             else
@@ -138,7 +125,8 @@ namespace StoriesProject.API.Services
                 {
                     var registerMapping = _mapper.Map<AuthorRegister>(register);
                     registerMapping.AccountantId = userId.Value;
-                    await _authorRegisterRepository.Create(registerMapping);
+                    _unitOfWork.AuthorRegisterRepository.Create(registerMapping);
+                    _unitOfWork.Commit();
                 } else
                 {
                     return false;
@@ -183,7 +171,7 @@ namespace StoriesProject.API.Services
             var userName = GetUserAuthen()?.UserName;
             if (!string.IsNullOrEmpty(userName))
             {
-                var userFull = await _accoutantsRepository.FirstOrDefault(item => item.UserName == userName);
+                var userFull = await _unitOfWork.AccountantsRepository.FirstOrDefault(item => item.UserName == userName);
                 if (userFull != null)
                 {
                     return new AccountantUpdate
@@ -213,15 +201,15 @@ namespace StoriesProject.API.Services
             var res = new RestOutput();
             if (account != null)
             {
-                var isExistUser = await _accoutantsRepository.CheckExitsByCondition(item => item.UserName == account.UserName);
-                if (false)
+                var isExistUser = await _unitOfWork.AccountantsRepository.CheckExitsByCondition(item => item.UserName == account.UserName);
+                if (isExistUser)
                 {
                     res.ErrorEventHandler("Username đã tồn tại");
                 }
                 else
                 {
                     var userNameCurrent = GetUserAuthen()?.UserName;
-                    var accUserUpdate = await _accoutantsRepository.FirstOrDefault(item => item.UserName == userNameCurrent);
+                    var accUserUpdate = await _unitOfWork.AccountantsRepository.FirstOrDefault(item => item.UserName == userNameCurrent);
                     if (accUserUpdate != null)
                     {
                         // update từng field của user
@@ -234,7 +222,7 @@ namespace StoriesProject.API.Services
                         accUserUpdate.ImgAvatar = account.ImgAvatar;
 
                         // lưu acc
-                        await _accoutantsRepository.Save();
+                        _unitOfWork.Commit();
                         res.SuccessEventHandler();
                     }
                 }
@@ -264,7 +252,7 @@ namespace StoriesProject.API.Services
                 else
                 {
                     var userNameCurrent = GetUserAuthen()?.UserName;
-                    var accUserUpdate = await _accoutantsRepository.FirstOrDefault(item => item.UserName == userNameCurrent);
+                    var accUserUpdate = await _unitOfWork.AccountantsRepository.FirstOrDefault(item => item.UserName == userNameCurrent);
 
                     var oldPasswordHash = HashCodeUlti.EncodePassword(oldPassword);
                     
@@ -279,7 +267,7 @@ namespace StoriesProject.API.Services
                         accUserUpdate.Password = passWordHash;
 
                         // lưu acc
-                        await _accoutantsRepository.Save();
+                        _unitOfWork.Commit();
                         res.SuccessEventHandler(true);
                     }
                 }
@@ -301,7 +289,7 @@ namespace StoriesProject.API.Services
             var roleMax = GetMaxRoleAuthen();
             if (roleMax != null)
             {
-                var result = await _authorRegisterRepository.GetAll();
+                var result = await _unitOfWork.AuthorRegisterRepository.GetAll();
                 return result;
             }
             return null;
@@ -313,7 +301,7 @@ namespace StoriesProject.API.Services
         /// <returns></returns>
         public async Task<IEnumerable<Accountant>?> GetAll()
         {
-            var result = await _accoutantsRepository.GetAll();
+            var result = await _unitOfWork.AccountantsRepository.GetAll();
 
             return result;
         }
@@ -326,7 +314,7 @@ namespace StoriesProject.API.Services
         public async Task<bool?> ApprovedAccountant(Guid regiserId)
         {
             // Lấy thông tin đăng ký
-            var registerData = await _authorRegisterRepository.FirstOrDefault(f => f.AuthorRegisterId == regiserId);
+            var registerData = await _unitOfWork.AuthorRegisterRepository.FirstOrDefault(f => f.AuthorRegisterId == regiserId);
 
             if(registerData == null) 
             {
@@ -335,7 +323,7 @@ namespace StoriesProject.API.Services
 
             // Lấy role của tác giả
             // tạm fix cứng quyền tác giả
-            var authorRole = await _roleRepository.FirstOrDefault(f => f.RoleName == "Author");
+            var authorRole = await _unitOfWork.RoleRepository.FirstOrDefault(f => f.RoleName == "Author");
 
             if(authorRole != null)
             {
@@ -347,9 +335,9 @@ namespace StoriesProject.API.Services
                         AccountId = registerData.AccountantId,
                         RoleId = authorRole.Id
                     };
-                    await _roleAccountantRepository.Create(userRole);
+                    _unitOfWork.RoleAccountantRepository.Create(userRole);
                     // xóa dữ liệu đăng ký
-                    await _authorRegisterRepository.Delete(registerData);
+                    _unitOfWork.AuthorRegisterRepository.Delete(registerData);
                 }
                 catch (Exception ex)
                 {
@@ -367,7 +355,7 @@ namespace StoriesProject.API.Services
         public async Task<bool?> DeniedAccountant(Guid regiserId)
         {
             // Lấy thông tin đăng ký
-            var registerData = await _authorRegisterRepository.FirstOrDefault(f => f.AuthorRegisterId == regiserId);
+            var registerData = await _unitOfWork.AuthorRegisterRepository.FirstOrDefault(f => f.AuthorRegisterId == regiserId);
 
             if (registerData == null)
             {
@@ -377,7 +365,7 @@ namespace StoriesProject.API.Services
             try
             {
                 // xóa dữ liệu đăng ký
-                await _authorRegisterRepository.Delete(registerData);
+                _unitOfWork.AuthorRegisterRepository.Delete(registerData);
             }
             catch (Exception ex)
             {
@@ -393,7 +381,7 @@ namespace StoriesProject.API.Services
         /// <returns></returns>
         public async Task<bool?> UpdateLockedAccountant(LockedAccountantParam param)
         {
-            var user = await _accoutantsRepository.FirstOrDefault(f => f.Id == param.AccountantId);
+            var user = await _unitOfWork.AccountantsRepository.FirstOrDefault(f => f.Id == param.AccountantId);
 
             if (user == null)
             {
@@ -403,7 +391,7 @@ namespace StoriesProject.API.Services
             try
             {
                 user.IsLocked = param.IsLocked;
-                await _accoutantsRepository.Save();
+                _unitOfWork.Commit();
             }
             catch (Exception ex)
             {

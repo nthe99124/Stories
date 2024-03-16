@@ -12,9 +12,9 @@ namespace StoriesProject.API.Repositories
 
         Task<IEnumerable<Role>?> GetListRoleByAccId(Guid accId);
     }
-    public class AccountantRepository : BaseRepository<Accountant>, IAccountantsRepository
+    public class AccountantsRepository : BaseRepository<Accountant>, IAccountantsRepository
     {
-        public AccountantRepository(IUnitOfWork entities):base(entities)
+        public AccountantsRepository(StoriesContext context):base(context)
         {
             
         }
@@ -32,7 +32,7 @@ namespace StoriesProject.API.Repositories
             {
                 new SqlParameter("@AccID", accId)
             };
-            var roleList = _entities.ExecuteStoredProcedureObject<Role>("GetRoleByAccId", param);
+            var roleList = ExecuteStoredProcedureObject<Role>("GetRoleByAccId", param);
             return roleList;
         }
     }

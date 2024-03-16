@@ -4,6 +4,7 @@ using StoriesProject.API.Common.Attribute;
 using StoriesProject.API.Common.Constant;
 using StoriesProject.API.Services;
 using StoriesProject.Model.BaseEntity;
+using StoriesProject.Model.DTO;
 using StoriesProject.Model.ViewModel;
 
 namespace StoriesProject.API.Controller.Base
@@ -115,10 +116,10 @@ namespace StoriesProject.API.Controller.Base
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        [HttpGet("GetAllStoryByTopic")]
-        public async Task<IActionResult> GetAllStoryByTopic(Guid topicId)
+        [HttpPost("GetAllStoryByTopic")]
+        public async Task<IActionResult> GetAllStoryByTopic(StoryByTopicParam param)
         {
-            var dataResult = await _storiesService.GetAllStoryByTopic(topicId);
+            var dataResult = await _storiesService.GetAllStoryByTopic(param.TopicId, param.Sort);
             _res.SuccessEventHandler(dataResult);
             return Ok(_res);
         }

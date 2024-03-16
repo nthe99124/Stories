@@ -138,19 +138,9 @@ services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // mỗi lần gọi 1 phát tạo insert nên dùng luôn Transient
 
-//Repository
-services.AddTransient<ILogEntryRepository, LogEntryRepository>();
-services.AddTransient<IAccountantsRepository, AccountantRepository>();
-services.AddTransient<IStoriesRepository, StoriesRepository>();
-services.AddTransient<ITopicRepository, TopicRepository>();
-services.AddTransient<IRoleAccountantRepository, RoleAccountantRepository>();
-services.AddTransient<IRoleRepository, RoleRepository>();
-services.AddTransient<IAuthorRegisterRepository, AuthorRegisterRepository>();
-services.AddTransient<ITopicStoryRepository, TopicStoryRepository>();
-
 //Service
 services.AddTransient<ILogEntryService, LogEntryService>();
-services.AddTransient<IAccoutantsService, AccoutantsService>();
+services.AddTransient<IAccountantsService, AccountantsService>();
 services.AddTransient<IStoriesService, StoriesService>();
 services.AddTransient<ITopicService, TopicService>();
 

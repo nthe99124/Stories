@@ -2,6 +2,7 @@
 using StoriesProject.API.Services.Base;
 using StoriesProject.Common.Cache;
 using StoriesProject.Model.BaseEntity;
+using StoriesProject.Model.DTO;
 using StoriesProject.Model.DTO.Story;
 using StoriesProject.Model.ViewModel;
 using StoriesProject.Services.ApiUrldefinition;
@@ -17,7 +18,7 @@ namespace StoriesProject.Services
         Task<List<StoryAccountGeneric>> GetTop10NewVersionStory();
         Task<List<StoryAccountGeneric>> GetFavoriteStory();
         Task<List<StoryAccountGeneric>> GetHistoryStoryRead();
-        Task<List<StoryAccountGeneric>> GetAllStoryByTopic(Guid topicId);
+        Task<List<StoryAccountGeneric>> GetAllStoryByTopic(Guid topicId, List<SortedPaging> sort = null);
         Task<List<StoryAccountGeneric>> GetNewVersionStoryByDay(DateTime dateTime);
         Task<StoryDetailFullDTO> GetStoryById(Guid? id);
         Task<List<StoryAccountGeneric>> GetStoryByCurrentAuthor();
@@ -113,10 +114,18 @@ namespace StoriesProject.Services
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<List<StoryAccountGeneric>> GetAllStoryByTopic(Guid topicId)
+        public async Task<List<StoryAccountGeneric>> GetAllStoryByTopic(Guid topicId, List<SortedPaging> sort = null)
         {
-            var url = StoriesApiUrlDef.GetAllStoryByTopic(topicId);
-            return await RequestGetAsync<List<StoryAccountGeneric>>(url);
+            var param = new StoryByTopicParam
+            {
+                TopicId = topicId,
+            };
+            if (sort != null && sort.Count>0)
+            {
+                param.Sort = sort;
+            }
+            var url = StoriesApiUrlDef.GetAllStoryByTopic();
+            return await RequestPostAsync<List<StoryAccountGeneric>>(url, param);
         }
 
         /// <summary>

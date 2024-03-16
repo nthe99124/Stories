@@ -69,7 +69,7 @@
     <Compile Include="Migrations\20240316052409_update-column-story.Designer.cs" />
     <Compile Include="Migrations\StoriesContextModelSnapshot.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Repositories\AccountantRepository.cs" />
+    <Compile Include="Repositories\AccountantsRepository.cs" />
     <Compile Include="Repositories\AuthorRegisterRepository.cs" />
     <Compile Include="Repositories\Base\BaseRepository.cs" />
     <Compile Include="Repositories\LogEntryRepository.cs" />
@@ -78,7 +78,7 @@
     <Compile Include="Repositories\TopicStoryRepository.cs" />
     <Compile Include="Repositories\StoriesRepository.cs" />
     <Compile Include="Repositories\TopicRepository.cs" />
-    <Compile Include="Services\AccoutantsService.cs" />
+    <Compile Include="Services\AccountantsService.cs" />
     <Compile Include="Services\Base\BaseService.cs" />
     <Compile Include="Services\LogEntryService.cs" />
     <Compile Include="Services\StoriesService.cs" />

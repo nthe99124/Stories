@@ -4,7 +4,7 @@ namespace StoriesProject.Model.DTO.Story
 {
     public class StoryDetailFullDTO
     {
-        public StoryDetailDTO DetailStory { get; set; }
+        public StoryDetailDTO? DetailStory { get; set; }
         public List<ChapterslDTO> Chapter { get; set; }
         public List<TopicslDTO> Topic { get; set; }
     }
@@ -14,6 +14,7 @@ namespace StoriesProject.Model.DTO.Story
         public string AuthorName { get; set; }
         public int TotalStory { get; set; }
         public string Description { get; set; }
+        public string ShortDescription { get; set; }
         public string Content { get; set; }
         public string ImageLink { get; set; }
         public decimal Price { get; set; }

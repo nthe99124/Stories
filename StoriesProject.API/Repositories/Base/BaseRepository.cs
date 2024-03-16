@@ -1,9 +1,13 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Dapper;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using StoriesProject.API.Common.Repository;
 using StoriesProject.Model.DTO;
 using System.Data;
 using System.Linq.Expressions;
+using System.Net.WebSockets;
+using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace StoriesProject.API.Repositories.Base
 {
@@ -12,39 +16,30 @@ namespace StoriesProject.API.Repositories.Base
         Task<PagingResultDTO<T>?> GetPaging(int pageSize = 0, int pageIndex = 0, Expression<Func<T, bool>>? predicateFilter = null, List<SortedPaging>? sortList = null);
         Task<IEnumerable<T>?> GetDataLimit(int limitValue = 0, List<SortedPaging>? sortList = null, Expression<Func<T, bool>>? predicateFilter = null);
         Task<IEnumerable<T>> GetAll();
+        IEnumerable<T> Get();
         Task<IEnumerable<T>> FindBy(Expression<Func<T, bool>> predicate);
         Task<T?> FirstOrDefault(Expression<Func<T, bool>> predicate);
         Task<bool> CheckExitsByCondition(Expression<Func<T, bool>> predicate);
-        Task<T> Create(T entity);
-        Task InsertAsync(T entity);
-        Task Remove(T entity);
-        Task InsertRangeAsync(List<T> entity);
-        Task RemoveRange(List<T> entity);
-        Task<int> Delete(T entity);
-        Task<int> BulkDelete(Expression<Func<T, bool>> predicate);
-        Task<int> Save();
-        IEnumerable<N> ExecuteStoredProcedureObject<N>(string nameProcedure, SqlParameter[]? array) where N : class, new();
-
-        /// <summary>
-        /// Insert 1 list object
-        /// </summary>
-        /// <param name="listEntity">List object</param>
-        /// <returns>Trả về 1: Thành công - 0: Thất bại</returns>
+        void Create(T entity);
+        Task CreateAsync(T entity);
+        void CreateRange(List<T> entity);
+        Task CreateRangeAsync(List<T> entity);
+        void Delete(T entity);
+        void DeleteRange(List<T> entity);
+        void DeleteRangeByCondition(Expression<Func<T, bool>> predicate);
         Task BulkInsert(IEnumerable<T> listEntity);
-
-        IEnumerable<N> SqlQuery<N>(string query, SqlParameter[]? array = null) where N : class, new();
-        DataTable SqlQuery(string query, SqlParameter[]? array = null);
-        Task<int> SqlCommand(string query, SqlParameter[]? array = null);
+        IEnumerable<N> ExecuteStoredProcedureObject<N>(string nameProcedure, SqlParameter[]? array) where N : class;
+        (List<T1>, List<T2>, List<T3>) ExecuteStoredProcedureMultiObject<T1, T2, T3>(string nameProcedure, DynamicParameters? array);
+        Task<IEnumerable<N>?> GetDataBySorted<N>(IEnumerable<N>? data, List<SortedPaging>? sortList = null) where N : class;
     }
     public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
     {
         protected readonly DbSet<T> _dbset;
-        protected readonly IUnitOfWork _entities;
-
-        protected BaseRepository(IUnitOfWork entities)
+        readonly StoriesContext _context;
+        protected BaseRepository(StoriesContext context)
         {
-            _entities = entities;
-            _dbset = _entities.Set<T>();
+            _dbset = context.Set<T>();
+            _context = context;
         }
 
         #region Paging
@@ -71,7 +66,8 @@ namespace StoriesProject.API.Repositories.Base
             // 1 task lấy data
             var taskGetDataRecord = Task.Run(async () =>
             {
-                var data = await GetDataByConditionAndSorted(predicateFilter, sortList);
+                var data = await GetDataByCondition(predicateFilter);
+                data = await GetDataBySorted<T>(data, sortList);
 
                 // phân trang
                 if (data != null && data.Count() > 0)
@@ -117,7 +113,8 @@ namespace StoriesProject.API.Repositories.Base
         {
             if (limitValue > 0)
             {
-                var data = await GetDataByConditionAndSorted(predicateFilter, sortList);
+                var data = await GetDataByCondition(predicateFilter);
+                data = await GetDataBySorted<T>(data, sortList);
                 return await Task.Run(() => data?.Take(limitValue).AsEnumerable<T>());
             }
             else
@@ -127,16 +124,14 @@ namespace StoriesProject.API.Repositories.Base
         }
 
         /// <summary>
-        /// Hàm lấy dữ liệu theo điều kiện lọc và sort
+        /// Hàm lấy dữ liệu lọc
         /// CreatedBy ntthe 29.02.2024
         /// </summary>
         /// <param name="predicateFilter"></param>
-        /// <param name="sortList"></param>
         /// <returns></returns>
-        private async Task<IEnumerable<T>?> GetDataByConditionAndSorted(Expression<Func<T, bool>>? predicateFilter = null, List<SortedPaging>? sortList = null)
+        private async Task<IEnumerable<T>> GetDataByCondition(Expression<Func<T, bool>>? predicateFilter = null)
         {
             IEnumerable<T>? data = null;
-            // lọc theo filter custom
             if (predicateFilter != null)
             {
                 data = _dbset.Where(predicateFilter);
@@ -145,11 +140,23 @@ namespace StoriesProject.API.Repositories.Base
             {
                 data = await GetAll();
             }
+            return data;
+        }
 
+
+        /// <summary>
+        /// Hàm lấy dữ liệu theo sort
+        /// CreatedBy ntthe 29.02.2024
+        /// </summary>
+        /// <param name="predicateFilter"></param>
+        /// <param name="sortList"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<N>?> GetDataBySorted<N>(IEnumerable<N>? data, List<SortedPaging>? sortList = null) where N : class
+        {
             // sort lại custom
             if (data != null && data.Count() > 0 && sortList != null && sortList.Count > 0)
             {
-                IOrderedEnumerable<T>? orderedData = null;
+                IOrderedEnumerable<N>? orderedData = null;
                 foreach (var item in sortList)
                 {
                     // lần đầu thì order thường, sau đó thì then
@@ -188,8 +195,12 @@ namespace StoriesProject.API.Repositories.Base
 
         public async Task<IEnumerable<T>> GetAll()
         {
-
             return await Task.Run(() => _dbset.AsEnumerable<T>());
+        }
+
+        public IEnumerable<T> Get()
+        {
+            return _dbset.ToList();
         }
 
         public async Task<IEnumerable<T>> FindBy(Expression<Func<T, bool>> predicate)
@@ -206,123 +217,97 @@ namespace StoriesProject.API.Repositories.Base
             return await Task.Run(() => _dbset.Any(predicate));
         }
 
-        public async Task<T> Create(T entity)
+        public void Create(T entity)
         {
             _dbset.Add(entity);
-            await Save();
-            return entity;
         }
-        public async Task<int> Delete(T entity)
-        {
-            _dbset.Remove(entity);
-            return await Save();
-        }
-
-        public async Task InsertAsync(T entity)
+        public async Task CreateAsync(T entity)
         {
             await _dbset.AddAsync(entity);
         }
-
-        public async Task InsertRangeAsync(List<T> entity)
+        public void CreateRange(List<T> entity)
+        {
+            _dbset.AddRange(entity);
+        }
+        public async Task CreateRangeAsync(List<T> entity)
         {
             await _dbset.AddRangeAsync(entity);
         }
-
-        public async Task Remove(T entity)
+        public void Delete(T entity)
         {
             _dbset.Remove(entity);
         }
 
-        public async Task RemoveRange(List<T> entity)
+        public void DeleteRange(List<T> entity)
         {
             _dbset.RemoveRange(entity);
         }
 
-        public async Task<int> BulkDelete(Expression<Func<T, bool>> predicate)
+        public void DeleteRangeByCondition(Expression<Func<T, bool>> predicate)
         {
             _dbset.RemoveRange((IEnumerable<T>)_dbset.Where(predicate).AsEnumerable());
-            return await Save();
-        }
-
-        public async Task<int> Save()
-        {
-            try
-            {
-                return await _entities.CommitAsync();
-            }
-            catch (Exception)
-            {
-                return -1;
-            }
-
-        }
-
-        public IEnumerable<N> ExecuteStoredProcedureObject<N>(string nameProcedure, SqlParameter[]? array) where N : class, new()
-        {
-            return _entities.ExecuteStoredProcedureObject<N>(nameProcedure, array);
         }
 
 
         /// <summary>
         /// Insert 1 list object
+        /// TODO:ntthe đánh giá lại có vẻ cái này phải nằm ở Unitofwork
         /// </summary>
         /// <param name="listEntity">List object</param>
         /// <returns>Trả về 1: Thành công - 0: Thất bại</returns>
         public async Task BulkInsert(IEnumerable<T> listEntity)
         {
-            await _entities.BulkInsert(listEntity);
+            await _context.BulkInsertAsync(listEntity);
         }
 
-
-        /// <summary>
-        /// excute ra dạng Datatabl, data sheet, string, object
-        /// </summary>
-        /// <typeparam name="N"></typeparam>
-        /// <param name="query"></param>
-        /// <param name="array"></param>
-        /// <returns></returns>
-        public IEnumerable<N> SqlQuery<N>(string query, SqlParameter[]? array = null) where N : class, new()
+        public IEnumerable<N> ExecuteStoredProcedureObject<N>(string nameProcedure, SqlParameter[]? array) where N: class
         {
             try
             {
+                //Duyệt array sqlparameter để lấy tên tạo câu query
+                var sb = new StringBuilder();
+                sb.Append("exec ").Append(nameProcedure);
+                for (var i = 0; i < array.Length; i++)
+                {
+                    if (i != 0)
+                    {
+                        sb.Append(",").Append(array[i].ParameterName);
+                    }
+                    else
+                    {
+                        sb.Append(" ").Append(array[i].ParameterName);
+                    }
+                }
+
+                var sqlRaw = sb.ToString();
+
+                //execute StoredProcedure 
+                //query là câu lệnh query, 
                 //array là mảng tham số truyền vào theo kiểu dữ liệu SqlParameter
-                return _entities.SqlQuery<N>(query, array);
+                _context.Database.SetCommandTimeout(1800);
+                var obj = _context.Set<N>().FromSqlRaw(sqlRaw, array).ToList();
+                return obj;
+
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine(e);
                 throw;
             }
         }
 
-        public DataTable SqlQuery(string query, SqlParameter[]? array = null)
+        //TODO: ntthe nghiên cứu tối ưu lại k chơi cứng thế này
+        public (List<T1>, List<T2>, List<T3>) ExecuteStoredProcedureMultiObject<T1, T2, T3>(string nameProcedure, DynamicParameters? array)
         {
-            try
+            using var connection = _context.Database.GetDbConnection();
+            connection.Open();
+            using (var results = connection.QueryMultiple(nameProcedure, array, commandType: CommandType.StoredProcedure))
             {
-                //array là mảng tham số truyền vào theo kiểu dữ liệu SqlParameter
-                return _entities.SqlQuery(query, array);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// excute các câu lệnh dạng delete, update
-        /// </summary>
-        /// <param name="query"></param>
-        /// <param name="array"></param>
-        /// <returns></returns>
-        public async Task<int> SqlCommand(string query, SqlParameter[]? array = null)
-        {
-            try
-            {
-                return await _entities.SqlCommand(query, array);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+                var list1 = results.Read<T1>().ToList();
+                var list2 = results.Read<T2>().ToList();
+                var list3 = results.Read<T3>().ToList();
+                return (list1, list2, list3);
+            };
         }
     }
 }

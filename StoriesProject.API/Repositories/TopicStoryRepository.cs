@@ -10,7 +10,7 @@ namespace StoriesProject.API.Repositories
     }
     public class TopicStoryRepository : BaseRepository<TopicStory>, ITopicStoryRepository
     {
-        public TopicStoryRepository(IUnitOfWork entities):base(entities)
+        public TopicStoryRepository(StoriesContext context) : base(context)
         {
             
         }

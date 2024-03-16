@@ -1,5 +1,7 @@
-﻿using StoriesProject.API.Common.Cache;
+﻿using AutoMapper;
+using StoriesProject.API.Common.Cache;
 using StoriesProject.API.Common.Constant;
+using StoriesProject.API.Common.Repository;
 using StoriesProject.API.Repositories;
 using StoriesProject.API.Services.Base;
 using StoriesProject.Model.BaseEntity;
@@ -14,14 +16,12 @@ namespace StoriesProject.API.Services
     }
     public class LogEntryService : BaseService, ILogEntryService
     {
-        private readonly ILogEntryRepository _logEntryRepository;
         private readonly IConfiguration _config;
         public LogEntryService(IHttpContextAccessor httpContextAccessor, 
-                                IDistributedCacheCustom cache, 
-                                ILogEntryRepository logEntryRepository,
-                                IConfiguration config) : base(httpContextAccessor, cache)
+                                IDistributedCacheCustom cache,
+                                IUnitOfWork unitOfWork, IMapper mapper,
+                                IConfiguration config) : base(httpContextAccessor, cache, unitOfWork, mapper)
         {
-            _logEntryRepository = logEntryRepository;
             _config = config;
         }
 
@@ -70,7 +70,8 @@ namespace StoriesProject.API.Services
                     RequestApi = requestApi
 
                 };
-                _logEntryRepository.Create(logEntry);
+                _unitOfWork.LogEntryRepository.Create(logEntry);
+                _unitOfWork.Commit();
             }
         }
         #endregion

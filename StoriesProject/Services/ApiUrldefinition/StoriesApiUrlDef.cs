@@ -79,9 +79,9 @@
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public static string GetAllStoryByTopic(Guid topicId)
+        public static string GetAllStoryByTopic()
         {
-            return @$"{pathController}/GetAllStoryByTopic?topicId={topicId}";
+            return @$"{pathController}/GetAllStoryByTopic";
         }
 
         /// <summary>

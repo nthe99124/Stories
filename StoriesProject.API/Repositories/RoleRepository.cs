@@ -10,7 +10,7 @@ namespace StoriesProject.API.Repositories
 
     public class RoleRepository : BaseRepository<Role>, IRoleRepository
     {
-        public RoleRepository(IUnitOfWork entities) : base(entities)
+        public RoleRepository(StoriesContext context) : base(context)
         {
         }
     }

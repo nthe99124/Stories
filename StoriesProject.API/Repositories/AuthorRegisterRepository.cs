@@ -11,7 +11,7 @@ namespace StoriesProject.API.Repositories
 
     public class AuthorRegisterRepository : BaseRepository<AuthorRegister>, IAuthorRegisterRepository
     {
-        public AuthorRegisterRepository(IUnitOfWork entities) : base(entities)
+        public AuthorRegisterRepository(StoriesContext context) : base(context)
         {
         }
     }

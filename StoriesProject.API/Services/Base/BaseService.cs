@@ -1,5 +1,7 @@
-﻿using StoriesProject.API.Common.Cache;
+﻿using AutoMapper;
+using StoriesProject.API.Common.Cache;
 using StoriesProject.API.Common.Constant;
+using StoriesProject.API.Common.Repository;
 using StoriesProject.Model.BaseEntity;
 using StoriesProject.Model.DTO.Accountant;
 using System.Net.WebSockets;
@@ -12,10 +14,14 @@ namespace StoriesProject.API.Services.Base
     {
         protected IHttpContextAccessor _httpContextAccessor;
         protected IDistributedCacheCustom _cache;
-        public BaseService(IHttpContextAccessor httpContextAccessor, IDistributedCacheCustom cache)
+        protected IUnitOfWork _unitOfWork;
+        protected IMapper _mapper;
+        public BaseService(IHttpContextAccessor httpContextAccessor, IDistributedCacheCustom cache, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _httpContextAccessor = httpContextAccessor;
             _cache = cache;
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public AccountGenericDTO? GetUserAuthen()

@@ -11,9 +11,9 @@ namespace StoriesProject.API.Controller.Base
 {
     public class AccountantController : BaseController
     {
-        private IAccoutantsService _accoutantsService;
+        private IAccountantsService _accoutantsService;
         public AccountantController(IRestOutput res, IHttpContextAccessor httpContextAccessor,
-                                    IAccoutantsService accoutantsService): base(res, httpContextAccessor)
+                                    IAccountantsService accoutantsService): base(res, httpContextAccessor)
         {
             _accoutantsService = accoutantsService;
         }

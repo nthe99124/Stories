@@ -1,5 +1,6 @@
 ﻿@page "/Category"
 @using StoriesProject.Model.BaseEntity;
+@using StoriesProject.Model.DTO
 @using StoriesProject.Services;
 @inject ITopicService _topicService;
 @inject IStoriesService _storiesService;
@@ -428,7 +429,7 @@
     </div>
     <div class="cate-container">
         <div class="cate-container__title clearfix">
-            <a class="btn btn--hot active" rel="nofollow" href="/category/?audience=1&amp;order=1">
+            <a class="btn btn--hot active" rel="nofollow" @onclick="(() => SortStoryByView())">
                 Phổ biến
             </a>
             @*      <a class="btn btn--time " rel="nofollow" href="/category/?audience=1&amp;order=2">更新时间
@@ -501,16 +502,17 @@
 </html>
 @code {
     int activeIndex = -1;
-    private List<Topic> listTopic { get; set; }
+    private List<TopicGeneric> listTopic { get; set; }
+    private Guid? currentTopic { get; set; }
     private List<StoryAccountGeneric> listStoryByTopic { get; set; }
     protected override async Task OnInitializedAsync()
     {
         SetActiveIndex(0);
-        listTopic = await _topicService.GetAllTopic();
+        listTopic = await _topicService.GetAllTopicSortByStory();
         if (listTopic != null && listTopic.Count() > 0)
         {
-            var firstTopicId = listTopic[0].Id;
-            listStoryByTopic = await _storiesService.GetAllStoryByTopic(firstTopicId);
+            currentTopic = listTopic[0].Id;
+            listStoryByTopic = await _storiesService.GetAllStoryByTopic((Guid)currentTopic);
         }
     }
     private void SetActiveIndex(int index)
@@ -520,6 +522,7 @@
 
     private async Task ChangeTopic(int index, Guid topicId)
     {
+        currentTopic = topicId;
         SetActiveIndex(index);
         listStoryByTopic = await _storiesService.GetAllStoryByTopic(topicId);
         StateHasChanged();
@@ -528,5 +531,22 @@
     private void NavigateToDetails(Guid detailId)
     {
         _navigationManager.NavigateTo($"/details/{detailId}");
+    }
+
+    private async Task SortStoryByView()
+    {
+        if (currentTopic != null)
+        {
+            var sort = new List<SortedPaging>
+                {
+                    new SortedPaging()
+                    {
+                       Field = "ViewAccess",
+                        IsAsc = false
+                    }
+                };
+            listStoryByTopic = await _storiesService.GetAllStoryByTopic((Guid)currentTopic, sort);
+            StateHasChanged();
+        }
     }
 }

@@ -5,6 +5,7 @@ using StoriesProject.API.Repositories.Base;
 using StoriesProject.Model.BaseEntity;
 using StoriesProject.Model.DTO;
 using StoriesProject.Model.DTO.Story;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace StoriesProject.API.Repositories
 {
@@ -17,14 +18,14 @@ namespace StoriesProject.API.Repositories
         Task<IEnumerable<Story>?> GetTopNewVersionStory(int numberStory);
         Task<IEnumerable<StoryAccountGeneric>?> GetHistoryStoryRead(Guid accId);
         Task<IEnumerable<StoryAccountGeneric>?> GetFavoriteStory(Guid accId);
-        Task<IEnumerable<StoryAccountGeneric>?> GetAllStoryByTopic(Guid topicId);
+        Task<IEnumerable<StoryAccountGeneric>?> GetAllStoryByTopic(Guid topicId, List<SortedPaging> sort);
         Task<IEnumerable<Story>?> GetNewVersionStoryByDay(DateTime dateTime);
         Task<StoryDetailFullDTO?> GetStoryById(Guid storyId);
         Task<IEnumerable<Story>?> GetStoryByAuthor(Guid id);
     }
     public class StoriesRepository : BaseRepository<Story>, IStoriesRepository
     {
-        public StoriesRepository(IUnitOfWork entities):base(entities)
+        public StoriesRepository(StoriesContext context) : base(context)
         {
             
         }
@@ -127,7 +128,7 @@ namespace StoriesProject.API.Repositories
             {
                 new SqlParameter("@AccountantID", accId)
             };
-            var storyAccount = _entities.ExecuteStoredProcedureObject<StoryAccountGeneric>("GetHistoryStoryRead", param);
+            var storyAccount = ExecuteStoredProcedureObject<StoryAccountGeneric>("GetHistoryStoryRead", param);
             return storyAccount;
         }
 
@@ -143,7 +144,7 @@ namespace StoriesProject.API.Repositories
             {
                 new SqlParameter("@AccountantID", accId)
             };
-            var storyAccount = _entities.ExecuteStoredProcedureObject<StoryAccountGeneric>("GetFavoriteStory", param);
+            var storyAccount = ExecuteStoredProcedureObject<StoryAccountGeneric>("GetFavoriteStory", param);
             return storyAccount;
         }
 
@@ -159,7 +160,7 @@ namespace StoriesProject.API.Repositories
             param.Add("@StoryId", storyId);
 
             //TODO: ntthe nghiên cứu dựng base cho thằng này
-            var storyAccount = _entities.ExecuteStoredProcedureMultiObject<StoryDetailDTO, ChapterslDTO, TopicslDTO>("GetStoryDetailById", param);
+            var storyAccount =  ExecuteStoredProcedureMultiObject<StoryDetailDTO, ChapterslDTO, TopicslDTO>("GetStoryDetailById", param);
             var detailData = new StoryDetailFullDTO()
             {
                 DetailStory = storyAccount.Item1.FirstOrDefault(),
@@ -175,13 +176,17 @@ namespace StoriesProject.API.Repositories
         /// </summary>
         /// <param name="accId"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<StoryAccountGeneric>?> GetAllStoryByTopic(Guid topicId)
+        public async Task<IEnumerable<StoryAccountGeneric>?> GetAllStoryByTopic(Guid topicId, List<SortedPaging> sort)
         {
             var param = new SqlParameter[]
             {
-                new SqlParameter("@TopicID", topicId)
+                new SqlParameter("@TopicID", topicId),
             };
-            var storyAccount = _entities.ExecuteStoredProcedureObject<StoryAccountGeneric>("GetAllStoryByTopic", param);
+            var storyAccount = ExecuteStoredProcedureObject<StoryAccountGeneric>("GetAllStoryByTopic", param);
+            if (sort != null && sort.Count > 0)
+            {
+                storyAccount = await GetDataBySorted<StoryAccountGeneric>(storyAccount, sort);
+            }
             return storyAccount;
         }
 

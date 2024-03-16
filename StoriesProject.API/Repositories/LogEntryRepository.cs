@@ -10,7 +10,7 @@ namespace StoriesProject.API.Repositories
     }
     public class LogEntryRepository : BaseRepository<LogEntry>, ILogEntryRepository
     {
-        public LogEntryRepository(IUnitOfWork entities) : base(entities)
+        public LogEntryRepository(StoriesContext context) : base(context)
         {
 
         }
