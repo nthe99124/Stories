@@ -269,3 +269,34 @@ a.sidebar-link:hover {
 /* .table-responsive {
   overflow-x: auto;
 } */
+.config-card {
+    background-color: white;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    color: rgb(7, 113, 7);
+    justify-content: space-between;
+    padding: 15px;
+}
+
+.mb-0 .fa-user {
+    font-size: 50px;
+    margin-right: 10px;
+    color: rgb(7, 113, 7);
+}
+
+.config-card:hover {
+    background-color: rgb(7, 113, 7);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+    .config-card:hover .icon-config {
+        color: white !important; /* Increase specificity and ensure the color change */
+    }
+
+    .config-card:hover .title-config {
+        color: white !important;
+    }

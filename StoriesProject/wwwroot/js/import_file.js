@@ -5,16 +5,24 @@
         const imageModal = document.getElementById('imageModal');
         const modalImage = document.getElementById('modalImage');
 
+
         fileInput.addEventListener('change', function () {
             const files = this.files;
+            console.log("files: ", files)
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];
+                console.log("file: ", file)
                 if (file.type.startsWith('image/')) {
                     const reader = new FileReader();
                     reader.onload = function (event) {
                         const imageUrl = event.target.result;
                         const imageItem = document.createElement('div');
                         imageItem.classList.add('imageItem');
+                        // Lưu trữ thông tin cần thiết của File
+                        imageItem.dataset.fileName = file.name;
+                        imageItem.dataset.fileType = file.type;
+                        imageItem.dataset.fileSize = file.size;
+                        // console.log("file-x: ", imageItem.dataset.file);
                         const image = new Image();
                         image.src = imageUrl;
                         image.onload = function () {
@@ -66,30 +74,18 @@
 function upload() {
     var images_raw = document.getElementById('imageContainer').getElementsByClassName('imageItem');
     console.log("images_raw: ", images_raw);
-    var imagesUrl = [];
+    var imageFiles = [];
     for (var i = 0; i < images_raw.length; i++) {
-        var image = images_raw[i].getElementsByTagName('img')[0];
-        imagesUrl.push(image.src);
+        // Lấy thông tin cần thiết của File từ thuộc tính dataset của imageItem
+        var fileName = images_raw[i].dataset.fileName;
+        var fileType = images_raw[i].dataset.fileType;
+        var fileSize = images_raw[i].dataset.fileSize;
+        // Tạo một đối tượng File mới từ thông tin đã lưu trữ
+        var fileData = new File([], fileName, { type: fileType, lastModified: Date.now(), size: fileSize });
+        imageFiles.push(fileData);
     }
-    console.log("imagesUrl: ", imagesUrl);
-    return imagesUrl;
-
-    // for (var i = 0; i < images.length; i++)
-    // {
-    //   var image = images[i];
-    //   var formData = new FormData();
-    //   formData.append('image', image.src);
-    //   var xhr = new XMLHttpRequest();
-    //   xhr.open('POST', 'upload.php', true);
-    //   xhr.onload = function ()
-    //   {
-    //     if (xhr.status === 200)
-    //     {
-    //       console.log('Image uploaded successfully!');
-    //     }
-    //   };
-    //   xhr.send(formData);
-    // }
+    console.log("imageFiles: ", imageFiles);
+    return imageFiles;
 }
 function addFiles() {
     // Trigger click event on the hidden file input
