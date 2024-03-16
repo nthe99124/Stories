@@ -208,19 +208,19 @@
             height: 100%;
         }
 
-        .layui-input-block .cover-y .btn,
-        .layui-input-block .cover-x .btn {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 36px;
-            text-align: center;
-            color: #fff;
-            background: rgba(0, 0, 0, 0.25);
-            cursor: pointer;
-        }
-
+    /*        .layui-input-block .cover-y .btn,
+            .layui-input-block .cover-x .btn {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 36px;
+                text-align: center;
+                color: #fff;
+                background: rgba(0, 0, 0, 0.25);
+                cursor: pointer;
+            }
+    */
     .layui-input-block > .tip {
         line-height: 18px;
         font-size: 12px;
@@ -317,6 +317,18 @@
         padding-right: 0;
         background: 0 0;
     }
+
+    .J_cover_y {
+        width: 90px !important;
+    }
+
+    .btn {
+        padding: 0px;
+    }
+
+    .layui-form input[type=radio], .layui-form select {
+        display: inline !important;
+    }
 </style>
 
 
@@ -360,8 +372,9 @@
                         <label class="layui-form-label"><i>*</i>Bìa truyện</label>
                         <div class="layui-input-block">
                             <div class="cover-y">
-                                <img src="" alt="">
-                                <span class="btn J_cover_y">Ảnh bìa</span>
+                                <img id="previewImage" src="" alt="">
+                                <input type="file" id="img_input" class="J_cover_y" style="display:none" @ref="fileInput" />
+                                <span class="btn J_cover_y" @onclick="() => OpenFilePicker()">Ảnh bìa</span>
                             </div>
                             <p class="tip">Kích thước đề xuất 600x800</p>
                             <p class="tip">Hỗ trợ jpg, png</p>
@@ -412,31 +425,19 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="layui-form-item">
+                    @*<div class="layui-form-item">*@
                         <label class="layui-form-label"><i>*</i>Đối tượng: </label>
                         <div class="layui-input-block">
-                            <input type="radio" name="audience" value="1" title="Vị thành niên">
-                            <div class="layui-unselect layui-form-radio layui-form-radioed">
-                                <i class="layui-anim layui-icon"></i>
-                                <div>Vị thành niên</div>
-                            </div>
-                            <input type="radio" name="audience" value="2" title="Nữ giới">
-                            <div class="layui-unselect layui-form-radio">
-                                <i class="layui-anim layui-icon"></i>
-                                <div>Nữ giới</div>
-                            </div>
-                            <input type="radio" name="audience" value="3" title="Nam giới">
-                            <div class="layui-unselect layui-form-radio">
-                                <i class="layui-anim layui-icon"></i>
-                                <div>Nam giới</div>
-                            </div>
-                            <input type="radio" name="audience" value="4" title="Thiếu nhi">
-                            <div class="layui-unselect layui-form-radio">
-                                <i class="layui-anim layui-icon"></i>
-                                <div>Thiếu nhi</div>
-                            </div>
+                            <input type="radio" name="audience" value="1" id="audience1" />
+                            <label for="audience1" style="font-size:14px">Vị thành niên</label>
+                            <input type="radio" name="audience" value="2" id="audience2" />
+                            <label for="audience2" style="font-size:14px">Nữ giới</label>
+                            <input type="radio" name="audience" value="3" id="audience3" />
+                            <label for="audience3" style="font-size:14px">Nam giới</label>
+                            <input type="radio" name="audience" value="4" id="audience4" />
+                            <label for="audience4" style="font-size:14px">Thiếu nhi</label>
                         </div>
-                    </div>
+                    @*</div>*@
                     <!-- <div class="layui-form-item">
                       <label class="layui-form-label"><i>*</i>作品进度：</label>
                       <div class="layui-input-block">
@@ -515,6 +516,8 @@
     private StoryRegisterVM story { get; set; } = new StoryRegisterVM();
     private List<Topic> listTopic { get; set; }
     private string selectedAudience = "1"; // Giá trị mặc định của radio button
+    private ElementReference fileInput;
+    private string imageDataUrl;
 
     private async Task ResgiterStory()
     {
@@ -536,5 +539,11 @@
     private void HandleAudienceChange(ChangeEventArgs e)
     {
         selectedAudience = e.Value.ToString();
+    }
+
+    // Phương thức xử lý sự kiện mở cửa sổ chọn file
+    private async Task OpenFilePicker()
+    {
+        await _js.InvokeVoidAsync("openFilePicker", fileInput);
     }
 }

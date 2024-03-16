@@ -91,3 +91,17 @@ function addFiles() {
     // Trigger click event on the hidden file input
     document.getElementById('fileInput').click();
 }
+
+window.openFilePicker = function (fileInput) {
+    console.log("fileInput: ", fileInput);
+    fileInput.click();
+    // Xử lý sự kiện khi người dùng đã chọn file
+    fileInput.addEventListener('change', function () {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var imgPreview = document.getElementById('previewImage');
+            imgPreview.src = e.target.result;
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+    });
+};
