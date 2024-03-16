@@ -2,208 +2,208 @@
 <html>
 
 <head>
-  <title>阅读历史 - 漫客栈</title>
-  <meta charset="utf-8">
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-  <meta name="keywords" content="关键词">
-  <meta name="description" content="描述">
-  <link rel="shortcut icon" href="https://static.mkzcdn.com/common/favicon.ico" type="image/x-icon" />
+    <title>阅读历史 - 漫客栈</title>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="keywords" content="关键词">
+    <meta name="description" content="描述">
+    <link rel="shortcut icon" href="https://static.mkzcdn.com/common/favicon.ico" type="image/x-icon" />
 
-  <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/script/libs/layui/css/layui.css?v=0b3cd68">
-  <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/style/common/common_user.css?v=a19b47d">
-  <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/style/bundle/user.css?v=b5db955">
+    <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/script/libs/layui/css/layui.css?v=0b3cd68">
+    <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/style/common/common_user.css?v=a19b47d">
+    <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/style/bundle/user.css?v=b5db955">
 
-  <!-- start Dplus -->
-@*  <script
+    <!-- start Dplus -->
+    @*  <script
     type="text/javascript">!function (a, b) { if (!b.__SV) { var c, d, e, f; window.dplus = b, b._i = [], b.init = function (a, c, d) { function g(a, b) { var c = b.split("."); 2 == c.length && (a = a[c[0]], b = c[1]), a[b] = function () { a.push([b].concat(Array.prototype.slice.call(arguments, 0))) } } var h = b; for ("undefined" != typeof d ? h = b[d] = [] : d = "dplus", h.people = h.people || [], h.toString = function (a) { var b = "dplus"; return "dplus" !== d && (b += "." + d), a || (b += " (stub)"), b }, h.people.toString = function () { return h.toString(1) + ".people (stub)" }, e = "disable track track_links track_forms register unregister get_property identify clear set_config get_config get_distinct_id track_pageview register_once track_with_tag time_event people.set people.unset people.delete_user".split(" "), f = 0; f < e.length; f++)g(h, e[f]); b._i.push([a, c, d]) }, b.__SV = 1.1, c = a.createElement("script"), c.type = "text/javascript", c.charset = "utf-8", c.async = !0, c.src = "//w.cnzz.com/dplus.php?id=1262045698", d = a.getElementsByTagName("script")[0], d.parentNode.insertBefore(c, d) } }(document, window.dplus || []), dplus.init("1262045698");
     </script>*@
-  <!-- end Dplus -->
-  <!--[if lt IE 9]>
-  <script src="//static.mkzcdn.com/home/assets/script/libs/respond/respond.js?v=afc1984"></script>
-<![endif]-->
-  <!--[if lt IE 9]>
-    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-  <![endif]-->
+    <!-- end Dplus -->
+    <!--[if lt IE 9]>
+      <script src="//static.mkzcdn.com/home/assets/script/libs/respond/respond.js?v=afc1984"></script>
+    <![endif]-->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 <style>
-  .header-user-wrapper .search-box input {
-    width: 250px;
-    background: rgba(255, 255, 255, 0.34);
-    border-radius: 18px;
-    color: rgba(255, 255, 255, 0.8);
-    padding: 11px 15px;
-    border: none;
-    font-size: 14px;
-    line-height: 14px;
-    height: 40px !important;
-  }
+    .header-user-wrapper .search-box input {
+        width: 250px;
+        background: rgba(255, 255, 255, 0.34);
+        border-radius: 18px;
+        color: rgba(255, 255, 255, 0.8);
+        padding: 11px 15px;
+        border: none;
+        font-size: 14px;
+        line-height: 14px;
+        height: 40px !important;
+    }
 
-  .g-au-wrap {
-    box-sizing: border-box;
-    float: right;
-    width: 840px;
-    padding: 30px 25px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-  }
+    .g-au-wrap {
+        box-sizing: border-box;
+        float: right;
+        width: 840px;
+        padding: 30px 25px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+    }
 
-  .g-au-info {
-    position: relative;
-    width: 100%;
-    height: 120px;
-    border-bottom: 1px solid #ddd;
-  }
+    .g-au-info {
+        position: relative;
+        width: 100%;
+        height: 120px;
+        border-bottom: 1px solid #ddd;
+    }
 
-  .g-au-info .m-avatar {
-    float: left;
-    width: 88px;
-    height: 88px;
-    margin-right: 22px;
-    background: #ff620e;
-    border-radius: 50%;
-    overflow: hidden;
-  }
+        .g-au-info .m-avatar {
+            float: left;
+            width: 88px;
+            height: 88px;
+            margin-right: 22px;
+            background: #ff620e;
+            border-radius: 50%;
+            overflow: hidden;
+        }
 
-  .g-au-info .m-avatar>img {
-    width: 100%;
-    height: 100%;
-  }
+            .g-au-info .m-avatar > img {
+                width: 100%;
+                height: 100%;
+            }
 
-  .g-ai-box {
-    float: left;
-    margin-top: 20px;
-  }
+    .g-ai-box {
+        float: left;
+        margin-top: 20px;
+    }
 
-  .g-ai-box .name {
-    font-size: 18px;
-    line-height: 18px;
-  }
+        .g-ai-box .name {
+            font-size: 18px;
+            line-height: 18px;
+        }
 
-  .g-ai-box .penname {
-    margin-top: 10px;
-    margin-bottom: 14px;
-    font-size: 12px;
-    color: #666;
-    line-height: 12px;
-  }
+        .g-ai-box .penname {
+            margin-top: 10px;
+            margin-bottom: 14px;
+            font-size: 12px;
+            color: #666;
+            line-height: 12px;
+        }
 
-  .g-au-info .m-create {
-    box-sizing: border-box;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 86px;
-    height: 28px;
-    line-height: 26px;
-    text-align: center;
-    border-radius: 14px;
-    color: #00b798;
-    border: 2px solid #00b798;
-  }
+    .g-au-info .m-create {
+        box-sizing: border-box;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 86px;
+        height: 28px;
+        line-height: 26px;
+        text-align: center;
+        border-radius: 14px;
+        color: #00b798;
+        border: 2px solid #00b798;
+    }
 
-  .g-ac-box {
-    padding-top: 25px;
-  }
+    .g-ac-box {
+        padding-top: 25px;
+    }
 
-  .g-ac-box .m-title {
-    font-size: 15px;
-    line-height: 16px;
-    color: #666;
-  }
+        .g-ac-box .m-title {
+            font-size: 15px;
+            line-height: 16px;
+            color: #666;
+        }
 
-  .g-ac-box .m-empty {
-    width: 204px;
-    height: 204px;
-    margin: 60px auto;
-    text-align: center;
-    font-size: 16px;
-    line-height: 16px;
-  }
+        .g-ac-box .m-empty {
+            width: 204px;
+            height: 204px;
+            margin: 60px auto;
+            text-align: center;
+            font-size: 16px;
+            line-height: 16px;
+        }
 
-  .g-ac-box .m-empty .tip {
-    margin: 20px 0;
-    font-size: 12px;
-    line-height: 40px;
-    color: #ccc;
-  }
+            .g-ac-box .m-empty .tip {
+                margin: 20px 0;
+                font-size: 12px;
+                line-height: 40px;
+                color: #ccc;
+            }
 </style>
 
 <body class="page-history">
-  <!-- 头部 -->
+    <!-- 头部 -->
 
     <AuthorHeader />
 
 
-  <!-- 内容 -->
-  <div class="main-container">
-    <AuthorSideBar isSelected=0 />
+    <!-- 内容 -->
+    <div class="main-container">
+        <AuthorSideBar isSelected=0 />
 
-    <!-- main-content -->
-    <div class="g-au-wrap">
-      <div class="g-au-info">
-        <div class="m-avatar" style="background:none!important;">
-          <img src="https://oss.mkzcdn.com/default/member/avatar/10.png!cover-200"
-            onerror="javascript:this.src='https://static.mkzcdn.com/home/assets/images/home/pic_login_defaulthead.png'"
-            alt="ảnh đại diện">
+        <!-- main-content -->
+        <div class="g-au-wrap">
+            <div class="g-au-info">
+                <div class="m-avatar" style="background:none!important;">
+                    <img src="https://oss.mkzcdn.com/default/member/avatar/10.png!cover-200"
+                         onerror="javascript:this.src='https://static.mkzcdn.com/home/assets/images/home/pic_login_defaulthead.png'"
+                         alt="ảnh đại diện">
+                </div>
+                <div class="g-ai-box">
+                    <p class="name">
+                        Username
+                    </p>
+                    <p class="penname">
+                        Tên tác giả
+                    </p>
+                </div>
+                <a href="/author/comic_add_step1/" class="m-create">
+                    Tạo tác phẩm
+                </a>
+            </div>
+            <div class="g-ac-box">
+                <p class="m-title">
+                    Tác phẩm của tôi: 0
+                </p>
+                <div class="m-empty">
+                    <p>
+                        Bạn chưa có tác phẩm nào
+                    </p>
+                    <a href="/author/comic_add_step1/" class="tip">
+                        Hãy thêm tác phẩm nào
+                    </a>
+                    <a href="/author/comic_add_step1/"><img src="https://static.mkzcdn.com/home/img/user/empty.png" alt=""></a>
+                </div>
+            </div>
         </div>
-        <div class="g-ai-box">
-          <p class="name">
-            Username
-          </p>
-          <p class="penname">
-            Tên tác giả
-          </p>
-        </div>
-        <a href="/author/comic_add_step1/" class="m-create">
-          Tạo tác phẩm
-        </a>
-      </div>
-      <div class="g-ac-box">
-        <p class="m-title">
-          Tác phẩm của tôi: 0
-        </p>
-        <div class="m-empty">
-          <p>
-            Bạn chưa có tác phẩm nào
-          </p>
-          <a href="/author/comic_add_step1/" class="tip">
-            Hãy thêm tác phẩm nào
-          </a>
-          <a href="/author/comic_add_step1/"><img src="https://static.mkzcdn.com/home/img/user/empty.png" alt=""></a>
-        </div>
-      </div>
     </div>
-  </div>
 
 
-@*  <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/vendor/base_lib.js?v=e631876"></script>
-  <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/libs/layer/layer.js?v=6e80f0c"></script>
-  <script type="text/javascript" charset="utf-8" src="https://g.alicdn.com/sd/nch5/index.js?t=2015052012"></script>
-  <!-- 国内使用 阿里云 滑动验证 --><!-- 若您的主要用户来源于海外，请替换使用下面的js资源 -->
-  <!-- <script type="text/javascript" charset="utf-8" src="//aeis.alicdn.com/sd/nch5/index.js?t=2015052012"></script> -->
-  <!-- <script src="https://g.alicdn.com/AWSC/AWSC/awsc.js"></script> -->
+    @*  <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/vendor/base_lib.js?v=e631876"></script>
+    <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/libs/layer/layer.js?v=6e80f0c"></script>
+    <script type="text/javascript" charset="utf-8" src="https://g.alicdn.com/sd/nch5/index.js?t=2015052012"></script>
+    <!-- 国内使用 阿里云 滑动验证 --><!-- 若您的主要用户来源于海外，请替换使用下面的js资源 -->
+    <!-- <script type="text/javascript" charset="utf-8" src="//aeis.alicdn.com/sd/nch5/index.js?t=2015052012"></script> -->
+    <!-- <script src="https://g.alicdn.com/AWSC/AWSC/awsc.js"></script> -->
 
-  <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/libs/layui/layui.js?v=3320191"></script>
-  <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/page/user/history.js?v=7f36731"></script>
-  <script>
+    <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/libs/layui/layui.js?v=3320191"></script>
+    <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/page/user/history.js?v=7f36731"></script>
+    <script>
     (function ()
     {
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      if (curProtocol === 'https')
-      {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-      }
-      else
-      {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-      }
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https')
+    {
+    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else
+    {
+    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
     })();
-  </script>*@
+    </script>*@
 
 
 

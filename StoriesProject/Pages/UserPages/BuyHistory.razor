@@ -1,245 +1,245 @@
 ﻿@page "/user/bill"
 <html>
 <head>
-  <title>我的购买 - 漫客栈</title>
-  <meta charset="utf-8">
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-  <meta name="keywords" content="关键词">
-  <meta name="description" content="描述">
-  <link rel="shortcut icon" href="https://static.mkzcdn.com/common/favicon.ico" type="image/x-icon" />
+    <title>我的购买 - 漫客栈</title>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="keywords" content="关键词">
+    <meta name="description" content="描述">
+    <link rel="shortcut icon" href="https://static.mkzcdn.com/common/favicon.ico" type="image/x-icon" />
 
-  <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/script/libs/layui/css/layui.css?v=0b3cd68">
-  <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/style/common/common_user.css?v=a19b47d">
-  <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/style/bundle/user.css?v=b5db955">
+    <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/script/libs/layui/css/layui.css?v=0b3cd68">
+    <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/style/common/common_user.css?v=a19b47d">
+    <link rel="stylesheet" href="//static.mkzcdn.com/home/assets/style/bundle/user.css?v=b5db955">
 
-  <!-- start Dplus -->
-  <!-- end Dplus -->
-  <!--[if lt IE 9]>
-  <script src="//static.mkzcdn.com/home/assets/script/libs/respond/respond.js?v=afc1984"></>
-<![endif]-->
-  <!--[if lt IE 9]>
-    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-  <![endif]-->
+    <!-- start Dplus -->
+    <!-- end Dplus -->
+    <!--[if lt IE 9]>
+      <script src="//static.mkzcdn.com/home/assets/script/libs/respond/respond.js?v=afc1984"></>
+    <![endif]-->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 
 
 <body class="p-user-buy" data-page_id="304">
 
-  <!-- 头部 -->
+    <!-- 头部 -->
     <UserHeader />
 
 
-  <!-- 内容 -->
-  <div class="main-container">
+    <!-- 内容 -->
+    <div class="main-container">
         <UserSideBar isSelected=3 />
 
-    <!-- main-content -->
-    <div class="main-content--aside">
-      <!-- title -->
-      <div class="main-content_title">
+        <!-- main-content -->
+        <div class="main-content--aside">
+            <!-- title -->
+            <div class="main-content_title">
                 <h3>Đơn hàng của tôi</h3>
-        <div class="main-content_subtitle">
-          共
-          <strong class="j-collection-count">0</strong>部作品
-        </div>
-      </div>
+                <div class="main-content_subtitle">
+                    共
+                    <strong class="j-collection-count">0</strong>部作品
+                </div>
+            </div>
 
-      <div class="main-content__buy">
-        <!-- comic-list -->
-        <div class="j-collection-list main-content__comic-list"></div>
-@*        <script id="user_buy_list" type="text/html">
-  <ul class="user-comic-list--buy">
-    {{# layui.each(d, function(i, item){ }}
-    <li class="user-comic-item" data-comicid="{{d[i].comic_id}}">
-      <a class="user-comic-item__cover" href="/{{d[i].comic_id}}/" target="_blank">
-        <img src="{{ d[i].cover.replace('http:', 'https:') }}!cover-400">
-      </a>
-      <div class="user-comic-item__detail">
-        <div class="user-comic-item--name">
-          <a class="text-overflow" href="/{{d[i].comic_id}}/" target="_blank">{{d[i].title}}</a>
-        </div>
-        <div class="user-comic-item--latest text-overflow">更至：{{d[i].chapter_title}}</div>
-        <div class="user-comic-item--text">已买了{{d[i].chapter_count}}个章节</div>
-        {{# if (d[i].auto_status == '1') { }}
-          <a class="j-auto-btn user-comic-item__btn" data-status="0" data-comicid="{{d[i].comic_id}}">取消自动购买</a>
-        {{# }else{ }}
-          <a class="j-auto-btn user-comic-item__btn active" data-status="1" data-comicid="{{d[i].comic_id}}">开启自动购买</a>
-        {{# }; }}
-      </div>
-    </li>
-    {{#  }); }}
-    {{#  if(d.length === 0){ }}
-      <div class="no-buy"></div>
-    {{#  } }}
-  </ul>
-</script>*@
+            <div class="main-content__buy">
+                <!-- comic-list -->
+                <div class="j-collection-list main-content__comic-list"></div>
+                @*        <script id="user_buy_list" type="text/html">
+                <ul class="user-comic-list--buy">
+                {{# layui.each(d, function(i, item){ }}
+                <li class="user-comic-item" data-comicid="{{d[i].comic_id}}">
+                <a class="user-comic-item__cover" href="/{{d[i].comic_id}}/" target="_blank">
+                <img src="{{ d[i].cover.replace('http:', 'https:') }}!cover-400">
+                </a>
+                <div class="user-comic-item__detail">
+                <div class="user-comic-item--name">
+                <a class="text-overflow" href="/{{d[i].comic_id}}/" target="_blank">{{d[i].title}}</a>
+                </div>
+                <div class="user-comic-item--latest text-overflow">更至：{{d[i].chapter_title}}</div>
+                <div class="user-comic-item--text">已买了{{d[i].chapter_count}}个章节</div>
+                {{# if (d[i].auto_status == '1') { }}
+                <a class="j-auto-btn user-comic-item__btn" data-status="0" data-comicid="{{d[i].comic_id}}">取消自动购买</a>
+                {{# }else{ }}
+                <a class="j-auto-btn user-comic-item__btn active" data-status="1" data-comicid="{{d[i].comic_id}}">开启自动购买</a>
+                {{# }; }}
+                </div>
+                </li>
+                {{#  }); }}
+                {{#  if(d.length === 0){ }}
+                <div class="no-buy"></div>
+                {{#  } }}
+                </ul>
+                </script>*@
 
-        <!-- pagination -->
-        <div class="pagination--center" id="buy-pagination"></div>
-      </div>
+                <!-- pagination -->
+                <div class="pagination--center" id="buy-pagination"></div>
+            </div>
+        </div>
+
     </div>
+    @*
+    <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/vendor/base_lib.js?v=e631876"></script>
+    <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/libs/layer/layer.js?v=6e80f0c"></script>
+    <script type="text/javascript" charset="utf-8" src="https://g.alicdn.com/sd/nch5/index.js?t=2015052012"></script>
+    <!-- 国内使用 阿里云 滑动验证 --><!-- 若您的主要用户来源于海外，请替换使用下面的js资源 -->
+    <!-- <script type="text/javascript" charset="utf-8" src="//aeis.alicdn.com/sd/nch5/index.js?t=2015052012"></script> -->
+    <!-- <script src="https://g.alicdn.com/AWSC/AWSC/awsc.js"></script> -->
 
-  </div>
-@*
-  <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/vendor/base_lib.js?v=e631876"></script>
-  <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/libs/layer/layer.js?v=6e80f0c"></script>
-  <script type="text/javascript" charset="utf-8" src="https://g.alicdn.com/sd/nch5/index.js?t=2015052012"></script>
-  <!-- 国内使用 阿里云 滑动验证 --><!-- 若您的主要用户来源于海外，请替换使用下面的js资源 -->
-  <!-- <script type="text/javascript" charset="utf-8" src="//aeis.alicdn.com/sd/nch5/index.js?t=2015052012"></script> -->
-  <!-- <script src="https://g.alicdn.com/AWSC/AWSC/awsc.js"></script> -->
-
-  <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/libs/layui/layui.js?v=3320191"></script>
-  <script type="text/javascript">/*
-* @Author: infiee 
-* @Date: 2018-07-08 21:09:14 
-* @Last Modified by: infiee
-* @Last Modified time: 2018-07-19 14:16:02
-* 
-* 用户中心 - 我的购买
-*/
+    <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/libs/layui/layui.js?v=3320191"></script>
+    <script type="text/javascript">/*
+    * @Author: infiee
+    * @Date: 2018-07-08 21:09:14
+    * @Last Modified by: infiee
+    * @Last Modified time: 2018-07-19 14:16:02
+    *
+    * 用户中心 - 我的购买
+    */
     seajs.use(['assets/script/modules/httpApi/httpApi'], function (httpApi)
     {
-      layui.use(['laypage', 'laytpl'], function ()
-      {
-        var laypage = layui.laypage,
-          laytpl = layui.laytpl;
+    layui.use(['laypage', 'laytpl'], function ()
+    {
+    var laypage = layui.laypage,
+    laytpl = layui.laytpl;
 
-        var buy_params = {
-          page_num: 1,
-          page_size: 6
-        };
+    var buy_params = {
+    page_num: 1,
+    page_size: 6
+    };
 
-        var $count = $('.j-collection-count'), // 收藏数
-          $list = $('.j-collection-list'), // 收藏列表
-          $tpl_list = $('#user_buy_list'), // 渲染模板
-          $pagination = $('#buy-pagination'); // 分页
+    var $count = $('.j-collection-count'), // 收藏数
+    $list = $('.j-collection-list'), // 收藏列表
+    $tpl_list = $('#user_buy_list'), // 渲染模板
+    $pagination = $('#buy-pagination'); // 分页
 
-        // 渲染list
-        function renderBuyList(page_num)
-        {
-          return httpApi.comic
-            .comicBuyList({
-              page_num: page_num,
-              page_size: buy_params.page_size
-            })
-            .done(function (res)
-            {
-              if (res.code == 200)
-              {
-                var resdata = res.data,
-                  count = resdata.count;
-                // 渲染收藏数
-                $count.text(count);
-                // 渲染模板
-                laytpl($tpl_list.html()).render(resdata.list, function (result)
-                {
-                  $list.html(result);
-                });
-              }
-            });
-        }
-
-        // 渲染分页
-        function renderPagination(count)
-        {
-          laypage.render({
-            elem: $pagination,
-            count: count,
-            theme: 'mkz',
-            prev: '<',
-            next: '>',
-            limit: buy_params.page_size,
-            jump: function (obj, first)
-            {
-              if (!first)
-              {
-                renderBuyList(obj.curr);
-              }
-            }
-          });
-        }
-
-        // 初始化分页
-        function initPagination()
-        {
-          return renderBuyList(1).then(function (res)
-          {
-            var count = res.data.count;
-            if (count <= buy_params.page_size)
-            {
-              $pagination.hide();
-            } else
-            {
-              $pagination.show().css({
-                borderTop: '1px solid #ddd'
-              });
-            }
-            if (count !== 0)
-            {
-              renderPagination(count);
-            }
-          });
-        }
-
-        // 购买事件
-        function autoBuyEvent()
-        {
-          $(document).on('click', '.j-auto-btn', function ()
-          {
-            var comicid = $(this).attr('data-comicid'),
-              auto_status = $(this).attr('data-status');
-            var $self = $(this);
-            httpApi.comic
-              .setAutoBuy({
-                comic_id: comicid,
-                auto_status: auto_status
-              })
-              .done(function (data)
-              {
-                if (data.code == 200)
-                {
-                  layer.alert(data.message, {
-                    title: '操作成功',
-                    closeBtn: 1
-                  });
-                  $self.toggleClass('active');
-                  $self.attr('data-status', auto_status == '0' ? '1' : '0');
-                  $self.text(auto_status == '0' ? '开启自动购买' : '取消自动购买');
-                } else
-                {
-                  layer.alert(data.message, {
-                    title: '操作失败',
-                    closeBtn: 1
-                  });
-                }
-              });
-          });
-        }
-
-        // 初始化执行
-        initPagination();
-        autoBuyEvent();
-      });
+    // 渲染list
+    function renderBuyList(page_num)
+    {
+    return httpApi.comic
+    .comicBuyList({
+    page_num: page_num,
+    page_size: buy_params.page_size
+    })
+    .done(function (res)
+    {
+    if (res.code == 200)
+    {
+    var resdata = res.data,
+    count = resdata.count;
+    // 渲染收藏数
+    $count.text(count);
+    // 渲染模板
+    laytpl($tpl_list.html()).render(resdata.list, function (result)
+    {
+    $list.html(result);
     });
-  </script>
-  <script>
+    }
+    });
+    }
+
+    // 渲染分页
+    function renderPagination(count)
+    {
+    laypage.render({
+    elem: $pagination,
+    count: count,
+    theme: 'mkz',
+    prev: '<',
+    next: '>',
+    limit: buy_params.page_size,
+    jump: function (obj, first)
+    {
+    if (!first)
+    {
+    renderBuyList(obj.curr);
+    }
+    }
+    });
+    }
+
+    // 初始化分页
+    function initPagination()
+    {
+    return renderBuyList(1).then(function (res)
+    {
+    var count = res.data.count;
+    if (count <= buy_params.page_size)
+    {
+    $pagination.hide();
+    } else
+    {
+    $pagination.show().css({
+    borderTop: '1px solid #ddd'
+    });
+    }
+    if (count !== 0)
+    {
+    renderPagination(count);
+    }
+    });
+    }
+
+    // 购买事件
+    function autoBuyEvent()
+    {
+    $(document).on('click', '.j-auto-btn', function ()
+    {
+    var comicid = $(this).attr('data-comicid'),
+    auto_status = $(this).attr('data-status');
+    var $self = $(this);
+    httpApi.comic
+    .setAutoBuy({
+    comic_id: comicid,
+    auto_status: auto_status
+    })
+    .done(function (data)
+    {
+    if (data.code == 200)
+    {
+    layer.alert(data.message, {
+    title: '操作成功',
+    closeBtn: 1
+    });
+    $self.toggleClass('active');
+    $self.attr('data-status', auto_status == '0' ? '1' : '0');
+    $self.text(auto_status == '0' ? '开启自动购买' : '取消自动购买');
+    } else
+    {
+    layer.alert(data.message, {
+    title: '操作失败',
+    closeBtn: 1
+    });
+    }
+    });
+    });
+    }
+
+    // 初始化执行
+    initPagination();
+    autoBuyEvent();
+    });
+    });
+    </script>
+    <script>
     (function ()
     {
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      if (curProtocol === 'https')
-      {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-      }
-      else
-      {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-      }
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https')
+    {
+    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else
+    {
+    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
     })();
-  </script>*@
+    </script>*@
 
 
 

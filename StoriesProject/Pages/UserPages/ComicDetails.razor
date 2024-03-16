@@ -1,5 +1,6 @@
 ﻿@page "/details/{id}"
 @page "/details"
+@using Microsoft.JSInterop
 @using StoriesProject.Model.BaseEntity;
 @using StoriesProject.Model.DTO.Story;
 @using StoriesProject.Services;
@@ -162,22 +163,22 @@
                     </a>
                 </div>
                 <div class="de-rate-wr">
-                  <div class="rate-handle layui-inline" data-score="97">
-                    <ul class="layui-rate">
-                      <li class="layui-inline"><i class="layui-icon layui-icon-rate-solid"></i></li>
-                      <li class="layui-inline"><i class="layui-icon layui-icon-rate-solid"></i></li>
-                      <li class="layui-inline"><i class="layui-icon layui-icon-rate-solid"></i></li>
-                      <li class="layui-inline"><i class="layui-icon layui-icon-rate-solid"></i></li>
-                      <li><i class="layui-icon layui-icon-rate-half"></i></li>
-                    </ul><span class="layui-inline">@storyDetail?.RateScore</span>
-                  </div>
-                  @* <p class="rate-count">（<span class="num">4933</span>人评价）</p> *@
+                    <div class="rate-handle layui-inline" data-score="97">
+                        <ul class="layui-rate">
+                            <li class="layui-inline"><i class="layui-icon layui-icon-rate-solid"></i></li>
+                            <li class="layui-inline"><i class="layui-icon layui-icon-rate-solid"></i></li>
+                            <li class="layui-inline"><i class="layui-icon layui-icon-rate-solid"></i></li>
+                            <li class="layui-inline"><i class="layui-icon layui-icon-rate-solid"></i></li>
+                            <li><i class="layui-icon layui-icon-rate-half"></i></li>
+                        </ul><span class="layui-inline">@storyDetail?.RateScore</span>
+                    </div>
+                    @* <p class="rate-count">（<span class="num">4933</span>人评价）</p> *@
                 </div>
                 @* <div class="de-user-handle">
-                    <a class="btn--ticket" href="javascript:void(0);">
-                        <i class="icon-de-ticket "></i>
-                        Độc giả: 200.000 người
-                    </a>
+                <a class="btn--ticket" href="javascript:void(0);">
+                <i class="icon-de-ticket "></i>
+                Độc giả: 200.000 người
+                </a>
                 </div> *@
             </div>
         </div>
@@ -187,10 +188,10 @@
             <div class="de-chapter">
                 <div class="de-chapter__title">
                     <span>Chapter</span>
-                    <span class="update-time">Số tập: @(chapterLst != null ? chapterLst.Count: 0) chapters</span>
+                    <span class="update-time">Số tập: @(chapterLst != null ? chapterLst.Count : 0) chapters</span>
                     @* <div class="btn--sort" style="display: block;">
-                        <span class="dx"><i class="iconfont icon-sortdown"></i> Mới⇾Cũ</span>
-                        <span class="zx"><i class="iconfont icon-sortup"></i> Cũ⇽Mới</span>
+                    <span class="dx"><i class="iconfont icon-sortdown"></i> Mới⇾Cũ</span>
+                    <span class="zx"><i class="iconfont icon-sortup"></i> Cũ⇽Mới</span>
                     </div> *@
                 </div>
                 <div class="chapter__list clearfix">
@@ -204,7 +205,7 @@
                                         <i class="vip-tag iconfont icon-ic_readlist_vip1"></i> @item.Name
                                     </a>
                                 </li>
-                            }                    
+                            }
                         }
                     </ul>
                     <div class="chapter__more">
@@ -221,124 +222,124 @@
                     </div>
                 </div>
             </div>
-          @*   <a class="de__ad" href="/215451/"
-               style="background-image: url(https://oss.mkzcdn.com/image/20210803/61089b5e061c4-1694x214.jpg!banner-1400);"
-               target="_blank"></a>
+            @*   <a class="de__ad" href="/215451/"
+            style="background-image: url(https://oss.mkzcdn.com/image/20210803/61089b5e061c4-1694x214.jpg!banner-1400);"
+            target="_blank"></a>
             <div class="guess-u-like clearfix" style="margin-bottom: 20px;">
-                <p class="guess__title" style="margin-top: 20px;">Có thể bạn cũng thích</p>
-                <div class="guess__list clearfix">
-                    <div class="tempWrap" style="overflow:hidden; position:relative; width:1120px">
-                        <div class="slide-wrapper"
-                             style="width: 1792px; left: 0px; position: relative; overflow: hidden; padding: 0px; margin: 0px;">
-                            <div class="guess-item slide-item" style="float: left; width: 214px;">
-                                <div class="cover">
-                                    <a href="/207727/">
-                                        <img class="lazy-slide"
-                                             src="https://oss.mkzcdn.com/comic/cover/20230106/63b795177413d-599x799.jpg!cover-400"
-                                             data-src="https://oss.mkzcdn.com/comic/cover/20230106/63b795177413d-599x799.jpg!cover-400"
-                                             alt="封面" style="display: inline-block;">
-                                    </a>
-                                    <div class="cover__tag">第732话</div>
-                                </div>
-                                <p class="comic__title"><a href="/207727/">星武神诀</a></p>
-                                <p class="comic__feature">逆天强者的撼世之路</p>
-                            </div>
-                            <div class="guess-item slide-item" style="float: left; width: 214px;">
-                                <div class="cover">
-                                    <a href="/212062/">
-                                        <img class="lazy-slide"
-                                             src="https://oss.mkzcdn.com/comic/cover/20230106/63b792d8e841d-600x800.jpg!cover-400"
-                                             data-src="https://oss.mkzcdn.com/comic/cover/20230106/63b792d8e841d-600x800.jpg!cover-400"
-                                             alt="封面" style="display: inline-block;">
-                                    </a>
-                                    <div class="cover__tag">第1季最终话</div>
-                                </div>
-                                <p class="comic__title"><a href="/212062/">修真四万年（别名：星域四万年）</a></p>
-                                <p class="comic__feature">边境少年的修真之路，为了主宰银河！</p>
-                            </div>
-                            <div class="guess-item slide-item" style="float: left; width: 214px;">
-                                <div class="cover">
-                                    <a href="/211189/">
-                                        <img class="lazy-slide"
-                                             src="https://oss.mkzcdn.com/comic/cover/20181218/5c18b62d4a78a-750x999.jpg!cover-400"
-                                             data-src="https://oss.mkzcdn.com/comic/cover/20181218/5c18b62d4a78a-750x999.jpg!cover-400"
-                                             alt="封面" style="display: inline-block;">
-                                    </a>
-                                    <div class="cover__tag">第453话</div>
-                                </div>
-                                <p class="comic__title"><a href="/211189/">姻缘宝典</a></p>
-                                <p class="comic__feature">手握宝典走天下</p>
-                            </div>
-                            <div class="guess-item slide-item" style="float: left; width: 214px;">
-                                <div class="cover">
-                                    <a href="/216307/">
-                                        <img class="lazy-slide"
-                                             src="https://oss.mkzcdn.com/comic/cover/20220113/61dfe85ca09c3-750x999.jpg!cover-400"
-                                             data-src="https://oss.mkzcdn.com/comic/cover/20220113/61dfe85ca09c3-750x999.jpg!cover-400"
-                                             alt="封面" style="display: inline-block;">
-                                    </a>
-                                    <div class="cover__tag">第204话 邀请</div>
-                                </div>
-                                <p class="comic__title"><a href="/216307/">最强内卷系统</a></p>
-                                <p class="comic__feature">穿到修仙界获得最强系统，武神只想种地</p>
-                            </div>
-                            <div class="guess-item slide-item" style="float: left; width: 214px;">
-                                <div class="cover">
-                                    <a href="/214673/">
-                                        <img class="lazy-slide"
-                                             src="https://oss.mkzcdn.com/comic/cover/20230106/63b799c660068-750x999.jpg!cover-400"
-                                             data-src="https://oss.mkzcdn.com/comic/cover/20230106/63b799c660068-750x999.jpg!cover-400"
-                                             alt="封面" style="display: inline-block;">
-                                    </a>
-                                    <div class="cover__tag">第344话 此路不通</div>
-                                </div>
-                                <p class="comic__title"><a href="/214673/">踏碎仙河</a></p>
-                                <p class="comic__feature">谱写一段永世不朽的传奇</p>
-                            </div>
-                            <div class="guess-item slide-item" style="float: left; width: 214px;">
-                                <div class="cover">
-                                    <a href="/208642/">
-                                        <img class="lazy-slide"
-                                             src="https://oss.mkzcdn.com/comic/cover/20210629/60dab657426f2-750x999.jpg!cover-400"
-                                             data-src="https://oss.mkzcdn.com/comic/cover/20210629/60dab657426f2-750x999.jpg!cover-400"
-                                             alt="封面" style="display: inline-block;">
-                                    </a>
-                                    <div class="cover__tag">第2季第89话 调查之前4</div>
-                                </div>
-                                <p class="comic__title"><a href="/208642/">妃夕妍雪</a></p>
-                                <p class="comic__feature">妃夕妍雪第二部开启，缘起之章</p>
-                            </div>
-                            <div class="guess-item slide-item" style="float: left; width: 214px;">
-                                <div class="cover">
-                                    <a href="/216621/">
-                                        <img class="lazy-slide"
-                                             src="https://oss.mkzcdn.com/comic/cover/20230421/644243d9c9297-750x999.jpg!cover-400"
-                                             data-src="https://oss.mkzcdn.com/comic/cover/20230421/644243d9c9297-750x999.jpg!cover-400"
-                                             alt="封面" style="display: inline-block;">
-                                    </a>
-                                    <div class="cover__tag">第161话 醋意</div>
-                                </div>
-                                <p class="comic__title"><a href="/216621/">少帅每天都在吃醋2:少帅是醋精</a></p>
-                                <p class="comic__feature">破案天才和她的醋精少帅</p>
-                            </div>
-                            <div class="guess-item slide-item" style="float: left; width: 214px;">
-                                <div class="cover">
-                                    <a href="/72/">
-                                        <img class="lazy-slide"
-                                             src="https://oss.mkzcdn.com/comic/cover/20181206/5c0888b755bb1-600x800.jpg!cover-400"
-                                             data-src="https://oss.mkzcdn.com/comic/cover/20181206/5c0888b755bb1-600x800.jpg!cover-400"
-                                             alt="封面" style="display: inline-block;">
-                                    </a>
-                                    <div class="cover__tag">第270话2 切割杀阵</div>
-                                </div>
-                                <p class="comic__title"><a href="/72/">星海镖师</a></p>
-                                <p class="comic__feature">宇宙护镖，使命必达</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="prev"><i class="layui-icon layui-icon-left"></i></div>
-                    <div class="next"><i class="layui-icon layui-icon-right"></i></div>
-                </div>
+            <p class="guess__title" style="margin-top: 20px;">Có thể bạn cũng thích</p>
+            <div class="guess__list clearfix">
+            <div class="tempWrap" style="overflow:hidden; position:relative; width:1120px">
+            <div class="slide-wrapper"
+            style="width: 1792px; left: 0px; position: relative; overflow: hidden; padding: 0px; margin: 0px;">
+            <div class="guess-item slide-item" style="float: left; width: 214px;">
+            <div class="cover">
+            <a href="/207727/">
+            <img class="lazy-slide"
+            src="https://oss.mkzcdn.com/comic/cover/20230106/63b795177413d-599x799.jpg!cover-400"
+            data-src="https://oss.mkzcdn.com/comic/cover/20230106/63b795177413d-599x799.jpg!cover-400"
+            alt="封面" style="display: inline-block;">
+            </a>
+            <div class="cover__tag">第732话</div>
+            </div>
+            <p class="comic__title"><a href="/207727/">星武神诀</a></p>
+            <p class="comic__feature">逆天强者的撼世之路</p>
+            </div>
+            <div class="guess-item slide-item" style="float: left; width: 214px;">
+            <div class="cover">
+            <a href="/212062/">
+            <img class="lazy-slide"
+            src="https://oss.mkzcdn.com/comic/cover/20230106/63b792d8e841d-600x800.jpg!cover-400"
+            data-src="https://oss.mkzcdn.com/comic/cover/20230106/63b792d8e841d-600x800.jpg!cover-400"
+            alt="封面" style="display: inline-block;">
+            </a>
+            <div class="cover__tag">第1季最终话</div>
+            </div>
+            <p class="comic__title"><a href="/212062/">修真四万年（别名：星域四万年）</a></p>
+            <p class="comic__feature">边境少年的修真之路，为了主宰银河！</p>
+            </div>
+            <div class="guess-item slide-item" style="float: left; width: 214px;">
+            <div class="cover">
+            <a href="/211189/">
+            <img class="lazy-slide"
+            src="https://oss.mkzcdn.com/comic/cover/20181218/5c18b62d4a78a-750x999.jpg!cover-400"
+            data-src="https://oss.mkzcdn.com/comic/cover/20181218/5c18b62d4a78a-750x999.jpg!cover-400"
+            alt="封面" style="display: inline-block;">
+            </a>
+            <div class="cover__tag">第453话</div>
+            </div>
+            <p class="comic__title"><a href="/211189/">姻缘宝典</a></p>
+            <p class="comic__feature">手握宝典走天下</p>
+            </div>
+            <div class="guess-item slide-item" style="float: left; width: 214px;">
+            <div class="cover">
+            <a href="/216307/">
+            <img class="lazy-slide"
+            src="https://oss.mkzcdn.com/comic/cover/20220113/61dfe85ca09c3-750x999.jpg!cover-400"
+            data-src="https://oss.mkzcdn.com/comic/cover/20220113/61dfe85ca09c3-750x999.jpg!cover-400"
+            alt="封面" style="display: inline-block;">
+            </a>
+            <div class="cover__tag">第204话 邀请</div>
+            </div>
+            <p class="comic__title"><a href="/216307/">最强内卷系统</a></p>
+            <p class="comic__feature">穿到修仙界获得最强系统，武神只想种地</p>
+            </div>
+            <div class="guess-item slide-item" style="float: left; width: 214px;">
+            <div class="cover">
+            <a href="/214673/">
+            <img class="lazy-slide"
+            src="https://oss.mkzcdn.com/comic/cover/20230106/63b799c660068-750x999.jpg!cover-400"
+            data-src="https://oss.mkzcdn.com/comic/cover/20230106/63b799c660068-750x999.jpg!cover-400"
+            alt="封面" style="display: inline-block;">
+            </a>
+            <div class="cover__tag">第344话 此路不通</div>
+            </div>
+            <p class="comic__title"><a href="/214673/">踏碎仙河</a></p>
+            <p class="comic__feature">谱写一段永世不朽的传奇</p>
+            </div>
+            <div class="guess-item slide-item" style="float: left; width: 214px;">
+            <div class="cover">
+            <a href="/208642/">
+            <img class="lazy-slide"
+            src="https://oss.mkzcdn.com/comic/cover/20210629/60dab657426f2-750x999.jpg!cover-400"
+            data-src="https://oss.mkzcdn.com/comic/cover/20210629/60dab657426f2-750x999.jpg!cover-400"
+            alt="封面" style="display: inline-block;">
+            </a>
+            <div class="cover__tag">第2季第89话 调查之前4</div>
+            </div>
+            <p class="comic__title"><a href="/208642/">妃夕妍雪</a></p>
+            <p class="comic__feature">妃夕妍雪第二部开启，缘起之章</p>
+            </div>
+            <div class="guess-item slide-item" style="float: left; width: 214px;">
+            <div class="cover">
+            <a href="/216621/">
+            <img class="lazy-slide"
+            src="https://oss.mkzcdn.com/comic/cover/20230421/644243d9c9297-750x999.jpg!cover-400"
+            data-src="https://oss.mkzcdn.com/comic/cover/20230421/644243d9c9297-750x999.jpg!cover-400"
+            alt="封面" style="display: inline-block;">
+            </a>
+            <div class="cover__tag">第161话 醋意</div>
+            </div>
+            <p class="comic__title"><a href="/216621/">少帅每天都在吃醋2:少帅是醋精</a></p>
+            <p class="comic__feature">破案天才和她的醋精少帅</p>
+            </div>
+            <div class="guess-item slide-item" style="float: left; width: 214px;">
+            <div class="cover">
+            <a href="/72/">
+            <img class="lazy-slide"
+            src="https://oss.mkzcdn.com/comic/cover/20181206/5c0888b755bb1-600x800.jpg!cover-400"
+            data-src="https://oss.mkzcdn.com/comic/cover/20181206/5c0888b755bb1-600x800.jpg!cover-400"
+            alt="封面" style="display: inline-block;">
+            </a>
+            <div class="cover__tag">第270话2 切割杀阵</div>
+            </div>
+            <p class="comic__title"><a href="/72/">星海镖师</a></p>
+            <p class="comic__feature">宇宙护镖，使命必达</p>
+            </div>
+            </div>
+            </div>
+            <div class="prev"><i class="layui-icon layui-icon-left"></i></div>
+            <div class="next"><i class="layui-icon layui-icon-right"></i></div>
+            </div>
             </div> *@
         </div>
     </div>

@@ -1,4 +1,5 @@
 ﻿@page "/login"
+@using Microsoft.JSInterop
 @using StoriesProject.API.Common.Constant;
 @using StoriesProject.Model.ViewModel.Accountant;
 @using StoriesProject.Services;
@@ -123,7 +124,7 @@
                                         </div>
                                     </div>
                                     <div class="form-item" @onclick="(() => LoginAction(loginViewModel))">
-                                        <div class="j-login-submit submit-btn disabled-select" >
+                                        <div class="j-login-submit submit-btn disabled-select">
                                             <i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop" style="@(isLogging ? "":"display:none")"></i>
                                             <span>Đăng nhập</span>
                                         </div>
@@ -156,12 +157,12 @@
                                         </div>
                                     </div>
                                     @* <div class="form-item">
-                                        <div class="input-block--inline">
-                                            <input type="text" name="verifycode" placeholder="Mã xác nhận" autocomplete="off" />
-                                            <div class="j-sms-btn sms-btn" data-status="false">
-                                                Gửi mã
-                                            </div>
-                                        </div>
+                                    <div class="input-block--inline">
+                                    <input type="text" name="verifycode" placeholder="Mã xác nhận" autocomplete="off" />
+                                    <div class="j-sms-btn sms-btn" data-status="false">
+                                    Gửi mã
+                                    </div>
+                                    </div>
                                     </div> *@
                                     <div class="form-item">
                                         <div class="input-block">
@@ -211,31 +212,31 @@
                         </div>
                         <!-- 第三方登录 -->
                         @*<div class="j-dialog-other-login other-login">
-                            <h3 class="j-dialog-other-title title">
-                                <div class="title-line"></div>
-                                <div class="title-text">其他登录方式</div>
-                            </h3>
-                            <div class="other-link">
-                                <a href="/login/oauth/?oauth_id=101" rel="nofollow" class="other-login-qq">
-                                    <i class="iconfont icon-ic_buytoast_qq"></i>
-                                </a>
-                                <a href="/login/oauth/?oauth_id=201" rel="nofollow" class="other-login-wx">
-                                    <i class="iconfont icon-ic_login_wx"></i>
-                                </a>
-                                <a href="/login/oauth/?oauth_id=301" rel="nofollow" class="other-login-sina">
-                                    <i class="iconfont icon-ic_login_xl"></i>
-                                </a>
-                                <!-- 扫码登录 -->
-                                <div class="j-dialog-switch-mode other-link__qr" data-contentid="qr">
-                                    <i class="iconfont icon-ic_login_smdl"></i>
-                                    <span class="other-link__qr--text">扫码登录</span>
-                                </div>
-                                <!-- 账号登录 -->
-                                <div class="j-dialog-switch-mode other-link__qr hide" data-contentid="login">
-                                    <i class="iconfont icon-ic_login_zhdl"></i>
-                                    <span class="other-link__qr--text">账号登录</span>
-                                </div>
-                            </div>
+                        <h3 class="j-dialog-other-title title">
+                        <div class="title-line"></div>
+                        <div class="title-text">其他登录方式</div>
+                        </h3>
+                        <div class="other-link">
+                        <a href="/login/oauth/?oauth_id=101" rel="nofollow" class="other-login-qq">
+                        <i class="iconfont icon-ic_buytoast_qq"></i>
+                        </a>
+                        <a href="/login/oauth/?oauth_id=201" rel="nofollow" class="other-login-wx">
+                        <i class="iconfont icon-ic_login_wx"></i>
+                        </a>
+                        <a href="/login/oauth/?oauth_id=301" rel="nofollow" class="other-login-sina">
+                        <i class="iconfont icon-ic_login_xl"></i>
+                        </a>
+                        <!-- 扫码登录 -->
+                        <div class="j-dialog-switch-mode other-link__qr" data-contentid="qr">
+                        <i class="iconfont icon-ic_login_smdl"></i>
+                        <span class="other-link__qr--text">扫码登录</span>
+                        </div>
+                        <!-- 账号登录 -->
+                        <div class="j-dialog-switch-mode other-link__qr hide" data-contentid="login">
+                        <i class="iconfont icon-ic_login_zhdl"></i>
+                        <span class="other-link__qr--text">账号登录</span>
+                        </div>
+                        </div>
                         </div>*@
                     </div>
                 </div>

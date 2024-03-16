@@ -71,6 +71,6 @@ function showToast(msg) {
             top: parent_height / 2 - $toast.outerHeight() / 2 - 50
         });
     setTimeout(() => {
-        
+
     }, 2000);
 }
