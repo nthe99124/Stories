@@ -77,7 +77,7 @@ namespace StoriesProject.API.Controller.Base
         [HttpGet("GetTop10NewVervionStory")]
         public async Task<IActionResult> GetTop10NewVervionStory()
         {
-            var dataResult = await _storiesService.GetTop10NewVervionStory();
+            var dataResult = await _storiesService.GetTop10NewVersionStory();
             _res.SuccessEventHandler(dataResult);
             return Ok(_res);
         }
@@ -131,7 +131,7 @@ namespace StoriesProject.API.Controller.Base
         [HttpGet("GetNewVervionStoryByDay")]
         public async Task<IActionResult> GetNewVervionStoryByDay(DateTime dateTime)
         {
-            var dataResult = await _storiesService.GetNewVervionStoryByDay(dateTime);
+            var dataResult = await _storiesService.GetNewVersionStoryByDay(dateTime);
             _res.SuccessEventHandler(dataResult);
             return Ok(_res);
         }
@@ -146,6 +146,34 @@ namespace StoriesProject.API.Controller.Base
         {
             var dataResult = await _storiesService.GetStoryById(id);
             _res.SuccessEventHandler(dataResult);
+            return Ok(_res);
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy danh sách truyện được tạo bởi user (chỉ cho tác giả)
+        /// CreatedBy ntthe 14.03.2024
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetStoryByCurrentAuthor")]
+        [Roles(RoleConstant.Author)]
+        public async Task<IActionResult> GetStoryByCurrentAuthor()
+        {
+            var dataResult = await _storiesService.GetStoryByCurrentAuthor();
+            _res.SuccessEventHandler(dataResult);
+            return Ok(_res);
+        }
+
+        /// <summary>
+        /// Hàm xử lý thêm mới tác phẩm (master)
+        /// CreatedBy ntthe 16.03.2024
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("CreateStoryByAuthor")]
+        [Roles(RoleConstant.Author)]
+        public async Task<IActionResult> CreateStoryByAuthor(StoryRegisterVM storyRegister)
+        {
+            await _storiesService.CreateStoryByAuthor(storyRegister);
+            _res.SuccessEventHandler();
             return Ok(_res);
         }
     }

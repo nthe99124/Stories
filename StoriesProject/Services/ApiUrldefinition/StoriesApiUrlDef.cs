@@ -105,6 +105,25 @@
         {
             return @$"{pathController}/GetStoryById?id={id}";
         }
-        
+
+        /// <summary>
+        /// Tạo url lấy danh sách truyện được tạo bởi user (chỉ cho tác giả)
+        /// CreatedBy ntthe 14.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public static string GetStoryByCurrentAuthor()
+        {
+            return @$"{pathController}/GetStoryByCurrentAuthor";
+        }
+
+        /// <summary>
+        /// Hàm xử lý thêm mới tác phẩm (master)
+        /// CreatedBy ntthe 14.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public static string CreateStoryByAuthor()
+        {
+            return @$"{pathController}/CreateStoryByAuthor";
+        }
     }
 }

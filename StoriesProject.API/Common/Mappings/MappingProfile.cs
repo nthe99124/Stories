@@ -10,6 +10,8 @@ namespace StoriesProject.API.Common.Mappings
         {
             CreateMap<AccountantRegister, Accountant>();
             CreateMap<AuthorRegisterModel, AuthorRegister>();
+            CreateMap<Story, StoryAccountGeneric>();
+            CreateMap<Story, StoryGeneric>();
         }
     }
 }

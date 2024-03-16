@@ -47,5 +47,17 @@ namespace StoriesProject.Model.Enum
             [Description("Khác")]
             Other,
         }
+
+        public enum TargetObject : short
+        {
+            [Description("Vị thành niên")]
+            Juvenile,
+            [Description("Nữ giới")]
+            Female,
+            [Description("Nam giới")]
+            Male,
+            [Description("Thiếu nhi")]
+            Children,
+        }
     }
 }

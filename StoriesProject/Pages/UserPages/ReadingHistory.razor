@@ -1,4 +1,5 @@
 ﻿@page "/user/history"
+@using Microsoft.JSInterop
 @using StoriesProject.Model.BaseEntity;
 @using StoriesProject.Services;
 @using StoriesProject.Shared.ComponentBase;
@@ -223,7 +224,7 @@
 </html>
 
 @code {
-    private List<StoryGeneric> listReadedStory { get; set; }
+    private List<StoryAccountGeneric> listReadedStory { get; set; }
 
     protected override async Task HandleAfterRenderAsync(bool firstRender)
     {

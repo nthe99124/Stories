@@ -3,22 +3,25 @@ using StoriesProject.API.Services.Base;
 using StoriesProject.Common.Cache;
 using StoriesProject.Model.BaseEntity;
 using StoriesProject.Model.DTO.Story;
+using StoriesProject.Model.ViewModel;
 using StoriesProject.Services.ApiUrldefinition;
 
 namespace StoriesProject.Services
 {
     public interface IStoriesService : IBaseService
     {
-        Task<List<StoryGeneric>> GetTop10NewStory();
+        Task<List<StoryAccountGeneric>> GetTop10NewStory();
         Task<List<StoryGeneric>> GetTop10HotStory();
-        Task<List<StoryGeneric>> GetTop10FreeStory();
-        Task<List<StoryGeneric>> GetTop10PaidStory();
-        Task<List<StoryGeneric>> GetTop10NewVervionStory();
-        Task<List<StoryGeneric>> GetFavoriteStory();
-        Task<List<StoryGeneric>> GetHistoryStoryRead();
-        Task<List<StoryGeneric>> GetAllStoryByTopic(Guid topicId);
-        Task<List<StoryGeneric>> GetNewVervionStoryByDay(DateTime dateTime);
+        Task<List<StoryAccountGeneric>> GetTop10FreeStory();
+        Task<List<StoryAccountGeneric>> GetTop10PaidStory();
+        Task<List<StoryAccountGeneric>> GetTop10NewVersionStory();
+        Task<List<StoryAccountGeneric>> GetFavoriteStory();
+        Task<List<StoryAccountGeneric>> GetHistoryStoryRead();
+        Task<List<StoryAccountGeneric>> GetAllStoryByTopic(Guid topicId);
+        Task<List<StoryAccountGeneric>> GetNewVersionStoryByDay(DateTime dateTime);
         Task<StoryDetailFullDTO> GetStoryById(Guid? id);
+        Task<List<StoryAccountGeneric>> GetStoryByCurrentAuthor();
+        Task<ResponseOutput<string>> CreateStoryByAuthor(StoryRegisterVM storyRegister);
     }
     public class StoriesService : BaseService, IStoriesService
     {
@@ -32,10 +35,10 @@ namespace StoriesProject.Services
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<List<StoryGeneric>> GetTop10NewStory()
+        public async Task<List<StoryAccountGeneric>> GetTop10NewStory()
         {
             var url = StoriesApiUrlDef.GetTop10NewStory();
-            return await RequestGetAsync<List<StoryGeneric>>(url);
+            return await RequestGetAsync<List<StoryAccountGeneric>>(url);
         }
 
 
@@ -55,10 +58,10 @@ namespace StoriesProject.Services
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<List<StoryGeneric>> GetTop10FreeStory()
+        public async Task<List<StoryAccountGeneric>> GetTop10FreeStory()
         {
             var url = StoriesApiUrlDef.GetTop10FreeStory();
-            return await RequestGetAsync<List<StoryGeneric>>(url);
+            return await RequestGetAsync<List<StoryAccountGeneric>>(url);
         }
 
         /// <summary>
@@ -66,10 +69,10 @@ namespace StoriesProject.Services
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<List<StoryGeneric>> GetTop10PaidStory()
+        public async Task<List<StoryAccountGeneric>> GetTop10PaidStory()
         {
             var url = StoriesApiUrlDef.GetTop10PaidStory();
-            return await RequestGetAsync<List<StoryGeneric>>(url);
+            return await RequestGetAsync<List<StoryAccountGeneric>>(url);
         }
 
         /// <summary>
@@ -77,10 +80,10 @@ namespace StoriesProject.Services
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<List<StoryGeneric>> GetTop10NewVervionStory()
+        public async Task<List<StoryAccountGeneric>> GetTop10NewVersionStory()
         {
             var url = StoriesApiUrlDef.GetTop10NewVervionStory();
-            return await RequestGetAsync<List<StoryGeneric>>(url);
+            return await RequestGetAsync<List<StoryAccountGeneric>>(url);
         }
 
         /// <summary>
@@ -88,10 +91,10 @@ namespace StoriesProject.Services
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<List<StoryGeneric>> GetFavoriteStory()
+        public async Task<List<StoryAccountGeneric>> GetFavoriteStory()
         {
             var url = StoriesApiUrlDef.GetFavoriteStory();
-            return await RequestAuthenGetAsync<List<StoryGeneric>>(url);
+            return await RequestAuthenGetAsync<List<StoryAccountGeneric>>(url);
         }
 
         /// <summary>
@@ -99,10 +102,10 @@ namespace StoriesProject.Services
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<List<StoryGeneric>> GetHistoryStoryRead()
+        public async Task<List<StoryAccountGeneric>> GetHistoryStoryRead()
         {
             var url = StoriesApiUrlDef.GetHistoryStoryRead();
-            return await RequestAuthenGetAsync<List<StoryGeneric>>(url);
+            return await RequestAuthenGetAsync<List<StoryAccountGeneric>>(url);
         }
 
         /// <summary>
@@ -110,10 +113,10 @@ namespace StoriesProject.Services
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<List<StoryGeneric>> GetAllStoryByTopic(Guid topicId)
+        public async Task<List<StoryAccountGeneric>> GetAllStoryByTopic(Guid topicId)
         {
             var url = StoriesApiUrlDef.GetAllStoryByTopic(topicId);
-            return await RequestGetAsync<List<StoryGeneric>>(url);
+            return await RequestGetAsync<List<StoryAccountGeneric>>(url);
         }
 
         /// <summary>
@@ -121,10 +124,10 @@ namespace StoriesProject.Services
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<List<StoryGeneric>> GetNewVervionStoryByDay(DateTime dateTime)
+        public async Task<List<StoryAccountGeneric>> GetNewVersionStoryByDay(DateTime dateTime)
         {
             var url = StoriesApiUrlDef.GetNewVervionStoryByDay(dateTime);
-            return await RequestAuthenGetAsync<List<StoryGeneric>>(url);
+            return await RequestAuthenGetAsync<List<StoryAccountGeneric>>(url);
         }
 
         /// <summary>
@@ -136,6 +139,28 @@ namespace StoriesProject.Services
         {
             var url = StoriesApiUrlDef.GetStoryById(id);
             return await RequestGetAsync<StoryDetailFullDTO>(url);
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy danh sách truyện được tạo bởi user (chỉ cho tác giả)
+        /// CreatedBy ntthe 14.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<StoryAccountGeneric>> GetStoryByCurrentAuthor()
+        {
+            var url = StoriesApiUrlDef.GetStoryByCurrentAuthor();
+            return await RequestAuthenGetAsync<List<StoryAccountGeneric>>(url);
+        }
+
+        /// <summary>
+        /// Hàm xử lý thêm mới tác phẩm (master)
+        /// CreatedBy ntthe 16.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ResponseOutput<string>> CreateStoryByAuthor(StoryRegisterVM storyRegister)
+        {
+            var url = StoriesApiUrlDef.CreateStoryByAuthor();
+            return await RequestFullAuthenPostAsync<string>(url, storyRegister);
         }
     }
 }

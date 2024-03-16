@@ -146,7 +146,7 @@ services.AddTransient<ITopicRepository, TopicRepository>();
 services.AddTransient<IRoleAccountantRepository, RoleAccountantRepository>();
 services.AddTransient<IRoleRepository, RoleRepository>();
 services.AddTransient<IAuthorRegisterRepository, AuthorRegisterRepository>();
-
+services.AddTransient<ITopicStoryRepository, TopicStoryRepository>();
 
 //Service
 services.AddTransient<ILogEntryService, LogEntryService>();

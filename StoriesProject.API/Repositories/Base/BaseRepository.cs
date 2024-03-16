@@ -16,6 +16,10 @@ namespace StoriesProject.API.Repositories.Base
         Task<T?> FirstOrDefault(Expression<Func<T, bool>> predicate);
         Task<bool> CheckExitsByCondition(Expression<Func<T, bool>> predicate);
         Task<T> Create(T entity);
+        Task InsertAsync(T entity);
+        Task Remove(T entity);
+        Task InsertRangeAsync(List<T> entity);
+        Task RemoveRange(List<T> entity);
         Task<int> Delete(T entity);
         Task<int> BulkDelete(Expression<Func<T, bool>> predicate);
         Task<int> Save();
@@ -212,6 +216,26 @@ namespace StoriesProject.API.Repositories.Base
         {
             _dbset.Remove(entity);
             return await Save();
+        }
+
+        public async Task InsertAsync(T entity)
+        {
+            await _dbset.AddAsync(entity);
+        }
+
+        public async Task InsertRangeAsync(List<T> entity)
+        {
+            await _dbset.AddRangeAsync(entity);
+        }
+
+        public async Task Remove(T entity)
+        {
+            _dbset.Remove(entity);
+        }
+
+        public async Task RemoveRange(List<T> entity)
+        {
+            _dbset.RemoveRange(entity);
         }
 
         public async Task<int> BulkDelete(Expression<Func<T, bool>> predicate)

@@ -30,6 +30,9 @@ public partial class Story
     [Description("Link video tiêu đề")]
     public string? VideoLink { get; set; }
 
+    [Description("Mô tả ngắn của truyện")]
+    public string? ShortDescription { get; set; }
+
     [Description("Mô tả của truyện")]
     public string? Description { get; set; }
 
@@ -41,6 +44,9 @@ public partial class Story
 
     [Description("Loại truyện")]
     public TypeOfStory TypeOfStory { get; set; }
+
+    [Description("Đối tượng hướng tới")]
+    public TypeOfStory TargetObject { get; set; }
 
     [Description("Nội dung thay đổi")]
     public string? ModifiedDescription { get; set; }

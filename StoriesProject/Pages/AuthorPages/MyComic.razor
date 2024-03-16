@@ -1,4 +1,11 @@
 ﻿@page "/author/mycomic"
+@using StoriesProject.Model.BaseEntity;
+@using StoriesProject.Services;
+@using StoriesProject.Shared.ComponentBase;
+@inject IStoriesService _storiesService;
+@inject IJSRuntime _js;
+@inject NavigationManager _navigationManager;
+@inherits AuthorBaseComponent
 <html>
 <head>
     <title>阅读历史 - 漫客栈</title>
@@ -149,61 +156,66 @@
                 </a>
             </div>
             <div class="g-ac-box">
-
-                <!-- <div class="m-empty">
-                  <p>
-                    Bạn chưa có tác phẩm nào
-                  </p>
-                  <a href="/author/comic_add_step1/" class="tip">
-                    Hãy thêm tác phẩm nào
-                  </a>
-                  <a href="/author/comic_add_step1/"><img src="https://static.mkzcdn.com/home/img/user/empty.png" alt=""></a>
-                </div> -->
-                <div class="j-collection-list main-content__comic-list">
-                    <ul class="user-comic-list">
-                        <li class="user-comic-item" data-comic="215003">
-                            <div class="j-item-select user-comic-item__select" data-comic="215003"> <i class="pic-select"></i> </div>
-                            <a class="user-comic-item__cover" href="/215003/" target="_blank">
-                                <img src="https://cdnnvd.com/nettruyen/thumb/tien-vo-de-ton.jpg">
-                            </a>
-                            <div class="user-comic-item__detail">
-                                <p class="user-comic-item--name">
-                                    <a class="text-overflow" href="/215003/" target="_blank">
-                                        Tiên võ đế
-                                        tôn
-                                    </a>
-                                </p>
-                                <p class="user-comic-item--text user-comic-item--latest">
-                                    <a class="text-overflow--gray"
-                                       href="/215003/1036339.html" target="_blank">Chapter 202: Chắc là đúng</a>
-                                </p>
-                            </div>
-                        </li>
-                        <li class="user-comic-item" data-comic="211685">
-                            <div class="j-item-select user-comic-item__select" data-comic="211685"> <i class="pic-select"></i> </div>
-                            <a class="user-comic-item__cover" href="/211685/" target="_blank">
-                                <img src="https://cdnnvd.com/nettruyen/thumb/boss-nha-giau-lai-la-nu-sinh-trung-hoc.jpg">
-                            </a>
-                            <div class="user-comic-item__detail">
-                                <p class="user-comic-item--name">
-                                    <a class="text-overflow" href="/211685/" target="_blank">
-                                        Boss nhà giàu
-                                        là nữ sinh trung học
-                                    </a>
-                                </p>
-                                <p class="user-comic-item--text user-comic-item--latest">
-                                    <a class="text-overflow--gray"
-                                       href="/211685/1036258.html" target="_blank">Chapter 165：Chắc là sai</a>
-                                </p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                @if (listStoryByMe == null || listStoryByMe.Count == 0)
+                {
+                    <div class="m-empty">
+                        <p>
+                        Bạn chưa có tác phẩm nào
+                        </p>
+                        <a href="/author/comic_add_step1/" class="tip">
+                        Hãy thêm tác phẩm nào
+                        </a>
+                        <a href="/author/comic_add_step1/"><img src="https://static.mkzcdn.com/home/img/user/empty.png" alt=""></a>
+                    </div>
+                }
+                else {
+                    <div class="j-collection-list main-content__comic-list">
+                        <ul class="user-comic-list">
+                            @if (listStoryByMe != null && listStoryByMe.Count > 0)
+                            {
+                                @foreach (var item in listStoryByMe)
+                                {
+                                    <li class="user-comic-item" @onclick="(() => NavigateToDetails(item.Id))">
+                                        <div class="j-item-select user-comic-item__select"> <i class="pic-select"></i> </div>
+                                        <a class="user-comic-item__cover">
+                                            <img src="https://cdnnvd.com/nettruyen/thumb/tien-vo-de-ton.jpg">
+                                        </a>
+                                        <div class="user-comic-item__detail">
+                                            <p class="user-comic-item--name">
+                                                <a class="text-overflow">
+                                                    @item.Name
+                                                </a>
+                                            </p>
+                                            <p class="user-comic-item--text user-comic-item--latest">
+                                                <a class="text-overflow--gray">@item.Description</a>
+                                            </p>
+                                        </div>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                }
             </div>
         </div>
     </div>
 </body>
 </html>
 @code {
+    private List<StoryAccountGeneric> listStoryByMe { get; set; }
+    private Guid detailID { get; set; }
 
+    protected override async Task HandleAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            listStoryByMe = await _storiesService.GetStoryByCurrentAuthor();
+            StateHasChanged();
+        }
+    }
+
+    private void NavigateToDetails(Guid detailId)
+    {
+        _navigationManager.NavigateTo($"/details/{detailId}");
+    }
 }

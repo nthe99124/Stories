@@ -1,4 +1,5 @@
 ﻿@page "/user/collection"
+@using Microsoft.JSInterop
 @using StoriesProject.Model.BaseEntity;
 @using StoriesProject.Services;
 @using StoriesProject.Shared.ComponentBase;
@@ -370,7 +371,7 @@
 
 </html>
 @code {
-    private List<StoryGeneric> listFavoritesStory { get; set; }
+    private List<StoryAccountGeneric> listFavoritesStory { get; set; }
     private Guid detailID { get; set; }
 
     protected override async Task HandleAfterRenderAsync(bool firstRender)

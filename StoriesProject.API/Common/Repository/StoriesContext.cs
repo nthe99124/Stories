@@ -1,16 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using StoriesProject.Model.BaseEntity;
-using StoriesProject.Model.DTO.Accountant;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StoriesProject.API.Common.Repository;
 
 public partial class StoriesContext : DbContext
 {
-    public StoriesContext()
-    {
-    }
+    private IConfiguration _configuration;
 
     public StoriesContext(DbContextOptions<StoriesContext> options)
         : base(options)
@@ -20,28 +17,19 @@ public partial class StoriesContext : DbContext
 
     public virtual DbSet<Accountant> Accountants { get; set; }
     public virtual DbSet<AuthorRegister> AuthorRegister { get; set; }
-
     public virtual DbSet<CoinLog> CoinLogs { get; set; }
-
     public virtual DbSet<Order> Orders { get; set; }
-
     public virtual DbSet<OrderDetail> OrderDetails { get; set; }
-
     public virtual DbSet<Role> Roles { get; set; }
-
     public virtual DbSet<RoleAccountant> RoleAccountants { get; set; }
-
     public virtual DbSet<Story> Stories { get; set; }
-
     public virtual DbSet<Topic> Topics { get; set; }
-
     public virtual DbSet<TopicStory> TopicStories { get; set; }
     public virtual DbSet<FavoriteStories> FavoriteStories { get; set; }
     public virtual DbSet<Chapter> Chapters { get; set; }
     public virtual DbSet<ViewedChapterStories> ViewedChapterStories { get; set; }
 
     #region Các model hứng dữ liệu
-    public virtual DbSet<StoryAccountGeneric> StoryAccountGeneric { get; set; }
     #endregion
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

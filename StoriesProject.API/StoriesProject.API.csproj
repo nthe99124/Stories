@@ -20,6 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Stories.Postman.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="Common\Attribute\CustomAuthorizeAttribute.cs" />
     <Compile Include="Common\Attribute\RolesAttribute.cs" />
     <Compile Include="Common\Cache\DistributedCacheCustom.cs" />
@@ -61,6 +65,8 @@
     <Compile Include="Migrations\20240310195505_add-proc.Designer.cs" />
     <Compile Include="Migrations\20240310195812_add-proc-GetRoleByAccId.cs" />
     <Compile Include="Migrations\20240310195812_add-proc-GetRoleByAccId.Designer.cs" />
+    <Compile Include="Migrations\20240316052409_update-column-story.cs" />
+    <Compile Include="Migrations\20240316052409_update-column-story.Designer.cs" />
     <Compile Include="Migrations\StoriesContextModelSnapshot.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Repositories\AccountantRepository.cs" />
@@ -69,6 +75,7 @@
     <Compile Include="Repositories\LogEntryRepository.cs" />
     <Compile Include="Repositories\RoleAccountantRepository.cs" />
     <Compile Include="Repositories\RoleRepository.cs" />
+    <Compile Include="Repositories\TopicStoryRepository.cs" />
     <Compile Include="Repositories\StoriesRepository.cs" />
     <Compile Include="Repositories\TopicRepository.cs" />
     <Compile Include="Services\AccoutantsService.cs" />

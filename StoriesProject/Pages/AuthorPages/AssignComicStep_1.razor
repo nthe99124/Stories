@@ -1,8 +1,11 @@
 ﻿@page "/author/assigncomicstep1"
+@using Microsoft.JSInterop
 @using StoriesProject.Model.BaseEntity;
+@using StoriesProject.Services
 @using StoriesProject.Shared.ComponentBase;
 @inject NavigationManager _navigationManager;
 @inject IJSRuntime _js;
+@inject IStoriesService _storiesService;
 @inherits AuthorBaseComponent
 <html>
 
@@ -364,13 +367,13 @@
               <p class="tip">Dung lượng 5MB</p>
             </div>
           </div>
-          <div class="layui-form-item">
+          @* <div class="layui-form-item">
             <label class="layui-form-label"><i>*</i>Tác giả: </label>
             <div class="layui-input-block">
               <input type="text" name="title" required="" lay-verify="required"
                 placeholder="Không cần có số, tối đa 15 từ" autocomplete="off" class="layui-input" @bind="story.CreatedBy">
             </div>
-          </div> 
+          </div>  *@
           <div class="layui-form-item">
             <label class="layui-form-label"><i>*</i>Giới thiệu ngắn: </label>
             <div class="layui-input-block">
@@ -437,21 +440,23 @@
           <div class="layui-form-item">
             <label class="layui-form-label"><i>*</i>Đối tượng: </label>
             <div class="layui-input-block">
-              <input type="radio" name="audience" value="1" title="Vị thành niên" checked="">
+                <input type="radio" name="audience" value="1" title="Vị thành niên" >
               <div class="layui-unselect layui-form-radio layui-form-radioed"><i class="layui-anim layui-icon"></i>
                 <div>Vị thành niên</div>
               </div>
-              <input type="radio" name="audience" value="2" title="Nữ giới">
+                <input type="radio" name="audience" value="2" title="Nữ giới" >
               <div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i>
                 <div>Nữ giới</div>
               </div>
-              <input type="radio" name="audience" value="3" title="Nam giới">
+                <input type="radio" name="audience" value="3" title="Nam giới">
               <div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i>
                 <div>Nam giới</div>
               </div>
-              <input type="radio" name="audience" value="4" title="Thiếu nhi">
-              <div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i>
-                <div>Thiếu nhi</div>
+                <input type="radio" name="audience" value="4" title="Thiếu nhi">
+                <div class="layui-unselect layui-form-radio">
+                    <i class="layui-anim layui-icon"></i>
+                    <div>Thiếu nhi</div>
+                </div>
               </div>
             </div>
           </div>
@@ -514,55 +519,31 @@
           <div class="layui-form-item">
             <label class="layui-form-label"></label>
             <div class="layui-input-block">
-              <button lay-submit="" lay-filter="stepOne" class="submit layui-btn">Tiếp theo</button>
+                            <button lay-submit="" lay-filter="stepOne" class="submit layui-btn" @onclick="(() => ResgiterStory())">Tiếp theo</button>
             </div>
           </div>
         </form>
       </div>
     </div>
   </div>
-
-@*  <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/vendor/base_lib.js?v=e631876"></script>
-  <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/libs/layer/layer.js?v=6e80f0c"></script>
-  <script type="text/javascript" charset="utf-8" src="https://g.alicdn.com/sd/nch5/index.js?t=2015052012"></script>
-  <!-- 国内使用 阿里云 滑动验证 --><!-- 若您的主要用户来源于海外，请替换使用下面的js资源 -->
-  <!-- <script type="text/javascript" charset="utf-8" src="//aeis.alicdn.com/sd/nch5/index.js?t=2015052012"></script> -->
-  <!-- <script src="https://g.alicdn.com/AWSC/AWSC/awsc.js"></script> -->
-
-  <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/libs/layui/layui.js?v=3320191"></script>
-  <script type="text/javascript" src="//static.mkzcdn.com/home/assets/script/page/user/history.js?v=7f36731"></script>
-  <script>
-    (function ()
-    {
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      if (curProtocol === 'https')
-      {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-      }
-      else
-      {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-      }
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>*@
-
-
-
 </body>
 
 </html>
 
 @code {
-    private Story story { get; set; } = new Story();
-    // protected override async Task HandleAfterRenderAsync(bool firstRender)
-    // {
-    //     if (firstRender)
-    //     {
-    //         accInfor = await _accoutantsService.GetUserInforGeneric();
-    //         StateHasChanged();
-    //     }
-    // }
+    private StoryRegisterVM story { get; set; } = new StoryRegisterVM();
+    private string selectedAudience = "1"; // Giá trị mặc định của radio button
+
+    private async Task ResgiterStory()
+    {
+        if (story != null)
+        {
+            await _storiesService.CreateStoryByAuthor(story);
+        }
+    }
+
+    private void HandleAudienceChange(ChangeEventArgs e)
+    {
+        selectedAudience = e.Value.ToString();
+    }
 }

@@ -1,31 +1,37 @@
-﻿using StoriesProject.API.Common.Cache;
-using StoriesProject.Model.BaseEntity;
+﻿using AutoMapper;
+using StoriesProject.API.Common.Cache;
 using StoriesProject.API.Repositories;
 using StoriesProject.API.Services.Base;
-using System;
+using StoriesProject.Model.BaseEntity;
 using StoriesProject.Model.DTO.Story;
 
 namespace StoriesProject.API.Services
 {
     public interface IStoriesService
     {
-        Task<IEnumerable<Story>?> GetTop10NewStory();
-        Task<IEnumerable<Story>?> GetTop10HotStory();
-        Task<IEnumerable<Story>?> GetTop10FreeStory();
-        Task<IEnumerable<Story>?> GetTop10PaidStory();
-        Task<IEnumerable<Story>?> GetTop10NewVervionStory();
+        Task<IEnumerable<StoryAccountGeneric>?> GetTop10NewStory();
+        Task<IEnumerable<StoryGeneric>?> GetTop10HotStory();
+        Task<IEnumerable<StoryAccountGeneric>?> GetTop10FreeStory();
+        Task<IEnumerable<StoryAccountGeneric>?> GetTop10PaidStory();
+        Task<IEnumerable<StoryAccountGeneric>?> GetTop10NewVersionStory();
         Task<IEnumerable<StoryAccountGeneric>?> GetHistoryStoryRead();
         Task<IEnumerable<StoryAccountGeneric>?> GetFavoriteStory();
         Task<IEnumerable<StoryAccountGeneric>?> GetAllStoryByTopic(Guid topicId);
-        Task<IEnumerable<Story>?> GetNewVervionStoryByDay(DateTime dateTime);
+        Task<IEnumerable<StoryAccountGeneric>?> GetNewVersionStoryByDay(DateTime dateTime);
         Task<StoryDetailFullDTO?> GetStoryById(Guid id);
+        Task<IEnumerable<StoryAccountGeneric>?> GetStoryByCurrentAuthor();
+        Task CreateStoryByAuthor(StoryRegisterVM storyRegister);
     }
     public class StoriesService: BaseService, IStoriesService
     {
         private readonly IStoriesRepository _storiesRepository;
-        public StoriesService(IHttpContextAccessor httpContextAccessor, IDistributedCacheCustom cache, IStoriesRepository storiesRepository) : base(httpContextAccessor, cache)
+        private readonly ITopicStoryRepository _topicStoryRepository;
+        private readonly IMapper _mapper;
+        public StoriesService(IHttpContextAccessor httpContextAccessor, IDistributedCacheCustom cache, IStoriesRepository storiesRepository, IMapper mapper, ITopicStoryRepository topicStoryRepository) : base(httpContextAccessor, cache)
         {
             _storiesRepository = storiesRepository;
+            _mapper = mapper;
+            _topicStoryRepository = topicStoryRepository;
         }
 
         /// <summary>
@@ -33,9 +39,11 @@ namespace StoriesProject.API.Services
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<Story>?> GetTop10NewStory()
+        public async Task<IEnumerable<StoryAccountGeneric>?> GetTop10NewStory()
         {
-            return await _storiesRepository.GetTopNewStory(10);
+            var top10Result = await _storiesRepository.GetTopNewStory(10);
+            var result = _mapper.Map<IEnumerable<StoryAccountGeneric>>(top10Result);
+            return result;
         }
 
 
@@ -44,9 +52,11 @@ namespace StoriesProject.API.Services
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<Story>?> GetTop10HotStory()
+        public async Task<IEnumerable<StoryGeneric>?> GetTop10HotStory()
         {
-            return await _storiesRepository.GetTopHotStory(10);
+            var top10Result = await _storiesRepository.GetTopHotStory(10);
+            var result = _mapper.Map<IEnumerable<StoryGeneric>>(top10Result);
+            return result;
         }
 
         /// <summary>
@@ -54,9 +64,11 @@ namespace StoriesProject.API.Services
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<Story>?> GetTop10FreeStory()
+        public async Task<IEnumerable<StoryAccountGeneric>?> GetTop10FreeStory()
         {
-            return await _storiesRepository.GetTopFreeStory(10);
+            var top10Result = await _storiesRepository.GetTopFreeStory(10);
+            var result = _mapper.Map<IEnumerable<StoryAccountGeneric>>(top10Result);
+            return result;
         }
 
         /// <summary>
@@ -64,9 +76,11 @@ namespace StoriesProject.API.Services
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<Story>?> GetTop10PaidStory()
+        public async Task<IEnumerable<StoryAccountGeneric>?> GetTop10PaidStory()
         {
-            return await _storiesRepository.GetTopPaidStory(10);
+            var top10Result = await _storiesRepository.GetTopPaidStory(10);
+            var result = _mapper.Map<IEnumerable<StoryAccountGeneric>>(top10Result);
+            return result;
         }
 
         /// <summary>
@@ -74,9 +88,11 @@ namespace StoriesProject.API.Services
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<Story>?> GetTop10NewVervionStory()
+        public async Task<IEnumerable<StoryAccountGeneric>?> GetTop10NewVersionStory()
         {
-            return await _storiesRepository.GetTopNewVervionStory(10);
+            var topResult = await _storiesRepository.GetTopNewVersionStory(10);
+            var result = _mapper.Map<IEnumerable<StoryAccountGeneric>>(topResult);
+            return result;
         }
 
         /// <summary>
@@ -108,7 +124,6 @@ namespace StoriesProject.API.Services
         /// <returns></returns>
         public async Task<IEnumerable<StoryAccountGeneric>?> GetAllStoryByTopic(Guid topicId)
         {
-            var userId = GetUserAuthen()?.AccoutantId;
             return await _storiesRepository.GetAllStoryByTopic(topicId);
         }
 
@@ -117,9 +132,11 @@ namespace StoriesProject.API.Services
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<Story>?> GetNewVervionStoryByDay(DateTime dateTime)
+        public async Task<IEnumerable<StoryAccountGeneric>?> GetNewVersionStoryByDay(DateTime dateTime)
         {
-            return await _storiesRepository.GetNewVervionStoryByDay(dateTime);
+            var topResult = await _storiesRepository.GetTopNewVersionStory(10);
+            var result = _mapper.Map<IEnumerable<StoryAccountGeneric>>(topResult);
+            return result;
         }
 
         /// <summary>
@@ -130,6 +147,60 @@ namespace StoriesProject.API.Services
         public async Task<StoryDetailFullDTO?> GetStoryById(Guid id)
         {
             return await _storiesRepository.GetStoryById(id);
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy danh sách truyện được tạo bởi user hiện tại (chỉ cho tác giả)
+        /// CreatedBy ntthe 14.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<StoryAccountGeneric>?> GetStoryByCurrentAuthor()
+        {
+            var currentAuthorId = GetUserAuthen()?.AccoutantId;
+            if (currentAuthorId != null)
+            {
+                var topResult = await _storiesRepository.GetStoryByAuthor((Guid)currentAuthorId);
+                var result = _mapper.Map<IEnumerable<StoryAccountGeneric>>(topResult);
+                return result;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Hàm xử lý thêm mới tác phẩm (master)
+        /// CreatedBy ntthe 15.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task CreateStoryByAuthor(StoryRegisterVM storyRegister)
+        {
+            var currentAuthorId = GetUserAuthen()?.AccoutantId;
+            if (storyRegister != null && currentAuthorId != null)
+            {
+                var storyInsert = _mapper.Map<Story>(storyRegister);
+                // Thêm mới truyện
+                await _storiesRepository.InsertAsync(storyInsert);
+
+                // Thêm mới bảng nhiều nhiều truyện và topic
+                if (storyRegister.ListTopic != null && storyRegister.ListTopic.Count > 0)
+                {
+                    var lstTopicStory = new List<TopicStory>();
+                    foreach (var item in storyRegister.ListTopic)
+                    {
+                        lstTopicStory.Add(new TopicStory()
+                        {
+                            TopicId = item,
+                            StoryId = storyInsert.Id
+                        });
+                    }
+
+                    if (lstTopicStory.Count > 0)
+                    {
+                        await _topicStoryRepository.InsertRangeAsync(lstTopicStory);
+                    }
+                }
+
+                await _storiesRepository.Save();
+            }
         }
 
         #region Private Method

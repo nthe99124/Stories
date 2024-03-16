@@ -42,6 +42,7 @@
     <Compile Include="ViewModel\ResponseOutput.cs" />
     <Compile Include="ViewModel\RestOutput.cs" />
     <Compile Include="ViewModel\RestPagingOutput.cs" />
+    <Compile Include="ViewModel\Story\StoryAccountGeneric.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,13 +1,10 @@
 ﻿using Dapper;
 using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Linq;
 using StoriesProject.API.Common.Repository;
 using StoriesProject.API.Repositories.Base;
 using StoriesProject.Model.BaseEntity;
 using StoriesProject.Model.DTO;
 using StoriesProject.Model.DTO.Story;
-using System.Data;
 
 namespace StoriesProject.API.Repositories
 {
@@ -17,12 +14,13 @@ namespace StoriesProject.API.Repositories
         Task<IEnumerable<Story>?> GetTopHotStory(int numberStory);
         Task<IEnumerable<Story>?> GetTopFreeStory(int numberStory);
         Task<IEnumerable<Story>?> GetTopPaidStory(int numberStory);
-        Task<IEnumerable<Story>?> GetTopNewVervionStory(int numberStory);
+        Task<IEnumerable<Story>?> GetTopNewVersionStory(int numberStory);
         Task<IEnumerable<StoryAccountGeneric>?> GetHistoryStoryRead(Guid accId);
         Task<IEnumerable<StoryAccountGeneric>?> GetFavoriteStory(Guid accId);
         Task<IEnumerable<StoryAccountGeneric>?> GetAllStoryByTopic(Guid topicId);
-        Task<IEnumerable<Story>?> GetNewVervionStoryByDay(DateTime dateTime);
+        Task<IEnumerable<Story>?> GetNewVersionStoryByDay(DateTime dateTime);
         Task<StoryDetailFullDTO?> GetStoryById(Guid storyId);
+        Task<IEnumerable<Story>?> GetStoryByAuthor(Guid id);
     }
     public class StoriesRepository : BaseRepository<Story>, IStoriesRepository
     {
@@ -103,7 +101,7 @@ namespace StoriesProject.API.Repositories
         /// </summary>
         /// <param name="numberStory"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<Story>?> GetTopNewVervionStory(int numberStory)
+        public async Task<IEnumerable<Story>?> GetTopNewVersionStory(int numberStory)
         {
             var sortedList = new List<SortedPaging>
             {
@@ -193,11 +191,35 @@ namespace StoriesProject.API.Repositories
         /// </summary>
         /// <param name="numberStory"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<Story>?> GetNewVervionStoryByDay(DateTime dateTime)
+        public async Task<IEnumerable<Story>?> GetNewVersionStoryByDay(DateTime dateTime)
         {
             var dataResult = await FindBy(item => (item.CreatedDate.HasValue && item.CreatedDate.Value.Date == dateTime.Date)
                                                     || (item.ModifiedDate.HasValue && item.ModifiedDate.Value.Date == dateTime.Date));
             return dataResult;
         }
+
+        /// <summary>
+        /// Hàm xử lý lấy danh sách truyện theo tác giả tạo
+        /// CreatedBy ntthe 14.03.2024
+        /// </summary>
+        /// <param name="numberStory"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<Story>?> GetStoryByAuthor(Guid id)
+        {
+            var dataResult = await FindBy(item => (item.CreatedBy == id));
+            return dataResult;
+        }
+
+        ///// <summary>
+        ///// Hàm xử lý tạo mới truyện
+        ///// CreatedBy ntthe 14.03.2024
+        ///// </summary>
+        ///// <param name="numberStory"></param>
+        ///// <returns></returns>
+        //public async Task<IEnumerable<Story>?> GetStoryByAuthor(Guid id)
+        //{
+        //    var dataResult = await FindBy(item => (item.CreatedBy == id));
+        //    return dataResult;
+        //}
     }
 }
