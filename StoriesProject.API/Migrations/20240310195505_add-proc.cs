@@ -25,6 +25,7 @@ namespace StoriesProject.API.Migrations
 				SELECT 
 					s.Name as StoryName,
 					a.Name as AuthorName,
+					a.ImgAvatar as AuthorAvatar,
 					@TotalStory as TotalStory,
 					s.Description,
 					s.Content,

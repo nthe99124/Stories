@@ -128,18 +128,20 @@
                 <div class="comic-author">
                     <a href="/author/12527029.html">
                         <img class="avatar"
-                             src="@storyDetail?.ImageLink">
+                             src="@storyDetail?.AuthorAvatar">
                     </a>
                     <span class="name"><a href="/author/12527029.html">@storyDetail?.AuthorName</a></span>
                     <span>|</span>
                     <span><a href="/author/12527029.html">@storyDetail?.TotalStory tác phẩm</a></span>
                 </div>
                 <div class="comic-status">
-                    <span class="text">Chủ đề: <b>Xuyên không</b></span>
+                    <span class="text">
+                        Chủ đề: <b>
+                            @(topicLst != null && topicLst.Count > 0 ? string.Join(',', topicLst.Select(item => item.Name)) : "")</b></span>
                     <span class="text"></span> Lượt xem: <b>@storyDetail?.ViewAccess người</b>
                 </div>
                 <div class="comic-intro">
-                    <span class="title">Giói thiệu: </span>
+                    <span class="title">Giới thiệu: </span>
                     <p class="intro">
                         @storyDetail?.ShortDescription
                     </p>
@@ -153,12 +155,13 @@
                     <a class="btn--read">
                         <i class="icon-de-read"></i>
                         <span class="txt1">Đọc truyện</span>
-                    </a> <a class="btn--collect j-user-collect collected" href="javascript:void(0);">
+                    </a> 
+                    @* <a class="btn--collect j-user-collect collected" href="javascript:void(0);">
                         <i class="icon-de-coll_hl"></i>
                         <i class="icon-de-coll"></i>
                         <span class="txt1">Đã lưu</span>
                         <span class="txt2">Đánh đấu</span>
-                    </a>
+                    </a> *@
                 </div>
                 @* <div class="de-user-handle">
                 <a class="btn--ticket" href="javascript:void(0);">
@@ -376,10 +379,10 @@
                       <a href="/update/">MỚI CẬP NHẬT</a>
                       <div class="underline"></div>
                     </li> -->
-                    <li class="nav-item ">
+                    @* <li class="nav-item ">
                         <a href="/top/">XẾP HẠNG</a>
                         <div class="underline"></div>
-                    </li>
+                    </li> *@
                     <li class="nav-item ">
                         <a href="/category/">PHÂN LOẠI</a>
                         <div class="underline"></div>
@@ -427,30 +430,24 @@
             </div>
             <div class="in-header__user">
                 <ul class="fl clearfix">
-                    <li class="user-item j-user-msg">
-                        <a href="/user/message/" rel="nofollow">
-                            <i class="iconfont icon-ic_head_inform"></i>
-                            <span class="item-text">消息</span>
-                        </a>
-                    </li>
                     <li class="user-item j-header-his">
                         <a href="/user/history/" rel="nofollow">
                             <i class="iconfont icon-ic_head_footprint"></i>
                             <span class="item-text">Lịch sử</span>
                         </a>
                     </li>
-                    <li class="user-item j-header-coll">
+                    @* <li class="user-item j-header-coll">
                         <a href="/user/collection/" rel="nofollow">
                             <i class="iconfont icon-ic_head_coll"></i>
                             <span class="item-text">Đánh dấu</span>
                         </a>
-                    </li>
-                    <li class="user-item">
-                        <a href="/author/comic_add_step1/">
+                    </li> *@
+                   @*  <li class="user-item">
+                        <a href="/author/">
                             <i class="iconfont icon-ic_head_tg"></i>
                             <span class="item-text">Tác giả</span>
                         </a>
-                    </li>
+                    </li> *@
                 </ul>
                 <div class="j-header-avatar in-header__avatar fl">
                     <a href="/user/">

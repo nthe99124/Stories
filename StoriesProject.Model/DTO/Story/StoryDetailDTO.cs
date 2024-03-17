@@ -12,6 +12,7 @@ namespace StoriesProject.Model.DTO.Story
     {
         public string StoryName { get; set; }
         public string AuthorName { get; set; }
+        public string AuthorAvatar { get; set; }
         public int TotalStory { get; set; }
         public string Description { get; set; }
         public string ShortDescription { get; set; }

@@ -218,13 +218,12 @@
                             var item = listHotStory[i];
                             if (item != null)
                             {
-                                var imgLink = $"Image/{item.ImageLink}";
+                                var imgLink = $"{item.ImageLink}";
                                 <div class="in-comic--type-b cs-item" style="float: left; width: 245px;">
                                     <div class="cover">
                                         <a @onclick="(() => NavigateToDetails(item.Id))">
                                             <img class="lazy-carousel"
-                                                 data-src="@imgLink"
-                                                 src="@imgLink" alt="逆天邪神"
+                                                 src="@imgLink"
                                                  style="display: inline-block;">
                                         </a>
                                         <div class="cover__tag">@item.Name</div>
@@ -260,7 +259,7 @@
                             var item = listNewStory[i];
                             if (item != null)
                             {
-                                var imgLink = $"Image/{item.ImageLink}";
+                                var imgLink = $"{item.ImageLink}";
                                 <div class="in-comic--type-b cs-item" style="float: left; width: 245px;" @onclick="(() => NavigateToDetails(item.Id))">
                                     <div class="cover">
                                         <a>
@@ -302,7 +301,7 @@
                             var item = listFreeStory[i];
                             if (item != null)
                             {
-                                var imgLink = $"Image/{item.ImageLink}";
+                                var imgLink = $"{item.ImageLink}";
                                 <div class="in-comic--type-b cs-item" style="float: left; width: 245px;" @onclick="(() => NavigateToDetails(item.Id))">
                                     <div class="cover">
                                         <a>
@@ -342,7 +341,7 @@
                             var item = listPaidStory[i];
                             if (item != null)
                             {
-                                var imgLink = $"Image/{item.ImageLink}";
+                                var imgLink = $"{item.ImageLink}";
                                 <div class="in-comic--type-b cs-item" style="float: left; width: 245px;" @onclick="(() => NavigateToDetails(item.Id))">
                                     <div class="cover">
                                         <a>

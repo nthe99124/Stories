@@ -219,7 +219,7 @@ namespace StoriesProject.API.Services
             var topResult = (from s in _unitOfWork.StoriesRepository.Get()
                          join ts in _unitOfWork.TopicStoryRepository.Get() on s.Id equals ts.StoryId into tmp_ts
                          from ts in tmp_ts.DefaultIfEmpty()
-                         where ts == null || ts.TopicId == topicId
+                         where topicId == null || ts.TopicId == topicId
                          
                          orderby s.Purchases descending
                          select new StoryAccountGeneric
