@@ -1,10 +1,8 @@
 ﻿@page "/author/assigncomicstep1"
-@using Microsoft.JSInterop
 @using StoriesProject.Model.BaseEntity;
+@using StoriesProject.Model.ViewModel.Story
 @using StoriesProject.Services
 @using StoriesProject.Shared.ComponentBase;
-@inject NavigationManager _navigationManager;
-@inject IJSRuntime _js;
 @inject ITopicService _topicService;
 @inject IStoriesService _storiesService;
 @inherits AuthorBaseComponent
@@ -392,7 +390,7 @@
                         <label class="layui-form-label"><i>*</i>Giới thiệu ngắn: </label>
                         <div class="layui-input-block">
                             <input type="text" name="feature" required="" lay-verify="required"
-                                   placeholder="Giới thiệu ngắn sẽ xuất hiện trên trang chủ" autocomplete="off" class="layui-input">
+                                   placeholder="Giới thiệu ngắn sẽ xuất hiện trên trang chủ" autocomplete="off" class="layui-input" @bind="story.ShortDescription">
                         </div>
                     </div>
                     <div class="layui-form-item layui-form-text">
@@ -501,7 +499,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label"></label>
                         <div class="layui-input-block">
-                            <button lay-submit="" lay-filter="stepOne" class="submit layui-btn" @onclick="(() => ResgiterStory())">Tiếp theo</button>
+                            <button lay-filter="stepOne" class="layui-btn" @onclick="(() => ResgiterStory())">Tiếp theo</button>
                         </div>
                     </div>
                 </form>
@@ -523,7 +521,11 @@
     {
         if (story != null)
         {
-            await _storiesService.CreateStoryByAuthor(story);
+            var res = await _storiesService.CreateStoryByAuthor(story);
+            if (res != null && res.IsSuccess)
+            {
+                NavigateToUrl($"/author/add-chapter");
+            }
         }
     }
 
@@ -544,6 +546,6 @@
     // Phương thức xử lý sự kiện mở cửa sổ chọn file
     private async Task OpenFilePicker()
     {
-        await _js.InvokeVoidAsync("openFilePicker", fileInput);
+        await InvokeVoidAsync("openFilePicker", fileInput);
     }
 }

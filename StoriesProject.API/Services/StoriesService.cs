@@ -8,6 +8,7 @@ using AutoMapper;
 using StoriesProject.API.Common.Repository;
 using StoriesProject.Model.DTO;
 using System.Data;
+using StoriesProject.Model.ViewModel.Story;
 
 namespace StoriesProject.API.Services
 {
@@ -24,7 +25,7 @@ namespace StoriesProject.API.Services
         Task<IEnumerable<StoryAccountGeneric>?> GetNewVersionStoryByDay(DateTime dateTime);
         Task<StoryDetailFullDTO?> GetStoryById(Guid id);
         Task<IEnumerable<StoryAccountGeneric>?> GetStoryByCurrentAuthor();
-        Task CreateStoryByAuthor(StoryRegisterVM storyRegister);
+        Task<Guid?> CreateStoryByAuthor(StoryRegisterVM storyRegister);
     }
     public class StoriesService: BaseService, IStoriesService
     {
@@ -170,7 +171,7 @@ namespace StoriesProject.API.Services
         /// CreatedBy ntthe 15.03.2024
         /// </summary>
         /// <returns></returns>
-        public async Task CreateStoryByAuthor(StoryRegisterVM storyRegister)
+        public async Task<Guid?> CreateStoryByAuthor(StoryRegisterVM storyRegister)
         {
             var currentAuthorId = GetUserAuthen()?.AccoutantId;
             if (storyRegister != null && currentAuthorId != null)
@@ -199,7 +200,10 @@ namespace StoriesProject.API.Services
                 }
 
                 await _unitOfWork.CommitAsync();
+
+                return storyInsert.Id;
             }
+            return null;
         }
 
         #region Private Method

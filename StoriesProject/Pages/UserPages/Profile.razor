@@ -1,13 +1,11 @@
 ﻿@page "/user/profile"
-@using Microsoft.JSInterop
 @using StoriesProject.Model.ViewModel.Accountant;
 @using StoriesProject.Services;
 @using StoriesProject.Shared.ComponentBase;
+@using System.Text.Json
 @using static StoriesProject.Model.Enum.DataType;
 
-@inject IAccoutantsService _accoutantsService;
-@inject IJSRuntime _js;
-@inject NavigationManager _navigationManager;
+@inject IAccountantsService _accountantsService;
 @inherits AuthorBaseComponent
 <html>
 <head>
@@ -426,7 +424,7 @@
     {
         if (firstRender)
         {
-            accInfor = await _accoutantsService.GetUserInforGeneric();
+            accInfor = await _accountantsService.GetUserInforGeneric();
             StateHasChanged();
         }
     }
@@ -435,15 +433,22 @@
     {
         if (accInfor != null)
         {
-            var res = await _accoutantsService.UpdateUserInfor(accInfor);
-            if (res != null && res.IsSuccess)
+            var res = await _accountantsService.UpdateUserInfor(accInfor);
+            if (res != null && res.IsSuccess && res.Data != null)
             {
-                await _js.InvokeVoidAsync("setSessionStorage", "userName", accInfor.UserName);
-                await _js.InvokeVoidAsync("showToast", "Cập nhật thành công");
+                var userInfor = new UserInforGeneric
+                {
+                        UserName = res.Data.UserName,
+                        ImgAvatar = res.Data.ImgAvatar,
+                    Coin = res.Data.Coin,
+                };
+                var userInforJson = JsonSerializer.Serialize(userInfor);
+                await SetSessionStorage("userInfor", userInforJson);
+                await ShowToast("Cập nhật thành công");
             }
             else
             {
-                await _js.InvokeVoidAsync("showToast", res?.Message);
+                await ShowToast(res?.Message);
             }
         }
     }

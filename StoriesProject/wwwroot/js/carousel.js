@@ -64,7 +64,7 @@ window.handleAvatarHover = () => {
         $('.j-dialog-avatar').css('display', 'block'); // Hiển thị phần tử khi hover vào .j-header-avatar
     });
 
-    $('.j-header-avatar').mouseleave(function () {
+    $('.in-dialog--avatar').mouseleave(function () {
         $('.j-dialog-avatar').css('display', 'none'); // Ẩn phần tử khi di chuột ra khỏi .j-header-avatar
     });
 }

@@ -74,3 +74,9 @@ function showToast(msg) {
 
     }, 2000);
 }
+$(".page-login").keypress(function (event) {
+    if (event.which === 13) {
+        // Xử lý khi phím Enter được nhấn
+        $('.login-action').click();
+    }
+});

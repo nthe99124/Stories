@@ -38,9 +38,9 @@
     <Compile Include="ViewModel\Accountant\AuthorRegisterModel.cs" />
     <Compile Include="ViewModel\Accountant\ChangPasswordVM.cs" />
     <Compile Include="ViewModel\Accountant\LockedAccountantParam.cs" />
-    <Compile Include="ViewModel\Accountant\UserInforGeneric.cs" />
     <Compile Include="ViewModel\Accountant\LoginResponse.cs" />
     <Compile Include="ViewModel\Accountant\LoginViewModel.cs" />
+    <Compile Include="ViewModel\Accountant\UserInforGeneric.cs" />
     <Compile Include="ViewModel\ResponseOutput.cs" />
     <Compile Include="ViewModel\RestOutput.cs" />
     <Compile Include="ViewModel\RestPagingOutput.cs" />

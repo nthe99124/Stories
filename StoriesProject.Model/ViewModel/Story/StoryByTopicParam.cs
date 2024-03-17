@@ -1,7 +1,6 @@
 ﻿using StoriesProject.Model.DTO;
-using static StoriesProject.Model.Enum.DataType;
 
-namespace StoriesProject.Model.BaseEntity;
+namespace StoriesProject.Model.ViewModel.Story;
 
 public class StoryByTopicParam
 {

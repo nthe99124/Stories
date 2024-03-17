@@ -1,6 +1,6 @@
-﻿@page "/author/add-chapter"
-@using Microsoft.JSInterop
-@inject IJSRuntime JSRuntime
+﻿@page "/author/add-chapter/{id}"
+@using StoriesProject.Shared.ComponentBase;
+@inherits AuthorBaseComponent
 <style>
     * {
         box-sizing: content-box;
@@ -460,15 +460,17 @@
 </body>
 
 @code {
+    [Parameter]
+    public string Id { get; set; }
 
     public async Task addFile()
     {
-        await JSRuntime.InvokeVoidAsync("addFiles");
-        await JSRuntime.InvokeVoidAsync("blazorFunctions.setupImageHandling");
+        await InvokeVoidAsync("addFiles");
+        await InvokeVoidAsync("blazorFunctions.setupImageHandling");
     }
     private async Task<List<string>> UploadImages()
     {
-        var imagesUrl = await JSRuntime.InvokeAsync<List<string>>("upload");
+        var imagesUrl = await InvokeAsync<List<string>>("upload");
         return imagesUrl;
     }
 }

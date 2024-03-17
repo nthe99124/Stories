@@ -1,11 +1,11 @@
 ﻿@page "/login"
-@using Microsoft.JSInterop
 @using StoriesProject.API.Common.Constant;
 @using StoriesProject.Model.ViewModel.Accountant;
 @using StoriesProject.Services;
-@inject IAccoutantsService _accoutantsService;
-@inject IJSRuntime _js;
-@inject NavigationManager _navigationManager;
+@using System.Text.Json
+@using StoriesProject.Shared.ComponentBase
+@inject IAccountantsService _accountantsService;
+@inherits BaseComponentCustom
 <html class="mdl-js">
 
 <head>
@@ -123,7 +123,7 @@
                                             <input type="password" name="password" placeholder="Password" autocomplete="off" @bind="loginViewModel.Password" />
                                         </div>
                                     </div>
-                                    <div class="form-item" @onclick="(() => LoginAction(loginViewModel))">
+                                    <div class="form-item login-action" @onclick="(() => LoginAction(loginViewModel))">
                                         <div class="j-login-submit submit-btn disabled-select">
                                             <i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop" style="@(isLogging ? "":"display:none")"></i>
                                             <span>Đăng nhập</span>
@@ -307,30 +307,37 @@
     private async Task LoginAction(LoginViewModel loginViewModel)
     {
         isLogging = true;
-        var isValid = await _js.InvokeAsync<bool>("validateLoginForm");
+        var isValid = await InvokeAsync<bool>("validateLoginForm");
         if (isValid)
         {
-            var res = await _accoutantsService.Login(loginViewModel);
+            var res = await _accountantsService.Login(loginViewModel);
             if (res != null && res.IsSuccess && res.Data != null)
             {
                 // Gọi hàm JavaScript để ghi token vào sessionStorage
-                await _js.InvokeVoidAsync("setSessionStorage", "token", res.Data.Token);
-                await _js.InvokeVoidAsync("setSessionStorage", "userName", loginViewModel.UserName);
-                await _js.InvokeVoidAsync("showToast", "Đăng nhập thành công");
+                await SetSessionStorage("token", res.Data.Token);
+                var userInfor = new UserInforGeneric
+                {
+                    UserName = loginViewModel.UserName,
+                    ImgAvatar = res.Data.ImgAvatar,
+                    Coin = res.Data.Coin,
+                };
+                var userInforJson = JsonSerializer.Serialize(userInfor);
+                await SetSessionStorage("userInfor", userInforJson);
+                await ShowToast("Đăng nhập thành công");
                 await Task.Delay(2000);
                 if (res.Data.RoleList.Contains(RoleConstant.Admin) || res.Data.RoleList.Contains(RoleConstant.Employee))
                 {
                     // là nhân viên hoặc admin thì bay luôn sang admin
-                    _navigationManager.NavigateTo($"/admin");
+                    NavigateToUrl($"/admin");
                 }
                 else
                 {
-                    _navigationManager.NavigateTo($"/");
+                    NavigateToUrl($"/");
                 }
             }
             else
             {
-                await _js.InvokeVoidAsync("showToast", res?.Message);
+                await ShowToast(res?.Message);
             }
         }
         isLogging = false;
@@ -339,19 +346,19 @@
     private async Task RegisterAction(AccountantRegister accRegister)
     {
         isLogging = true;
-        var isValid = await _js.InvokeAsync<bool>("validateRegisterForm");
+        var isValid = await InvokeAsync<bool>("validateRegisterForm");
         if (isValid)
         {
-            var res = await _accoutantsService.Register(accRegister);
+            var res = await _accountantsService.Register(accRegister);
             if (res != null && res.IsSuccess)
             {
-                await _js.InvokeVoidAsync("showToast", res.Data);
+                await ShowToast(res.Data);
                 await Task.Delay(2000);
-                _navigationManager.NavigateTo($"/Login");
+                NavigateToUrl($"/Login");
             }
             else
             {
-                await _js.InvokeVoidAsync("showToast", res?.Message);
+                await ShowToast(res?.Message);
             }
         }
         isLogging = false;

@@ -10,11 +10,11 @@ namespace StoriesProject.API.Services.Base
 {
     public interface IBaseService
     {
-        Task<T> RequestPostAsync<T>(string url, object model);
-        Task<ResponseOutput<T>> RequestFullPostAsync<T>(string url, object model);
+        Task<T> RequestPostAsync<T>(string url, object model = null);
+        Task<ResponseOutput<T>> RequestFullPostAsync<T>(string url, object model = null);
         Task<T> RequestGetAsync<T>(string url);
-        Task<T> RequestAuthenPostAsync<T>(string url, object model);
-        Task<ResponseOutput<T>> RequestFullAuthenPostAsync<T>(string url, object model);
+        Task<T> RequestAuthenPostAsync<T>(string url, object model = null);
+        Task<ResponseOutput<T>> RequestFullAuthenPostAsync<T>(string url, object model = null);
         Task<T> RequestAuthenGetAsync<T>(string url);
     }
 
@@ -33,7 +33,7 @@ namespace StoriesProject.API.Services.Base
             _js = js;
         }
 
-        public async Task<T> RequestPostAsync<T>(string url,object model)
+        public async Task<T> RequestPostAsync<T>(string url,object model = null)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace StoriesProject.API.Services.Base
             }
         }
 
-        public async Task<ResponseOutput<T>> RequestFullPostAsync<T>(string url, object model)
+        public async Task<ResponseOutput<T>> RequestFullPostAsync<T>(string url, object model = null)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace StoriesProject.API.Services.Base
             }
         }
 
-        public async Task<T> RequestAuthenPostAsync<T>(string url, object model)
+        public async Task<T> RequestAuthenPostAsync<T>(string url, object model = null)
         {
             try
             {
@@ -96,7 +96,7 @@ namespace StoriesProject.API.Services.Base
             }
         }
 
-        public async Task<ResponseOutput<T>> RequestFullAuthenPostAsync<T>(string url, object model)
+        public async Task<ResponseOutput<T>> RequestFullAuthenPostAsync<T>(string url, object model = null)
         {
             try
             {
@@ -186,10 +186,14 @@ namespace StoriesProject.API.Services.Base
             }
         }
 
-        public async Task<ResponseOutput<T>> PostAsync<T>(HttpClient? httpClient, string url, object model, string? accessToken = null)
+        public async Task<ResponseOutput<T>> PostAsync<T>(HttpClient? httpClient, string url, object model = null, string? accessToken = null)
         {
-            var jsonContent = JsonConvert.SerializeObject(model);
-            var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+            StringContent content = null;
+            if (model != null)
+            {
+                var jsonContent = JsonConvert.SerializeObject(model);
+                content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+            }
 
             // nếu có accessToken thì mới đưa Bearer Token vào
             if (!string.IsNullOrEmpty(accessToken))
@@ -222,24 +226,6 @@ namespace StoriesProject.API.Services.Base
         {
             return await _js.InvokeAsync<string>("getSessionStorage", key);
         }
-        #endregion
-
-        #region Authen
-
-        //protected async Task SignTokenCustomApp(string userName, string token)
-        //{
-        //    var claims = new List<Claim>
-        //    {
-        //        new Claim(ClaimTypes.Name, userName),
-        //        new Claim("Token", token),
-        //    };
-
-        //    var identity = new ClaimsIdentity(claims, "jwt", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-        //    var user = new ClaimsPrincipal(identity);
-
-        //    // Cập nhật AuthenticationState
-        //    await (_authenticationStateProvider as CustomAuthenticationStateProvider).NotifyAuthenticationStateChangedAsync(new AuthenticationState(user));
-        //}
         #endregion
     }
 }

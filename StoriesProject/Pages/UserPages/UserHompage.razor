@@ -1,6 +1,7 @@
 ﻿@page "/user"
 @using Microsoft.JSInterop
-@inject IJSRuntime _js;
+@using StoriesProject.Shared.ComponentBase
+@inherits AuthorBaseComponent
 <html>
 <head>
     <title>用户中心 - 漫客栈</title>
@@ -61,29 +62,37 @@
                 </div>
                 <!-- 用户信息 -->
                 <div class="user-info__info">
-                    <span class="j-user-name user-name"></span>
-                    <i class="icon-vip-type2"></i> <br />
-                    <span class="vip-info">Username</span>
-                    <span class="j-buy-btn vip-recharge" data-type="2">User</span>
+                    <span class="j-user-name user-name">
+                        <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">@UserName</font></font>
+                    </span>
+                    <i class="icon-vip-type2"></i> <br/>
+                    <span class="vip-info"></span>
+                    @* <span class="j-buy-btn vip-recharge" data-type="2">User</span> *@
                 </div>
                 <!-- 用户资金信息 -->
                 <div class="user-info__funds">
                     <div class="user-info__funds--item">
-                        <span class="user-info__funds--num j-user-gold"></span><br />
-                        <span class="user-info__funds--text">Vàng</span>
+                        <span class="user-info__funds--num j-user-gold"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">@Coin </font></font></span><br>
+                        <span class="user-info__funds--text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">coin</font></font></span>
                         <i class="user-info__funds--icon icon-user-yb"></i>
                     </div>
                     @* <div class="user-info__funds--item">
-                    <span class="user-info__funds--num j-user-ticket"></span><br />
-                    <span class="user-info__funds--text">Đã mua</span>
-                    <i class="user-info__funds--icon icon-user-yp"></i>
-                    <a class="j-recharge-ticket-btn hide">购买</a>
+                        <span class="user-info__funds--num j-user-integral"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">40 </font></font></span><br>
+                        <span class="user-info__funds--text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">điểm</font></font></span>
+                        <i class="user-info__funds--icon icon-user-jf"></i>
+                        <a class="j-recharge-ticket-btn hide"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Mua</font></font></a>
                     </div>
                     <div class="user-info__funds--item">
-                    <span class="user-info__funds--num j-user-coupon"></span><br />
-                    <span class="user-info__funds--text">Đang đọc</span>
-                    <i class="user-info__funds--icon icon-user-kq"></i>
-                    <a class="j-recharge-ticket-btn hide">购买</a>
+                        <span class="user-info__funds--num j-user-ticket"><font style="vertical-align: inherit;"></font></span><font style="vertical-align: inherit;"><span class="user-info__funds--text"><font style="vertical-align: inherit;">0 vé tháng</font></span></font><br>
+                        <span class="user-info__funds--text"><font style="vertical-align: inherit;"></font></span>
+                        <i class="user-info__funds--icon icon-user-yp"></i>
+                        <a class="j-recharge-ticket-btn hide"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Mua</font></font></a>
+                    </div>
+                    <div class="user-info__funds--item">
+                        <span class="user-info__funds--num j-user-coupon"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">0 </font></font></span><br>
+                        <span class="user-info__funds--text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">phiếu giảm giá</font></font></span>
+                        <i class="user-info__funds--icon icon-user-kq"></i>
+                        <a class="j-recharge-ticket-btn hide"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Mua</font></font></a>
                     </div> *@
                 </div>
             </div>
@@ -129,12 +138,18 @@
 
 @code {
     private string UserName { get; set; }
+    private long Coin { get; set; }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            UserName = await _js.InvokeAsync<string>("getSessionStorage", "userName");
-            StateHasChanged();
+            var userInfor = await GetUserInfor();
+            if (userInfor != null)
+            {
+                UserName = userInfor.UserName;
+                Coin = userInfor.Coin ?? 0;
+                StateHasChanged();
+            }
         }
     }
 }

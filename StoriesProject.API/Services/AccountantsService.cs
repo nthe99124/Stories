@@ -72,7 +72,7 @@ namespace StoriesProject.API.Services
                         HttpOnly = true, // Set HttpOnly to true for security
                         Secure = true,   // Set Secure to true if your site uses HTTPS
                         SameSite = SameSiteMode.Strict, // Set SameSite to Strict for added security
-                        Expires = DateTimeOffset.UtcNow.AddMinutes(15) // Set the expiration time
+                        Expires = DateTime.UtcNow.AddMinutes(15) // Set the expiration time
                     });
                     var result = new LoginResponse();
                     result.Token = token;
@@ -223,7 +223,13 @@ namespace StoriesProject.API.Services
 
                         // lưu acc
                         _unitOfWork.Commit();
-                        res.SuccessEventHandler();
+                        var dataResponse = new UserInforGeneric
+                        {
+                            UserName = accUserUpdate.UserName,
+                            ImgAvatar = accUserUpdate.ImgAvatar,
+                            Coin = accUserUpdate.Coin,
+                        };
+                        res.SuccessEventHandler(dataResponse);
                     }
                 }
             }

@@ -6,9 +6,6 @@ using StoriesProject.Common.MiddleWare;
 using StoriesProject.Model.ViewModel;
 using StoriesProject.Services;
 using System.Globalization;
-using Microsoft.Extensions.DependencyInjection;
-using StoriesProject.Common.Handler;
-using static StoriesProject.Services.IAccoutantsService;
 
 #region Config service
 var builder = WebApplication.CreateBuilder(args);
@@ -26,7 +23,8 @@ services.AddSingleton(configuration);
 #region Razor page config
 services.AddRazorPages();
 services.AddServerSideBlazor();
-services.AddHttpClient("MyHttpClient").AddHttpMessageHandler<RequestHttpHandler>();
+services.AddHttpClient();
+
 #endregion
 
 #region Localize
@@ -64,9 +62,8 @@ services.AddHttpContextAccessor();
 
 #region Config Service
 services.AddScoped(typeof(IResponseOutput<>), typeof(ResponseOutput<>));
-services.AddScoped<RequestHttpHandler>();
 services.AddScoped<IBaseService, BaseService>();
-services.AddScoped<IAccoutantsService, AccoutantsService>();
+services.AddScoped<IAccountantsService, AccountantsService>();
 services.AddScoped<IStoriesService, StoriesService>();
 services.AddScoped<ITopicService, TopicService>();
 #endregion  

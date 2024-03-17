@@ -7,5 +7,8 @@ namespace StoriesProject.Model.ViewModel.Accountant
     {
         public string Token { get; set; }
         public List<string> RoleList { get; set; }
+        public string ImgAvatar { get; set; }
+        public long Coin { get; set; }
+
     }
 }

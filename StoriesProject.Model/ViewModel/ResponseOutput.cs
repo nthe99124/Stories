@@ -1,6 +1,4 @@
-﻿using System.Net;
-
-namespace StoriesProject.Model.ViewModel
+﻿namespace StoriesProject.Model.ViewModel
 {
     public interface IResponseOutput<T>
     {

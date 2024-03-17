@@ -6,6 +6,7 @@ using StoriesProject.API.Services;
 using StoriesProject.Model.BaseEntity;
 using StoriesProject.Model.DTO;
 using StoriesProject.Model.ViewModel;
+using StoriesProject.Model.ViewModel.Story;
 
 namespace StoriesProject.API.Controller.Base
 {
@@ -170,11 +171,11 @@ namespace StoriesProject.API.Controller.Base
         /// </summary>
         /// <returns></returns>
         [HttpPost("CreateStoryByAuthor")]
-        [Roles(RoleConstant.Author)]
+        //[Roles(RoleConstant.Author)]
         public async Task<IActionResult> CreateStoryByAuthor(StoryRegisterVM storyRegister)
         {
-            await _storiesService.CreateStoryByAuthor(storyRegister);
-            _res.SuccessEventHandler();
+            var data = await _storiesService.CreateStoryByAuthor(storyRegister);
+            _res.SuccessEventHandler(data);
             return Ok(_res);
         }
     }

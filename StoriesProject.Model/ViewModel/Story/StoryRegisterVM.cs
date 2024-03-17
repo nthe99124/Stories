@@ -1,6 +1,6 @@
 ﻿using static StoriesProject.Model.Enum.DataType;
 
-namespace StoriesProject.Model.BaseEntity;
+namespace StoriesProject.Model.ViewModel.Story;
 
 public class StoryRegisterVM
 {
@@ -9,7 +9,7 @@ public class StoryRegisterVM
     public string? ImageLink { get; set; }
     public string? Description { get; set; }
     public string? ShortDescription { get; set; }
-    public List<Guid> ListTopic { get; set; }
+    public List<Guid>? ListTopic { get; set; }
     public string? VideoLink { get; set; }
     public TargetObject TargetObject { get; set; }
 }

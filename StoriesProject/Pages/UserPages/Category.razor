@@ -2,9 +2,10 @@
 @using StoriesProject.Model.BaseEntity;
 @using StoriesProject.Model.DTO
 @using StoriesProject.Services;
+@using StoriesProject.Shared.ComponentBase
 @inject ITopicService _topicService;
 @inject IStoriesService _storiesService;
-@inject NavigationManager _navigationManager;
+@inherits AuthorBaseComponent
 <html>
 
 <head>
@@ -530,7 +531,7 @@
 
     private void NavigateToDetails(Guid detailId)
     {
-        _navigationManager.NavigateTo($"/details/{detailId}");
+        NavigateToUrl($"/details/{detailId}");
     }
 
     private async Task SortStoryByView()

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using StoriesProject.API.Common.Attribute;
 using StoriesProject.API.Common.Constant;
 using StoriesProject.API.Services;
-using StoriesProject.Model.BaseEntity;
 using StoriesProject.Model.ViewModel;
 using StoriesProject.Model.ViewModel.Accountant;
 
@@ -93,7 +92,7 @@ namespace StoriesProject.API.Controller.Base
         /// </summary>
         /// <returns></returns>
         [HttpPost("RegisterAuthorAccountant")]
-        [Authorize]
+        [Roles(RoleConstant.Customer)]
         public async Task<IActionResult> RegisterAuthorAccountant(AuthorRegisterModel register)
         {
             if (register != null)

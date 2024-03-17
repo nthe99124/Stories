@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using StoriesProject.Model.BaseEntity;
 using StoriesProject.Model.ViewModel.Accountant;
+using StoriesProject.Model.ViewModel.Story;
 
 namespace StoriesProject.API.Common.Mappings
 {
@@ -11,6 +12,7 @@ namespace StoriesProject.API.Common.Mappings
             CreateMap<AccountantRegister, Accountant>();
             CreateMap<AuthorRegisterModel, AuthorRegister>();
             CreateMap<Story, StoryAccountGeneric>();
+            CreateMap<StoryRegisterVM, Story>();
             CreateMap<Story, StoryGeneric>();
         }
     }

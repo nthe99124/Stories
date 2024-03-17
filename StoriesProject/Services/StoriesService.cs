@@ -5,6 +5,7 @@ using StoriesProject.Model.BaseEntity;
 using StoriesProject.Model.DTO;
 using StoriesProject.Model.DTO.Story;
 using StoriesProject.Model.ViewModel;
+using StoriesProject.Model.ViewModel.Story;
 using StoriesProject.Services.ApiUrldefinition;
 
 namespace StoriesProject.Services
@@ -22,7 +23,7 @@ namespace StoriesProject.Services
         Task<List<StoryAccountGeneric>> GetNewVersionStoryByDay(DateTime dateTime);
         Task<StoryDetailFullDTO> GetStoryById(Guid? id);
         Task<List<StoryAccountGeneric>> GetStoryByCurrentAuthor();
-        Task<ResponseOutput<string>> CreateStoryByAuthor(StoryRegisterVM storyRegister);
+        Task<ResponseOutput<Guid?>> CreateStoryByAuthor(StoryRegisterVM storyRegister);
     }
     public class StoriesService : BaseService, IStoriesService
     {
@@ -166,10 +167,10 @@ namespace StoriesProject.Services
         /// CreatedBy ntthe 16.03.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<ResponseOutput<string>> CreateStoryByAuthor(StoryRegisterVM storyRegister)
+        public async Task<ResponseOutput<Guid?>> CreateStoryByAuthor(StoryRegisterVM storyRegister)
         {
             var url = StoriesApiUrlDef.CreateStoryByAuthor();
-            return await RequestFullAuthenPostAsync<string>(url, storyRegister);
+            return await RequestFullAuthenPostAsync<Guid?>(url, storyRegister);
         }
     }
 }

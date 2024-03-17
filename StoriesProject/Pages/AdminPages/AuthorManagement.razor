@@ -4,8 +4,7 @@
 @using StoriesProject.Model.BaseEntity;
 @using StoriesProject.Shared.ComponentBase;
 
-@inject IAccoutantsService _accoutantsService;
-@inject IJSRuntime _js;
+@inject IAccountantsService _accountantsService;
 @inherits AuthorBaseComponent
 
 <body>
@@ -287,39 +286,39 @@
     {
         if (firstRender)
         {
-            lstRegisterAccountants = await _accoutantsService.GetRegisterAccountantsByRole();
-            lstLockedAccountant = await _accoutantsService.GetAllAccountants();
+            lstRegisterAccountants = await _accountantsService.GetRegisterAccountantsByRole();
+            lstLockedAccountant = await _accountantsService.GetAllAccountants();
         }
     }
 
     private async Task ApprovedAccountant(Guid regiserId)
     {
-        var res = await _accoutantsService.ApprovedAccountant(regiserId);
+        var res = await _accountantsService.ApprovedAccountant(regiserId);
         if (res != null && res.IsSuccess)
         {
-            await _js.InvokeVoidAsync("showToast", res?.Data);
-            lstRegisterAccountants = await _accoutantsService.GetRegisterAccountantsByRole();
+            await ShowToast(res?.Data);
+            lstRegisterAccountants = await _accountantsService.GetRegisterAccountantsByRole();
             StateHasChanged();
 
         }
         else
         {
-            await _js.InvokeVoidAsync("showToast", res?.Message);
+            await ShowToast(res?.Message);
         }
     }
 
     private async Task DeniedAccountant(Guid regiserId)
     {
-        var res = await _accoutantsService.DeniedAccountant(regiserId);
+        var res = await _accountantsService.DeniedAccountant(regiserId);
         if (res != null && res.IsSuccess)
         {
-            await _js.InvokeVoidAsync("showToast", res?.Data);
-            lstRegisterAccountants = await _accoutantsService.GetRegisterAccountantsByRole();
+            await ShowToast(res?.Data);
+            lstRegisterAccountants = await _accountantsService.GetRegisterAccountantsByRole();
             StateHasChanged();
         }
         else
         {
-            await _js.InvokeVoidAsync("showToast", res?.Message);
+            await ShowToast(res?.Message);
         }
     }
 
@@ -331,16 +330,16 @@
                 IsLocked = isLocked
             };
 
-        var res = await _accoutantsService.UpdateLockedAccountant(param);
+        var res = await _accountantsService.UpdateLockedAccountant(param);
         if (res != null && res.IsSuccess)
         {
-            await _js.InvokeVoidAsync("showToast", res?.Data);
-            lstLockedAccountant = await _accoutantsService.GetAllAccountants();
+            await ShowToast(res?.Data);
+            lstLockedAccountant = await _accountantsService.GetAllAccountants();
             StateHasChanged();
         }
         else
         {
-            await _js.InvokeVoidAsync("showToast", res?.Message);
+            await ShowToast(res?.Message);
         }
     }
 }

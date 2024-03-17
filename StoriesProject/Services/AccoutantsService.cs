@@ -11,7 +11,7 @@ using StoriesProject.Services.ApiUrldefinition;
 
 namespace StoriesProject.Services
 {
-    public interface IAccoutantsService : IBaseService
+    public interface IAccountantsService : IBaseService
     {
         Task<ResponseOutput<LoginResponse>> Login(LoginViewModel loginViewModel);
         Task<ResponseOutput<string>> Register(AccountantRegister loginViewModel);
@@ -22,13 +22,14 @@ namespace StoriesProject.Services
         Task<ResponseOutput<string>> DeniedAccountant(Guid regiserId);
         Task<ResponseOutput<string>> UpdateLockedAccountant(LockedAccountantParam param);
         Task<AccountantUpdate> GetUserInforGeneric();
-        Task<ResponseOutput<string>> UpdateUserInfor(AccountantUpdate account);
+        Task<ResponseOutput<UserInforGeneric>> UpdateUserInfor(AccountantUpdate account);
         Task<ResponseOutput<string>> ChangePassword(ChangPasswordVM password);
+        Task<ResponseOutput<string>> Logout();
     }
         
-    public class AccoutantsService : BaseService, IAccoutantsService
+    public class AccountantsService : BaseService, IAccountantsService
     {
-        public AccoutantsService(IDistributedCacheCustom cache, IHttpClientFactory httpClientFactory, IConfiguration config, IJSRuntime js) : base(cache, httpClientFactory, config, js)
+        public AccountantsService(IDistributedCacheCustom cache, IHttpClientFactory httpClientFactory, IConfiguration config, IJSRuntime js) : base(cache, httpClientFactory, config, js)
         {
 
         }
@@ -111,10 +112,10 @@ namespace StoriesProject.Services
         /// </summary>
         /// <param name="account"></param>
         /// <returns></returns>
-        public async Task<ResponseOutput<string>> UpdateUserInfor(AccountantUpdate account)
+        public async Task<ResponseOutput<UserInforGeneric>> UpdateUserInfor(AccountantUpdate account)
         {
             var url = AccountantApiUrlDef.UpdateUserInfor();
-            return await RequestFullAuthenPostAsync<string>(url, account);
+            return await RequestFullAuthenPostAsync<UserInforGeneric>(url, account);
         }
 
         /// <summary>
@@ -126,6 +127,17 @@ namespace StoriesProject.Services
         {
             var url = AccountantApiUrlDef.ChangePassword();
             return await RequestFullAuthenPostAsync<string>(url, password);
+        }
+
+        /// <summary>
+        /// Đăng xuất
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
+        public async Task<ResponseOutput<string>> Logout()
+        {
+            var url = AccountantApiUrlDef.Logout();
+            return await RequestFullPostAsync<string>(url);
         }
     }
 }

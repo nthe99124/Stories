@@ -100,7 +100,14 @@
         {
             return @$"{pathController}/UpdateLockedAccountant";
         }
-        
 
+        /// <summary>
+        /// Đăng xuất
+        /// </summary>
+        /// <returns></returns>
+        public static string Logout()
+        {
+            return @$"{pathController}/Logout";
+        }
     }
 }

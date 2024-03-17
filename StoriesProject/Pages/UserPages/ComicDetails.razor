@@ -1,12 +1,10 @@
 ﻿@page "/details/{id}"
 @page "/details"
-@using Microsoft.JSInterop
 @using StoriesProject.Model.BaseEntity;
 @using StoriesProject.Model.DTO.Story;
 @using StoriesProject.Services;
 @using StoriesProject.Shared.ComponentBase;
 @inject IStoriesService _storiesService;
-@inject IJSRuntime _js;
 @inherits BaseComponentCustom
 <html>
 

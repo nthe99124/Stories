@@ -2,7 +2,7 @@
 @using System.Net;
 @inject NavigationManager _navigationManager;
 @inject IJSRuntime _js;
-
+@inherits BaseComponentCustom
 @code {
     protected async Task HandleUnauthorizedException(bool firstRender)
     {
@@ -18,7 +18,7 @@
                 _navigationManager.NavigateTo("/");
                 // đồng thời xóa token
                 await RemoveSessionStorage("token");
-                await RemoveSessionStorage("userName");
+                await RemoveSessionStorage("userInfor");
             }
         }
     }
@@ -34,21 +34,4 @@
     /// <param name="firstRender"></param>
     /// <returns></returns>
     protected virtual async Task HandleAfterRenderAsync(bool firstRender) { }
-
-    #region TODO: các hàm dùng chung cho các form từ js => nên tách ra dạng mixin
-    protected async Task<string> GetSessionStorage(string key)
-    {
-        return await _js.InvokeAsync<string>("getSessionStorage", key);
-    }
-
-    protected async Task SetSessionStorage(string key, object value)
-    {
-        await _js.InvokeAsync<string>("setSessionStorage", key, value);
-    }
-
-    protected async Task RemoveSessionStorage(string key)
-    {
-        await _js.InvokeAsync<string>("removeSessionStorage", key);
-    }
-    #endregion
 }

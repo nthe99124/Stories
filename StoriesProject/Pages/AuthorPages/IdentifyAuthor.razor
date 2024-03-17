@@ -1,12 +1,11 @@
 ﻿@page "/author/identify"
 
-@using Microsoft.JSInterop
 @using StoriesProject.Model.ViewModel.Accountant;
 @using StoriesProject.Services;
 @using StoriesProject.Model.BaseEntity;
-
-@inject IJSRuntime _js;
-@inject IAccoutantsService _accoutantsService;
+@using StoriesProject.Shared.ComponentBase
+@inject IAccountantsService _accountantsService;
+@inherits AuthorBaseComponent
 <html>
 
 <head>
@@ -514,18 +513,18 @@
 
     private async Task RegisterAuthorAccountant(AuthorRegisterModel register)
     {
-        var isValid = await _js.InvokeAsync<bool>("validateRegisterForm");
+        var isValid = await InvokeAsync<bool>("validateRegisterForm");
         if (isValid)
         {
-            var res = await _accoutantsService.RegisterAuthorAccountant(register);
+            var res = await _accountantsService.RegisterAuthorAccountant(register);
             // TODO: tạm thời xử lý show toast
             if (res != null && res.IsSuccess)
             {
-                await _js.InvokeVoidAsync("showToast", res.Data);
+                await ShowToast(res.Data);
             }
             else
             {
-                await _js.InvokeVoidAsync("showToast", res?.Message);
+                await ShowToast(res?.Message);
             }
         }
     }

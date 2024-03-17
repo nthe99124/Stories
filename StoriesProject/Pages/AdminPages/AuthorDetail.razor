@@ -1,5 +1,6 @@
 ﻿@page "/admin/author_detail"
-@inject IJSRuntime JSRuntime
+@using StoriesProject.Shared.ComponentBase;
+@inherits AuthorBaseComponent
 <body>
   <div class="wrapper">
     <AdminSidebar/>
@@ -215,11 +216,11 @@
   </script>*@
 </body>
 @code {
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task HandleAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            await JSRuntime.InvokeVoidAsync("registerMouseEvents");
+            await InvokeVoidAsync("registerMouseEvents");
         }
     }
 }
