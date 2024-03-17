@@ -126,7 +126,7 @@
                                                     <div class="show-comic__on-hover" id="showComicInfo">
                                                         <div style="display: flex;">
                                                             <img src="https://cdnnvd.com/nettruyen/thumb/ngay-toi-sinh-ra-bach-quy-da-hanh-tuyet-thi-ho-dao.jpg"
-                                                                 height="150px" />
+                                                                 style="height : 150px !important" />
                                                             <div style="display: flex;flex-direction: column;margin-left: 10px;">
                                                                 <strong style="font-size: 16px;">Tên truyện</strong>
                                                                 <p style="font-size: 13px;">Ngày tôi sinh ra, bạch quỷ đã hành tuyết thị hồ đao</p>
@@ -221,7 +221,7 @@
                                                     <div class="show-comic__on-hover" id="showComicInfo">
                                                         <div style="display: flex;">
                                                             <img src="https://cdnnvd.com/nettruyen/thumb/ngay-toi-sinh-ra-bach-quy-da-hanh-tuyet-thi-ho-dao.jpg"
-                                                                 height="150px" />
+                                                                 style="height : 150px !important" />
                                                             <div style="display: flex;flex-direction: column;margin-left: 10px;">
                                                                 <strong style="font-size: 16px;">Tên truyện</strong>
                                                                 <p style="font-size: 13px;">Ngày tôi sinh ra, bạch quỷ đã hành tuyết thị hồ đao</p>
@@ -345,7 +345,7 @@
                                                     <div class="show-comic__on-hover" id="showComicInfo">
                                                         <div style="display: flex;">
                                                             <img src="https://cdnnvd.com/nettruyen/thumb/ngay-toi-sinh-ra-bach-quy-da-hanh-tuyet-thi-ho-dao.jpg"
-                                                                 height="150px" />
+                                                                 style="height : 150px !important" />
                                                             <div style="display: flex;flex-direction: column;margin-left: 10px;">
                                                                 <strong style="font-size: 16px;">Tên truyện</strong>
                                                                 <p style="font-size: 13px;">Ngày tôi sinh ra, bạch quỷ đã hành tuyết thị hồ đao</p>
@@ -434,13 +434,9 @@
     {
         selectedTab = tab;
     }
-    protected override async Task HandleAfterRenderAsync(bool firstRender)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
-        {
-            await InvokeVoidAsync("registerMouseEvents");
-        }
+        await InvokeVoidAsync("registerMouseEvents");
     }
-
 }
 
