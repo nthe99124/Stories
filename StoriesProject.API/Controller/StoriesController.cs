@@ -196,6 +196,7 @@ namespace StoriesProject.API.Controller.Base
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetListStoryForAdmin")]
+        [Roles(RoleConstant.Employee, RoleConstant.Admin)]
         public async Task<IActionResult> GetListStoryForAdmin(StoryStatus status)
         {
             var dataResult = await _storiesService.GetListStoryForAdmin(status);
@@ -208,10 +209,25 @@ namespace StoriesProject.API.Controller.Base
         /// CreatedBy ntthe 17.03.2024
         /// </summary>
         /// <returns></returns>
-        [HttpPost("ApprovedStory")]
-        public async Task<IActionResult> ChangeStatusStory(Guid storyId, StoryStatus status)
+        [HttpPost("ChangeStatusStory")]
+        [Roles(RoleConstant.Employee, RoleConstant.Admin)]
+        public async Task<IActionResult> ChangeStatusStory(ChangeStatusStoryVM changeStatusStory)
         {
-            _res = await _storiesService.ChangeStatusStory(storyId, status);
+            _res = await _storiesService.ChangeStatusStory(changeStatusStory.StoryId, changeStatusStory.Status);
+            return Ok(_res);
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy content của chapter
+        /// CreatedBy ntthe 17.03.2024
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetContentChapter")]
+        [Roles(RoleConstant.Customer)]
+        public async Task<IActionResult> GetContentChapter(Guid chapterId)
+        {
+            var data = await _storiesService.GetContentChapter(chapterId);
+            _res.SuccessEventHandler(data);
             return Ok(_res);
         }
     }

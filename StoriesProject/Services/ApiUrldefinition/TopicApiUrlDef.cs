@@ -23,5 +23,36 @@
         {
             return @$"{pathController}/GetAllTopicSortByStory";
         }
+
+        /// <summary>
+        /// Hàm xử lý thêm thể loại
+        /// CreatedBy ntthe 17.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public static string AddTopic()
+        {
+            return @$"{pathController}/AddTopic";
+        }
+
+        /// <summary>
+        /// Hàm xử lý xóa thể loại
+        /// CreatedBy ntthe 17.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public static string DeleteTopic()
+        {
+            return @$"{pathController}/DeleteTopic";
+        }
+
+        /// <summary>
+        /// Hàm xử lý sửa thể loại
+        /// CreatedBy ntthe 17.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public static string EditTopic()
+        {
+            return @$"{pathController}/EditTopic";
+        }
+
     }
 }

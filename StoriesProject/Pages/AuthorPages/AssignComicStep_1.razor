@@ -423,18 +423,17 @@
                             </ul>
                         </div>
                     </div>
-                    @*<div class="layui-form-item">*@
-                        <label class="layui-form-label"><i>*</i>Đối tượng: </label>
-                        <div class="layui-input-block">
-                            <input type="radio" name="audience" value="1" id="audience1" />
-                            <label for="audience1" style="font-size:14px">Vị thành niên</label>
-                            <input type="radio" name="audience" value="2" id="audience2" />
-                            <label for="audience2" style="font-size:14px">Nữ giới</label>
-                            <input type="radio" name="audience" value="3" id="audience3" />
-                            <label for="audience3" style="font-size:14px">Nam giới</label>
-                            <input type="radio" name="audience" value="4" id="audience4" />
-                            <label for="audience4" style="font-size:14px">Thiếu nhi</label>
-                        </div>
+                    <label class="layui-form-label"><i>*</i>Đối tượng: </label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="audience" value="1" id="audience1" />
+                        <label for="audience1" style="font-size:14px">Vị thành niên</label>
+                        <input type="radio" name="audience" value="2" id="audience2" />
+                        <label for="audience2" style="font-size:14px">Nữ giới</label>
+                        <input type="radio" name="audience" value="3" id="audience3" />
+                        <label for="audience3" style="font-size:14px">Nam giới</label>
+                        <input type="radio" name="audience" value="4" id="audience4" />
+                        <label for="audience4" style="font-size:14px">Thiếu nhi</label>
+                    </div>
                     <div class="layui-form-item font-12 protocol">
                         <label class="layui-form-label"></label>
                         <input checked="" type="checkbox" name="protocol" title="Tôi đã đọc và chấp thuận" lay-skin="primary">
@@ -476,7 +475,7 @@
             var res = await _storiesService.CreateStoryByAuthor(story);
             if (res != null && res.IsSuccess)
             { 
-                NavigateToUrl($"/author/add-chapter/{1}");
+                NavigateToUrl($"/author/add-chapter/{res.Data}");
             }
         }
     }

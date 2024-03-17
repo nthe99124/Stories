@@ -5,9 +5,7 @@ using StoriesProject.API.Common.Repository;
 using StoriesProject.Model.DTO;
 using System.Data;
 using System.Linq.Expressions;
-using System.Net.WebSockets;
 using System.Text;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace StoriesProject.API.Repositories.Base
 {

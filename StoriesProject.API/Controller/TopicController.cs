@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using StoriesProject.API.Common.Attribute;
+using StoriesProject.API.Common.Constant;
 using StoriesProject.API.Services;
 using StoriesProject.Model.BaseEntity;
 using StoriesProject.Model.ViewModel;
+using StoriesProject.Model.ViewModel.Story;
 
 namespace StoriesProject.API.Controller.Base
 {
@@ -46,6 +49,7 @@ namespace StoriesProject.API.Controller.Base
         /// </summary>
         /// <returns></returns>
         [HttpPost("AddTopic")]
+        [Roles(RoleConstant.Employee, RoleConstant.Admin)]
         public async Task<IActionResult> AddTopic(string topicName)
         {
             _res = await _topicService.AddTopic(topicName);
@@ -53,11 +57,12 @@ namespace StoriesProject.API.Controller.Base
         }
 
         /// <summary>
-        /// Hàm xử lý thêm thể loại
+        /// Hàm xử lý xóa thể loại
         /// CreatedBy ntthe 17.03.2024
         /// </summary>
         /// <returns></returns>
         [HttpPost("DeleteTopic")]
+        [Roles(RoleConstant.Employee, RoleConstant.Admin)]
         public async Task<IActionResult> DeleteTopic(Guid topicId)
         {
             _res = await _topicService.DeleteTopic(topicId);
@@ -70,9 +75,10 @@ namespace StoriesProject.API.Controller.Base
         /// </summary>
         /// <returns></returns>
         [HttpPost("EditTopic")]
-        public async Task<IActionResult> EditTopic(Guid topicId, string topicName)
+        [Roles(RoleConstant.Employee, RoleConstant.Admin)]
+        public async Task<IActionResult> EditTopic(EditTopicVM editTopic)
         {
-            _res = await _topicService.EditTopic(topicId, topicName);
+            _res = await _topicService.EditTopic(editTopic.TopicId, editTopic.TopicName);
             return Ok(_res);
         }
 
@@ -82,6 +88,7 @@ namespace StoriesProject.API.Controller.Base
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetAllTopicInfor")]
+        [Roles(RoleConstant.Employee, RoleConstant.Admin)]
         public IActionResult GetAllTopicInfor()
         {
             var dataResult = _topicService.GetAllTopicInfor();

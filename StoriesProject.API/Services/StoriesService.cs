@@ -28,6 +28,7 @@ namespace StoriesProject.API.Services
         Task<List<StoryAccountGeneric>?> GetTopPurchasesStory(Guid? topicId, int numberStory);
         Task<IEnumerable<StoryInforAdmin>?> GetListStoryForAdmin(StoryStatus status);
         Task<RestOutput> ChangeStatusStory(Guid storyId, StoryStatus status);
+        Task<ContentChapterGeneric> GetContentChapter(Guid chapterId);
     }
     public class StoriesService: BaseService, IStoriesService
     {
@@ -266,6 +267,30 @@ namespace StoriesProject.API.Services
                 res.ErrorEventHandler("Không tìm thấy truyện để đổi trạng thái");
             }
             return res;
+        }
+
+        /// <summary>
+        /// Hàm xử lý thay đổi trạng thái duyệt của truyện
+        /// CreatedBy ntthe 17.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ContentChapterGeneric> GetContentChapter(Guid chapterId)
+        {
+            // ntthe 2 con này độc lập nên phân task
+            var getStoryNameTask = Task.FromResult((from s in _unitOfWork.StoriesRepository.Get()
+                                                     join c in _unitOfWork.ChapterRepository.Get() on s.Id equals c.StoryId
+                                                     where c.Id == chapterId
+                                                     select s.Name).FirstOrDefault());
+            var getChapterContentTask = _unitOfWork.ChapterContentRepository.FindBy(item => item.ChapterId == chapterId);
+            await Task.WhenAll(getStoryNameTask, getChapterContentTask);
+            var result = new ContentChapterGeneric();
+            result.StoryName = await getStoryNameTask;
+            var chapterContentList = await getChapterContentTask;
+            if (chapterContentList != null && chapterContentList.Count() > 0)
+            {
+                result.ImgLinkContent = chapterContentList.Select(item => item.ImgLink).ToList();
+            }
+            return result;
         }
 
         #region Private Method

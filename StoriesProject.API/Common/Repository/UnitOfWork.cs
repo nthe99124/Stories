@@ -15,6 +15,8 @@ namespace StoriesProject.API.Common.Repository
         public IStoriesRepository StoriesRepository { get; }
         public ITopicRepository TopicRepository { get; }
         public ITopicStoryRepository TopicStoryRepository { get; }
+        public IChapterRepository ChapterRepository { get; }
+        public IChapterContentRepository ChapterContentRepository { get; }
         DbSet<T> Set<T>() where T : class;
         int Commit();
         Task<int> CommitAsync();
@@ -137,6 +139,32 @@ namespace StoriesProject.API.Common.Repository
                     _topicStoryRepository = new TopicStoryRepository(_context);
                 }
                 return _topicStoryRepository;
+            }
+        }
+
+        private IChapterRepository _chapterRepository;
+        public IChapterRepository ChapterRepository
+        {
+            get
+            {
+                if (_chapterRepository == null)
+                {
+                    _chapterRepository = new ChapterRepository(_context);
+                }
+                return _chapterRepository;
+            }
+        }
+
+        private IChapterContentRepository _chapterContentRepository;
+        public IChapterContentRepository ChapterContentRepository
+        {
+            get
+            {
+                if (_chapterContentRepository == null)
+                {
+                    _chapterContentRepository = new ChapterContentRepository(_context);
+                }
+                return _chapterContentRepository;
             }
         }
 

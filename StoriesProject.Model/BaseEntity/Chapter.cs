@@ -31,6 +31,7 @@ public partial class Chapter
 
     [Description("Người tạo")]
     public Guid? CreatedBy { get; set; }
+    public virtual ICollection<ChapterContent> ChapterContents { get; set; } = new List<ChapterContent>();
     public virtual Accountant? CreatedByNavigation { get; set; }
     public virtual Story? StoryIdNavigation { get; set; }
 }

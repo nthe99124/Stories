@@ -7,6 +7,7 @@ using StoriesProject.Model.DTO.Story;
 using StoriesProject.Model.ViewModel;
 using StoriesProject.Model.ViewModel.Story;
 using StoriesProject.Services.ApiUrldefinition;
+using static StoriesProject.Model.Enum.DataType;
 
 namespace StoriesProject.Services
 {
@@ -25,6 +26,9 @@ namespace StoriesProject.Services
         Task<List<StoryAccountGeneric>> GetStoryByCurrentAuthor();
         Task<ResponseOutput<Guid?>> CreateStoryByAuthor(StoryRegisterVM storyRegister);
         Task<List<StoryAccountGeneric>> GetTopPurchasesStory(int numberStory, Guid? topicId = null);
+        Task<ContentChapterGeneric> GetContentChapter(Guid chapterId);
+        Task<ResponseOutput<string>> ChangeStatusStory(Guid storyId, StoryStatus status);
+        Task<IEnumerable<StoryInforAdmin>> GetListStoryForAdmin(StoryStatus status);
     }
     public class StoriesService : BaseService, IStoriesService
     {
@@ -183,6 +187,44 @@ namespace StoriesProject.Services
         {
             var url = StoriesApiUrlDef.GetTopPurchasesStory(topicId, numberStory);
             return await RequestGetAsync<List<StoryAccountGeneric>>(url);
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy content của chapter
+        /// CreatedBy ntthe 17.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ContentChapterGeneric> GetContentChapter(Guid chapterId)
+        {
+            var url = StoriesApiUrlDef.GetContentChapter(chapterId);
+            return await RequestAuthenGetAsync<ContentChapterGeneric>(url);
+        }
+
+        /// <summary>
+        /// Hàm xử lý thay đổi trạng thái duyệt của truyện
+        /// CreatedBy ntthe 17.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ResponseOutput<string>> ChangeStatusStory(Guid storyId, StoryStatus status)
+        {
+            var changeStatusStory = new ChangeStatusStoryVM
+            {
+                StoryId = storyId,
+                Status = status
+            };
+            var url = StoriesApiUrlDef.ChangeStatusStory();
+            return await RequestFullAuthenPostAsync<string>(url, changeStatusStory);
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy danh sách truyện chờ xét duyệt, đang hoạt động, từ chối
+        /// CreatedBy ntthe 17.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<StoryInforAdmin>> GetListStoryForAdmin(StoryStatus status)
+        {
+            var url = StoriesApiUrlDef.GetListStoryForAdmin(status);
+            return await RequestAuthenGetAsync<IEnumerable<StoryInforAdmin>>(url);
         }
     }
 }

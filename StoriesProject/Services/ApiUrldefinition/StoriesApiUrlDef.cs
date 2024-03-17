@@ -1,4 +1,6 @@
-﻿namespace StoriesProject.Services.ApiUrldefinition
+﻿using static StoriesProject.Model.Enum.DataType;
+
+namespace StoriesProject.Services.ApiUrldefinition
 {
     public class StoriesApiUrlDef
     {
@@ -150,6 +152,35 @@
             }
             
         }
-        
+
+        /// <summary>
+        /// Tạo url lấy content của chapter
+        /// CreatedBy ntthe 17.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public static string GetContentChapter(Guid chapterId)
+        {
+            return @$"{pathController}/GetContentChapter?chapterId={chapterId}";
+        }
+
+        /// <summary>
+        /// Tạo url xử lý thay đổi trạng thái duyệt của truyện
+        /// CreatedBy ntthe 17.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public static string ChangeStatusStory()
+        {
+            return @$"{pathController}/ChangeStatusStory";
+        }
+
+        /// <summary>
+        /// Tạo url xử lý lấy danh sách truyện chờ xét duyệt, đang hoạt động, từ chối
+        /// CreatedBy ntthe 17.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public static string GetListStoryForAdmin(StoryStatus status)
+        {
+            return @$"{pathController}/ChangeStatusStory?status={status}";
+        }
     }
 }
