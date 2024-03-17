@@ -15,7 +15,7 @@
     </div>
     <ul class="sidebar-nav">
         <li class="sidebar-item">
-            <a href="/admin/" class="sidebar-link">
+            <a href="/admin/" class="sidebar-link @(tab==0? "active": "")">
                 <i class="lni lni-agenda"></i>
                 <span>Dashboard</span>
             </a>
@@ -28,51 +28,28 @@
             </a>
             <ul id="auth" class="sidebar-dropdown list-unstyled collapse @(!isAuthCollapsed ? "" : "show")"
                 data-bs-parent="#sidebar">
-                <li class="sidebar-item">
-                    <a href="/admin/author_management" class="sidebar-link">Manage Author</a>
+                <li class="sidebar-item" style="padding-left: 15px">
+                    <a href="/admin/author_management" class="sidebar-link @(tab==1? "active": "")">Manage Author</a>
                 </li>
-                <li class="sidebar-item">
-                    <a href="/admin/comic_management" class="sidebar-link">Manage Book</a>
+                <li class="sidebar-item" style="padding-left: 15px">
+                    <a href="/admin/comic_management" class="sidebar-link @(tab==2? "active": "")">Manage Book</a>
                 </li>
             </ul>
         </li>
-        <!-- <li class="sidebar-item">
-          <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse" data-bs-target="#multi"
-            aria-expanded="false" aria-controls="multi">
-            <i class="lni lni-layout"></i>
-            <span>Multi Level</span>
-          </a>
-          <ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
-            <li class="sidebar-item">
-              <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse" data-bs-target="#multi-two"
-                aria-expanded="false" aria-controls="multi-two">
-                Two Links
-              </a>
-              <ul id="multi-two" class="sidebar-dropdown list-unstyled collapse">
-                <li class="sidebar-item">
-                  <a href="#" class="sidebar-link">Link 1</a>
-                </li>
-                <li class="sidebar-item">
-                  <a href="#" class="sidebar-link">Link 2</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li> -->
         <li class="sidebar-item">
-            <a href="/admin/category_management" class="sidebar-link">
+            <a href="/admin/category_management" class="sidebar-link @(tab==3? "active": "")">
                 <i class="lni lni-layout"></i>
                 <span>Manage Category</span>
             </a>
         </li>
         <li class="sidebar-item">
-            <a href="/admin/order_management" class="sidebar-link">
+            <a href="/admin/order_management" class="sidebar-link @(tab==4? "active": "")">
                 <i class="lni lni-control-panel"></i>
                 <span>Manage Order</span>
             </a>
         </li>
         <li class="sidebar-item">
-            <a href="#" class="sidebar-link">
+            <a href="#" class="sidebar-link @(tab==5? "active": "")">
                 <i class="lni lni-cog"></i>
                 <span>Setting</span>
             </a>
@@ -87,6 +64,8 @@
 </aside>
 
 @code {
+    [Parameter]
+    public int tab { get; set; } = 0;
     bool isAuthCollapsed = true; // Biến trạng thái đóng/mở
 
     void ToggleCollapse()
@@ -101,4 +80,3 @@
         }
     }
 }
- 

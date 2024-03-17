@@ -435,55 +435,6 @@
                             <input type="radio" name="audience" value="4" id="audience4" />
                             <label for="audience4" style="font-size:14px">Thiếu nhi</label>
                         </div>
-                    @*</div>*@
-                    <!-- <div class="layui-form-item">
-                      <label class="layui-form-label"><i>*</i>作品进度：</label>
-                      <div class="layui-input-block">
-                        <input type="radio" name="finish" value="1" title="连载" checked="">
-                        <div class="layui-unselect layui-form-radio layui-form-radioed"><i class="layui-anim layui-icon"></i>
-                          <div>连载</div>
-                        </div>
-                        <input type="radio" name="finish" value="2" title="完结">
-                        <div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i>
-                          <div>完结</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="layui-form-item">
-                      <label class="layui-form-label"><i>*</i>首发状态：</label>
-                      <div class="layui-input-block">
-                        <input type="radio" name="first_launch" value="0" title="非漫客栈首发" checked="">
-                        <div class="layui-unselect layui-form-radio layui-form-radioed"><i class="layui-anim layui-icon"></i>
-                          <div>非漫客栈首发</div>
-                        </div>
-                        <input type="radio" name="first_launch" value="1" title="漫客栈首发" disabled="disabled" style="color:#28282d">
-                        <div class="layui-unselect layui-form-radio layui-radio-disbaled layui-disabled"><i
-                            class="layui-anim layui-icon"></i>
-                          <div>漫客栈首发</div>
-                        </div>
-                        <div class="call-editer-sf">( <a class=""
-                            href="tencent://message/?uin=204528691&amp;Site=www.mkzhan.com&amp;Menu=yes" target="_blank"
-                            rel="nofollow">联系编辑</a> )</div>
-                      </div>
-                    </div>
-
-                    <div class="layui-form-item">
-                      <label class="layui-form-label"><i>*</i>授权状态：</label>
-                      <div class="layui-input-block">
-                        <input type="radio" name="copyright" value="2" title="非独家作品" checked="">
-                        <div class="layui-unselect layui-form-radio layui-form-radioed"><i class="layui-anim layui-icon"></i>
-                          <div>非独家作品</div>
-                        </div>
-                        <input type="radio" name="copyright" value="1" title="独家作品" disabled="disabled" style="color:#28282d">
-                        <div class="layui-unselect layui-form-radio layui-radio-disbaled layui-disabled"><i
-                            class="layui-anim layui-icon"></i>
-                          <div>独家作品</div>
-                        </div>
-                        <div class="call-editer">( <a class=""
-                            href="tencent://message/?uin=204528691&amp;Site=www.mkzhan.com&amp;Menu=yes" target="_blank"
-                            rel="nofollow">联系编辑</a> )</div>
-                      </div>
-                    </div> -->
                     <div class="layui-form-item font-12 protocol">
                         <label class="layui-form-label"></label>
                         <input checked="" type="checkbox" name="protocol" title="Tôi đã đọc và chấp thuận" lay-skin="primary">
@@ -519,12 +470,13 @@
 
     private async Task ResgiterStory()
     {
+
         if (story != null)
         {
             var res = await _storiesService.CreateStoryByAuthor(story);
             if (res != null && res.IsSuccess)
-            {
-                NavigateToUrl($"/author/add-chapter");
+            { 
+                NavigateToUrl($"/author/add-chapter/{1}");
             }
         }
     }

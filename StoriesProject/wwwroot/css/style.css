@@ -30,7 +30,7 @@ body {
     width: 100%;
     overflow: hidden;
     transition: all 0.35s ease-in-out;
-    background-color: #fff;
+    background-color: #f5f5f5;
     min-width: 0;
 }
 
@@ -39,7 +39,7 @@ body {
     min-width: 70px;
     z-index: 1000;
     transition: all 0.25s ease-in-out;
-    background-color: #0e2238;
+    background-color: #07669e;
     display: flex;
     flex-direction: column;
 }
@@ -104,6 +104,11 @@ a.sidebar-link {
     white-space: nowrap;
     border-left: 3px solid transparent;
 }
+
+    a.sidebar-link.active {
+        background-color: #36a2eb;
+        border-left: 3px solid transparent;
+    }
 
 .sidebar-link i,
 .dropdown-item i {
@@ -221,6 +226,7 @@ a.sidebar-link:hover {
     z-index: 999;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+
 .sumery-order {
     display: flex;
     /* align-items: center; */

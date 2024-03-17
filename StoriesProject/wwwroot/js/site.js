@@ -35,3 +35,9 @@ window.handleSearchHover = () => {
         $(e.target).parents('.search-hot__item').addClass('active')
     });
 }
+
+window.addCategory = () => {
+    showComicInfo.addEventListener('mouseleave', () => {
+        showComicInfo.style.display = 'none';
+    });
+}
