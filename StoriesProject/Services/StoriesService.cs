@@ -13,7 +13,7 @@ namespace StoriesProject.Services
     public interface IStoriesService : IBaseService
     {
         Task<List<StoryAccountGeneric>> GetTop10NewStory();
-        Task<List<StoryGeneric>> GetTop10HotStory();
+        Task<List<StoryGeneric>> GetTop10HotStory(string? searchStory = null);
         Task<List<StoryAccountGeneric>> GetTop10FreeStory();
         Task<List<StoryAccountGeneric>> GetTop10PaidStory();
         Task<List<StoryAccountGeneric>> GetTop10NewVersionStory();
@@ -49,9 +49,9 @@ namespace StoriesProject.Services
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<List<StoryGeneric>> GetTop10HotStory()
+        public async Task<List<StoryGeneric>> GetTop10HotStory(string? name = null)
         {
-            var url = StoriesApiUrlDef.GetTop10HotStory();
+            var url = StoriesApiUrlDef.GetTop10HotStory(name);
             return await RequestGetAsync<List<StoryGeneric>>(url);
         }
 
@@ -136,7 +136,7 @@ namespace StoriesProject.Services
         /// <returns></returns>
         public async Task<List<StoryAccountGeneric>> GetNewVersionStoryByDay(DateTime dateTime)
         {
-            var url = StoriesApiUrlDef.GetNewVervionStoryByDay(dateTime);
+            var url = StoriesApiUrlDef.GetNewVersionStoryByDay(dateTime);
             return await RequestAuthenGetAsync<List<StoryAccountGeneric>>(url);
         }
 

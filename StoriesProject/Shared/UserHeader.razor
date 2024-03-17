@@ -1,4 +1,6 @@
-﻿<style>
+﻿@using StoriesProject.Shared.ComponentBase
+@inherits BaseComponentCustom
+<style>
     .header-user-wrapper .search-box input {
         width: 250px;
         background: rgba(255, 255, 255, 0.34);
@@ -39,7 +41,7 @@
             <!-- switch -->
             <ul class="switch-tab reader">
                 <!-- <a class="hl" rel="nofollow" href="/user/">读者</a> -->
-                <a rel="nofollow" href="/author/">Tác giả</a>
+                <a rel="nofollow" @onclick="GoToAuthorPage">Tác giả</a>
             </ul>
             <!-- user-box -->
             <div class="j-header-avatar user-box">
@@ -55,5 +57,16 @@
 </div>
 
 @code {
-
+    private async Task GoToAuthorPage()
+    {
+        var isAuthor = await GetSessionStorage("IsAuthor");
+        if (!string.IsNullOrEmpty(isAuthor) && bool.Parse(isAuthor))
+        {
+            NavigateToUrl($"/author");
+        }
+        else
+        {
+            NavigateToUrl($"/author/assigncomicstep1");
+        }
+    }
 }

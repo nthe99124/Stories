@@ -38,9 +38,9 @@ namespace StoriesProject.API.Controller.Base
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetTop10HotStory")]
-        public async Task<IActionResult> GetTop10HotStory()
+        public async Task<IActionResult> GetTop10HotStory(string? searchStory)
         {
-            var dataResult = await _storiesService.GetTop10HotStory(); 
+            var dataResult = await _storiesService.GetTop10HotStory(searchStory); 
             _res.SuccessEventHandler(dataResult);
             return Ok(_res);
         }
@@ -130,8 +130,8 @@ namespace StoriesProject.API.Controller.Base
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        [HttpGet("GetNewVervionStoryByDay")]
-        public async Task<IActionResult> GetNewVervionStoryByDay(DateTime dateTime)
+        [HttpGet("GetNewVersionStoryByDay")]
+        public async Task<IActionResult> GetNewVersionStoryByDay(DateTime dateTime)
         {
             var dataResult = await _storiesService.GetNewVersionStoryByDay(dateTime);
             _res.SuccessEventHandler(dataResult);

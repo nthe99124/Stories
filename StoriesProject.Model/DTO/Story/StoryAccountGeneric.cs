@@ -10,5 +10,6 @@ public class StoryAccountGeneric
     public string? ImageLink { get; set; }
     public string? VideoLink { get; set; }
     public string? Description { get; set; }
+    public string? ShortDescription { get; set; }
     public TypeOfStory TypeOfStory { get; set; }
 }

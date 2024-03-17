@@ -1,13 +1,10 @@
-﻿using StoriesProject.API.Common.Cache;
-using StoriesProject.Model.BaseEntity;
-using StoriesProject.API.Repositories;
-using StoriesProject.API.Services.Base;
-using System;
-using StoriesProject.Model.DTO.Story;
-using AutoMapper;
+﻿using AutoMapper;
+using StoriesProject.API.Common.Cache;
 using StoriesProject.API.Common.Repository;
+using StoriesProject.API.Services.Base;
+using StoriesProject.Model.BaseEntity;
 using StoriesProject.Model.DTO;
-using System.Data;
+using StoriesProject.Model.DTO.Story;
 using StoriesProject.Model.ViewModel.Story;
 
 namespace StoriesProject.API.Services
@@ -15,7 +12,7 @@ namespace StoriesProject.API.Services
     public interface IStoriesService
     {
         Task<IEnumerable<StoryAccountGeneric>?> GetTop10NewStory();
-        Task<IEnumerable<StoryAccountGeneric>?> GetTop10HotStory();
+        Task<IEnumerable<StoryAccountGeneric>?> GetTop10HotStory(string? searchStory);
         Task<IEnumerable<StoryAccountGeneric>?> GetTop10FreeStory();
         Task<IEnumerable<StoryAccountGeneric>?> GetTop10PaidStory();
         Task<IEnumerable<StoryAccountGeneric>?> GetTop10NewVersionStory();
@@ -52,9 +49,9 @@ namespace StoriesProject.API.Services
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<StoryAccountGeneric>?> GetTop10HotStory()
+        public async Task<IEnumerable<StoryAccountGeneric>?> GetTop10HotStory(string? name)
         {
-            var top10Result = await _unitOfWork.StoriesRepository.GetTopHotStory(10);
+            var top10Result = await _unitOfWork.StoriesRepository.GetTopHotStory(10, name);
             var result = _mapper.Map<IEnumerable<StoryAccountGeneric>>(top10Result);
             return result;
         }

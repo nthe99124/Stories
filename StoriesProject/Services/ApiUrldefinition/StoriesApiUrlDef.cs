@@ -19,9 +19,17 @@
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public static string GetTop10HotStory()
+        public static string GetTop10HotStory(string? name = null)
         {
-            return @$"{pathController}/GetTop10HotStory";
+            if (!string.IsNullOrEmpty(name))
+            {
+                return @$"{pathController}/GetTop10HotStory";
+            }
+            else
+            {
+                return @$"{pathController}/GetTop10HotStory?name={name}";
+            }
+            
         }
 
         /// <summary>
@@ -89,11 +97,11 @@
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
-        public static string GetNewVervionStoryByDay(DateTime dateTime)
+        public static string GetNewVersionStoryByDay(DateTime dateTime)
         {
             string formattedDateTime = dateTime.ToString("yyyy-MM-ddTHH:mm:ss");
             string encodedDateTime = Uri.EscapeDataString(formattedDateTime);
-            return @$"{pathController}/GetNewVervionStoryByDay?dateTime={encodedDateTime}";
+            return @$"{pathController}/GetNewVersionStoryByDay?dateTime={encodedDateTime}";
         }
 
         /// <summary>

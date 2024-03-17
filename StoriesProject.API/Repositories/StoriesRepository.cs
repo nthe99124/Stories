@@ -5,6 +5,7 @@ using StoriesProject.API.Repositories.Base;
 using StoriesProject.Model.BaseEntity;
 using StoriesProject.Model.DTO;
 using StoriesProject.Model.DTO.Story;
+using System.Linq.Expressions;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace StoriesProject.API.Repositories
@@ -12,7 +13,7 @@ namespace StoriesProject.API.Repositories
     public interface IStoriesRepository : IBaseRepository<Story>
     {
         Task<IEnumerable<Story>?> GetTopNewStory(int numberStory);
-        Task<IEnumerable<Story>?> GetTopHotStory(int numberStory);
+        Task<IEnumerable<Story>?> GetTopHotStory(int numberStory, string? searchStory);
         Task<IEnumerable<Story>?> GetTopFreeStory(int numberStory);
         Task<IEnumerable<Story>?> GetTopPaidStory(int numberStory);
         Task<IEnumerable<Story>?> GetTopNewVersionStory(int numberStory);
@@ -57,7 +58,7 @@ namespace StoriesProject.API.Repositories
         /// </summary>
         /// <param name="numberStory"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<Story>?> GetTopHotStory(int numberStory)
+        public async Task<IEnumerable<Story>?> GetTopHotStory(int numberStory, string? searchStory)
         {
             var sortedList = new List<SortedPaging>
             {
@@ -67,8 +68,13 @@ namespace StoriesProject.API.Repositories
                     IsAsc = false
                 }
             };
+            Expression<Func<Story, bool>> predicateFilter = null;
+            if (!string.IsNullOrEmpty(searchStory))
+            {
+                predicateFilter = item => item.Name.Contains(searchStory);
+            }
 
-            var dataResult = await GetDataLimit(numberStory, sortedList);
+            var dataResult = await GetDataLimit(numberStory, sortedList, predicateFilter);
             return dataResult;
         }
 

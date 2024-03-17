@@ -72,7 +72,7 @@ namespace StoriesProject.API.Services
                         HttpOnly = true, // Set HttpOnly to true for security
                         Secure = true,   // Set Secure to true if your site uses HTTPS
                         SameSite = SameSiteMode.Strict, // Set SameSite to Strict for added security
-                        Expires = DateTime.UtcNow.AddMinutes(15) // Set the expiration time
+                        Expires = DateTime.UtcNow.AddDays(1) // Set the expiration time
                     });
                     var result = new LoginResponse();
                     result.Token = token;

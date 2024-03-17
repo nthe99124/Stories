@@ -67,6 +67,8 @@
     <Compile Include="Migrations\20240310195812_add-proc-GetRoleByAccId.Designer.cs" />
     <Compile Include="Migrations\20240316052409_update-column-story.cs" />
     <Compile Include="Migrations\20240316052409_update-column-story.Designer.cs" />
+    <Compile Include="Migrations\20240317070054_col-acc.cs" />
+    <Compile Include="Migrations\20240317070054_col-acc.Designer.cs" />
     <Compile Include="Migrations\StoriesContextModelSnapshot.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Repositories\AccountantsRepository.cs" />

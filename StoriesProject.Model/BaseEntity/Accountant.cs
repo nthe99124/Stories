@@ -54,6 +54,9 @@ public partial class Accountant
     [Description("Số coin tài khoảng đang có")]
     public long Coin { get; set; }
 
+    [Description("Số truyện đã tạo (với tài khoản là tác giả)")]
+    public long? StoryCreated { get; set; }
+
     [Description("Ngày tạo")]
     public DateTime? CreatedDate { get; set; } = DateTime.UtcNow;
 

@@ -28,3 +28,10 @@ function showToast(msg) {
 
     }, 2000);
 }
+
+window.handleSearchHover = () => {
+    $('.in-header__search .search-hot__item').mouseenter(function (e) {
+        $('.in-header__search .search-hot__item').removeClass('active');
+        $(e.target).parents('.search-hot__item').addClass('active')
+    });
+}

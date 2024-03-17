@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using StoriesProject.API.Common.Attribute;
 using StoriesProject.API.Common.Constant;
 using StoriesProject.API.Services;

@@ -1,4 +1,6 @@
-﻿<style>
+﻿@using StoriesProject.Shared.ComponentBase
+@inherits BaseComponentCustom
+<style>
     .user-selecteds a {
         border-left: 4px solid #00B798;
         padding-left: 43px !important;
@@ -22,13 +24,15 @@
     }
 </style>
 <div class="aside-user">
-
-    <dl class="aside-user--first">
-        <dt class="@(isSelected == 0 ? "center_selected" : "")">
-            <i class="iconfont icon-door"></i>
-            <a rel="nofollow" href="/author/">Trung tâm tác giả</a>
-        </dt>
-    </dl>
+    @if (IsAuthor)
+    {
+        <dl class="aside-user--first">
+            <dt class="@(isSelected == 0 ? "center_selected" : "")">
+                <i class="iconfont icon-door"></i>
+                <a rel="nofollow" href="/author/">Trung tâm tác giả</a>
+            </dt>
+        </dl>
+    }
     <dl>
         <dt>
             <i class="iconfont icon-book"></i>Quản lý công việc
@@ -36,27 +40,48 @@
         <dd class="@(isSelected == 1 ? "user-selecteds" : "")">
             <a rel="nofollow" href="/author/identify">Đăng kí tác giả</a>
         </dd>
-        <dd class="@(isSelected == 2 ? "user-selecteds" : "")">
-            <a rel="nofollow" href="/author/mycomic">Tác phẩm của tôi</a>
-        </dd>
-        <dd class="@(isSelected == 3 ? "user-selecteds" : "")">
-            <a rel="nofollow" href="/author/assigncomicstep1">Tạo tác phẩm mới</a>
-        </dd>
+        @if (IsAuthor)
+        {
+            <dd class="@(isSelected == 2 ? "user-selecteds" : "")">
+                <a rel="nofollow" href="/author/mycomic">Tác phẩm của tôi</a>
+            </dd>
+            <dd class="@(isSelected == 3 ? "user-selecteds" : "")">
+                <a rel="nofollow" href="/author/assigncomicstep1">Tạo tác phẩm mới</a>
+            </dd>
+        }
     </dl>
-    <dl>
-        <dt>
-            <i class="iconfont icon-data"></i>Thống kê
-        </dt>
-        <dd class="@(isSelected == 4 ? "user-selecteds" : "")">
-            <a rel="nofollow" href="/user/task/">Thu nhập</a>
-        </dd>
-        <dd class="@(isSelected == 5 ? "user-selecteds" : "")">
-            <a rel="nofollow" href="/shop/integral/">Khách hàng</a>
-        </dd>
-    </dl>
+    @if (IsAuthor)
+    {
+        <dl>
+            <dt>
+                <i class="iconfont icon-data"></i>Thống kê
+            </dt>
+            <dd class="@(isSelected == 4 ? "user-selecteds" : "")">
+                <a rel="nofollow" href="/user/task/">Thu nhập</a>
+            </dd>
+            <dd class="@(isSelected == 5 ? "user-selecteds" : "")">
+                <a rel="nofollow" href="/shop/integral/">Khách hàng</a>
+            </dd>
+        </dl>
+    }
 </div>
 
 @code {
     [Parameter]
     public int isSelected { get; set; }
+
+    public bool IsAuthor { get; set; } = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var isAuthor = await GetSessionStorage("IsAuthor");
+            if (!string.IsNullOrEmpty(isAuthor) && bool.Parse(isAuthor))
+            {
+                IsAuthor = true;
+                StateHasChanged();
+            }
+        }
+    }
 }

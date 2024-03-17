@@ -1,6 +1,9 @@
 ﻿@page "/author"
+@using StoriesProject.Model.BaseEntity
+@using StoriesProject.Services
 @using StoriesProject.Shared.ComponentBase;
 @inherits AuthorBaseComponent
+@inject IStoriesService _storiesService;
 <html>
 
 <head>
@@ -152,10 +155,10 @@
                 </div>
                 <div class="g-ai-box">
                     <p class="name">
-                        Username
+                        @UserName
                     </p>
                     <p class="penname">
-                        Tên tác giả
+                        <font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Bút danh: @UserName</font></font>
                     </p>
                 </div>
                 <a href="/author/comic_add_step1/" class="m-create">
@@ -164,17 +167,42 @@
             </div>
             <div class="g-ac-box">
                 <p class="m-title">
-                    Tác phẩm của tôi: 0
+                    Tác phẩm của tôi: @(listStoryByMe == null ? 0 : listStoryByMe.Count) tác phẩm
                 </p>
-                <div class="m-empty">
-                    <p>
-                        Bạn chưa có tác phẩm nào
-                    </p>
-                    <a href="/author/comic_add_step1/" class="tip">
-                        Hãy thêm tác phẩm nào
-                    </a>
-                    <a href="/author/comic_add_step1/"><img src="https://static.mkzcdn.com/home/img/user/empty.png" alt=""></a>
-                </div>
+                @if (listStoryByMe == null || listStoryByMe.Count == 0)
+                {
+                    <div class="m-empty">
+                        <p>
+                            Bạn chưa có tác phẩm nào
+                        </p>
+                        <a href="/author/assigncomicstep1/" class="tip">
+                            Hãy thêm tác phẩm nào
+                        </a>
+                        <a href="/author/assigncomicstep1/"><img src="https://static.mkzcdn.com/home/img/user/empty.png" alt=""></a>
+                    </div>
+                }
+                else
+                {
+                    @foreach (var item in listStoryByMe)
+                    {
+                        <li class="user-comic-item" @onclick="(() => NavigateToDetails(item.Id))">
+                            <div class="j-item-select user-comic-item__select"> <i class="pic-select"></i> </div>
+                            <a class="user-comic-item__cover">
+                                <img src="https://cdnnvd.com/nettruyen/thumb/tien-vo-de-ton.jpg">
+                            </a>
+                            <div class="user-comic-item__detail">
+                                <p class="user-comic-item--name">
+                                    <a class="text-overflow">
+                                        @item.Name
+                                    </a>
+                                </p>
+                                <p class="user-comic-item--text user-comic-item--latest">
+                                    <a class="text-overflow--gray">@item.Description</a>
+                                </p>
+                            </div>
+                        </li>
+                    }
+                }
             </div>
         </div>
     </div>
@@ -214,5 +242,27 @@
 </html>
 
 @code {
+    private string UserName { get; set; }
+    private string LinkAvatar { get; set; }
+    private List<StoryAccountGeneric> listStoryByMe { get; set; }
 
+    protected override async Task HandleAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var userInfor = await GetUserInfor();
+            if (userInfor != null)
+            {
+                UserName = userInfor.UserName;
+                LinkAvatar = userInfor.ImgAvatar;
+                listStoryByMe = await _storiesService.GetStoryByCurrentAuthor();
+                StateHasChanged();
+            }
+        }
+    }
+
+    private void NavigateToDetails(Guid detailId)
+    {
+        NavigateToUrl($"/details/{detailId}");
+    }
 }

@@ -57,7 +57,7 @@
             <div class="user-info">
                 <!-- avatar -->
                 <div class="user-info__avatar">
-                    <img class="j-user-avatar" src="http://oss.mkzcdn.com/default/member/avatar/10.png!cover-200"
+                    <img class="j-user-avatar" src="@LinkAvatar"
                          alt="mk_65ddb6932cf83" />
                 </div>
                 <!-- 用户信息 -->
@@ -139,7 +139,8 @@
 @code {
     private string UserName { get; set; }
     private long Coin { get; set; }
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    private string LinkAvatar { get; set; }
+    protected override async Task HandleAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
@@ -148,6 +149,7 @@
             {
                 UserName = userInfor.UserName;
                 Coin = userInfor.Coin ?? 0;
+                LinkAvatar = userInfor.ImgAvatar;
                 StateHasChanged();
             }
         }

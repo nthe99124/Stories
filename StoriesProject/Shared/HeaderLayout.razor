@@ -1,6 +1,8 @@
-﻿@using StoriesProject.Services
+﻿@using StoriesProject.Model.BaseEntity
+@using StoriesProject.Services
 @using StoriesProject.Shared.ComponentBase
 @inject IAccountantsService _accountantsService;
+@inject IStoriesService _storiesService;
 @inherits AuthorBaseComponent
 <style>
     /*# Thêm vào*/
@@ -58,12 +60,12 @@
             </ul>
         </div>
         <div class="in-header__search">
-            <input class="input j-header-input" type="text" placeholder="Tìm truyện">
-            <span class="button_config">Search</span>
+            <input class="input j-header-input" type="text" placeholder="Tìm truyện" @bind="NameSearch">
+            <span class="button_config" @onclick="(() => SearchStory())">Search</span>
             <i class="iconfont icon-ic_head_search"></i>
-            <div class="in-dialog--search hide">
-                <div class="search-his-wr">
-                    <div class="dialog-title">
+            <div class="in-dialog--search" style="display: @(IsHideSearch?"none":"block")">
+                @* <div class="search-his-wr" style="display: none;">
+                    <div class="dialog-title" style="display: none;">
                         <span>历史记录</span>
                         <div class="search-his__clear">
                             <i class="iconfont icon-ic_head_searchnull"></i>
@@ -71,16 +73,48 @@
                         </div>
                     </div>
                     <div class="search-his clearfix"></div>
+                </div> *@
+                <div class="search-hot-wr" @onmouseleave="@(() => HanleHideSearch())">
+                    @* <p class="dialog-title">今日热搜</p> *@
+                    <div class="search-hot rended">
+                        @if (listHotStory != null && listHotStory.Count > 0)
+                        {
+                            @for (int i = 0; i < listHotStory.Count; i++)
+                            {
+                                var currentItem = listHotStory[i];
+                                <div class="search-hot__item" @onclick="(() => NavigateToDetails(currentItem.Id))">
+                                    <p class="search-item__name">
+                                        <span class="num ">@(i + 1)</span>
+                                        <span class="comic-title">@currentItem.Name</span>
+                                    </p>
+                                    <a class="search-item__detail fl">
+                                        <span class="num ">@(i + 1)</span>
+                                        <span class="cover">
+                                            <img src="@currentItem.ImageLink">
+                                        </span>
+                                        <p class="title">@currentItem.Name</p>
+                                        <p class="text">@currentItem.ShortDescription</p>
+                                    </a>
+                                </div>
+                            }
+                        }
+                    </div>
                 </div>
-                <div class="search-hot-wr">
-                    <p class="dialog-title">今日热搜</p>
-                    <div class="search-hot">
+                <div class="keyword-box clearfix hide">
+                    <div class="keyword-item {{ index == 0 ? 'active' : '' }}" data-cid="{{ item.comic_id }}">
+                        <div class="search-item__detail fl">
+                            <a class="cover" href="/{{ item.comic_id }}/"><img src="{{ item.cover.replace('http:', 'https:') }}!cover-200" alt="{{ item.title }}"></a>
+                            <p class="title"><a href="/{{ item.comic_id }}/">{{ item.title }}</a></p>
+                            <p class="text">作者：{{ item.author_title }}</p>
+                            <p class="text">{{ item.feature }}</p>
+                            <a class="read" href="/{{ item.comic_id }}/{{ item.start_chapter_id }}.html">开始阅读</a>
+                        </div>
+                        <p class="search-item__name">
+                            <span class="comic-title">{{ item.title }}</span>
+                        </p>
                     </div>
                 </div>
 
-                <!-- 搜索关键字弹出框 -->
-                <div class="keyword-box clearfix hide">
-                </div>
             </div>
         </div>
         <div class="in-header__user">
@@ -124,27 +158,27 @@
                             <p class="base-info">
                                 <a class="j-user-name nickname" href="/user/"></a>
                                 <i class="j-user-vip vip-tag icon-vip-tag"></i>
-                                @if (IsAuthen)
-                                {
-                                    <a class="j-user-logout logout" style="cursor:pointer" @onclick="Logout">Đăng xuất</a>
-                                }
-                                else
-                                {
-                                    <a class="j-user-logout logout" style="cursor:pointer" @onclick="GoToLoginPage">Đăng nhập để xem thêm</a>
-                                }
-                            </p>
                             @if (IsAuthen)
                             {
-                                <p style="font-size: 16px;"> @UserName </p>
+                                    <a class="j-user-logout logout" style="cursor:pointer" @onclick="Logout">Đăng xuất</a>
                             }
                             else
                             {
-                                <p style="font-size: 16px;"> Tài khoản khách </p>
+                                    <a class="j-user-logout logout" style="cursor:pointer" @onclick="GoToLoginPage">Đăng nhập để xem thêm</a>
                             }
-                        </div>
-                        <!-- 登录用户-end -->
+                            </p>
                         @if (IsAuthen)
                         {
+                                <p style="font-size: 16px;"> @UserName </p>
+                        }
+                        else
+                        {
+                                <p style="font-size: 16px;"> Tài khoản khách </p>
+                        }
+                        </div>
+                        <!-- 登录用户-end -->
+                    @if (IsAuthen)
+                    {
                             <div class="row-2">
                                 <div class="fund-item">
                                     <div class="fund-item__icon">
@@ -152,7 +186,7 @@
                                     </div>
                                     <div class="fund-item__info">
                                         Vàng<br>
-                                        <span class="j-user-gold">0</span>
+                                        <span class="j-user-gold">@Coin</span>
                                     </div>
                                 </div>
                                 <div class="fund-item">
@@ -174,7 +208,7 @@
                                     </div>
                                 </div>
                             </div>
-                        }
+                    }
 
                     </div>
                 </div>
@@ -187,7 +221,11 @@
     public int isSelected { get; set; }
     private bool IsAuthen { get; set; } = false;
     private string UserName { get; set; }
+    private long Coin { get; set; }
     private string LinkAvatar { get; set; } = "//static.mkzcdn.com/home/assets/images/home/pic_login_defaulthead.png?v=5b80a2f";
+    private List<StoryGeneric> listHotStory { get; set; }
+    private string NameSearch { get; set; }
+    private bool IsHideSearch { get; set; } = false;
 
     private void GoToUserPage()
     {
@@ -211,6 +249,7 @@
                 IsAuthen = true;
                 LinkAvatar = userInfor.ImgAvatar ?? "//static.mkzcdn.com/home/assets/images/home/pic_login_defaulthead.png?v=5b80a2f";
                 UserName = userInfor.UserName ?? "";
+                Coin = userInfor.Coin ?? 0;
                 StateHasChanged();
             }
         }
@@ -233,5 +272,30 @@
         {
             NavigateToUrl($"/login");
         }
+    }
+
+    private async Task SearchStory()
+    {
+        if (!string.IsNullOrEmpty(NameSearch))
+        {
+            listHotStory = await _storiesService.GetTop10HotStory(NameSearch);
+        }
+        else
+        {
+            listHotStory = await _storiesService.GetTop10HotStory();
+        }
+        StateHasChanged();
+        await InvokeVoidAsync("handleSearchHover");
+    }
+
+    private void NavigateToDetails(Guid detailId)
+    {
+        NavigateToUrl($"/details/{detailId}");
+    }
+    private void HanleHideSearch()
+    {
+        IsHideSearch = false;
+        listHotStory = null;
+        StateHasChanged();
     }
 }
