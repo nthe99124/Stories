@@ -6,6 +6,7 @@ using StoriesProject.Model.BaseEntity;
 using StoriesProject.Model.DTO;
 using StoriesProject.Model.DTO.Story;
 using System.Linq.Expressions;
+using static StoriesProject.Model.Enum.DataType;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace StoriesProject.API.Repositories
@@ -23,6 +24,7 @@ namespace StoriesProject.API.Repositories
         Task<IEnumerable<Story>?> GetNewVersionStoryByDay(DateTime dateTime);
         Task<StoryDetailFullDTO?> GetStoryById(Guid storyId);
         Task<IEnumerable<Story>?> GetStoryByAuthor(Guid id);
+        Task<IEnumerable<StoryInforAdmin>?> GetListStoryForAdmin(StoryStatus status);
     }
     public class StoriesRepository : BaseRepository<Story>, IStoriesRepository
     {
@@ -221,16 +223,20 @@ namespace StoriesProject.API.Repositories
             return dataResult;
         }
 
-        ///// <summary>
-        ///// Hàm xử lý tạo mới truyện
-        ///// CreatedBy ntthe 14.03.2024
-        ///// </summary>
-        ///// <param name="numberStory"></param>
-        ///// <returns></returns>
-        //public async Task<IEnumerable<Story>?> GetStoryByAuthor(Guid id)
-        //{
-        //    var dataResult = await FindBy(item => (item.CreatedBy == id));
-        //    return dataResult;
-        //}
+        /// <summary>
+        /// Hàm xử lý lấy danh sách truyện chờ xét duyệt
+        /// CreatedBy ntthe 17.03.2024
+        /// </summary>
+        /// <param name="StoryStatus status"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<StoryInforAdmin>?> GetListStoryForAdmin(StoryStatus status)
+        {
+            var param = new SqlParameter[]
+            {
+                new SqlParameter("@Status", status),
+            };
+            var lstStory = ExecuteStoredProcedureObject<StoryInforAdmin>("GetListStoryForAdmin", param);
+            return lstStory;
+        }
     }
 }

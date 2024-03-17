@@ -24,6 +24,7 @@ namespace StoriesProject.Services
         Task<StoryDetailFullDTO> GetStoryById(Guid? id);
         Task<List<StoryAccountGeneric>> GetStoryByCurrentAuthor();
         Task<ResponseOutput<Guid?>> CreateStoryByAuthor(StoryRegisterVM storyRegister);
+        Task<List<StoryAccountGeneric>> GetTopPurchasesStory(int numberStory, Guid? topicId = null);
     }
     public class StoriesService : BaseService, IStoriesService
     {
@@ -171,6 +172,17 @@ namespace StoriesProject.Services
         {
             var url = StoriesApiUrlDef.CreateStoryByAuthor();
             return await RequestFullAuthenPostAsync<Guid?>(url, storyRegister);
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy 10 truyện lượt bán cao nhất (theo topic)
+        /// CreatedBy ntthe 28.02.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<StoryAccountGeneric>> GetTopPurchasesStory(int numberStory, Guid? topicId = null)
+        {
+            var url = StoriesApiUrlDef.GetTopPurchasesStory(topicId, numberStory);
+            return await RequestGetAsync<List<StoryAccountGeneric>>(url);
         }
     }
 }

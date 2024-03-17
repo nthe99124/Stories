@@ -31,7 +31,7 @@ namespace StoriesProject.API.Migrations
                 AS
                 BEGIN
                     SELECT s.Id, s.Name, s.Code,
-			                s.ImageLink, s.VideoLink, s.Description, s.TypeOfStory
+			                s.ImageLink, s.VideoLink, s.Description, s.ShortDescription, s.TypeOfStory
                     FROM Stories s
 	                INNER JOIN TopicStory ts ON s.Id = ts.StoryID
 	                WHERE ts.TopicId = @TopicID

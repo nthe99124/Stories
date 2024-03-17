@@ -39,6 +39,11 @@ public partial class Story
     [Description("Lượt truy cập")]
     public long ViewAccess { get; set; } = 0;
 
+    [Description("Lượt mua")]
+    public long Purchases { get; set; } = 0;
+    [Description("Trạng thái duyệt của truyện")]
+    public StoryStatus Status { get; set; } = StoryStatus.NotApprovedYet;
+
     [Description("Điểm đánh giá")]
     public decimal RateScore { get; set; } = 0;
 

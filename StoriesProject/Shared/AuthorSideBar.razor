@@ -37,9 +37,12 @@
         <dt>
             <i class="iconfont icon-book"></i>Quản lý công việc
         </dt>
-        <dd class="@(isSelected == 1 ? "user-selecteds" : "")">
-            <a rel="nofollow" href="/author/identify">Đăng kí tác giả</a>
-        </dd>
+        @if (!IsAuthor)
+        {
+            <dd class="@(isSelected == 1 ? "user-selecteds" : "")">
+                <a rel="nofollow" href="/author/identify">Đăng kí tác giả</a>
+            </dd>
+        }
         @if (IsAuthor)
         {
             <dd class="@(isSelected == 2 ? "user-selecteds" : "")">

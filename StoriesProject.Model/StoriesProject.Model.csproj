@@ -28,9 +28,11 @@
     <Compile Include="DTO\Accountant\AccountGenericDTO.cs" />
     <Compile Include="DTO\Accountant\AuthorRegisterGenericDTO.cs" />
     <Compile Include="DTO\PagingModel.cs" />
+    <Compile Include="DTO\Story\StoryInforAdmin.cs" />
     <Compile Include="DTO\Story\StoryAccountGeneric.cs" />
     <Compile Include="DTO\Story\StoryDetailDTO.cs" />
     <Compile Include="DTO\Story\StoryGeneric.cs" />
+    <Compile Include="DTO\Topic\TopicFullInfor.cs" />
     <Compile Include="DTO\Topic\TopicGeneric.cs" />
     <Compile Include="Enum\DataType.cs" />
     <Compile Include="ViewModel\Accountant\AccountantUpdate.cs" />

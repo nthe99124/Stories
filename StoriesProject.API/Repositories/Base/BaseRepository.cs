@@ -25,10 +25,10 @@ namespace StoriesProject.API.Repositories.Base
         void CreateRange(List<T> entity);
         Task CreateRangeAsync(List<T> entity);
         void Delete(T entity);
-        void DeleteRange(List<T> entity);
+        void DeleteRange(IEnumerable<T> entity);
         void DeleteRangeByCondition(Expression<Func<T, bool>> predicate);
         Task BulkInsert(IEnumerable<T> listEntity);
-        IEnumerable<N> ExecuteStoredProcedureObject<N>(string nameProcedure, SqlParameter[]? array) where N : class;
+        IEnumerable<N> ExecuteStoredProcedureObject<N>(string nameProcedure, SqlParameter[]? array = null) where N : class;
         (List<T1>, List<T2>, List<T3>) ExecuteStoredProcedureMultiObject<T1, T2, T3>(string nameProcedure, DynamicParameters? array);
         Task<IEnumerable<N>?> GetDataBySorted<N>(IEnumerable<N>? data, List<SortedPaging>? sortList = null) where N : class;
     }
@@ -238,7 +238,7 @@ namespace StoriesProject.API.Repositories.Base
             _dbset.Remove(entity);
         }
 
-        public void DeleteRange(List<T> entity)
+        public void DeleteRange(IEnumerable<T> entity)
         {
             _dbset.RemoveRange(entity);
         }
@@ -260,7 +260,7 @@ namespace StoriesProject.API.Repositories.Base
             await _context.BulkInsertAsync(listEntity);
         }
 
-        public IEnumerable<N> ExecuteStoredProcedureObject<N>(string nameProcedure, SqlParameter[]? array) where N: class
+        public IEnumerable<N> ExecuteStoredProcedureObject<N>(string nameProcedure, SqlParameter[]? array = null) where N: class
         {
             try
             {

@@ -133,5 +133,23 @@
         {
             return @$"{pathController}/CreateStoryByAuthor";
         }
+        /// <summary>
+        /// Tạo url lấy 10 truyện lượt bán cao nhất (theo topic)
+        /// CreatedBy ntthe 28.02.2024
+        /// </summary>
+        /// <returns></returns>
+        public static string GetTopPurchasesStory(Guid? topicId, int numberStory)
+        {
+            if (topicId != null)
+            {
+                return @$"{pathController}/GetTopPurchasesStory?numberStory={numberStory}&topicId={topicId}";
+            }
+            else
+            {
+                return @$"{pathController}/GetTopPurchasesStory?numberStory={numberStory}";
+            }
+            
+        }
+        
     }
 }

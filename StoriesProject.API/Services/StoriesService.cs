@@ -5,7 +5,9 @@ using StoriesProject.API.Services.Base;
 using StoriesProject.Model.BaseEntity;
 using StoriesProject.Model.DTO;
 using StoriesProject.Model.DTO.Story;
+using StoriesProject.Model.ViewModel;
 using StoriesProject.Model.ViewModel.Story;
+using static StoriesProject.Model.Enum.DataType;
 
 namespace StoriesProject.API.Services
 {
@@ -23,6 +25,9 @@ namespace StoriesProject.API.Services
         Task<StoryDetailFullDTO?> GetStoryById(Guid id);
         Task<IEnumerable<StoryAccountGeneric>?> GetStoryByCurrentAuthor();
         Task<Guid?> CreateStoryByAuthor(StoryRegisterVM storyRegister);
+        Task<List<StoryAccountGeneric>?> GetTopPurchasesStory(Guid? topicId, int numberStory);
+        Task<IEnumerable<StoryInforAdmin>?> GetListStoryForAdmin(StoryStatus status);
+        Task<RestOutput> ChangeStatusStory(Guid storyId, StoryStatus status);
     }
     public class StoriesService: BaseService, IStoriesService
     {
@@ -201,6 +206,66 @@ namespace StoriesProject.API.Services
                 return storyInsert.Id;
             }
             return null;
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy danh sách lượt mua cao nhất
+        /// CreatedBy ntthe 17.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<StoryAccountGeneric>?> GetTopPurchasesStory(Guid? topicId, int numberStory)
+        {
+            var topResult = (from s in _unitOfWork.StoriesRepository.Get()
+                         join ts in _unitOfWork.TopicStoryRepository.Get() on s.Id equals ts.StoryId into tmp_ts
+                         from ts in tmp_ts.DefaultIfEmpty()
+                         where ts == null || ts.TopicId == topicId
+                         
+                         orderby s.Purchases descending
+                         select new StoryAccountGeneric
+                         {
+                             Id = s.Id,
+                             Name = s.Name,
+                             Code = s.Code,
+                             ImageLink = s.ImageLink,
+                             VideoLink = s.VideoLink,
+                             Description = s.Description,
+                             TypeOfStory = s.TypeOfStory,
+                         }).Take(numberStory);
+            var result = _mapper.Map<List<StoryAccountGeneric>>(topResult.ToList());
+            return result;
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy danh sách truyện chờ xét duyệt
+        /// CreatedBy ntthe 17.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<StoryInforAdmin>?> GetListStoryForAdmin(StoryStatus status)
+        {
+            var result = await _unitOfWork.StoriesRepository.GetListStoryForAdmin(status);
+            return result;
+        }
+
+        /// <summary>
+        /// Hàm xử lý thay đổi trạng thái duyệt của truyện
+        /// CreatedBy ntthe 17.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<RestOutput> ChangeStatusStory(Guid storyId, StoryStatus status)
+        {
+            var res = new RestOutput();
+            var story = await _unitOfWork.StoriesRepository.FirstOrDefault(item => item.Id == storyId);
+            if (story != null)
+            {
+                story.Status = status;
+                await _unitOfWork.CommitAsync();
+                res.SuccessEventHandler("Đổi trạng thái thành công");
+            }
+            else 
+            {
+                res.ErrorEventHandler("Không tìm thấy truyện để đổi trạng thái");
+            }
+            return res;
         }
 
         #region Private Method

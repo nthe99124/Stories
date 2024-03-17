@@ -14,6 +14,9 @@ public partial class Topic
     [Description("Tên chủ đề")]
     public string? Name { get; set; }
 
+    [Description("Mô tả")]
+    public string? Description { get; set; }
+
     [Description("Ngày tạo")]
     public DateTime? CreatedDate { get; set; } = DateTime.UtcNow;
 

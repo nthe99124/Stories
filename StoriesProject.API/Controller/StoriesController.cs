@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using StoriesProject.API.Common.Attribute;
 using StoriesProject.API.Common.Constant;
 using StoriesProject.API.Services;
-using StoriesProject.Model.BaseEntity;
-using StoriesProject.Model.DTO;
 using StoriesProject.Model.ViewModel;
 using StoriesProject.Model.ViewModel.Story;
+using static StoriesProject.Model.Enum.DataType;
 
 namespace StoriesProject.API.Controller.Base
 {
@@ -176,6 +174,44 @@ namespace StoriesProject.API.Controller.Base
         {
             var data = await _storiesService.CreateStoryByAuthor(storyRegister);
             _res.SuccessEventHandler(data);
+            return Ok(_res);
+        }
+
+        /// <summary>
+        /// Hàm xử lý danh sách 10 truyện lượt bán cao nhất (theo topic)
+        /// CreatedBy ntthe 28.02.2024
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetTopPurchasesStory")]
+        public async Task<IActionResult> GetTopPurchasesStory(Guid? topicId, int numberStory)
+        {
+            var dataResult = await _storiesService.GetTopPurchasesStory(topicId, numberStory);
+            _res.SuccessEventHandler(dataResult);
+            return Ok(_res);
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy danh sách truyện chờ xét duyệt, đang hoạt động, từ chối
+        /// CreatedBy ntthe 17.03.2024
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetListStoryForAdmin")]
+        public async Task<IActionResult> GetListStoryForAdmin(StoryStatus status)
+        {
+            var dataResult = await _storiesService.GetListStoryForAdmin(status);
+            _res.SuccessEventHandler(dataResult);
+            return Ok(_res);
+        }
+
+        /// <summary>
+        /// Hàm xử lý thay đổi trạng thái duyệt của truyện
+        /// CreatedBy ntthe 17.03.2024
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("ApprovedStory")]
+        public async Task<IActionResult> ChangeStatusStory(Guid storyId, StoryStatus status)
+        {
+            _res = await _storiesService.ChangeStatusStory(storyId, status);
             return Ok(_res);
         }
     }

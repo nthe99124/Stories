@@ -59,5 +59,15 @@ namespace StoriesProject.Model.Enum
             [Description("Thiếu nhi")]
             Children,
         }
+
+        public enum StoryStatus : short
+        {
+            [Description("Chưa duyệt")]
+            NotApprovedYet,
+            [Description("Đã duyệt")]
+            Approved,
+            [Description("Từ chối")]
+            Reject
+        }
     }
 }

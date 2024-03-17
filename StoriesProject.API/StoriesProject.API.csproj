@@ -69,6 +69,12 @@
     <Compile Include="Migrations\20240316052409_update-column-story.Designer.cs" />
     <Compile Include="Migrations\20240317070054_col-acc.cs" />
     <Compile Include="Migrations\20240317070054_col-acc.Designer.cs" />
+    <Compile Include="Migrations\20240317091245_Story-Purchases.cs" />
+    <Compile Include="Migrations\20240317091245_Story-Purchases.Designer.cs" />
+    <Compile Include="Migrations\20240317110216_StatusStory.cs" />
+    <Compile Include="Migrations\20240317110216_StatusStory.Designer.cs" />
+    <Compile Include="Migrations\20240317144005_add-colum-topic.cs" />
+    <Compile Include="Migrations\20240317144005_add-colum-topic.Designer.cs" />
     <Compile Include="Migrations\StoriesContextModelSnapshot.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Repositories\AccountantsRepository.cs" />

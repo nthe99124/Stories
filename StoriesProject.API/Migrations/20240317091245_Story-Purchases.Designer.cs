@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StoriesProject.API.Common.Repository;
 
@@ -11,9 +12,11 @@ using StoriesProject.API.Common.Repository;
 namespace StoriesProject.API.Migrations
 {
     [DbContext(typeof(StoriesContext))]
-    partial class StoriesContextModelSnapshot : ModelSnapshot
+    [Migration("20240317091245_Story-Purchases")]
+    partial class StoryPurchases
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -380,9 +383,6 @@ namespace StoriesProject.API.Migrations
                     b.Property<string>("ShortDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<short>("Status")
-                        .HasColumnType("smallint");
-
                     b.Property<short>("TargetObject")
                         .HasColumnType("smallint");
 
@@ -482,9 +482,6 @@ namespace StoriesProject.API.Migrations
 
                     b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
