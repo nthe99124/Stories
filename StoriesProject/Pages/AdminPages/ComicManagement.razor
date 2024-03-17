@@ -1,5 +1,9 @@
 ﻿@page "/admin/comic_management"
+@using StoriesProject.Model.BaseEntity
+@using StoriesProject.Services
 @using StoriesProject.Shared.ComponentBase;
+@using static StoriesProject.Model.Enum.DataType
+@inject IStoriesService _storiesService;
 @inherits AuthorBaseComponent
 <body>
     <div class="wrapper">
@@ -23,7 +27,7 @@
             <main class="content px-3 py-4">
                 <div class="container-fluid">
                     <div class="mb-3">
-                        <h3 class="fw-bold fs-4 mb-5">Author Management</h3>
+                        <h3 class="fw-bold fs-4 mb-5">Quản lý truyện</h3>
 
                         <ul class="nav nav-tabs mb-5" id="myTabs" role="tablist">
                             <li class="nav-item" role="presentation">
@@ -94,7 +98,6 @@
                                             <thead>
                                             <th scope="col" style="width: 2%;">#</th>
                                             <th scope="col" style="width: 14%;">Tác phẩm</th>
-                                            <th scope="col" style="width: 5%;">Mã</th>
                                             <th scope="col" style="width: 8%;">Tác giả</th>
                                             <th scope="col" style="width: 6%;">Giá (vnd)</th>
                                             <th scope="col" style="width: 18%;">Mô tả</th>
@@ -106,79 +109,35 @@
                                             <th scope="col" style="width: 5%;">Chi tiết</th>
                                             </thead>
                                             <tbody class="table-group-divider">
-                                                <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>Tác phẩm 1</td>
-                                                    <td>MSL134</td>
-                                                    <td>
-                                                        <a href="#" style="color: black;text-decoration: underline;text-decoration: underline;">
-                                                            Trần
-                                                            Vinh
-                                                        </a>
-                                                    </td>
-                                                    <td>200,000</td>
-                                                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget felis nulla. </td>
-                                                    <td>Hành động </td>
-                                                    <td>50 </td>
-                                                    <td>10,000,000</td>
-                                                    <td>20/12/2023</td>
-                                                    <td>15,000</td>
-                                                    <td>
-                                                        <a href="#">
-                                                            <i class="lni lni-eye"></i>
-                                                            Xem
-                                                        </a>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <div class="show-comic__on-hover" id="showComicInfo">
-                                                        <div style="display: flex;">
-                                                            <img src="https://cdnnvd.com/nettruyen/thumb/ngay-toi-sinh-ra-bach-quy-da-hanh-tuyet-thi-ho-dao.jpg"
-                                                                 style="height : 150px !important" />
-                                                            <div style="display: flex;flex-direction: column;margin-left: 10px;">
-                                                                <strong style="font-size: 16px;">Tên truyện</strong>
-                                                                <p style="font-size: 13px;">Ngày tôi sinh ra, bạch quỷ đã hành tuyết thị hồ đao</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <th scope="row">2</th>
-                                                    <td>Tác phẩm 2</td>
-                                                    <td>MSL134</td>
-                                                    <td><a href="#" style="color: black;text-decoration: underline;">Trần Vinh</a></td>
-                                                    <td>200,000</td>
-                                                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget felis nulla. </td>
-                                                    <td>Hành động </td>
-                                                    <td>50 </td>
-                                                    <td>10,000,000</td>
-                                                    <td>20/12/2023</td>
-                                                    <td>15,000</td>
-                                                    <td>
-                                                        <a href="#">
-                                                            <i class="lni lni-eye"></i>
-                                                            Xem
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">3</th>
-                                                    <td>Tác phẩm 3</td>
-                                                    <td>MSL134</td>
-                                                    <td><a href="#" style="color: black;text-decoration: underline;">Trần Vinh</a></td>
-                                                    <td>200,000</td>
-                                                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget felis nulla. </td>
-                                                    <td>Hành động </td>
-                                                    <td>50 </td>
-                                                    <td>10,000,000</td>
-                                                    <td>20/12/2023</td>
-                                                    <td>15,000</td>
-                                                    <td>
-                                                        <a href="#">
-                                                            <i class="lni lni-eye"></i>
-                                                            Xem
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                                @if (listStoryActive != null && listStoryActive.Count >0)
+                                                {
+                                                    @for (int i = 0; i < listStoryActive.Count; i++)
+                                                    {
+                                                        var currentItem = listStoryActive[i];
+                                                        <tr>
+                                                            <th scope="row">@(i + 1)</th>
+                                                            <td>@currentItem.Name</td>
+                                                            <td>
+                                                                <a href="#" style="color: black;text-decoration: underline;text-decoration: underline;">
+                                                                    @currentItem.AuthorName
+                                                                </a>
+                                                            </td>
+                                                            <td>@currentItem.Price</td>
+                                                            <td>@currentItem.Description</td>
+                                                            <td>@currentItem.TopicName</td>
+                                                            <td>@currentItem.Purchases </td>
+                                                            <td>@currentItem.Revenue</td>
+                                                            <td>@currentItem.CreatedDate</td>
+                                                            <td>@currentItem.ViewAccess</td>
+                                                            <td>
+                                                                <a href="#">
+                                                                    <i class="lni lni-eye"></i>
+                                                                    Xem
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
                                             </tbody>
                                         </table>
                                     </div>
@@ -195,7 +154,6 @@
                                             <thead>
                                             <th scope="col" style="width: 2%;">#</th>
                                             <th scope="col" style="width: 14%;">Tác phẩm</th>
-                                            <th scope="col" style="width: 5%;">Mã</th>
                                             <th scope="col" style="width: 8%;">Tác giả</th>
                                             <th scope="col" style="width: 6%;">Giá (vnd)</th>
                                             <th scope="col" style="width: 18%;">Mô tả</th>
@@ -205,77 +163,46 @@
                                             <th scope="col" style="width: 5%;">Action</th>
                                             </thead>
                                             <tbody class="table-group-divider">
-                                                <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>Tác phẩm 1</td>
-                                                    <td>MSL134</td>
-                                                    <td><a href="#" style="color: black;text-decoration: underline;">Trần Vinh</a></td>
-                                                    <td>200,000</td>
-                                                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget felis nulla. </td>
-                                                    <td>Hành động </td>
-                                                    <td>20/12/2023</td>
-                                                    <td>
-                                                        <a href="#">
-                                                            <i class="lni lni-eye"></i>
-                                                            Preview
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <a href="#" style="color: green;text-decoration: underline;margin-right: 15px;">Duyệt </a>
-                                                        <a href="#" style="color: red;text-decoration: underline;">Từ chối</a>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <div class="show-comic__on-hover" id="showComicInfo">
-                                                        <div style="display: flex;">
-                                                            <img src="https://cdnnvd.com/nettruyen/thumb/ngay-toi-sinh-ra-bach-quy-da-hanh-tuyet-thi-ho-dao.jpg"
-                                                                 style="height : 150px !important" />
-                                                            <div style="display: flex;flex-direction: column;margin-left: 10px;">
-                                                                <strong style="font-size: 16px;">Tên truyện</strong>
-                                                                <p style="font-size: 13px;">Ngày tôi sinh ra, bạch quỷ đã hành tuyết thị hồ đao</p>
+                                                @if (listStoryPending != null && listStoryPending.Count > 0)
+                                                {
+                                                    @for (int i = 0; i < listStoryPending.Count; i++)
+                                                    {
+                                                        var currentItem = listStoryPending[i];
+                                                        <tr>
+                                                            <div class="show-comic__on-hover" id="showComicInfo">
+                                                                <div style="display: flex;">
+                                                                    <img src="https://cdnnvd.com/nettruyen/thumb/ngay-toi-sinh-ra-bach-quy-da-hanh-tuyet-thi-ho-dao.jpg"
+                                                                         style="height : 150px !important" />
+                                                                    <div style="display: flex;flex-direction: column;margin-left: 10px;">
+                                                                        <strong style="font-size: 16px;">Tên truyện</strong>
+                                                                        <p style="font-size: 13px;">Ngày tôi sinh ra, bạch quỷ đã hành tuyết thị hồ đao</p>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <th scope="row">2</th>
-                                                    <td>Tác phẩm 2</td>
-                                                    <td>MSL134</td>
-                                                    <td><a href="#" style="color: black;text-decoration: underline;">Trần Vinh</a></td>
-                                                    <td>200,000</td>
-                                                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget felis nulla. </td>
-                                                    <td>Hành động </td>
-                                                    <td>20/12/2023</td>
-                                                    <td>
-                                                        <a href="#">
-                                                            <i class="lni lni-eye"></i>
-                                                            Preview
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <a href="#" style="color: green;text-decoration: underline;margin-right: 15px;">Duyệt </a>
-                                                        <a href="#" style="color: red;text-decoration: underline;">Từ chối</a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">3</th>
-                                                    <td>Tác phẩm 3</td>
-                                                    <td>MSL134</td>
-                                                    <td><a href="#" style="color: black;text-decoration: underline;">Trần Vinh</a></td>
-                                                    <td>200,000</td>
-                                                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget felis nulla. </td>
-                                                    <td>Hành động </td>
-                                                    <td>20/12/2023</td>
-                                                    <td>
-                                                        <a href="#">
-                                                            <i class="lni lni-eye"></i>
-                                                            Preview
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <a href="#" style="color: green;text-decoration: underline;margin-right: 15px;">Duyệt </a>
-                                                        <a href="#" style="color: red;text-decoration: underline;">Từ chối</a>
-                                                    </td>
-                                                </tr>
+                                                            <th scope="row">@(i + 1)</th>
+                                                            <td>@currentItem.Name</td>
+                                                            <td>
+                                                                <a href="#" style="color: black;text-decoration: underline;text-decoration: underline;">
+                                                                    @currentItem.AuthorName
+                                                                </a>
+                                                            </td>
+                                                            <td>@currentItem.Price</td>
+                                                            <td>@currentItem.Description</td>
+                                                            <td>@currentItem.TopicName</td>
+                                                            <td>@currentItem.CreatedDate</td>
+                                                            <td>
+                                                                <a href="#">
+                                                                    <i class="lni lni-eye"></i>
+                                                                    Xem
+                                                                </a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="#" style="color: green;text-decoration: underline;margin-right: 15px;">Duyệt </a>
+                                                                <a href="#" style="color: red;text-decoration: underline;">Từ chối</a>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
                                             </tbody>
                                         </table>
                                     </div>
@@ -285,7 +212,7 @@
                             {
                                 <div class="tab-pane fade show active" id="blocked" role="tabpanel" aria-labelledby="blocked-tab">
                                     <h3 class="fw-bold fs-5 mb-4" style="color: #9e2828;">Đang bị chặn</h3>
-                                    <div>
+                                    @* <div>
                                         <div class="mb-3"
                                              style="width: 70%;display: flex; align-items: center;justify-content: space-between;">
                                             <div style="width: 40%;">
@@ -319,7 +246,7 @@
                                             </div>
                                         </div>
                                         <button class="btn btn-primary mb-5">Tìm kiếm</button>
-                                    </div>
+                                    </div> *@
 
                                     <div class="table-responsive">
                                         <table class="table table-hover custom-table" style="width: 150%;">
@@ -327,92 +254,54 @@
                                             <thead>
                                             <th scope="col" style="width: 2%;">#</th>
                                             <th scope="col" style="width: 14%;">Tác phẩm</th>
-                                            <th scope="col" style="width: 5%;">Mã</th>
                                             <th scope="col" style="width: 8%;">Tác giả</th>
                                             <th scope="col" style="width: 6%;">Giá (vnd)</th>
                                             <th scope="col" style="width: 18%;">Mô tả</th>
                                             <th scope="col" style="width: 18%;">Thể loại</th>
-                                            <th scope="col" style="width: 4%;">Đã bán</th>
-                                            <th scope="col" style="width: 7%;">Doanh thu (vnd)</th>
                                             <th scope="col" style="width: 7%;">Ngày cập nhật</th>
-                                            <th scope="col" style="width: 8%;">Lượng truy cập (người)</th>
                                             <th scope="col" style="width: 5%;">Chi tiết</th>
                                             </thead>
                                             <tbody class="table-group-divider">
-                                                <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>Tác phẩm 1</td>
-                                                    <td>MSL134</td>
-                                                    <td><a href="#" style="color: black;text-decoration: underline;">Trần Vinh</a></td>
-                                                    <td>200,000</td>
-                                                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget felis nulla. </td>
-                                                    <td>Hành động </td>
-                                                    <td>50 </td>
-                                                    <td>10,000,000</td>
-                                                    <td>20/12/2023</td>
-                                                    <td>15,000</td>
-                                                    <td>
-                                                        <a href="#">
-                                                            <i class="lni lni-eye"></i>
-                                                            Xem
-                                                        </a>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <div class="show-comic__on-hover" id="showComicInfo">
-                                                        <div style="display: flex;">
-                                                            <img src="https://cdnnvd.com/nettruyen/thumb/ngay-toi-sinh-ra-bach-quy-da-hanh-tuyet-thi-ho-dao.jpg"
-                                                                 style="height : 150px !important" />
-                                                            <div style="display: flex;flex-direction: column;margin-left: 10px;">
-                                                                <strong style="font-size: 16px;">Tên truyện</strong>
-                                                                <p style="font-size: 13px;">Ngày tôi sinh ra, bạch quỷ đã hành tuyết thị hồ đao</p>
+                                                @if (listStoryReject != null && listStoryReject.Count > 0)
+                                                {
+                                                    @for (int i = 0; i < listStoryReject.Count; i++)
+                                                    {
+                                                        var currentItem = listStoryReject[i];
+                                                        <tr>
+                                                            <div class="show-comic__on-hover" id="showComicInfo">
+                                                                <div style="display: flex;">
+                                                                    <img src="https://cdnnvd.com/nettruyen/thumb/ngay-toi-sinh-ra-bach-quy-da-hanh-tuyet-thi-ho-dao.jpg"
+                                                                         style="height : 150px !important" />
+                                                                    <div style="display: flex;flex-direction: column;margin-left: 10px;">
+                                                                        <strong style="font-size: 16px;">Tên truyện</strong>
+                                                                        <p style="font-size: 13px;">Ngày tôi sinh ra, bạch quỷ đã hành tuyết thị hồ đao</p>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <th scope="row">2</th>
-                                                    <td>Tác phẩm 2</td>
-                                                    <td>MSL134</td>
-                                                    <td><a href="#" style="color: black;text-decoration: underline;">Trần Vinh</a></td>
-
-                                                    <td>200,000</td>
-                                                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget felis nulla. </td>
-                                                    <td>Hành động </td>
-                                                    <td>50 </td>
-                                                    <td>10,000,000</td>
-                                                    <td>20/12/2023</td>
-                                                    <td>15,000</td>
-                                                    <td>
-                                                        <a href="#">
-                                                            <i class="lni lni-eye"></i>
-                                                            Xem
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">3</th>
-                                                    <td>Tác phẩm 3</td>
-                                                    <td>MSL134</td>
-                                                    <td><a href="#" style="color: black;text-decoration: underline;">Trần Vinh</a></td>
-                                                    <td>200,000</td>
-                                                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget felis nulla. </td>
-                                                    <td>Hành động </td>
-                                                    <td>50 </td>
-                                                    <td>10,000,000</td>
-                                                    <td>20/12/2023</td>
-                                                    <td>15,000</td>
-                                                    <td>
-                                                        <a href="#">
-                                                            <i class="lni lni-eye"></i>
-                                                            Xem
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                                            <th scope="row">@(i + 1)</th>
+                                                            <td>@currentItem.Name</td>
+                                                            <td>
+                                                                <a href="#" style="color: black;text-decoration: underline;text-decoration: underline;">
+                                                                    @currentItem.AuthorName
+                                                                </a>
+                                                            </td>
+                                                            <td>@currentItem.Price</td>
+                                                            <td>@currentItem.Description</td>
+                                                            <td>@currentItem.TopicName</td>
+                                                            <td>@currentItem.CreatedDate</td>
+                                                            <td>
+                                                                <a href="#">
+                                                                    <i class="lni lni-eye"></i>
+                                                                    Xem
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-
                             }
                         </div>
                     </div>
@@ -448,13 +337,41 @@
 
 @code {
     private int selectedTab = 1;
-    private void SetSelectedTab(int tab)
+    private async Task SetSelectedTab(int tab)
     {
         selectedTab = tab;
+        await GetListStoryForAdminByTab();
     }
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    private List<StoryInforAdmin> listStoryActive { get; set; }
+    private List<StoryInforAdmin> listStoryPending { get; set; }
+    private List<StoryInforAdmin> listStoryReject { get; set; }
+    protected override async Task HandleAfterRenderAsync(bool firstRender)
     {
-        await InvokeVoidAsync("registerMouseEvents");
+        if (firstRender)
+        {
+            // await GetListStoryForAdminByTab();
+            await InvokeVoidAsync("registerMouseEvents");
+        }
+        
+    }
+
+    private async Task GetListStoryForAdminByTab()
+    {
+        switch (selectedTab)
+        {
+            case 1:
+                listStoryActive = await _storiesService.GetListStoryForAdmin(StoryStatus.Approved);
+                StateHasChanged();
+                break;
+            case 2:
+                listStoryPending = await _storiesService.GetListStoryForAdmin(StoryStatus.NotApprovedYet);
+                StateHasChanged();
+                break;
+            case 3:
+                listStoryReject = await _storiesService.GetListStoryForAdmin(StoryStatus.Reject);
+                StateHasChanged();
+                break;
+        }
     }
 }
 

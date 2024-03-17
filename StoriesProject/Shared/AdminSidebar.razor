@@ -10,7 +10,7 @@
             <i class="lni lni-grid-alt"></i>
         </button>
         <div class="sidebar-logo">
-            <a href="#">ComicHub</a>
+            <a href="#">Quản lý</a>
         </div>
     </div>
     <ul class="sidebar-nav">
@@ -24,36 +24,36 @@
             <a href="javascript:void(0)" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse" data-bs-target="#auth"
                aria-expanded="false" aria-controls="auth" @onclick="ToggleCollapse">
                 <i class="lni lni-user"></i>
-                <span>Author</span>
+                <span>Tác giả</span>
             </a>
             <ul id="auth" class="sidebar-dropdown list-unstyled collapse @(!isAuthCollapsed ? "" : "show")"
                 data-bs-parent="#sidebar">
                 <li class="sidebar-item" style="padding-left: 15px">
-                    <a href="/admin/author_management" class="sidebar-link @(tab==1? "active": "")">Manage Author</a>
+                    <a href="/admin/author_management" class="sidebar-link @(tab==1? "active": "")">Quản lý tác giả</a>
                 </li>
                 <li class="sidebar-item" style="padding-left: 15px">
-                    <a href="/admin/comic_management" class="sidebar-link @(tab==2? "active": "")">Manage Book</a>
+                    <a href="/admin/comic_management" class="sidebar-link @(tab==2? "active": "")">Quản lý truyện</a>
                 </li>
             </ul>
         </li>
         <li class="sidebar-item">
             <a href="/admin/category_management" class="sidebar-link @(tab==3? "active": "")">
                 <i class="lni lni-layout"></i>
-                <span>Manage Category</span>
+                <span>Quản lý chủ đề</span>
             </a>
         </li>
         <li class="sidebar-item">
             <a href="/admin/order_management" class="sidebar-link @(tab==4? "active": "")">
                 <i class="lni lni-control-panel"></i>
-                <span>Manage Order</span>
+                <span>Quản lý đơn hàng</span>
             </a>
         </li>
-        <li class="sidebar-item">
+        @* <li class="sidebar-item">
             <a href="#" class="sidebar-link @(tab==5? "active": "")">
                 <i class="lni lni-cog"></i>
                 <span>Setting</span>
             </a>
-        </li>
+        </li> *@
     </ul>
     <div class="sidebar-footer">
         <a href="#" class="sidebar-link">

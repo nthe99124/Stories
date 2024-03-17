@@ -28,7 +28,7 @@ namespace StoriesProject.Services
         Task<List<StoryAccountGeneric>> GetTopPurchasesStory(int numberStory, Guid? topicId = null);
         Task<ContentChapterGeneric> GetContentChapter(Guid chapterId);
         Task<ResponseOutput<string>> ChangeStatusStory(Guid storyId, StoryStatus status);
-        Task<IEnumerable<StoryInforAdmin>> GetListStoryForAdmin(StoryStatus status);
+        Task<List<StoryInforAdmin>> GetListStoryForAdmin(StoryStatus status);
     }
     public class StoriesService : BaseService, IStoriesService
     {
@@ -221,10 +221,10 @@ namespace StoriesProject.Services
         /// CreatedBy ntthe 17.03.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<StoryInforAdmin>> GetListStoryForAdmin(StoryStatus status)
+        public async Task<List<StoryInforAdmin>> GetListStoryForAdmin(StoryStatus status)
         {
             var url = StoriesApiUrlDef.GetListStoryForAdmin(status);
-            return await RequestAuthenGetAsync<IEnumerable<StoryInforAdmin>>(url);
+            return await RequestAuthenGetAsync<List<StoryInforAdmin>>(url);
         }
     }
 }

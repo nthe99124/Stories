@@ -27,6 +27,9 @@ namespace StoriesProject.API.Migrations
 					s.Name as Name, 
 					a.Name as AuthorName, 
 					s.Price, 
+                    s.Purchases as Purchases,
+					s.Purchases * s.Price as Revenue,
+					s.ViewAccess,
 					s.ShortDescription as Description,
 					STUFF((SELECT ', ' + t.Name
               FROM TopicStory ts

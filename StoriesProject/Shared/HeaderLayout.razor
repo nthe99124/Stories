@@ -254,9 +254,9 @@
         var res = await _accountantsService.Logout();
         if (res != null && res.IsSuccess)
         {
-            NavigateToUrl($"/");
             await RemoveSessionStorage("token");
             await RemoveSessionStorage("userInfor");
+            NavigateToUrl($"/");
         }
     }
 
