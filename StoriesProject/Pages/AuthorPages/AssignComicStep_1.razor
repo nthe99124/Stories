@@ -449,7 +449,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label"></label>
                         <div class="layui-input-block">
-                            <button lay-filter="stepOne" class="layui-btn" @onclick="(() => ResgiterStory())">Tiếp theo</button>
+                            <button type="button" lay-filter="stepOne" class="layui-btn" @onclick="(() => ResgiterStory())">Tiếp theo</button>
                         </div>
                     </div>
                 </form>
@@ -473,6 +473,7 @@
         if (story != null)
         {
             var res = await _storiesService.CreateStoryByAuthor(story);
+
             if (res != null && res.IsSuccess)
             { 
                 NavigateToUrl($"/author/add-chapter/{res.Data}");
@@ -480,14 +481,19 @@
         }
     }
 
-    protected override async Task HandleAfterRenderAsync(bool firstRender)
+    protected override async Task OnInitializedAsync()
     {
-        if (firstRender)
-        {
-            listTopic = await _topicService.GetAllTopic();
-            StateHasChanged();
-        }
+        listTopic = await _topicService.GetAllTopic();
     }
+
+    //protected override async Task HandleAfterRenderAsync(bool firstRender)
+    //{
+    //    if (firstRender)
+    //    {
+    //        listTopic = await _topicService.GetAllTopic();
+    //        StateHasChanged();
+    //    }
+    //}
 
     private void HandleAudienceChange(ChangeEventArgs e)
     {
