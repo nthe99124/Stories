@@ -17,7 +17,7 @@ namespace StoriesProject.API.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ChapterId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SortOrder = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SortOrder = table.Column<Guid>(type: "int", nullable: false),
                     ImgLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),

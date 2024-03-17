@@ -199,7 +199,7 @@ namespace StoriesProject.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("SortOrder")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

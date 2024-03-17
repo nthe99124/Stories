@@ -14,7 +14,7 @@ public partial class ChapterContent
     [Description("Mã chapter")]
     public Guid ChapterId { get; set; }
     [Description("Vị trí")]
-    public Guid SortOrder { get; set; }
+    public int SortOrder { get; set; }
 
     [Description("Tên chapter truyện")]
     public string? ImgLink { get; set; }

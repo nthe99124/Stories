@@ -280,11 +280,16 @@ namespace StoriesProject.API.Services
             var getStoryNameTask = Task.FromResult((from s in _unitOfWork.StoriesRepository.Get()
                                                      join c in _unitOfWork.ChapterRepository.Get() on s.Id equals c.StoryId
                                                      where c.Id == chapterId
-                                                     select s.Name).FirstOrDefault());
+                                                    select new ContentChapterGeneric
+                                                    {
+                                                        StoryName = s.Name,
+                                                        ChapterName = c.Name,
+                                                        StoryId = s.Id,
+                                                    }).FirstOrDefault());
             var getChapterContentTask = _unitOfWork.ChapterContentRepository.FindBy(item => item.ChapterId == chapterId);
             await Task.WhenAll(getStoryNameTask, getChapterContentTask);
             var result = new ContentChapterGeneric();
-            result.StoryName = await getStoryNameTask;
+            result = await getStoryNameTask;
             var chapterContentList = await getChapterContentTask;
             if (chapterContentList != null && chapterContentList.Count() > 0)
             {

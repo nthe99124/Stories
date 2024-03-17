@@ -77,7 +77,7 @@ namespace StoriesProject.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Accountants");
+                    b.ToTable("Accountants", (string)null);
                 });
 
             modelBuilder.Entity("StoriesProject.Model.BaseEntity.AuthorRegister", b =>
@@ -132,7 +132,7 @@ namespace StoriesProject.API.Migrations
                     b.HasIndex("AccountantId")
                         .IsUnique();
 
-                    b.ToTable("AuthorRegister");
+                    b.ToTable("AuthorRegister", (string)null);
                 });
 
             modelBuilder.Entity("StoriesProject.Model.BaseEntity.Chapter", b =>
@@ -171,7 +171,7 @@ namespace StoriesProject.API.Migrations
 
                     b.HasIndex("StoryId");
 
-                    b.ToTable("Chapters");
+                    b.ToTable("Chapters", (string)null);
                 });
 
             modelBuilder.Entity("StoriesProject.Model.BaseEntity.ChapterContent", b =>
@@ -196,7 +196,7 @@ namespace StoriesProject.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("SortOrder")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -204,7 +204,7 @@ namespace StoriesProject.API.Migrations
 
                     b.HasIndex("CreatedByNavigationId");
 
-                    b.ToTable("ChapterContent");
+                    b.ToTable("ChapterContent", (string)null);
                 });
 
             modelBuilder.Entity("StoriesProject.Model.BaseEntity.CoinLog", b =>
@@ -256,7 +256,7 @@ namespace StoriesProject.API.Migrations
 
                     b.HasIndex("StoryId");
 
-                    b.ToTable("FavoriteStories");
+                    b.ToTable("FavoriteStories", (string)null);
                 });
 
             modelBuilder.Entity("StoriesProject.Model.BaseEntity.Order", b =>
@@ -292,7 +292,7 @@ namespace StoriesProject.API.Migrations
 
                     b.HasIndex("CreatedBy");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("StoriesProject.Model.BaseEntity.OrderDetail", b =>
@@ -319,7 +319,7 @@ namespace StoriesProject.API.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderDetails");
+                    b.ToTable("OrderDetails", (string)null);
                 });
 
             modelBuilder.Entity("StoriesProject.Model.BaseEntity.Role", b =>
@@ -335,7 +335,7 @@ namespace StoriesProject.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("StoriesProject.Model.BaseEntity.RoleAccountant", b =>
@@ -434,7 +434,7 @@ namespace StoriesProject.API.Migrations
 
                     b.HasIndex("ModifiedBy");
 
-                    b.ToTable("Stories");
+                    b.ToTable("Stories", (string)null);
                 });
 
             modelBuilder.Entity("StoriesProject.Model.BaseEntity.StoryAccountGeneric", b =>
@@ -466,7 +466,7 @@ namespace StoriesProject.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StoryAccountGeneric");
+                    b.ToTable("StoryAccountGeneric", (string)null);
                 });
 
             modelBuilder.Entity("StoriesProject.Model.BaseEntity.StoryAccoutant", b =>
@@ -502,7 +502,7 @@ namespace StoriesProject.API.Migrations
 
                     b.HasIndex("StoryIDNavigationId");
 
-                    b.ToTable("StoryAccoutant");
+                    b.ToTable("StoryAccoutant", (string)null);
                 });
 
             modelBuilder.Entity("StoriesProject.Model.BaseEntity.Topic", b =>
@@ -571,7 +571,7 @@ namespace StoriesProject.API.Migrations
 
                     b.HasIndex("ChapterId");
 
-                    b.ToTable("ViewedChapterStories");
+                    b.ToTable("ViewedChapterStories", (string)null);
                 });
 
             modelBuilder.Entity("StoriesProject.Model.BaseEntity.Accountant", b =>

@@ -1,6 +1,8 @@
-﻿@page "/chapter"
+﻿@page "/chapter/{id}"
+@using StoriesProject.Services
 @using StoriesProject.Shared.ComponentBase
-@inherits BaseComponentCustom
+@inject IStoriesService _storiesService;
+@inherits AuthorBaseComponent
 <html>
 
 <head>
@@ -34,9 +36,9 @@
             <div class="read__crumb">
                 <a href="/">Trang chủ</a>
                 <span><i class="iconfont icon-ic_vip_switch_r"></i></span>
-                <a href="/215599/" class="crumb__title j-comic-title">Tên truyện</a>
+                <a href="/215599/" class="crumb__title j-comic-title">@StoryName</a>
                 <span><i class="iconfont icon-ic_vip_switch_r"></i></span>
-                <h1 class="comic-title"><a class="last-crumb" href="/215599/901786.html">Chapter 3</a></h1>
+                <h1 class="comic-title"><a class="last-crumb" href="/215599/901786.html">@ChapterName</a></h1>
             </div>
             <div class="page-index__btn">
                 <span class="j-pg-index">6</span>/<span class="count">19</span>
@@ -56,50 +58,7 @@
                 </div>
             </div>
             <div class="in-header__user">
-                <ul class="fl clearfix">
-                    <li class="user-item j-header-his">
-                        <a href="/user/history/" rel="nofollow">
-                            <i class="iconfont icon-ic_head_footprint"></i>
-                            <span class="item-text">Lịch sử</span>
-                        </a>
-                        <div class="in-dialog--his hide">
-                            <p class="in-dialog__title">我看过的<a class="more" href="/user/history/">查看全部&gt;</a></p>
-                            <p class="in-dialog__offline">登录同步看到各端数据，<a class="hl" href="/login/">请登录</a></p>
-                            <ul class="in-dialog__user-list hide"></ul>
-
-                            <div class="in-dialog__empty">还没有看过的漫画，<a class="hl" href="/category/">去追一部</a></div>
-                            <span class="triangle"><i class="iconfont icon-ic_nav_toast_sj"></i></span>
-                        </div>
-                    </li>
-                    <li class="user-item j-header-coll">
-                        <a href="/user/collection/" rel="nofollow">
-                            <i class="iconfont icon-ic_head_coll"></i>
-                            <span class="item-text">Đánh dấu</span>
-                        </a>
-                        <div class="in-dialog--coll hide">
-                            <p class="in-dialog__title">我收藏的<a class="more" href="/user/collection/">查看全部&gt;</a></p>
-                            <ul class="in-dialog__user-list">
-                            </ul>
-                            <div class="in-dialog__empty coll hide">还没有收藏的漫画，<a class="hl" href="/category/">去追一部</a></div>
-                            <div class="in-dialog__empty offline">登录查看收藏记录，<a class="hl" href="/login/">去登录</a></div>
-                            <span class="triangle"><i class="iconfont icon-ic_nav_toast_sj"></i></span>
-                        </div>
-                    </li>
-                    <!-- <li class="user-item j-header-down">
-                      <a href="/download/" rel="nofollow">
-                        <i class="iconfont icon-ic_head_app"></i>
-                        <span class="item-text">下载APP</span>
-                      </a>
-                      <div class="in-dialog--download hide">
-                        <img class="qr-code" src="https://static.mkzcdn.com/home/img/download/pic_screen1_ewm.png" alt="下载二维码">
-                        <p class="text"><i class="iconfont icon-ic_nav_app_"></i> 海量免费漫画</p>
-                        <p class="text"><i class="iconfont icon-ic_nav_app_1"></i> 流畅阅读体验</p>
-                        <p class="text"><i class="iconfont icon-ic_nav_app_2"></i> 无码高清画质</p>
-                        <span class="triangle"><i class="iconfont icon-ic_nav_toast_sj"></i></span>
-                      </div>
-                    </li> -->
-                </ul>
-                <div class="j-header-avatar in-header__avatar fl">
+                S<div class="j-header-avatar in-header__avatar fl">
                     <a href="/user/">
                         <img class="j-user-avatar"
                              src="https://oss.mkzcdn.com/default/member/avatar/10.png!avatar-100" alt="用户头像">
@@ -177,264 +136,19 @@
         <div class="rd-article-wr clearfix">
             <!-- 渲染章节图片 -->
             <div id="pages-tpl">
-                <div class="rd-article__pic hide" data-page_id="9082253" style="display: block;">
-                    <img class="lazy-read"
-                         data-src="https://content.mkzcdn.com/image/20220921/632abc89d6f71-1200x3000.jpg!page-800-x?auth_key=1709406259-0-0-ad9bf36eb37ddb6ee32279f159ca170d"
-                         src="https://content.mkzcdn.com/image/20220921/632abc89d6f71-1200x3000.jpg!page-800-x?auth_key=1709406259-0-0-ad9bf36eb37ddb6ee32279f159ca170d"
-                         alt="9082253}" style="display: inline-block;">
-                    <div class="rd-article__toast id-9082253 rended" data-page_id="9082253">
-                        <div class="toast-item"
-                             style="left: 800px; top: 109.156px; transition-duration: 10000ms; transform: translate(-877px, 0px) translateZ(0px);">
-                            <div class="avatar"
-                                 style="background: url(&quot;https://oss.mkzcdn.com/image/20200811/5f31e81386a09-432x432.jpg!avatar-100&quot;) center center / cover no-repeat;">
-                            </div><span class="text">好看</span>
+                @if (lstLinkImgContent != null && lstLinkImgContent.Count > 0)
+                {
+                    @for (int i = 0; i < lstLinkImgContent.Count; i++)
+                    {
+                        var currentItem = lstLinkImgContent[i];
+                        <div class="rd-article__pic hide" style="display: block;">
+                            <img class="lazy-read"
+                                 src="@currentItem"
+                                 alt="9082254}" style="display: inline-block;">
+                            <div class="rd-article__toast id"></div>
                         </div>
-                        <div class="toast-item"
-                             style="left: 800px; top: 318.968px; transition-duration: 10000ms; transform: translate(-877px, 0px) translateZ(0px);">
-                            <div class="avatar"
-                                 style="background: url(&quot;https://oss.mkzcdn.com/default/member/avatar/7.jpg!avatar-100&quot;) center center / cover no-repeat;">
-                            </div><span class="text">好看</span>
-                        </div>
-                        <div class="toast-item"
-                             style="left: 800px; top: 274.452px; transition-duration: 10000ms; transform: translate(-875px, 0px) translateZ(0px);">
-                            <div class="avatar"
-                                 style="background: url(&quot;https://oss.mkzcdn.com/image/20200822/5f40f8667ee9a-823x816.jpg!avatar-100&quot;) center center / cover no-repeat;">
-                            </div><span class="text">……</span>
-                        </div>
-                        <div class="toast-item"
-                             style="left: 800px; top: 85.2552px; transition-duration: 10000ms; transform: translate(-852px, 0px) translateZ(0px);">
-                            <div class="avatar"
-                                 style="background: url(&quot;https://oss.mkzcdn.com/image/20200822/5f40f8667ee9a-823x816.jpg!avatar-100&quot;) center center / cover no-repeat;">
-                            </div><span class="text">…</span>
-                        </div>
-                        <div class="toast-item"
-                             style="left: 800px; top: 44.8873px; transition-duration: 10000ms; transform: translate(-875px, 0px) translateZ(0px);">
-                            <div class="avatar"
-                                 style="background: url(&quot;https://oss.mkzcdn.com/image/20200822/5f40f8667ee9a-823x816.jpg!avatar-100&quot;) center center / cover no-repeat;">
-                            </div><span class="text">……</span>
-                        </div>
-                        <div class="toast-item"
-                             style="left: 800px; top: 109.947px; transition-duration: 10000ms; transform: translate(-890px, 0px) translateZ(0px);">
-                            <div class="avatar"
-                                 style="background: url(&quot;https://oss.mkzcdn.com/image/20200404/5e8863772c493-132x132.!avatar-100&quot;) center center / cover no-repeat;">
-                            </div><span class="text">vbnh</span>
-                        </div>
-                        <div class="toast-item"
-                             style="left: 800px; top: 219.363px; transition-duration: 10000ms; transform: translate(-850px, 0px) translateZ(0px);">
-                            <div class="avatar"
-                                 style="background: url(&quot;https://oss.mkzcdn.com/image/20200502/5eaca4ca4b10c-281x281.jpg!avatar-100&quot;) center center / cover no-repeat;">
-                            </div><span class="text">...</span>
-                        </div>
-                        <div class="toast-item"
-                             style="left: 800px; top: 94.6297px; transition-duration: 10000ms; transform: translate(-853px, 0px) translateZ(0px);">
-                            <div class="avatar"
-                                 style="background: url(&quot;https://oss.mkzcdn.com/image/20210720/60f6d92178986-289x289.jpg!avatar-100&quot;) center center / cover no-repeat;">
-                            </div><span class="text">乙</span>
-                        </div>
-                        <div class="toast-item"
-                             style="left: 800px; top: 71.9581px; transition-duration: 10000ms; transform: translate(-853px, 0px) translateZ(0px);">
-                            <div class="avatar"
-                                 style="background: url(&quot;https://oss.mkzcdn.com/image/20200705/5f01bd076f6f4-694x694.jpg!avatar-100&quot;) center center / cover no-repeat;">
-                            </div><span class="text">。</span>
-                        </div>
-                        <div class="toast-item"
-                             style="left: 800px; top: 22.6378px; transition-duration: 10000ms; transform: translate(-853px, 0px) translateZ(0px);">
-                            <div class="avatar"
-                                 style="background: url(&quot;https://oss.mkzcdn.com/image/20210119/6005cef484c57-640x641.jpg!avatar-100&quot;) center center / cover no-repeat;">
-                            </div><span class="text">。</span>
-                        </div>
-                        <div class="toast-item">
-                            <div class="avatar"></div><span class="text"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="rd-article__pic hide" data-page_id="9082254" style="display: block;">
-                    <img class="lazy-read"
-                         data-src="https://content.mkzcdn.com/image/20220921/632abc8a3fa6c-1200x1992.jpg!page-800-x?auth_key=1709406259-0-0-534802383f84e9c44d30294fae5eeace"
-                         src="https://content.mkzcdn.com/image/20220921/632abc8a3fa6c-1200x1992.jpg!page-800-x?auth_key=1709406259-0-0-534802383f84e9c44d30294fae5eeace"
-                         alt="9082254}" style="display: inline-block;">
-                    <div class="rd-article__toast id-9082254" data-page_id="9082254"></div>
-                </div>
-                <div class="rd-article__pic hide" data-page_id="9082255" style="display: block;">
-                    <img class="lazy-read"
-                         data-src="https://content.mkzcdn.com/image/20220921/632abc8a7f84a-1200x1715.jpg!page-800-x?auth_key=1709406259-0-0-4d5373be523db17bc939a9b5e1e66f58"
-                         src="https://content.mkzcdn.com/image/20220921/632abc8a7f84a-1200x1715.jpg!page-800-x?auth_key=1709406259-0-0-4d5373be523db17bc939a9b5e1e66f58"
-                         alt="9082255}" style="display: inline-block;">
-                    <div class="rd-article__toast id-9082255" data-page_id="9082255"></div>
-                </div>
-                <div class="rd-article__pic hide" data-page_id="9082256" style="display: block;">
-                    <img class="lazy-read"
-                         data-src="https://content.mkzcdn.com/image/20220921/632abc8ac510a-1200x1440.jpg!page-800-x?auth_key=1709406259-0-0-0f3e5cd9ffa9821d2a9ada00dcc12561"
-                         src="https://content.mkzcdn.com/image/20220921/632abc8ac510a-1200x1440.jpg!page-800-x?auth_key=1709406259-0-0-0f3e5cd9ffa9821d2a9ada00dcc12561"
-                         alt="9082256}" style="display: inline-block;">
-                    <div class="rd-article__toast id-9082256" data-page_id="9082256"></div>
-                </div>
-                <div class="rd-article__pic hide" data-page_id="9082257" style="display: block;">
-                    <img class="lazy-read"
-                         data-src="https://content.mkzcdn.com/image/20220921/632abc8b23b69-1200x816.jpg!page-800-x?auth_key=1709406259-0-0-c0954f3802ce19f0ff4a3a38fd09be0d"
-                         src="https://content.mkzcdn.com/image/20220921/632abc8b23b69-1200x816.jpg!page-800-x?auth_key=1709406259-0-0-c0954f3802ce19f0ff4a3a38fd09be0d"
-                         alt="9082257}" style="display: inline-block;">
-                    <div class="rd-article__toast id-9082257" data-page_id="9082257"></div>
-                </div>
-                <div class="rd-article__pic hide" data-page_id="9082258" style="display: block;">
-                    <img class="lazy-read"
-                         data-src="https://content.mkzcdn.com/image/20220921/632abc8b8af57-1200x1752.jpg!page-800-x?auth_key=1709406259-0-0-5d044edad7e5903da57da8fc8981a83f"
-                         src="https://content.mkzcdn.com/image/20220921/632abc8b8af57-1200x1752.jpg!page-800-x?auth_key=1709406259-0-0-5d044edad7e5903da57da8fc8981a83f"
-                         alt="9082258}" style="display: inline-block;">
-                    <div class="rd-article__toast id-9082258 rended" data-page_id="9082258">
-                        <div class="toast-item"
-                             style="left: 800px; top: 331.234px; transition-duration: 10000ms; transform: translate(-861px, 0px) translateZ(0px);">
-                            <div class="avatar"
-                                 style="background: url(&quot;https://oss.mkzcdn.com/image/20210613/60c570555cb7b-808x807.jpg!avatar-100&quot;) center center / cover no-repeat;">
-                            </div><span class="text">gg</span>
-                        </div>
-                        <div class="toast-item"
-                             style="left: 800px; top: 37.0585px; transition-duration: 10000ms; transform: translate(-997px, 0px) translateZ(0px);">
-                            <div class="avatar"
-                                 style="background: url(&quot;https://oss.mkzcdn.com/image/20190509/5cd3bcc021811-1200x1200.jpg!avatar-100&quot;) center center / cover no-repeat;">
-                            </div><span class="text">我觉的妹妹没死</span>
-                        </div>
-                        <div class="toast-item"
-                             style="left: 800px; top: 205.817px; transition-duration: 10000ms; transform: translate(-877px, 0px) translateZ(0px);">
-                            <div class="avatar"
-                                 style="background: url(&quot;https://oss.mkzcdn.com/image/20210629/60dae14d08a4d-640x640.jpg!avatar-100&quot;) center center / cover no-repeat;">
-                            </div><span class="text">帅！</span>
-                        </div>
-                        <div class="toast-item"
-                             style="left: 800px; top: 53.758px; transition-duration: 10000ms; transform: translate(-859px, 0px) translateZ(0px);">
-                            <div class="avatar"
-                                 style="background: url(&quot;https://oss.mkzcdn.com/image/20200207/5e3d68688ad2d-78x78.jpg!avatar-100&quot;) center center / cover no-repeat;">
-                            </div><span class="text">66</span>
-                        </div>
-                        <div class="toast-item"
-                             style="left: 800px; top: 322.76px; transition-duration: 10000ms; transform: translate(-873px, 0px) translateZ(0px);">
-                            <div class="avatar"
-                                 style="background: url(&quot;https://oss.mkzcdn.com/image/20200207/5e3d68688ad2d-78x78.jpg!avatar-100&quot;) center center / cover no-repeat;">
-                            </div><span class="text">666</span>
-                        </div>
-                        <div class="toast-item"
-                             style="left: 800px; top: 24.872px; transition-duration: 10000ms; transform: translate(-901px, 0px) translateZ(0px);">
-                            <div class="avatar"
-                                 style="background: url(&quot;https://oss.mkzcdn.com/image/20190221/5c6e165075a66-762x762.jpg!avatar-100&quot;) center center / cover no-repeat;">
-                            </div><span class="text">。。。</span>
-                        </div>
-                        <div class="toast-item"
-                             style="left: 800px; top: 143.142px; transition-duration: 10000ms; transform: translate(-853px, 0px) translateZ(0px);">
-                            <div class="avatar"
-                                 style="background: url(&quot;https://oss.mkzcdn.com/image/20220203/61fbe3204dc83-976x976.jpg!avatar-100&quot;) center center / cover no-repeat;">
-                            </div><span class="text">，</span>
-                        </div>
-                        <div class="toast-item"
-                             style="left: 800px; top: 169.264px; transition-duration: 10000ms; transform: translate(-877px, 0px) translateZ(0px);">
-                            <div class="avatar"
-                                 style="background: url(&quot;https://oss.mkzcdn.com/image/20210613/60c570555cb7b-808x807.jpg!avatar-100&quot;) center center / cover no-repeat;">
-                            </div><span class="text">？？</span>
-                        </div>
-                        <div class="toast-item"
-                             style="left: 800px; top: 338.829px; transition-duration: 10000ms; transform: translate(-901px, 0px) translateZ(0px);">
-                            <div class="avatar"
-                                 style="background: url(&quot;https://oss.mkzcdn.com/image/20210613/60c570555cb7b-808x807.jpg!avatar-100&quot;) center center / cover no-repeat;">
-                            </div><span class="text">？？？</span>
-                        </div>
-                        <div class="toast-item"
-                             style="left: 800px; top: 75.2559px; transition-duration: 10000ms; transform: translate(-861px, 0px) translateZ(0px);">
-                            <div class="avatar"
-                                 style="background: url(&quot;https://oss.mkzcdn.com/image/20210613/60c570555cb7b-808x807.jpg!avatar-100&quot;) center center / cover no-repeat;">
-                            </div><span class="text">gg</span>
-                        </div>
-                        <div class="toast-item">
-                            <div class="avatar"></div><span class="text"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="rd-article__pic hide" data-page_id="9082259" style="display: block;">
-                    <img class="lazy-read"
-                         data-src="https://content.mkzcdn.com/image/20220921/632abc8bc53fc-1200x2856.jpg!page-800-x?auth_key=1709406259-0-0-7aace5b9c065076fb78570c5c3e032d4"
-                         src="https://content.mkzcdn.com/image/20220921/632abc8bc53fc-1200x2856.jpg!page-800-x?auth_key=1709406259-0-0-7aace5b9c065076fb78570c5c3e032d4"
-                         alt="9082259}" style="display: inline-block;">
-                    <div class="rd-article__toast id-9082259" data-page_id="9082259"></div>
-                </div>
-                <div class="rd-article__pic hide" data-page_id="9082260" style="display: block;">
-                    <img class="lazy-read"
-                         data-src="https://content.mkzcdn.com/image/20220921/632abc8c4db5f-1200x2136.jpg!page-800-x?auth_key=1709406259-0-0-f3d17988cf18804db74d745b77538fad"
-                         src="https://content.mkzcdn.com/image/20220921/632abc8c4db5f-1200x2136.jpg!page-800-x?auth_key=1709406259-0-0-f3d17988cf18804db74d745b77538fad"
-                         alt="9082260}" style="display: inline-block;">
-                    <div class="rd-article__toast id-9082260" data-page_id="9082260"></div>
-                </div>
-                <div class="rd-article__pic hide" data-page_id="9082261" style="display: block;">
-                    <img class="lazy-read"
-                         data-src="https://content.mkzcdn.com/image/20220921/632abc8cadd48-1200x3215.jpg!page-800-x?auth_key=1709406259-0-0-a04efde0f7d83cecb15306313f008f92"
-                         src="https://content.mkzcdn.com/image/20220921/632abc8cadd48-1200x3215.jpg!page-800-x?auth_key=1709406259-0-0-a04efde0f7d83cecb15306313f008f92"
-                         alt="9082261}" style="display: inline-block;">
-                    <div class="rd-article__toast id-9082261" data-page_id="9082261"></div>
-                </div>
-                <div class="rd-article__pic hide" data-page_id="9082262" style="display: block;">
-                    <img class="lazy-read"
-                         data-src="https://content.mkzcdn.com/image/20220921/632abc8d219e1-1200x1596.jpg!page-800-x?auth_key=1709406259-0-0-02b6c2f2dfe74c603a051b1a730281dd"
-                         src="https://content.mkzcdn.com/image/20220921/632abc8d219e1-1200x1596.jpg!page-800-x?auth_key=1709406259-0-0-02b6c2f2dfe74c603a051b1a730281dd"
-                         alt="9082262}" style="display: inline-block;">
-                    <div class="rd-article__toast id-9082262" data-page_id="9082262"></div>
-                </div>
-                <div class="rd-article__pic hide" data-page_id="9082263" style="display: block;">
-                    <img class="lazy-read"
-                         data-src="https://content.mkzcdn.com/image/20220921/632abc8d82f70-1200x912.jpg!page-800-x?auth_key=1709406259-0-0-2e542c408612e02f9fd312085f395e7d"
-                         src="https://static.mkzcdn.com/home/assets/images/read/lazyload_img.png" alt="9082263}">
-                    <div class="rd-article__toast id-9082263" data-page_id="9082263"></div>
-                </div>
-                <div class="rd-article__pic hide" data-page_id="9082264" style="display: block;">
-                    <img class="lazy-read"
-                         data-src="https://content.mkzcdn.com/image/20220921/632abc8e19b95-1200x2586.jpg!page-800-x?auth_key=1709406259-0-0-8879a2579b7a0a571f8e57ed43f4c1a6"
-                         src="https://content.mkzcdn.com/image/20220921/632abc8e19b95-1200x2586.jpg!page-800-x?auth_key=1709406259-0-0-8879a2579b7a0a571f8e57ed43f4c1a6"
-                         alt="9082264}" style="display: inline-block;">
-                    <div class="rd-article__toast id-9082264" data-page_id="9082264"></div>
-                </div>
-                <div class="rd-article__pic hide" data-page_id="9082265" style="display: block;">
-                    <img class="lazy-read"
-                         data-src="https://content.mkzcdn.com/image/20220921/632abc8e691e6-1200x2699.jpg!page-800-x?auth_key=1709406259-0-0-2ea59e53447c410eaa87204a84b02052"
-                         src="https://content.mkzcdn.com/image/20220921/632abc8e691e6-1200x2699.jpg!page-800-x?auth_key=1709406259-0-0-2ea59e53447c410eaa87204a84b02052"
-                         alt="9082265}" style="display: inline-block;">
-                    <div class="rd-article__toast id-9082265" data-page_id="9082265"></div>
-                </div>
-                <div class="rd-article__pic hide" data-page_id="9082266" style="display: block;">
-                    <img class="lazy-read"
-                         data-src="https://content.mkzcdn.com/image/20220921/632abc8ee83a2-1200x1674.jpg!page-800-x?auth_key=1709406259-0-0-de4ebbe9ba9c3dcf3e1f620a1275bd83"
-                         src="https://content.mkzcdn.com/image/20220921/632abc8ee83a2-1200x1674.jpg!page-800-x?auth_key=1709406259-0-0-de4ebbe9ba9c3dcf3e1f620a1275bd83"
-                         alt="9082266}" style="display: inline-block;">
-                    <div class="rd-article__toast id-9082266" data-page_id="9082266"></div>
-                </div>
-                <div class="rd-article__pic hide" data-page_id="9082267" style="display: block;">
-                    <img class="lazy-read"
-                         data-src="https://content.mkzcdn.com/image/20220921/632abc8f9044a-1200x2244.jpg!page-800-x?auth_key=1709406259-0-0-5b881de47196bdfa9b277f9b48de9943"
-                         src="https://content.mkzcdn.com/image/20220921/632abc8f9044a-1200x2244.jpg!page-800-x?auth_key=1709406259-0-0-5b881de47196bdfa9b277f9b48de9943"
-                         alt="9082267}" style="display: inline-block;">
-                    <div class="rd-article__toast id-9082267" data-page_id="9082267"></div>
-                </div>
-                <div class="rd-article__pic hide" data-page_id="9082268" style="display: block;">
-                    <img class="lazy-read"
-                         data-src="https://content.mkzcdn.com/image/20220921/632abc902ea2a-1200x2868.jpg!page-800-x?auth_key=1709406259-0-0-5f77c9e36bb972368ff0fe89608955fc"
-                         src="https://static.mkzcdn.com/home/assets/images/read/lazyload_img.png" alt="9082268}">
-                    <div class="rd-article__toast id-9082268" data-page_id="9082268"></div>
-                </div>
-                <div class="rd-article__pic hide" data-page_id="9082269" style="display: block;">
-                    <img class="lazy-read"
-                         data-src="https://content.mkzcdn.com/image/20220921/632abc909b195-1200x1500.jpg!page-800-x?auth_key=1709406259-0-0-51e988bddcd275024f5253793ff60eff"
-                         src="https://content.mkzcdn.com/image/20220921/632abc909b195-1200x1500.jpg!page-800-x?auth_key=1709406259-0-0-51e988bddcd275024f5253793ff60eff"
-                         alt="9082269}" style="display: inline-block;">
-                    <div class="rd-article__toast id-9082269" data-page_id="9082269"></div>
-                </div>
-                <div class="rd-article__pic hide" data-page_id="9082270" style="display: block;">
-                    <img class="lazy-read"
-                         data-src="https://content.mkzcdn.com/image/20220921/632abc90c2af5-1200x1776.jpg!page-800-x?auth_key=1709406259-0-0-5f46e8f454f5de8fd66f79883dc13053"
-                         src="https://content.mkzcdn.com/image/20220921/632abc90c2af5-1200x1776.jpg!page-800-x?auth_key=1709406259-0-0-5f46e8f454f5de8fd66f79883dc13053"
-                         alt="9082270}" style="display: inline-block;">
-                    <div class="rd-article__toast id-9082270" data-page_id="9082270"></div>
-                </div>
-                <div class="rd-article__pic hide" data-page_id="9082271" style="display: block;">
-                    <img class="lazy-read"
-                         data-src="https://content.mkzcdn.com/image/20220921/632abc911321b-1200x1560.jpg!page-800-x?auth_key=1709406259-0-0-9bd2bd47dd16ea50dc9f1efa77990313"
-                         src="https://static.mkzcdn.com/home/assets/images/read/lazyload_img.png" alt="9082271}">
-                    <div class="rd-article__toast id-9082271" data-page_id="9082271"></div>
-                </div>
+                    }
+                }
             </div>
 
             <div class="rd-article__end hide" style="display: block;">
@@ -1663,107 +1377,18 @@
                 <i class="iconfont"></i>
             </div>
             <div class="rd-guess__comic-wr">
-                <div class="rd-guess__comic">
-                    <a class="cover" href="/208644/">
-                        <img src="https://oss.mkzcdn.com/comic/cover/20210707/60e567b94a6fb-750x999.png!cover-200" alt="凤逆天下">
-                    </a>
-                </div>
-                <div class="rd-guess__comic">
-                    <a class="cover" href="/208643/">
-                        <img src="https://oss.mkzcdn.com/comic/cover/20230106/63b78f932da0e-750x999.jpg!cover-200" alt="穿越西元3000后">
-                    </a>
-                </div>
-                <div class="rd-guess__comic">
-                    <a class="cover" href="/208645/">
-                        <img src="https://oss.mkzcdn.com/comic/cover/20210203/601a09656b366-750x999.jpg!cover-200" alt="寻找前世之旅">
-                    </a>
-                </div>
-                <div class="rd-guess__comic">
-                    <a class="cover" href="/209533/">
-                        <img src="https://oss.mkzcdn.com/comic/cover/20230106/63b7917662ab3-750x999.jpg!cover-200" alt="我被总裁黑上了！">
-                    </a>
-                </div>
-                <div class="rd-guess__comic">
-                    <a class="cover" href="/208646/">
-                        <img src="https://oss.mkzcdn.com/comic/cover/20181106/5be15681edc19-600x800.jpg!cover-200" alt="血族禁域">
-                    </a>
-                </div>
-                <div class="rd-guess__comic">
-                    <a class="cover" href="/214705/">
-                        <img src="https://oss.mkzcdn.com/comic/cover/20190715/5d2c2380f3b25-750x999.jpg!cover-200" alt="某天成为王的女儿">
-                    </a>
-                </div>
-                <div class="rd-guess__comic">
-                    <a class="cover" href="/208642/">
-                        <img src="https://oss.mkzcdn.com/comic/cover/20210629/60dab657426f2-750x999.jpg!cover-200" alt="妃夕妍雪">
-                    </a>
-                </div>
-                <div class="rd-guess__comic">
-                    <a class="cover" href="/214712/">
-                        <img src="https://oss.mkzcdn.com/comic/cover/20190717/5d2eb40d48465-750x999.jpg!cover-200"
-                             alt="妈咪快跑：爹地追来了">
-                    </a>
-                </div>
-                <div class="rd-guess__comic">
-                    <a class="cover" href="/212470/">
-                        <img src="https://oss.mkzcdn.com/comic/cover/20230106/63b78da17a9d8-750x999.jpg!cover-200" alt="万丈光芒不及你">
-                    </a>
-                </div>
-                <div class="rd-guess__comic">
-                    <a class="cover" href="/212584/">
-                        <img src="https://oss.mkzcdn.com/comic/cover/20190719/5d318caa7cf47-3183x4244.jpg!cover-200" alt="吸血鬼男神">
-                    </a>
-                </div>
-                <div class="rd-guess__comic">
-                    <a class="cover" href="/208697/">
-                        <img src="https://oss.mkzcdn.com/comic/cover/20181106/5be1553bad82f-600x800.jpg!cover-200" alt="三眼哮天录">
-                    </a>
-                </div>
-                <div class="rd-guess__comic">
-                    <a class="cover" href="/212764/">
-                        <img src="https://oss.mkzcdn.com/comic/cover/20200924/5f6c3a47560a5-750x1000.jpg!cover-200" alt="天醒之路">
-                    </a>
-                </div>
-                <div class="rd-guess__comic">
-                    <a class="cover" href="/209945/">
-                        <img src="https://oss.mkzcdn.com/comic/cover/20181206/5c0918761c878-750x999.jpg!cover-200" alt="恶魔总裁的祭品新娘">
-                    </a>
-                </div>
-                <div class="rd-guess__comic">
-                    <a class="cover" href="/213112/">
-                        <img src="https://oss.mkzcdn.com/comic/cover/20190912/5d7a1b1b47aa8-750x999.jpg!cover-200" alt="因爱宠你">
-                    </a>
-                </div>
-                <div class="rd-guess__comic">
-                    <a class="cover" href="/212076/">
-                        <img src="https://oss.mkzcdn.com/comic/cover/20230106/63b7950a0b8ab-750x999.jpg!cover-200" alt="冷酷总裁的夏天">
-                    </a>
-                </div>
-                <div class="rd-guess__comic">
-                    <a class="cover" href="/208698/">
-                        <img src="https://oss.mkzcdn.com/comic/cover/20210706/60e3c76661fda-750x999.jpg!cover-200" alt="奇怪的苏夕">
-                    </a>
-                </div>
-                <div class="rd-guess__comic">
-                    <a class="cover" href="/214368/">
-                        <img src="https://oss.mkzcdn.com/comic/cover/20210604/60b9fa4bb5250-750x999.jpg!cover-200" alt="医武至尊">
-                    </a>
-                </div>
-                <div class="rd-guess__comic">
-                    <a class="cover" href="/212807/">
-                        <img src="https://oss.mkzcdn.com/comic/cover/20200119/5e23f76727f6d-750x1000.jpg!cover-200" alt="极品战兵在都市">
-                    </a>
-                </div>
-                <div class="rd-guess__comic">
-                    <a class="cover" href="/213058/">
-                        <img src="https://oss.mkzcdn.com/comic/cover/20230106/63b799ce643d1-750x999.jpg!cover-200" alt="狼少女养成记">
-                    </a>
-                </div>
-                <div class="rd-guess__comic">
-                    <a class="cover" href="/213184/">
-                        <img src="https://oss.mkzcdn.com/comic/cover/20210112/5ffd0bd3b8c4e-750x999.jpg!cover-200" alt="我的V信是外挂">
-                    </a>
-                </div>
+                @if (lstLinkImgContent != null && lstLinkImgContent.Count > 0)
+                {
+                    @for (int i = 0; i < lstLinkImgContent.Count; i++)
+                    {
+                        var currentItem = lstLinkImgContent[i];
+                        <div class="rd-guess__comic">
+                            <a class="cover">
+                                <img src="@currentItem">
+                            </a>
+                        </div>
+                    }
+                }
             </div>
         </div>
         <div class="rd-toast clearfix">
@@ -1798,5 +1423,30 @@
 </html>
 
 @code {
+    [Parameter]
+    public string Id { get; set; }
+    private List<string> lstLinkImgContent { get; set; }
+    private string StoryName { get; set; }
+    private string ChapterName { get; set; }
+    private Guid StoryId { get; set; }
 
+    protected override async Task HandleAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if (!string.IsNullOrEmpty(Id))
+            {
+                var chapterId = Guid.Parse(Id);
+                var contentChapter = await _storiesService.GetContentChapter(chapterId);
+                if (contentChapter != null)
+                {
+                    lstLinkImgContent = contentChapter.ImgLinkContent;
+                    StoryName = contentChapter.StoryName;
+                    ChapterName = contentChapter.ChapterName;
+                    StoryId = contentChapter.StoryId;
+                    StateHasChanged();
+                }
+            }
+        }
+    }
 }
