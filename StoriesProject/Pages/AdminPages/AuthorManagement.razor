@@ -9,7 +9,7 @@
 
 <body>
     <div class="wrapper">
-        <AdminSidebar tab=1/>
+        <AdminSidebar tab=1 />
         <div class="main">
             <nav class="navbar navbar-expand px-4 py-3">
                 <form action="#" class="d-none d-sm-inline-block">
@@ -54,152 +54,158 @@
 
 
                         <div class="tab-content" id="myTabsContent">
-                            @if(selectedTab == 1)
+                            @if (selectedTab == 1)
                             {
                                 <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab">
                                     <h3 class="fw-bold fs-5 mb-5" style="color: rgb(53, 70, 145);">Chờ xét duyệt</h3>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <table class="table table-striped" style="width: 95%;">
-                                                <thead>
-                                                    <tr class="highlight">
-                                                        <th scope="col">#</th>
-                                                        <th scope="col">Họ tên</th>
-                                                        <th scope="col">Email</th>
-                                                        <th scope="col">Ngày đăng ký</th>
-                                                        <th scope="col">Action</th>
-
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @if (lstRegisterAccountants != null && lstRegisterAccountants.Count() > 0)
-                                                    {
-                                                        @for (int i = 0; i < lstRegisterAccountants.Count; i++)
-                                                        {
-                                                            var item = lstRegisterAccountants[i];
-                                                            int currentIndex = i + 1;
-                                                            <tr>
-                                                                <th scope="row">@currentIndex</th>
-                                                                <td>@item.Name</td>
-                                                                <td>@item.Email</td>
-                                                                <td>@item.CreatedDate</td>
-                                                                <td>
-                                                                    <button type="button" class="btn btn-success"
-                                                                            style="background-color: #1f6b0a;"
-                                                                        @onclick="() => ApprovedAccountant(item.AuthorRegisterId)"
-                                                                    >
-                                                                        Duyệt
-                                                                    </button>
-                                                                    <button type="button" class="btn btn-danger" style="background-color: #9e2828;"
-                                                                        @onclick="() => DeniedAccountant(item.AuthorRegisterId)"
-                                                                    >
-                                                                        Từ
-                                                                        chối
-                                                                    </button>
-                                                                </td>
-                                                            </tr>
-                                                        }
-                                                    }
-                                                </tbody>
-                                            </table>
+                                    <div>
+                                        <div class="mb-3"
+                                             style="width: 70%;display: flex; align-items: center;justify-content: space-between;">
+                                            <div style="width: 40%;">
+                                                <strong>Tác giả:</strong>
+                                                <input type="text" class="form-control" id="comic-name" placeholder="Tên/Username...">
+                                            </div>
                                         </div>
+                                        <button class="btn btn-primary mb-5">Tìm kiếm</button>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover custom-table" style="width: 90%;">
+                                            <thead>
+                                                <tr class="highlight">
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Họ tên</th>
+                                                    <th scope="col">Email</th>
+                                                    <th scope="col">Ngày đăng ký</th>
+                                                    <th scope="col">Action</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (lstRegisterAccountants != null && lstRegisterAccountants.Count() > 0)
+                                                {
+                                                    @for (int i = 0; i < lstRegisterAccountants.Count; i++)
+                                                    {
+                                                        var item = lstRegisterAccountants[i];
+                                                        int currentIndex = i + 1;
+                                                        <tr>
+                                                            <th scope="row">@currentIndex</th>
+                                                            <td>@item.Name</td>
+                                                            <td>@item.Email</td>
+                                                            <td>@item.CreatedDate</td>
+                                                            <td>
+                                                                <button type="button" class="btn btn-success"
+                                                                        style="background-color: #1f6b0a;"
+                                                                @onclick="() => ApprovedAccountant(item.AuthorRegisterId)">
+                                                                    Duyệt
+                                                                </button>
+                                                                <button type="button" class="btn btn-danger" style="background-color: #9e2828;"
+                                                                @onclick="() => DeniedAccountant(item.AuthorRegisterId)">
+                                                                    Từ
+                                                                    chối
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
 
                             }
-                            @if(selectedTab == 2)
+                            @if (selectedTab == 2)
                             {
                                 <div class="tab-pane fade show active" id="blocked" role="tabpanel" aria-labelledby="blocked-tab">
                                     <h3 class="fw-bold fs-5 mb-4" style="color: #9e2828;">Danh sách tài khoản</h3>
-                                   @*  <div style="display: flex;align-items: center;" class="mb-5">
-                                        <strong>Thống kê theo: </strong>
-                                        <div class="dropdown">
-                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                                    data-bs-toggle="dropdown" aria-expanded="false" style="width: 200px; margin-left: 10px;">
-                                                All of time
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <li><a class="dropdown-item" href="#">Theo tháng</a></li>
-                                                <li><a class="dropdown-item" href="#">Theo tuần</a></li>
-                                                <li><a class="dropdown-item" href="#">Theo năm</a></li>
-                                                <li><a class="dropdown-item" href="#">All of time</a></li>
-                                            </ul>
-                                        </div>
-                                    </div> *@
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <table class="table table-striped" style="width: 95%;">
-                                                <thead>
-                                                    <tr class="highlight">
-                                                        <th scope="col">#</th>
-                                                        <th scope="col">Họ tên</th>
-                                                        <th scope="col">Username</th>
-                                                        <th scope="col">Email</th>
-                                                        <th scope="col">Trạng thái</th>
-                                                        <th scope="col">Hành động</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @if (lstLockedAccountant != null && lstLockedAccountant.Count() > 0)
+                                    @*  <div style="display: flex;align-items: center;" class="mb-5">
+                                <strong>Thống kê theo: </strong>
+                                <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false" style="width: 200px; margin-left: 10px;">
+                                All of time
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" href="#">Theo tháng</a></li>
+                                <li><a class="dropdown-item" href="#">Theo tuần</a></li>
+                                <li><a class="dropdown-item" href="#">Theo năm</a></li>
+                                <li><a class="dropdown-item" href="#">All of time</a></li>
+                                </ul>
+                                </div>
+                                </div> *@
+                                    <div class="table-responsive">
+                                        <table class="table table-hover custom-table" style="width: 95%;">
+                                            <thead>
+                                                <tr class="highlight">
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Họ tên</th>
+                                                    <th scope="col">Username</th>
+                                                    <th scope="col">Email</th>
+                                                    <th scope="col">Trạng thái</th>
+                                                    <th scope="col">Hành động</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (lstLockedAccountant != null && lstLockedAccountant.Count() > 0)
+                                                {
+                                                    @for (int i = 0; i < lstLockedAccountant.Count; i++)
                                                     {
-                                                        @for (int i = 0; i < lstLockedAccountant.Count; i++)
-                                                        {
-                                                            var item = lstLockedAccountant[i];
-                                                            int currentIndex = i + 1;
-                                                            var state = item.IsLocked ? "Bị chặn" : "Hoạt động";
-                                                            <tr>
-                                                                <th scope="row">@currentIndex</th>
-                                                                <td>@item.Name</td>
-                                                                <td>@item.UserName</td>
-                                                                <td>@item.Email</td>
-                                                                <td>@state</td>
-                                                                <td>
-                                                                    @if (item.IsLocked)
-                                                                    {
-                                                                        <button type="button" class="btn btn-success"
-                                                                                style="background-color: #1f6b0a;"
-                                                                                @onclick="() => UpdateLockedAccountant(item.Id, false)">
-                                                                            Bỏ chặn
-                                                                        </button>
-                                                                    } else
-                                                                    {
-                                                                        <button type="button" class="btn btn-danger" style="background-color: #9e2828;"
-                                                                                @onclick="() => UpdateLockedAccountant(item.Id, true)">
-                                                                            Chặn
-                                                                        </button>
-                                                                    }
-                                                                    
-                                                                </td>
-                                                            </tr>
-                                                        }
+                                                        var item = lstLockedAccountant[i];
+                                                        int currentIndex = i + 1;
+                                                        var state = item.IsLocked ? "Bị chặn" : "Hoạt động";
+                                                        <tr>
+                                                            <th scope="row">@currentIndex</th>
+                                                            <td>@item.Name</td>
+                                                            <td>@item.UserName</td>
+                                                            <td>@item.Email</td>
+                                                            <td>@state</td>
+                                                            <td>
+                                                                @if (item.IsLocked)
+                                                                {
+                                                                    <button type="button" class="btn btn-success"
+                                                                            style="background-color: #1f6b0a;"
+                                                                    @onclick="() => UpdateLockedAccountant(item.Id, false)">
+                                                                        Bỏ chặn
+                                                                    </button>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <button type="button" class="btn btn-danger" style="background-color: #9e2828;"
+                                                                    @onclick="() => UpdateLockedAccountant(item.Id, true)">
+                                                                        Chặn
+                                                                    </button>
+                                                                }
+
+                                                            </td>
+                                                        </tr>
                                                     }
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                }
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
 
                             }
-                            @if(selectedTab == 3){
+                            @if (selectedTab == 3)
+                            {
                                 <div class="tab-pane fade" id="payment" role="tabpanel" aria-labelledby="payment-tab">
                                     <h3 class="fw-bold fs-5 mb-4" style="color: #751759;">Yêu cầu thanh toán</h3>
                                     @* <div style="display: flex;align-items: center;" class="mb-5">
-                                        <strong>Thống kê theo: </strong>
-                                        <div class="dropdown">
-                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                                    data-bs-toggle="dropdown" aria-expanded="false" style="width: 200px; margin-left: 10px;">
-                                                All of time
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <li><a class="dropdown-item" href="#">Theo tháng</a></li>
-                                                <li><a class="dropdown-item" href="#">Theo tuần</a></li>
-                                                <li><a class="dropdown-item" href="#">Theo năm</a></li>
-                                                <li><a class="dropdown-item" href="#">All of time</a></li>
-                                            </ul>
-                                        </div>
-                                    </div> *@
+                                <strong>Thống kê theo: </strong>
+                                <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false" style="width: 200px; margin-left: 10px;">
+                                All of time
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" href="#">Theo tháng</a></li>
+                                <li><a class="dropdown-item" href="#">Theo tuần</a></li>
+                                <li><a class="dropdown-item" href="#">Theo năm</a></li>
+                                <li><a class="dropdown-item" href="#">All of time</a></li>
+                                </ul>
+                                </div>
+                                </div> *@
                                     <div class="row">
-                                        <div style="display: flex; flex-direction: column;background-color: rgb(245, 245, 239); padding: 15px;border-radius: 5px; box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.222); margin: 30px 30px"
+                                        <div style="display: flex; flex-direction: column;background-color: white; padding: 15px;border-radius: 5px; box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.222); margin: 30px 30px"
                                              class="col-md-3">
                                             <div style="display: flex;">
                                                 <div style="display: flex; flex-direction: column;">
@@ -261,7 +267,7 @@
                         </div>
                     </div>
                 </div>
-            </footer> 
+            </footer>
         </div>
     </div>
     @*  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
