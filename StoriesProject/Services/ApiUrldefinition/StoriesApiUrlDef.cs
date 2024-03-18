@@ -180,7 +180,7 @@ namespace StoriesProject.Services.ApiUrldefinition
         /// <returns></returns>
         public static string GetListStoryForAdmin(StoryStatus status)
         {
-            return @$"{pathController}/ChangeStatusStory?status={status}";
+            return @$"{pathController}/GetListStoryForAdmin?status={status}";
         }
     }
 }

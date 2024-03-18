@@ -31,13 +31,6 @@ namespace StoriesProject.API.Controller.Base
                 if (userResult != null && !string.IsNullOrEmpty(userResult.Token))
                 {
                     _res.SuccessEventHandler(userResult);
-                    Response.Cookies.Append("access_token", userResult.Token, new CookieOptions
-                    {
-                        HttpOnly = true, // Set HttpOnly to true for security
-                        Secure = true,   // Set Secure to true if your site uses HTTPS
-                        SameSite = SameSiteMode.Strict, // Set SameSite to Strict for added security
-                        Expires = DateTimeOffset.UtcNow.AddMinutes(15) // Set the expiration time
-                    });
                 }
             }
             catch (Exception ex)

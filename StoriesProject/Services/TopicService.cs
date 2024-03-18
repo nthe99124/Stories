@@ -12,6 +12,10 @@ namespace StoriesProject.Services
     {
         Task<List<Topic>> GetAllTopic();
         Task<List<TopicGeneric>> GetAllTopicSortByStory();
+        Task<List<TopicFullInfor>> GetAllTopicInfor();
+        Task<ResponseOutput<string>> AddTopic(string topicName);
+        Task<ResponseOutput<string>> DeleteTopic(Guid topicId);
+        Task<ResponseOutput<string>> EditTopic(Guid topicId, string topicName);
     }
     public class TopicService : BaseService, ITopicService
     {
@@ -21,7 +25,7 @@ namespace StoriesProject.Services
         }
 
         /// <summary>
-        /// Hàm xử lý lấy 10 truyện mới nhất
+        /// Hàm xử lý lấy tất cả chủ đề
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
@@ -29,6 +33,17 @@ namespace StoriesProject.Services
         {
             var url = TopicApiUrlDef.GetAllTopic();
             return await RequestGetAsync<List<Topic>>(url);
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy tất cả chủ đề đủ thông tin
+        /// CreatedBy ntthe 18.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<TopicFullInfor>> GetAllTopicInfor()
+        {
+            var url = TopicApiUrlDef.GetAllTopicInfor();
+            return await RequestAuthenGetAsync<List<TopicFullInfor>>(url);
         }
 
         /// <summary>

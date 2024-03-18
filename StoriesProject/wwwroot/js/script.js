@@ -7,27 +7,32 @@ function toggleSidebar() {
     });
 }
 
-window.registerMouseEvents = () => {
-    const showComicInfo = document.getElementById('showComicInfo');
+function registerMouseEvents(classShowComicInfo, classTab) {
+    const showComicInfo = $('#' + classShowComicInfo);
+    $('.' + classTab + ' tbody tr').each(function () {
+        var row = $(this);
+        if (row) {
+            row.on('mouseenter', function (event) {
+                const mouseX = event.clientX;
+                const mouseY = event.clientY;
 
-    document.querySelectorAll('tr').forEach(row => {
-        row.addEventListener('mouseenter', (event) => {
-            const mouseX = event.clientX;
-            const mouseY = event.clientY;
-
-            showComicInfo.style.left = `${mouseX}px`;
-            showComicInfo.style.top = `${mouseY}px`;
-            showComicInfo.style.display = 'block';
-        });
-
-        row.addEventListener('mouseleave', () => {
-            showComicInfo.style.display = 'none';
-        });
+                showComicInfo.css({
+                    left: mouseX + 'px',
+                    top: mouseY + 'px',
+                    display: 'block'
+                });
+            });
+            row.on('mouseleave', function () {
+                showComicInfo.css('display', 'none');
+            });
+        }
     });
 
-    showComicInfo.addEventListener('mouseleave', () => {
-        showComicInfo.style.display = 'none';
-    });
+    if (showComicInfo) {
+        showComicInfo.on('mouseleave', function () {
+            showComicInfo.css('display', 'none');
+        });
+    }
 };
 
 window.autoIncrease = {

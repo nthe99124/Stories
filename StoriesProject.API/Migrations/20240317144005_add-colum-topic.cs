@@ -23,24 +23,26 @@ namespace StoriesProject.API.Migrations
 				@Status smallint
             AS
             BEGIN
-                SELECT s.Id, 
+                SELECT distinct s.Id, 
 					s.Name as Name, 
 					a.Name as AuthorName, 
 					s.Price, 
-                    s.Purchases as Purchases,
+					s.Purchases as Purchases,
 					s.Purchases * s.Price as Revenue,
 					s.ViewAccess,
 					s.ShortDescription as Description,
 					STUFF((SELECT ', ' + t.Name
-              FROM TopicStory ts
-              JOIN Topic t ON ts.TopicId = t.Id
-              WHERE ts.StoryId = s.Id
-              FOR XML PATH('')), 1, 2, '') AS TopicName,
-					s.CreatedDate
+						  FROM TopicStory ts
+						  JOIN Topic t ON ts.TopicId = t.Id
+						  WHERE ts.StoryId = s.Id
+						  FOR XML PATH('')), 1, 2, '') AS TopicName,
+					s.CreatedDate,
+                    s.ImageLink as ImgLinkStory
 			FROM Stories s
 			left join TopicStory ts on s.Id = ts.StoryId
 			left join Topic t on ts.TopicId = t.Id
 			left join Accountants a on a.Id = s.CreatedBy
+			where s.Status = @Status
             END;");
         }
 

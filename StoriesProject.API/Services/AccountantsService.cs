@@ -430,7 +430,7 @@ namespace StoriesProject.API.Services
                         new Claim(JwtRegisteredClaimsNamesConstant.AccId, account.Id.ToString()),
                         new Claim(JwtRegisteredClaimsNamesConstant.Jti, Guid.NewGuid().ToString()),
                     }),
-                    Expires = DateTime.UtcNow.AddMinutes(10),
+                    //Expires = DateTime.UtcNow.AddMinutes(10),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKeyByte), SecurityAlgorithms.HmacSha256)
                 };
 
@@ -444,7 +444,6 @@ namespace StoriesProject.API.Services
                         {
                             tokenDescription?.Subject.AddClaim(new Claim(JwtRegisteredClaimsNamesConstant.Role, role.RoleName));
                             tokenDescription?.Subject.AddClaim(new Claim(JwtRegisteredClaimsNamesConstant.RoleInfor, JsonSerializer.Serialize(role)));
-                            
                         }
                     }
                 }

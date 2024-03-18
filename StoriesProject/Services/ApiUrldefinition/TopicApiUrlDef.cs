@@ -5,13 +5,23 @@
         private static readonly string pathController = "/api/Topic";
 
         /// <summary>
-        /// Tạo url đăng nhập
+        /// Tạo url lấy tất cả chủ đề
         /// CreatedBy ntthe 28.02.2024
         /// </summary>
         /// <returns></returns>
         public static string GetAllTopic()
         {
             return @$"{pathController}/GetAllTopic";
+        }
+
+        /// <summary>
+        /// Tạo lấy tất cả chủ đề đủ thông tin
+        /// CreatedBy ntthe 28.02.2024
+        /// </summary>
+        /// <returns></returns>
+        public static string GetAllTopicInfor()
+        {
+            return @$"{pathController}/GetAllTopicInfor";
         }
 
         /// <summary>
