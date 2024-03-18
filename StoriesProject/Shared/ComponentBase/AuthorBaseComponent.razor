@@ -12,13 +12,21 @@
         }
         catch (Exception ex)
         {
-            if (ex is HttpRequestException httpException && httpException.StatusCode == HttpStatusCode.Unauthorized)
+            if (ex is HttpRequestException httpException)
             {
-                // Nếu là lỗi 401, chuyển hướng đến trang home
-                _navigationManager.NavigateTo("/");
-                // đồng thời xóa token
-                await RemoveSessionStorage("token");
-                await RemoveSessionStorage("userInfor");
+                switch (httpException.StatusCode)
+                {
+                    case HttpStatusCode.Unauthorized:
+                        // Nếu là lỗi 401, chuyển hướng đến trang home
+                        _navigationManager.NavigateTo("/");
+                        // đồng thời xóa token
+                        await RemoveSessionStorage("token");
+                        await RemoveSessionStorage("userInfor");
+                        break;
+                    case HttpStatusCode.Forbidden:
+                        // Nếu là lỗi 403 thì xử lý show cảnh báo không có quyền
+                        break;
+                }
             }
         }
     }

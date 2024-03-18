@@ -34,35 +34,33 @@
                         </div>
 
                         <!-- Modal -->
-                        @if (showAddCategoryModal)
-                        {
-                            <div class="modal fade show" tabindex="-1" style="display:block;" @onclick="CloseAddCategoryModal">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Thêm Thể Loại</h5>
-                                            <button type="button" class="btn-close" @onclick="CloseAddCategoryModal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form>
-                                                <div class="mb-3">
-                                                    <label for="categoryName" class="form-label">Tên thể loại</label>
-                                                    <input type="text" class="form-control" id="categoryName" @bind="newCategoryName" placeholder="Nhập tên thể loại">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="categoryDescription" class="form-label">Mô tả</label>
-                                                    <textarea class="form-control" id="categoryDescription" @bind="newCategoryDescription" rows="3" placeholder="Nhập mô tả thể loại"></textarea>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" @onclick="CloseAddCategoryModal">Hủy</button>
-                                            <button type="button" class="btn btn-primary" @onclick="AddCategory">Thêm</button>
-                                        </div>
+                        <!-- Modal -->
+                        <div class="modal" style="display: @(showAddCategoryModal || showEditCategoryModal ? "block":"" );">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">@((showAddCategoryModal ? "Thêm" : "Chỉnh sửa")) Thể Loại</h5>
+                                        <button type="button" class="btn-close" @onclick="CloseModal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="mb-3">
+                                                <label for="categoryName" class="form-label">Tên thể loại</label>
+                                                <input type="text" class="form-control" id="categoryName" @bind="selectedCategory.Name" placeholder="Nhập tên thể loại">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="categoryDescription" class="form-label">Mô tả</label>
+                                                <textarea class="form-control" id="categoryDescription" @bind="selectedCategory.Description" rows="3" placeholder="Nhập mô tả thể loại"></textarea>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" @onclick="CloseModal">Hủy</button>
+                                        <button type="button" class="btn btn-primary" @onclick="@(showAddCategoryModal ? AddCategory : SaveEditedCategory)">@((showAddCategoryModal ? "Thêm" : "Lưu"))</button>
                                     </div>
                                 </div>
                             </div>
-                        }
+                        </div>
 
                         <div class="table-responsive">
                             <table class="table table-hover custom-table" style="width: 100%;">
@@ -113,8 +111,8 @@
 
 @code {
     bool showAddCategoryModal = false;
-    string newCategoryName = "";
-    string newCategoryDescription = "";
+    bool showEditCategoryModal = false;
+    Topic selectedCategory = new Topic();
 
     private List<TopicFullInfor> lstTopic { get; set; }
 
@@ -137,12 +135,28 @@
         showAddCategoryModal = true;
     }
 
-    void CloseAddCategoryModal()
+    void ShowEditCategoryModal()
+    {
+        showEditCategoryModal = true;
+    }
+
+    void CloseModal()
     {
         showAddCategoryModal = false;
+        showEditCategoryModal = false;
+        //Để lại cái selectedCategory name với description là rỗng 
     }
+
     void AddCategory()
     {
+
+        CloseModal();
+    }
+
+    void SaveEditedCategory()
+    {
+
+        CloseModal();
     }
 
     private async Task OpenFormEditTopic(Guid topicId)
@@ -177,4 +191,5 @@
             await ShowToast(res?.Message);
         }
     }
+
 }
