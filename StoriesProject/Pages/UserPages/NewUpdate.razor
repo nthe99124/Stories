@@ -1,8 +1,10 @@
 ﻿@page "/Newupdate"
 @using StoriesProject.Model.BaseEntity;
 @using StoriesProject.Services;
+@using StoriesProject.Shared.ComponentBase
 @inject ITopicService _topicService;
 @inject IStoriesService _storiesService;
+@inherits BaseComponentCustom
 <html>
 
 <head>
@@ -442,8 +444,8 @@
                 {
                     <div class="common-comic-item">
                         <a class="cover" href="/207622/" target="_blank">
-                            <img class="lazy" data-src="@item.ImageLink"
-                                 src="@item.ImageLink"
+                            <img class="lazy"
+                                 src="@GetLinkImage(item.ImageLink)"
                                  style="display: inline-block;">
                             @* <p class="comic-feature">@item.Description</p> *@
                             <div class="cover__shadow"></div>

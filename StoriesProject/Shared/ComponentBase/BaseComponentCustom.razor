@@ -4,7 +4,7 @@
 @using System.Text.Json
 @inject NavigationManager _navigationManager;
 @inject IJSRuntime _js;
-
+@inject IConfiguration config;
 @code {
     #region TODO: các hàm dùng chung cho các form từ js => nên tách ra dạng mixin
     protected async Task<string> GetSessionStorage(string key)
@@ -49,6 +49,12 @@
     protected void NavigateToUrl(string url)
     {
         _navigationManager.NavigateTo(url);
+    }
+
+    protected string GetLinkImage(string imgFileName)
+    {
+        var baseUrlApiImage = config.GetSection("BaseUrlApiImage").Value;
+        return baseUrlApiImage + imgFileName;
     }
     #endregion
 }

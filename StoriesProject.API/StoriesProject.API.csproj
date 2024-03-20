@@ -40,6 +40,7 @@
     <Compile Include="Controller\AccountantController.cs" />
     <Compile Include="Controller\Base\BaseController.cs" />
     <Compile Include="Controller\StoriesController.cs" />
+    <Compile Include="Controller\FileController.cs" />
     <Compile Include="Controller\TopicController.cs" />
     <Compile Include="Migrations\20240302104921_update-table-story.cs" />
     <Compile Include="Migrations\20240302104921_update-table-story.Designer.cs" />

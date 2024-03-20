@@ -444,8 +444,8 @@
                 {
                     <div class="common-comic-item" @onclick="(() => NavigateToDetails(item.Id))">
                         <a class="cover">
-                            <img class="lazy" data-src="@item.ImageLink"
-                                 src="@item.ImageLink"
+                            <img class="lazy"
+                                 src="@GetLinkImage(item.ImageLink)"
                                  style="display: inline-block;">
                             @* <p class="comic-feature">@item.Description</p> *@
                             <div class="cover__shadow"></div>

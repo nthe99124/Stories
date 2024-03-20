@@ -82,7 +82,7 @@
                                 <div class="slide-item @(i == 0? "layui-this":"")" @onclick="(() => NavigateToDetails(currentItem.Id))">
                                     <a>
                                         <img class="lazy"
-                                             src="@currentItem.ImageLink"
+                                             src="@GetLinkImage(currentItem.ImageLink)"
                                              style="display: block;">
                                     </a>
                                     <p class="feature">@currentItem.Name</p>
@@ -114,7 +114,7 @@
                     <div class="in-banner--type1 fl" @onclick="(() => NavigateToDetails(currentItem.Id))">
                         <a>
                             <img class="lazy"
-                                 src="@currentItem.ImageLink"
+                                 src="@GetLinkImage(currentItem.ImageLink)"
                                  style="display: block;">
                         </a>
                         <p class="feature">@currentItem.Name</p>
@@ -125,7 +125,7 @@
                     <div class="in-banner--type2 fl" @onclick="(() => NavigateToDetails(currentItem.Id))">
                         <a>
                             <img class="lazy"
-                                 src="@currentItem.ImageLink"
+                                 src="@GetLinkImage(currentItem.ImageLink)"
                                  style="display: block;">
                         </a>
                         <p class="feature">@currentItem.Name</p>
@@ -165,7 +165,7 @@
                 <div class="in-fine__cover" @onclick="(() => NavigateToDetails(firstItem.Id))">
                     <a>
                         <img class="lazy"
-                             src="@firstItem.ImageLink"
+                             src="@GetLinkImage(currentItem.ImageLink)"
                              style="display: inline-block;">
                     </a>
                     <div class="cover__tag">@firstItem.Name</div>
@@ -189,7 +189,7 @@
                     <div class="cover">
                         <a >
                             <img class="lazy"
-                                 src="@currentItem.ImageLink" alt="无敌剑域"
+                                 src="@GetLinkImage(currentItem.ImageLink)" alt="无敌剑域"
                                  style="display: inline-block;">
                         </a>
                         <div class="cover__tag">@currentItem.Name</div>
@@ -223,7 +223,7 @@
                                     <div class="cover">
                                         <a @onclick="(() => NavigateToDetails(item.Id))">
                                             <img class="lazy-carousel"
-                                                 src="@imgLink"
+                                                 src="@GetLinkImage(imgLink)"
                                                  style="display: inline-block;">
                                         </a>
                                         <div class="cover__tag">@item.Name</div>
@@ -264,8 +264,7 @@
                                     <div class="cover">
                                         <a>
                                             <img class="lazy-carousel"
-                                                 data-src="@imgLink"
-                                                 src="@imgLink" alt="皇后很忙"
+                                                 src="@GetLinkImage(imgLink)" alt="皇后很忙"
                                                  style="display: inline-block;">
                                         </a>
                                         <div class="cover__tag">@item.Name</div>
@@ -306,8 +305,7 @@
                                     <div class="cover">
                                         <a>
                                             <img class="lazy-carousel"
-                                                 data-src="@imgLink"
-                                                 src="@imgLink" alt="氪金玩家"
+                                                 src="@GetLinkImage(imgLink)" alt="氪金玩家"
                                                  style="display: inline-block;">
                                         </a>
                                         <div class="cover__tag">@item.Name</div>
@@ -346,8 +344,7 @@
                                     <div class="cover">
                                         <a>
                                             <img class="lazy-carousel"
-                                                 data-src="@imgLink"
-                                                 src="@imgLink" alt="妖神记"
+                                                 src="@GetLinkImage(imgLink)" alt="妖神记"
                                                  style="display: inline-block;">
                                         </a>
                                         <div class="cover__tag">@item.Name</div>

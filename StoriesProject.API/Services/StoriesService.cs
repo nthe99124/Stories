@@ -184,7 +184,7 @@ namespace StoriesProject.API.Services
             {
                 var storyInsert = _mapper.Map<Story>(storyRegister);
                 storyInsert.CreatedBy = currentAuthorId;
-                storyInsert.ImageLink = imgAvatar.Name;
+                storyInsert.ImageLink = imgAvatar.FileName;
                 // Thêm mới truyện
                 await _unitOfWork.StoriesRepository.CreateAsync(storyInsert);
 

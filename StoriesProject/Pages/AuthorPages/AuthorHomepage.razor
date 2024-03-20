@@ -188,7 +188,7 @@
                         <li class="user-comic-item" @onclick="(() => NavigateToDetails(item.Id))">
                             <div class="j-item-select user-comic-item__select"> <i class="pic-select"></i> </div>
                             <a class="user-comic-item__cover">
-                                <img src="https://cdnnvd.com/nettruyen/thumb/tien-vo-de-ton.jpg">
+                                <img src="@GetLinkImage(item.ImageLink)">
                             </a>
                             <div class="user-comic-item__detail">
                                 <p class="user-comic-item--name">

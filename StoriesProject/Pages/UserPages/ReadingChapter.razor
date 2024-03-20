@@ -143,7 +143,7 @@
                         var currentItem = lstLinkImgContent[i];
                         <div class="rd-article__pic hide" style="display: block;">
                             <img class="lazy-read"
-                                 src="@currentItem"
+                                 src="@GetLinkImage(currentItem)"
                                  alt="9082254}" style="display: inline-block;">
                             <div class="rd-article__toast id"></div>
                         </div>
@@ -245,7 +245,7 @@
                         var currentItem = lstLinkImgContent[i];
                         <div class="rd-guess__comic">
                             <a class="cover">
-                                <img src="@currentItem">
+                                <img src="@GetLinkImage(currentItem)">
                             </a>
                         </div>
                     }
