@@ -207,18 +207,18 @@
         }
 
     /*        .layui-input-block .cover-y .btn,
-            .layui-input-block .cover-x .btn {
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                height: 36px;
-                text-align: center;
-                color: #fff;
-                background: rgba(0, 0, 0, 0.25);
-                cursor: pointer;
-            }
-    */
+                            .layui-input-block .cover-x .btn {
+                                position: absolute;
+                                bottom: 0;
+                                left: 0;
+                                width: 100%;
+                                height: 36px;
+                                text-align: center;
+                                color: #fff;
+                                background: rgba(0, 0, 0, 0.25);
+                                cursor: pointer;
+                            }
+                    */
     .layui-input-block > .tip {
         line-height: 18px;
         font-size: 12px;
@@ -325,7 +325,11 @@
     }
 
     .layui-form input[type=radio], .layui-form select {
-        display: inline !important;
+        display: inline-block !important;
+    }
+
+    .layui-form input[type=checkbox], .layui-form input[type=radio], .layui-form select {
+        display: inline-block !important;
     }
 </style>
 
@@ -413,10 +417,7 @@
                                         <li class="ticai-list">
                                             <input lay-filter="theme" type="checkbox" name="theme_id" title="@item.Name"
                                                    lay-skin="primary" value="@item.Id">
-                                            <div class="layui-unselect layui-form-checkbox" lay-skin="primary">
-                                                <span>@item.Name</span>
-                                                <i class="layui-icon layui-icon-ok"></i>
-                                            </div>
+                                            <span style="font-size:14px">@item.Name</span>
                                         </li>
                                     }
                                 }
@@ -434,16 +435,13 @@
                         <input type="radio" name="audience" value="4" id="audience4" />
                         <label for="audience4" style="font-size:14px">Thiếu nhi</label>
                     </div>
-                    <div class="layui-form-item font-12 protocol">
-                        <label class="layui-form-label"></label>
-                        <input checked="" type="checkbox" name="protocol" title="Tôi đã đọc và chấp thuận" lay-skin="primary">
-                        <div class="layui-unselect layui-form-checkbox layui-form-checked" lay-skin="primary">
-                            <span>
-                                Tôi đã đọc và
-                                chấp thuận
-                            </span><i class="layui-icon layui-icon-ok"></i>
-                        </div><a href="/help/10012/"
-                                 target="_blank">Thảo thuận của comic hub</a>
+                    <div class="layui-form-item font-12 protocol" style="display:flex;align-items:center">
+                        <input checked="" type="checkbox" name="protocol" lay-skin="primary" style="padding-top:10px; margin-left:9%">
+
+                        <span style="margin-left:10px;font-size:14px">
+                            Tôi đã đọc và chấp thuận
+                        </span>
+                        <a href="/help/10012/" target="_blank" style="margin:0px 10px;">Thảo thuận của comic hub</a>
                     </div>
 
                     <div class="layui-form-item">
@@ -475,7 +473,7 @@
             var res = await _storiesService.CreateStoryByAuthor(story);
 
             if (res != null && res.IsSuccess)
-            { 
+            {
                 NavigateToUrl($"/author/add-chapter/{res.Data}");
             }
         }
