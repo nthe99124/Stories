@@ -43,6 +43,9 @@ window.addCategory = () => {
 }
 
 window.getValue = function (element) {
-    debugger
     return element.value;
+}
+
+window.reload = function () {
+    window.location.reload();
 }

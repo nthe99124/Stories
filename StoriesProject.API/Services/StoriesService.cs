@@ -183,6 +183,7 @@ namespace StoriesProject.API.Services
             if (storyRegister != null && currentAuthorId != null)
             {
                 var storyInsert = _mapper.Map<Story>(storyRegister);
+                storyInsert.CreatedBy = currentAuthorId;
                 storyInsert.ImageLink = imgAvatar.Name;
                 // Thêm mới truyện
                 await _unitOfWork.StoriesRepository.CreateAsync(storyInsert);
@@ -332,9 +333,11 @@ namespace StoriesProject.API.Services
                     {
                         ChapterId = chapterInsert.Id,
                         SortOrder = i + 1,
-                        ImgLink = item.Name
+                        ImgLink = item.FileName
                     });
                 }
+
+                await _unitOfWork.ChapterContentRepository.CreateRangeAsync(chapterContentList);
                 await _unitOfWork.CommitAsync();
                 res.SuccessEventHandler();
             }

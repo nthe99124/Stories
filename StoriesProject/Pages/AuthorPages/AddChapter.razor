@@ -494,13 +494,24 @@
     }
     private async Task AddChapters()
     {
-        alertComponent.Show("Thêm chương thành công", "success");
-        
-        //if (chapter != null)
-        //{
-        //    chapter.StoryId = Guid.Parse(Id);
-        //    var res = await _storiesService.AddChapter(listSelectedFile, chapter);
-        //}
+        if (chapter != null)
+        {
+            chapter.StoryId = Guid.Parse(Id);
+            var res = await _storiesService.AddChapter(listSelectedFile, chapter);
+            var isSuccess = false;
+            if (res != null && res.IsSuccess)
+            {
+                isSuccess = true;
+                alertComponent.Show("Thêm chương thành công", "success");
+                // reset form để thêm tiếp
+                Thread.Sleep(2000);
+                await InvokeVoidAsync("reload");
+            }
+            if (!isSuccess)
+            {
+                alertComponent.Show("Thêm chương thất bại", "error");
+            }
+        }
     }
 
     private async Task HandleFileSelected(InputFileChangeEventArgs e)
