@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using StoriesProject.API.Common.Cache;
 using StoriesProject.API.Common.Repository;
+using StoriesProject.API.Common.Ulti;
 using StoriesProject.API.Services.Base;
 using StoriesProject.Model.BaseEntity;
 using StoriesProject.Model.DTO;
@@ -24,17 +25,19 @@ namespace StoriesProject.API.Services
         Task<IEnumerable<StoryAccountGeneric>?> GetNewVersionStoryByDay(DateTime dateTime);
         Task<StoryDetailFullDTO?> GetStoryById(Guid id);
         Task<IEnumerable<StoryAccountGeneric>?> GetStoryByCurrentAuthor();
-        Task<Guid?> CreateStoryByAuthor(StoryRegisterVM storyRegister);
+        Task<Guid?> CreateStoryByAuthor(IFormFile imgAvatar, StoryRegisterVM storyRegister);
         Task<List<StoryAccountGeneric>?> GetTopPurchasesStory(Guid? topicId, int numberStory);
         Task<IEnumerable<StoryInforAdmin>?> GetListStoryForAdmin(StoryStatus status);
         Task<RestOutput> ChangeStatusStory(Guid storyId, StoryStatus status);
         Task<ContentChapterGeneric> GetContentChapter(Guid chapterId);
+        Task<RestOutput> AddChapter(List<IFormFile> listFile, AddChapterVM chapter);
     }
     public class StoriesService: BaseService, IStoriesService
     {
-        public StoriesService(IHttpContextAccessor httpContextAccessor, IDistributedCacheCustom cache, IUnitOfWork unitOfWork, IMapper mapper) : base(httpContextAccessor, cache, unitOfWork, mapper)
+        private IFileUlti _fileUlti;
+        public StoriesService(IHttpContextAccessor httpContextAccessor, IDistributedCacheCustom cache, IUnitOfWork unitOfWork, IMapper mapper, IFileUlti fileUlti) : base(httpContextAccessor, cache, unitOfWork, mapper)
         {
-
+            _fileUlti = fileUlti;
         }
 
         /// <summary>
@@ -174,12 +177,13 @@ namespace StoriesProject.API.Services
         /// CreatedBy ntthe 15.03.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<Guid?> CreateStoryByAuthor(StoryRegisterVM storyRegister)
+        public async Task<Guid?> CreateStoryByAuthor(IFormFile imgAvatar, StoryRegisterVM storyRegister)
         {
             var currentAuthorId = GetUserAuthen()?.AccoutantId;
             if (storyRegister != null && currentAuthorId != null)
             {
                 var storyInsert = _mapper.Map<Story>(storyRegister);
+                storyInsert.ImageLink = imgAvatar.Name;
                 // Thêm mới truyện
                 await _unitOfWork.StoriesRepository.CreateAsync(storyInsert);
 
@@ -203,6 +207,9 @@ namespace StoriesProject.API.Services
                 }
 
                 await _unitOfWork.CommitAsync();
+
+                // lưu xong thành công thì save file
+                await _fileUlti.SaveFile(imgAvatar);
 
                 return storyInsert.Id;
             }
@@ -270,7 +277,7 @@ namespace StoriesProject.API.Services
         }
 
         /// <summary>
-        /// Hàm xử lý thay đổi trạng thái duyệt của truyện
+        /// Hàm xử lý lấy content của chapter
         /// CreatedBy ntthe 17.03.2024
         /// </summary>
         /// <returns></returns>
@@ -296,6 +303,42 @@ namespace StoriesProject.API.Services
                 result.ImgLinkContent = chapterContentList.Select(item => item.ImgLink).ToList();
             }
             return result;
+        }
+
+        /// <summary>
+        /// Hàm xử lý thêm chương mới
+        /// CreatedBy ntthe 17.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<RestOutput> AddChapter(List<IFormFile> listFile, AddChapterVM chapter)
+        {
+            var res = new RestOutput();
+            var currentAuthorId = GetUserAuthen()?.AccoutantId;
+            if (chapter != null && currentAuthorId != null)
+            {
+                var chapterInsert = _mapper.Map<Chapter>(chapter);
+                // Thêm mới chapter
+                await _unitOfWork.ChapterRepository.CreateAsync(chapterInsert);
+
+                // Thêm mới chaptercontent
+                var chapterContentList = new List<ChapterContent>();
+
+                // TODO: ntthe nghiên cứu làm lưu file luồng nhiều
+                for (int i = 0; i < listFile.Count; i++)
+                {
+                    var item = listFile[i];
+                    await _fileUlti.SaveFile(item);
+                    chapterContentList.Add(new ChapterContent()
+                    {
+                        ChapterId = chapterInsert.Id,
+                        SortOrder = i + 1,
+                        ImgLink = item.Name
+                    });
+                }
+                await _unitOfWork.CommitAsync();
+                res.SuccessEventHandler();
+            }
+            return res;
         }
 
         #region Private Method

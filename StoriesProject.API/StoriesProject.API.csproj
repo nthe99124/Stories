@@ -94,6 +94,7 @@
     <Compile Include="Services\Base\BaseService.cs" />
     <Compile Include="Services\LogEntryService.cs" />
     <Compile Include="Services\StoriesService.cs" />
+    <Compile Include="Common\Ulti\FileUlti.cs" />
     <Compile Include="Services\TopicService.cs" />
   </ItemGroup>
 

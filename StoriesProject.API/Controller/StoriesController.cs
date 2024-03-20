@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using StoriesProject.API.Common.Attribute;
 using StoriesProject.API.Common.Constant;
 using StoriesProject.API.Services;
+using StoriesProject.Model.BaseEntity;
 using StoriesProject.Model.ViewModel;
 using StoriesProject.Model.ViewModel.Story;
 using static StoriesProject.Model.Enum.DataType;
@@ -169,10 +171,11 @@ namespace StoriesProject.API.Controller.Base
         /// </summary>
         /// <returns></returns>
         [HttpPost("CreateStoryByAuthor")]
-        //[Roles(RoleConstant.Author)]
-        public async Task<IActionResult> CreateStoryByAuthor(StoryRegisterVM storyRegister)
+        [Roles(RoleConstant.Author)]
+        public async Task<IActionResult> CreateStoryByAuthor([FromForm] IFormFile file, [FromForm] string jsonRegister)
         {
-            var data = await _storiesService.CreateStoryByAuthor(storyRegister);
+            var storyRegister = JsonConvert.DeserializeObject<StoryRegisterVM>(jsonRegister);
+            var data = await _storiesService.CreateStoryByAuthor(file, storyRegister);
             _res.SuccessEventHandler(data);
             return Ok(_res);
         }
@@ -228,6 +231,20 @@ namespace StoriesProject.API.Controller.Base
         {
             var data = await _storiesService.GetContentChapter(chapterId);
             _res.SuccessEventHandler(data);
+            return Ok(_res);
+        }
+
+        /// <summary>
+        /// Hàm xử lý thêm mới chương
+        /// CreatedBy ntthe 16.03.2024
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("AddChapter")]
+        [Roles(RoleConstant.Author)]
+        public async Task<IActionResult> AddChapter([FromForm] List<IFormFile> file, [FromForm] string jsonChapter)
+        {
+            var chapter = JsonConvert.DeserializeObject<AddChapterVM>(jsonChapter);
+            _res = await _storiesService.AddChapter(file, chapter);
             return Ok(_res);
         }
     }

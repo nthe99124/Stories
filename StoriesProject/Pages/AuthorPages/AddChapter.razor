@@ -1,5 +1,8 @@
 ﻿@page "/author/add-chapter/{id}"
+@using StoriesProject.Model.BaseEntity
+@using StoriesProject.Services
 @using StoriesProject.Shared.ComponentBase;
+@inject IStoriesService _storiesService;
 @inherits AuthorBaseComponent
 <style>
     * {
@@ -433,14 +436,22 @@
                         <label class="layui-form-label">Tên chương</label>
                         <div class="layui-input-block">
                             <input type="text" name="title" required lay-verify="required" placeholder="Nhập tên chương"
-                                   autocomplete="off" class="layui-input">
+                                   autocomplete="off" class="layui-input" @bind="chapter.Name">
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label"><i>*</i>Giới thiệu: </label>
+                        <div class="layui-input-block">
+                            <textarea name="content" required="" lay-verify="required"
+                                      placeholder="Giới thiệt qua về chương"
+                                      class="layui-textarea" @bind="chapter.Description"></textarea>
                         </div>
                     </div>
                     <div id="imageContainer">
                         <div style="width: 100%;background-color: rgb(162 158 158);">
-                            <p style="font-size: 20px;color: white;margin: 5px; ">Thêm ảnh cho truyện </p>
+                            <p style="font-size: 20px;color: white;margin: 5px; ">Thêm ảnh cho chương </p>
                         </div>
-                        <input type="file" id="fileInput" multiple style="display: none;" />
+                        <InputFile OnChange="HandleFileSelected" id="fileInput" style="display:none" @ref="fileInput" multiple />
                         <button style="width: 135px;height: 180px; margin: 10px;background-color: rgb(239, 230, 230);display: flex;justify-content: center;align-items: center;border: none;cursor: pointer;"
                                 @onclick="() => addFile()">
                             <i class="fa-solid fa-file-circle-plus" style="color: white; font-size: 30px;"></i>
@@ -448,9 +459,9 @@
                     </div>
 
                     <div style="text-align: right;width: 118%; margin: 20px 0px;">
-                        <button type="button" @onclick="() => UploadImages()"
+                        <button type="button" @onclick="() => AddChapters()"
                                 style="padding: 10px 20px; background-color: #00B798; color: white; border: none; border-radius: 5px; cursor: pointer;">
-                            Upload
+                            Thêm chương
                         </button>
                     </div>
                 </div>
@@ -462,6 +473,11 @@
 @code {
     [Parameter]
     public string Id { get; set; }
+
+    private InputFile fileInput;
+    private List<IBrowserFile> listSelectedFile = new List<IBrowserFile>();
+    private AddChapterVM chapter { get; set; } = new AddChapterVM();
+
     protected override async Task HandleAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -474,9 +490,18 @@
         await InvokeVoidAsync("addFiles");
         StateHasChanged();
     }
-    private async Task<List<string>> UploadImages()
+    private async Task AddChapters()
     {
-        var imagesUrl = await InvokeAsync<List<string>>("upload");
-        return imagesUrl;
+        if (chapter != null)
+        {
+            chapter.StoryId = Guid.Parse(Id);
+            var res = await _storiesService.AddChapter(listSelectedFile, chapter);
+        }
+    }
+
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        var files = e.GetMultipleFiles();
+        listSelectedFile.AddRange(files);
     }
 }

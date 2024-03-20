@@ -1,11 +1,13 @@
 ﻿using AspNetCoreRateLimit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using StoriesProject.API.Common.Cache;
 using StoriesProject.API.Common.Mappings;
 using StoriesProject.API.Common.Repository;
+using StoriesProject.API.Common.Ulti;
 using StoriesProject.API.Repositories;
 using StoriesProject.API.Services;
 using StoriesProject.Model.BaseEntity;
@@ -31,6 +33,7 @@ services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 services.AddEndpointsApiExplorer();
 services.AddHttpContextAccessor();
+
 #endregion
 
 #region Swagger
@@ -143,6 +146,9 @@ services.AddTransient<ILogEntryService, LogEntryService>();
 services.AddTransient<IAccountantsService, AccountantsService>();
 services.AddTransient<IStoriesService, StoriesService>();
 services.AddTransient<ITopicService, TopicService>();
+
+//Ulti
+services.AddTransient<IFileUlti, FileUlti>();
 
 #endregion
 

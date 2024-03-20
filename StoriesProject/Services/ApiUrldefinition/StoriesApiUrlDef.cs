@@ -182,5 +182,16 @@ namespace StoriesProject.Services.ApiUrldefinition
         {
             return @$"{pathController}/GetListStoryForAdmin?status={status}";
         }
+
+        /// <summary>
+        /// Thêm chương mới
+        /// CreatedBy ntthe 17.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public static string AddChapter()
+        {
+            return @$"{pathController}/AddChapter";
+        }
+        
     }
 }

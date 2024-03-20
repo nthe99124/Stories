@@ -1,4 +1,5 @@
-﻿using Microsoft.JSInterop;
+﻿using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.JSInterop;
 using StoriesProject.API.Services.Base;
 using StoriesProject.Common.Cache;
 using StoriesProject.Model.BaseEntity;
@@ -6,6 +7,7 @@ using StoriesProject.Model.DTO;
 using StoriesProject.Model.DTO.Story;
 using StoriesProject.Model.ViewModel;
 using StoriesProject.Model.ViewModel.Story;
+using StoriesProject.Pages.AuthorPages;
 using StoriesProject.Services.ApiUrldefinition;
 using static StoriesProject.Model.Enum.DataType;
 
@@ -24,11 +26,12 @@ namespace StoriesProject.Services
         Task<List<StoryAccountGeneric>> GetNewVersionStoryByDay(DateTime dateTime);
         Task<StoryDetailFullDTO> GetStoryById(Guid? id);
         Task<List<StoryAccountGeneric>> GetStoryByCurrentAuthor();
-        Task<ResponseOutput<Guid?>> CreateStoryByAuthor(StoryRegisterVM storyRegister);
+        Task<ResponseOutput<Guid?>> CreateStoryByAuthor(IBrowserFile selectedFile, StoryRegisterVM storyRegister);
         Task<List<StoryAccountGeneric>> GetTopPurchasesStory(int numberStory, Guid? topicId = null);
         Task<ContentChapterGeneric> GetContentChapter(Guid chapterId);
         Task<ResponseOutput<string>> ChangeStatusStory(Guid storyId, StoryStatus status);
         Task<List<StoryInforAdmin>> GetListStoryForAdmin(StoryStatus status);
+        Task<ResponseOutput<string>> AddChapter(List<IBrowserFile> listSelectedFile, AddChapterVM chapter);
     }
     public class StoriesService : BaseService, IStoriesService
     {
@@ -172,10 +175,14 @@ namespace StoriesProject.Services
         /// CreatedBy ntthe 16.03.2024
         /// </summary>
         /// <returns></returns>
-        public async Task<ResponseOutput<Guid?>> CreateStoryByAuthor(StoryRegisterVM storyRegister)
+        public async Task<ResponseOutput<Guid?>> CreateStoryByAuthor(IBrowserFile selectedFile, StoryRegisterVM storyRegister)
         {
             var url = StoriesApiUrlDef.CreateStoryByAuthor();
-            return await RequestFullAuthenPostAsync<Guid?>(url, storyRegister);
+            var lstFile = new List<IBrowserFile>
+            {
+                selectedFile
+            };
+            return await RequestFileAsync<Guid?>(url, lstFile, storyRegister);
         }
 
         /// <summary>
@@ -225,6 +232,17 @@ namespace StoriesProject.Services
         {
             var url = StoriesApiUrlDef.GetListStoryForAdmin(status);
             return await RequestAuthenGetAsync<List<StoryInforAdmin>>(url);
+        }
+
+        /// <summary>
+        /// Hàm xử lý thêm chapter
+        /// CreatedBy ntthe 17.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ResponseOutput<string>> AddChapter(List<IBrowserFile> listSelectedFile, AddChapterVM chapter)
+        {
+            var url = StoriesApiUrlDef.AddChapter();
+            return await RequestFileAsync<string>(url, listSelectedFile, chapter);
         }
     }
 }

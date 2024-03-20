@@ -48,8 +48,9 @@
     <Compile Include="ViewModel\ResponseOutput.cs" />
     <Compile Include="ViewModel\RestOutput.cs" />
     <Compile Include="ViewModel\RestPagingOutput.cs" />
-    <Compile Include="ViewModel\Story\ChangeStatusStoryVM.cs" />
     <Compile Include="ViewModel\Story\AddChapterVM.cs" />
+    <Compile Include="ViewModel\Story\ChangeStatusStoryVM.cs" />
+    <Compile Include="ViewModel\Story\AddChapter.cs" />
     <Compile Include="ViewModel\Story\EditTopicVM.cs" />
     <Compile Include="ViewModel\Story\StoryRegisterVM.cs" />
     <Compile Include="ViewModel\Story\StoryByTopicParam.cs" />

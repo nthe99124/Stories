@@ -41,3 +41,8 @@ window.addCategory = () => {
         showComicInfo.style.display = 'none';
     });
 }
+
+window.getValue = function (element) {
+    debugger
+    return element.value;
+}

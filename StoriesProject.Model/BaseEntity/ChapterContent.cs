@@ -16,7 +16,7 @@ public partial class ChapterContent
     [Description("Vị trí")]
     public int SortOrder { get; set; }
 
-    [Description("Tên chapter truyện")]
+    [Description("Link ảnh")]
     public string? ImgLink { get; set; }
 
     [Description("Ngày tạo")]

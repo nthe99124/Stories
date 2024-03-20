@@ -13,6 +13,7 @@ namespace StoriesProject.API.Common.Mappings
             CreateMap<AuthorRegisterModel, AuthorRegister>();
             CreateMap<Story, StoryAccountGeneric>();
             CreateMap<StoryRegisterVM, Story>();
+            CreateMap<AddChapterVM, Chapter>();
             CreateMap<Story, StoryGeneric>();
         }
     }

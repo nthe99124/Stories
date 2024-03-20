@@ -3,6 +3,7 @@
 @using StoriesProject.Model.ViewModel.Story
 @using StoriesProject.Services
 @using StoriesProject.Shared.ComponentBase;
+@using static StoriesProject.Model.Enum.DataType
 @inject ITopicService _topicService;
 @inject IStoriesService _storiesService;
 @inherits AuthorBaseComponent
@@ -271,7 +272,7 @@
     .layui-input-block .ticai-list,
     .layui-input-block .update-list {
         float: left;
-        margin-right: 10px;
+        margin-right: 20px;
     }
 
     .layui-rate,
@@ -331,6 +332,17 @@
     .layui-form input[type=checkbox], .layui-form input[type=radio], .layui-form select {
         display: inline-block !important;
     }
+
+    .layui-form input[type=radio], .layui-form input[type=checkbox] {
+        scale:1.3;
+        cursor:pointer;
+    }
+
+    .radio-target-object label{
+        display: inline-block !important;
+        font-size: 14px;
+        margin-right: 20px;
+    }
 </style>
 
 
@@ -375,7 +387,7 @@
                         <div class="layui-input-block">
                             <div class="cover-y">
                                 <img id="previewImage" src="" alt="">
-                                <input type="file" id="img_input" class="J_cover_y" style="display:none" @ref="fileInput" />
+                                <InputFile OnChange="HandleFileSelected" id="img_input" class="J_cover_y" style="display:none" @ref="fileInput" multiple />
                                 <span class="btn J_cover_y" @onclick="() => OpenFilePicker()">Ảnh bìa</span>
                             </div>
                             <p class="tip">Kích thước đề xuất 600x800</p>
@@ -416,7 +428,7 @@
                                         var item = listTopic[i];
                                         <li class="ticai-list">
                                             <input lay-filter="theme" type="checkbox" name="theme_id" title="@item.Name"
-                                                   lay-skin="primary" value="@item.Id">
+                                                   lay-skin="primary" value="@item.Id" @onchange="ChangeTopicSelected" @ref="topicInput">
                                             <span style="font-size:14px">@item.Name</span>
                                         </li>
                                     }
@@ -425,23 +437,25 @@
                         </div>
                     </div>
                     <label class="layui-form-label"><i>*</i>Đối tượng: </label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="audience" value="1" id="audience1" />
-                        <label for="audience1" style="font-size:14px">Vị thành niên</label>
-                        <input type="radio" name="audience" value="2" id="audience2" />
-                        <label for="audience2" style="font-size:14px">Nữ giới</label>
-                        <input type="radio" name="audience" value="3" id="audience3" />
-                        <label for="audience3" style="font-size:14px">Nam giới</label>
-                        <input type="radio" name="audience" value="4" id="audience4" />
-                        <label for="audience4" style="font-size:14px">Thiếu nhi</label>
+                    <div class="layui-input-block radio-target-object">
+                        <input type="radio" name="audience" value="1" id="audience1" @ref="targetObjectInput" @onchange="ChangeTargetObjectSelected" />
+                        <label for="audience1" style="">Vị thành niên</label>
+                        <input type="radio" name="audience" value="2" id="audience2" @ref="targetObjectInput" @onchange="ChangeTargetObjectSelected" />
+                        <label for="audience2">Nữ giới</label>
+                        <input type="radio" name="audience" value="3" id="audience3" @ref="targetObjectInput" @onchange="ChangeTargetObjectSelected" />
+                        <label for="audience3">Nam giới</label>
+                        <input type="radio" name="audience" value="4" id="audience4" @ref="targetObjectInput" @onchange="ChangeTargetObjectSelected" />
+                        <label for="audience4">Thiếu nhi</label>
                     </div>
-                    <div class="layui-form-item font-12 protocol" style="display:flex;align-items:center">
-                        <input checked="" type="checkbox" name="protocol" lay-skin="primary" style="padding-top:10px; margin-left:9%">
-
-                        <span style="margin-left:10px;font-size:14px">
-                            Tôi đã đọc và chấp thuận
-                        </span>
-                        <a href="/help/10012/" target="_blank" style="margin:0px 10px;">Thảo thuận của comic hub</a>
+                    <div class="layui-form-item font-12 protocol">
+                        <div class="layui-input-block" style="display:flex;align-items:center">
+                            <input checked="" type="checkbox" name="protocol" lay-skin="primary" style="padding-top:10px">
+                            <span style="margin-left:10px;font-size:14px">
+                                Tôi đã đọc và chấp thuận
+                            </span>
+                            <a href="/help/10012/" target="_blank" style="margin:0px 10px;">Thảo thuận của comic hub</a>
+                        </div>
+                        
                     </div>
 
                     <div class="layui-form-item">
@@ -459,18 +473,29 @@
 </html>
 
 @code {
-    private StoryRegisterVM story { get; set; } = new StoryRegisterVM();
+    private StoryRegisterVM story { get; set; } = new StoryRegisterVM()
+    {
+        ListTopic = new List<Guid>()
+    };
     private List<Topic> listTopic { get; set; }
     private string selectedAudience = "1"; // Giá trị mặc định của radio button
-    private ElementReference fileInput;
-    private string imageDataUrl;
+    private ElementReference topicInput;
+    private ElementReference targetObjectInput;
+    private IBrowserFile selectedFile;
+    private InputFile fileInput;
+
+    private List<Guid> listTopicSelected { get; set; } = new List<Guid>();
 
     private async Task ResgiterStory()
     {
 
         if (story != null)
         {
-            var res = await _storiesService.CreateStoryByAuthor(story);
+            if (story.ListTopic.Count == 0)
+            {
+                story.ListTopic = null;
+            }
+            var res = await _storiesService.CreateStoryByAuthor(selectedFile, story);
 
             if (res != null && res.IsSuccess)
             {
@@ -493,14 +518,44 @@
     //    }
     //}
 
-    private void HandleAudienceChange(ChangeEventArgs e)
-    {
-        selectedAudience = e.Value.ToString();
-    }
-
     // Phương thức xử lý sự kiện mở cửa sổ chọn file
     private async Task OpenFilePicker()
     {
-        await InvokeVoidAsync("openFilePicker", fileInput);
+        await InvokeVoidAsync("openFilePicker", fileInput.Element);
+    }
+
+
+    private async Task ChangeTopicSelected(ChangeEventArgs e)
+    {
+        var idTopic = await InvokeAsync<string>("getValue", topicInput);
+        if (Guid.TryParse(idTopic, out Guid idTopicGuid))
+        {
+            if (e.Value is bool valueBool && !valueBool)
+            {
+                story.ListTopic.Remove(idTopicGuid);
+            }
+            else
+            {
+                story.ListTopic.Add(idTopicGuid);
+            }
+
+        }
+    }
+
+    private async Task ChangeTargetObjectSelected(ChangeEventArgs e)
+    {
+        var targetValue = await InvokeAsync<string>("getValue", targetObjectInput);
+        if (TargetObject.TryParse(targetValue, out TargetObject targetValueEnum))
+        {
+            story.TargetObject = targetValueEnum;
+        }
+    }
+
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        var files = e.GetMultipleFiles(); // Nếu bạn muốn hỗ trợ chọn nhiều tệp tin
+
+        // Trong trường hợp này, chọn một tệp tin duy nhất, vì vậy lấy tệp tin đầu tiên
+        selectedFile = files.FirstOrDefault();
     }
 }
