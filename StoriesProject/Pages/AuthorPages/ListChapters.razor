@@ -1,0 +1,335 @@
+﻿@page "/author/list-chapters/{id}"
+@using StoriesProject.Model.BaseEntity;
+@using StoriesProject.Model.DTO.Story;
+@using StoriesProject.Services;
+@using StoriesProject.Shared.ComponentBase;
+@inject IStoriesService _storiesService;
+@inherits BaseComponentCustom
+<style>
+    * {
+        box-sizing: content-box;
+    }
+
+    .header-user-wrapper .search-box input {
+        width: 250px;
+        background: rgba(255, 255, 255, 0.34);
+        border-radius: 18px;
+        color: rgba(255, 255, 255, 0.8);
+        padding: 11px 15px;
+        border: none;
+        font-size: 14px;
+        line-height: 14px;
+        height: 40px !important;
+    }
+
+    .user-selecteds a {
+        border-left: 4px solid #00B798;
+        padding-left: 43px !important;
+        background: #F8F8F8 !important;
+        color: #00B798 !important;
+    }
+
+    a:hover {
+        color: #00b798;
+    }
+
+    dl dd a:hover {
+        border-left: 4px solid #00B798 !important;
+        padding-left: 43px !important;
+        background: #F8F8F8 !important;
+        color: #00B798 !important;
+    }
+
+    .center_selected {
+        color: #00b798;
+    }
+
+    .user-right {
+        float: right;
+        width: 838px;
+        margin: 20px 0 60px;
+        border: 1px solid #DDD;
+        min-height: 372px;
+        background: #FFF;
+    }
+
+    .user-right {
+        float: right;
+        width: 838px;
+        margin: 20px 0 60px;
+        border: 1px solid #DDD;
+        min-height: 372px;
+        background: #FFF;
+    }
+
+        .user-right .user-right-top {
+            width: 100%;
+            border-bottom: 1px solid #DDD;
+            height: 47px;
+            overflow: hidden;
+        }
+
+            .user-right .user-right-top h3 {
+                -webkit-margin-before: 0;
+                -webkit-margin-after: 0;
+                font-size: 18px;
+                font-weight: normal;
+                float: left;
+                line-height: 48px;
+                margin-left: 15px;
+                margin-top: 0;
+            }
+
+    .step-nav {
+        height: 36px;
+        margin: 32px 0;
+        padding-left: 254px;
+        line-height: 36px;
+        font-size: 18px;
+        color: #ccc;
+    }
+
+        .step-nav .active {
+            color: #00b798;
+        }
+
+        .step-nav .step-itm {
+            float: left;
+            margin-right: 60px;
+        }
+
+        .step-nav .active .num {
+            background: #00b798;
+        }
+
+        .step-nav .num {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            font-size: 20px;
+            text-align: center;
+            line-height: 36px;
+            color: #fff;
+            border-radius: 18px;
+            background: #ccc;
+        }
+
+        .step-nav .active {
+            color: #00b798;
+        }
+
+        .step-nav .step-itm {
+            float: left;
+            margin-right: 60px;
+        }
+
+    .layui-input-block {
+        margin-left: 140px;
+        line-height: 38px;
+        min-height: 36px;
+    }
+
+    .de-chapter__title {
+        height: 40px;
+        margin-bottom: 20px;
+        font-size: 24px;
+        line-height: 40px;
+    }
+
+    .clearfix:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+
+    .de-chapter__title .update-time {
+        font-size: 13px;
+        color: #666;
+    }
+
+    .de-chapter__title .btn--sort {
+        float: right;
+        font-size: 14px;
+        cursor: pointer;
+        display: none;
+    }
+
+    .chapter__list .chapter__list-box {
+        max-height: 302px;
+        overflow: hidden;
+    }
+
+    .chapter__item {
+        position: relative;
+        float: left;
+        height: 22px;
+        margin-bottom: 10px;
+        padding: 10px 15px 10px 15px;
+        font-size: 14px;
+        line-height: 22px;
+        background: #fbfbfb;
+        border-radius: 2px;
+        margin-left: 20px;
+        width: 94px !important;
+    }
+
+    .chapter__list .chapter__list-box {
+        width: 100% !important;
+    }
+
+    /*        .chapter__list .chapter__list-box .chapter__item {
+                width: 94px;
+                margin-right: 5px;
+            }*/
+
+
+    .chapter__item > a {
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        cursor: pointer;
+    }
+
+    .chapter__more {
+        width: 100%;
+        height: 42px;
+        line-height: 42px;
+        font-size: 14px;
+        text-align: center;
+        color: #999;
+        clear: both;
+    }
+</style>
+
+
+<body class="page-history">
+    <!-- 头部 -->
+
+    <AuthorHeader />
+
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <div class="modal-content">
+            <img id="modalImage">
+        </div>
+    </div>
+
+    <!-- 内容 -->
+    <div class="main-container">
+        <AuthorSideBar isSelected="3" />
+
+        <!-- main-content -->
+        <div class="user-right">
+            <div class="user-right-top">
+                <h3>Tên truyện</h3>
+            </div>
+            <!--步骤-->
+            <div style="padding:10px">
+                <div class="de-chapter__title">
+                    <span>Chapter</span>
+                    <span class="update-time">Số tập: 100 chapters</span>
+                    <div class="btn--sort" style="display: block;">
+                        <button type="button"
+                                style="background-color: #2ccc9c;color: white;padding: 5px;border: none;border-radius: 5px; box-shadow: 5px 5px 5px rgb(215, 206, 206);">
+                            <i class="iconfont icon-add"></i> Thêm chapter
+                        </button>
+                    </div>
+                </div>
+                <div class="chapter__list clearfix">
+                    <ul class="chapter__list-box clearfix hide"
+                        style="display: block; height: auto;overflow: hidden; height: 302px;">
+
+                        <li class="j-chapter-item chapter__item">
+                            <a class="j-chapter-link">
+                                asdfasdfasdfadsfasdfasdfasdfadsf
+                            </a>
+                        </li>
+                        <li class="j-chapter-item chapter__item">
+                            <a class="j-chapter-link">
+                                <i class="vip-tag iconfont icon-ic_readlist_vip1"></i> asdfasdfasdfadsfasdfasdfasdfadsf
+                            </a>
+                        </li>
+                        <li class="j-chapter-item chapter__item">
+                            <a class="j-chapter-link">
+                                <i class="vip-tag iconfont icon-ic_readlist_vip1"></i> asdfasdfasdfadsfasdfasdfasdfadsf
+                            </a>
+                        </li>
+                        <li class="j-chapter-item chapter__item">
+                            <a class="j-chapter-link">
+                                <i class="vip-tag iconfont icon-ic_readlist_vip1"></i> asdfasdfasdfadsfasdfasdfasdfadsf
+                            </a>
+                        </li>
+                        <li class="j-chapter-item chapter__item">
+                            <a class="j-chapter-link">
+                                <i class="vip-tag iconfont icon-ic_readlist_vip1"></i> asdfasdfasdfadsfasdfasdfasdfadsf
+                            </a>
+                        </li>
+                        <li class="j-chapter-item chapter__item">
+                            <a class="j-chapter-link">
+                                <i class="vip-tag iconfont icon-ic_readlist_vip1"></i> asdfasdfasdfadsfasdfasdfasdfadsf
+                            </a>
+                        </li>
+                        <li class="j-chapter-item chapter__item">
+                            <a class="j-chapter-link">
+                                <i class="vip-tag iconfont icon-ic_readlist_vip1"></i> asdfasdfasdfadsfasdfasdfasdfadsf
+                            </a>
+                        </li>
+                        <li class="j-chapter-item chapter__item">
+                            <a class="j-chapter-link">
+                                <i class="vip-tag iconfont icon-ic_readlist_vip1"></i> asdfasdfasdfadsfasdfasdfasdfadsf
+                            </a>
+                        </li>
+                        <li class="j-chapter-item chapter__item">
+                            <a class="j-chapter-link">
+                                <i class="vip-tag iconfont icon-ic_readlist_vip1"></i> asdfasdfasdfadsfasdfasdfasdfadsf
+                            </a>
+                        </li>
+                        <li class="j-chapter-item chapter__item">
+                            <a class="j-chapter-link">
+                                <i class="vip-tag iconfont icon-ic_readlist_vip1"></i> asdfasdfasdfadsfasdfasdfasdfadsf
+                            </a>
+                        </li>
+                        <li class="j-chapter-item chapter__item">
+                            <a class="j-chapter-link">
+                                <i class="vip-tag iconfont icon-ic_readlist_vip1"></i> asdfasdfasdfadsfasdfasdfasdfadsf
+                            </a>
+                        </li>
+                        <li class="j-chapter-item chapter__item">
+                            <a class="j-chapter-link">
+                                <i class="vip-tag iconfont icon-ic_readlist_vip1"></i> asdfasdfasdfadsfasdfasdfasdfadsf
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="chapter__more">
+                        <a class="btn close" href="javascript:void(0);">
+                            @if (isShow)
+                            {
+                                <span class="down" @onclick="handleShow">Ẩn bớt<i class="iconfont icon-ic_detaillist_up"></i></span>
+                            }
+                            else
+                            {
+                                <span class="down" @onclick="handleShow">Hiển thị thêm<i class="iconfont icon-ic_detaillist_down1"></i></span>
+                            }
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</body>
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+    bool isShow = false;
+    void handleShow()
+    {
+        isShow = !isShow;
+    }
+}

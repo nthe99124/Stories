@@ -401,7 +401,7 @@
     <!-- 头部 -->
 
     <AuthorHeader />
-
+    <AlertComponent @ref="@alertComponent"></AlertComponent>
     <div id="imageModal" class="modal">
         <span class="close">&times;</span>
         <div class="modal-content">
@@ -477,6 +477,8 @@
     private InputFile fileInput;
     private List<IBrowserFile> listSelectedFile = new List<IBrowserFile>();
     private AddChapterVM chapter { get; set; } = new AddChapterVM();
+    //alert
+    private AlertComponent alertComponent;
 
     protected override async Task HandleAfterRenderAsync(bool firstRender)
     {
@@ -492,11 +494,13 @@
     }
     private async Task AddChapters()
     {
-        if (chapter != null)
-        {
-            chapter.StoryId = Guid.Parse(Id);
-            var res = await _storiesService.AddChapter(listSelectedFile, chapter);
-        }
+        alertComponent.Show("Thêm chương thành công", "success");
+        
+        //if (chapter != null)
+        //{
+        //    chapter.StoryId = Guid.Parse(Id);
+        //    var res = await _storiesService.AddChapter(listSelectedFile, chapter);
+        //}
     }
 
     private async Task HandleFileSelected(InputFileChangeEventArgs e)

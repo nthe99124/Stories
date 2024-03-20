@@ -38,6 +38,7 @@
 		<Content Include="Pages\AuthorPages\IdentifyAuthor.razor" />
 		<Content Include="Pages\AuthorPages\MyComic.razor" />
 		<Content Include="Pages\AuthorPages\AddChapter.razor" />
+		<Content Include="Pages\AuthorPages\ListChapters.razor" />
 		<Content Include="Pages\Counter.razor" />
 		<Content Include="Pages\Error.cshtml" />
 		<Content Include="Pages\Index.razor" />
@@ -66,6 +67,7 @@
 		<Content Include="Shared\MainLayout.razor" />
 		<Content Include="Shared\FooterLayout.razor" />
 		<Content Include="Shared\HeaderLayout.razor" />
+		<Content Include="Shared\AlertComponent.razor" />
 		<Content Include="Shared\ComponentBase\AuthorBaseComponent.razor" />
 		<Content Include="Shared\UserHeader.razor" />
 		<Content Include="Shared\UserSideBar.razor" />

@@ -1,0 +1,86 @@
+﻿<style>
+    .modal-content {
+        width:600px !important;
+    }
+    .modal-body .alert i {
+    margin-right: 10px;
+    font-size: 18px;
+}
+</style>
+@if (IsVisible)
+{
+    <div class="modal fade show" tabindex="-1" role="dialog" style="display: block;">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" style="font-size:16px">Thông báo</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="alert @GetAlertClass()" style="font-size:13px">
+                        @switch (Type)
+                        {
+                            case "success":
+                                <i class="fas fa-check-circle" style="color:#52ae4e"></i>
+                                break;
+                            case "error":
+                                <i class="fas fa-exclamation-circle" style="color: #a84646"></i>
+                                break;
+                            case "warning":
+                                <i class="fas fa-exclamation-triangle" style="color: #a89b46"></i>
+                                break;
+                            default:
+                                <i class="fas fa-info-circle" style="color: #465da8"></i>
+                                break;
+                        }
+                        @Message
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="CloseModal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string? Message { get; set; }
+
+    [Parameter]
+    public string? Type { get; set; }
+
+    [Parameter]
+    public bool IsVisible { get; set; }
+
+    //[Parameter]
+    //public EventCallback<T> OnClose { get; set; }
+
+    private string GetAlertClass()
+    {
+        switch (Type)
+        {
+            case "success":
+                return "alert-success";
+            case "error":
+                return "alert-danger";
+            case "warning":
+                return "alert-warning";
+            default:
+                return "alert-info";
+        }
+    }
+
+    private void CloseModal()
+    {
+        IsVisible = false;
+        StateHasChanged();
+    }
+    public void Show(string message, string type)
+    {
+        Message = message;
+        Type = type;
+        IsVisible = true;
+        StateHasChanged();
+    }
+}
