@@ -6,6 +6,8 @@
 @inherits AuthorBaseComponent
 <body>
     <div class="wrapper">
+        <AlertComponent @ref="@alertComponent"></AlertComponent>
+
         <AdminSidebar tab=3 />
         <div class="main">
             @*<nav class="navbar navbar-expand px-4 py-3">
@@ -64,7 +66,7 @@
 
                         <div class="table-responsive">
                             <table class="table table-hover custom-table" style="width: 100%;">
-                                <caption>@(lstTopic != null ? lstTopic.Count: 0) bản ghi</caption>
+                                <caption>@(lstTopic != null ? lstTopic.Count : 0) bản ghi</caption>
                                 <thead>
                                 <th scope="col" style="width: 5%;">STT</th>
                                 <th scope="col" style="width: 15%;">Thể loại</th>
@@ -74,13 +76,13 @@
                                 <th scope="col" style="width: 15%;">Hành động</th>
                                 </thead>
                                 <tbody class="table-group-divider">
-                                    @if (lstTopic != null && lstTopic.Count >0)
+                                    @if (lstTopic != null && lstTopic.Count > 0)
                                     {
                                         @for (int i = 0; i < lstTopic.Count; i++)
                                         {
                                             var currentItem = lstTopic[i];
                                             <tr>
-                                                <th scope="row">@(i+1)</th>
+                                                <th scope="row">@(i + 1)</th>
                                                 <td>@currentItem.Name</td>
                                                 <td>@currentItem.NumberStory</td>
                                                 <td>@currentItem.CreatedDate</td>
@@ -88,16 +90,16 @@
                                                 <td>
                                                     <button type="button" class="btn btn-success"
                                                             style="background-color: #1f6b0a;"
-                                                            @onclick="() => OpenFormEditTopic(currentItem.Id)">
+                                                    @onclick="() => OpenFormEditTopic(currentItem.Id)">
                                                         Sửa
                                                     </button>
                                                     <button type="button" class="btn btn-danger" style="background-color: #9e2828;"
-                                                            @onclick="() => DeleteTopic(currentItem.Id)">
+                                                    @onclick="() => DeleteTopic(currentItem.Id)">
                                                         Xóa
                                                     </button>
                                                 </td>
                                             </tr>
-                                        }    
+                                        }
                                     }
                                 </tbody>
                             </table>
@@ -113,6 +115,7 @@
     bool showAddCategoryModal = false;
     bool showEditCategoryModal = false;
     Topic selectedCategory = new Topic();
+    private AlertComponent alertComponent;
 
     private List<TopicFullInfor> lstTopic { get; set; }
 
@@ -144,7 +147,7 @@
     {
         showAddCategoryModal = false;
         showEditCategoryModal = false;
-        //Để lại cái selectedCategory name với description là rỗng 
+        //Để lại cái selectedCategory name với description là rỗng
     }
 
     void AddCategory()
@@ -161,7 +164,7 @@
 
     private async Task OpenFormEditTopic(Guid topicId)
     {
-        
+
     }
 
     private async Task EditTopic(Guid topicId, string topicName)
@@ -169,12 +172,13 @@
         var res = await _topicService.EditTopic(topicId, topicName);
         if (res != null && res.IsSuccess)
         {
-            await ShowToast(res?.Data);
+            alertComponent.Show("Chỉnh sửa thành công", "success");
             await GetTopicList();
         }
         else
         {
             await ShowToast(res?.Message);
+            alertComponent.Show(res?.Message, "error");
         }
     }
 
@@ -183,12 +187,13 @@
         var res = await _topicService.DeleteTopic(topicId);
         if (res != null && res.IsSuccess)
         {
-            await ShowToast(res?.Data);
+            alertComponent.Show("Xóa thành công", "success");
             await GetTopicList();
         }
         else
         {
             await ShowToast(res?.Message);
+            alertComponent.Show(res?.Message, "error");
         }
     }
 

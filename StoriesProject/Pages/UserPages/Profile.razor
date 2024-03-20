@@ -62,6 +62,7 @@
     <!-- 内容 -->
     <div class="main-container">
         <UserSideBar isSelected=4 />
+        <AlertComponent @ref="@alertComponent"></AlertComponent>
 
         <!-- main-content -->
         <div class="main-content--aside">
@@ -419,7 +420,7 @@
 @code {
     private AccountantUpdate accInfor { get; set; } = new AccountantUpdate();
     private Guid detailID { get; set; }
-
+    private AlertComponent alertComponent;
     protected override async Task HandleAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -444,11 +445,12 @@
                 };
                 var userInforJson = JsonSerializer.Serialize(userInfor);
                 await SetSessionStorage("userInfor", userInforJson);
-                await ShowToast("Cập nhật thành công");
+                alertComponent.Show("Cập nhật thành công", "success");
+
             }
             else
             {
-                await ShowToast(res?.Message);
+                alertComponent.Show(res?.Message, "error");
             }
         }
     }

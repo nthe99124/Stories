@@ -59,15 +59,15 @@
                                 <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab">
                                     <h3 class="fw-bold fs-5 mb-5" style="color: rgb(53, 70, 145);">Chờ xét duyệt</h3>
                                     @* <div>
-                                        <div class="mb-3"
-                                             style="width: 70%;display: flex; align-items: center;justify-content: space-between;">
-                                            <div style="width: 40%;">
-                                                <strong>Tác giả:</strong>
-                                                <input type="text" class="form-control" id="comic-name" placeholder="Tên/Username...">
-                                            </div>
-                                        </div>
-                                        <button class="btn btn-primary mb-5">Tìm kiếm</button>
-                                    </div> *@
+                                <div class="mb-3"
+                                style="width: 70%;display: flex; align-items: center;justify-content: space-between;">
+                                <div style="width: 40%;">
+                                <strong>Tác giả:</strong>
+                                <input type="text" class="form-control" id="comic-name" placeholder="Tên/Username...">
+                                </div>
+                                </div>
+                                <button class="btn btn-primary mb-5">Tìm kiếm</button>
+                                </div> *@
                                     <div class="table-responsive">
                                         <table class="table table-hover custom-table" style="width: 90%;">
                                             <thead>
@@ -255,6 +255,7 @@
 
 @code {
     private int selectedTab = 1;
+    private AlertComponent alertComponent;
     private async Task SetSelectedTab(int tab)
     {
         selectedTab = tab;
@@ -293,11 +294,13 @@
         var res = await _accountantsService.ApprovedAccountant(regiserId);
         if (res != null && res.IsSuccess)
         {
+            alertComponent.Show(res?.Data, "success");
             await ShowToast(res?.Data);
             await GetListAccountForAdminByTab();
         }
         else
         {
+            alertComponent.Show(res?.Message, "error");
             await ShowToast(res?.Message);
         }
     }
@@ -307,11 +310,13 @@
         var res = await _accountantsService.DeniedAccountant(regiserId);
         if (res != null && res.IsSuccess)
         {
+            alertComponent.Show(res?.Data, "success");
             await ShowToast(res?.Data);
             await GetListAccountForAdminByTab();
         }
         else
         {
+            alertComponent.Show(res?.Message, "error");
             await ShowToast(res?.Message);
         }
     }
@@ -327,11 +332,13 @@
         var res = await _accountantsService.UpdateLockedAccountant(param);
         if (res != null && res.IsSuccess)
         {
+            alertComponent.Show(res?.Data, "success");
             await ShowToast(res?.Data);
             await GetListAccountForAdminByTab();
         }
         else
         {
+            alertComponent.Show(res?.Message, "error");
             await ShowToast(res?.Message);
         }
     }
