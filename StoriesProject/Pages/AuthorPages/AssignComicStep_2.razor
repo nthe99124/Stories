@@ -451,7 +451,7 @@
                         <div style="width: 100%;background-color: rgb(162 158 158);">
                             <p style="font-size: 20px;color: white;margin: 5px; ">Thêm ảnh cho chương </p>
                         </div>
-                        <InputFile OnChange="HandleFileSelected" id="fileInput" style="display:none" @ref="fileInput" multiple />
+                        <InputFile OnChange="HandleFileSelected" id="fileInput" style="display:none" @ref="fileInput" multiple max="100" />
                         <button style="width: 135px;height: 180px; margin: 10px;background-color: rgb(239, 230, 230);display: flex;justify-content: center;align-items: center;border: none;cursor: pointer;"
                                 @onclick="() => addFile()">
                             <i class="fa-solid fa-file-circle-plus" style="color: white; font-size: 30px;"></i>
@@ -514,8 +514,15 @@
     }
 
     private async Task HandleFileSelected(InputFileChangeEventArgs e)
-    {
-        var files = e.GetMultipleFiles();
-        listSelectedFile.AddRange(files);
+    {   
+        if (e.FileCount > 10)
+        {
+            alertComponent.Show("Bạn chỉ được chọn tối đa 10 file 1 lần. Vui lòng chọn lại", "error");
+        }
+        else
+        {
+            var files = e.GetMultipleFiles();
+            listSelectedFile.AddRange(files);
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Localization;
+using Microsoft.AspNetCore.SignalR;
 using StoriesProject.API.Services.Base;
 using StoriesProject.Common.Cache;
 using StoriesProject.Common.MiddleWare;
@@ -48,6 +49,10 @@ services.Configure<RequestLocalizationOptions>(options =>
         new QueryStringRequestCultureProvider(),
         new CookieRequestCultureProvider(),
     };
+});
+services.Configure<HubOptions>(options =>
+{
+    options.DisableImplicitFromServicesParameters = true;
 });
 #endregion
 

@@ -2,15 +2,12 @@
 {
     public class StatusAlert
     {
-        public class StatusAlert
+        public enum Status
         {
-            public enum Status
-            {
-                Success,
-                Error,
-                Warning,
-                Info
-            }
+            Success,
+            Error,
+            Warning,
+            Info
         }
     }
 }

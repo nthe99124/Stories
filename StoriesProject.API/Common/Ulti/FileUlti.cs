@@ -1,10 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.Extensions.Hosting.Internal;
-using StoriesProject.API.Common.Cache;
-using StoriesProject.API.Common.Repository;
-using StoriesProject.API.Services.Base;
-
-namespace StoriesProject.API.Common.Ulti
+﻿namespace StoriesProject.API.Common.Ulti
 {
     public interface IFileUlti
     {
@@ -40,10 +34,13 @@ namespace StoriesProject.API.Common.Ulti
             // Đường dẫn đến file lưu trữ trên server
             var filePath = Path.Combine(uploadFolder, file.FileName);
 
-            // Mở luồng để ghi dữ liệu file từ yêu cầu vào file trên server
-            using (var stream = new FileStream(filePath, FileMode.Create))
+            if (!File.Exists(filePath))
             {
-                await file.CopyToAsync(stream);
+                // Mở luồng để ghi dữ liệu file từ yêu cầu vào file trên server
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
             }
 
             return fileName; // Trả về tên file đã lưu

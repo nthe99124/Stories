@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using StoriesProject.API.Common.Attribute;
 using StoriesProject.API.Common.Constant;
+using StoriesProject.API.Common.Ulti;
 using StoriesProject.API.Services;
 using StoriesProject.Model.BaseEntity;
 using StoriesProject.Model.ViewModel;
@@ -241,10 +242,23 @@ namespace StoriesProject.API.Controller.Base
         /// <returns></returns>
         [HttpPost("AddChapter")]
         [Roles(RoleConstant.Author)]
-        public async Task<IActionResult> AddChapter([FromForm] List<IFormFile> file, [FromForm] string jsonChapter)
+        public async Task<IActionResult> AddChapter(AddChapterVM chapter)
         {
-            var chapter = JsonConvert.DeserializeObject<AddChapterVM>(jsonChapter);
-            _res = await _storiesService.AddChapter(file, chapter);
+            List<IFormFile> formFiles = new List<IFormFile>();
+            foreach (var item in chapter.ImgContent)
+            {
+                byte[] bytes = Convert.FromBase64String(item.base64);
+                MemoryStream stream = new(bytes);
+
+                //item.File = new FormFile(stream, 0, bytes.Length, item.SeoFilename, item.SeoFilename);
+                formFiles.Add(new FormFile(stream, 0, stream.Length, null, item.SeoFilename)
+                {
+                    Headers = new HeaderDictionary(),
+                    ContentType = item.contentType
+                });
+            }
+            _res = await _storiesService.AddChapter(formFiles, chapter);
+
             return Ok(_res);
         }
     }

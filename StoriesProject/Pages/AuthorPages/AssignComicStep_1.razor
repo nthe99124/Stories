@@ -1,4 +1,4 @@
-﻿@page "/author/assign-comic-step-1"
+﻿@page "/author/assigncomicstep1"
 @using StoriesProject.Model.BaseEntity;
 @using StoriesProject.Model.ViewModel.Story
 @using StoriesProject.Services
@@ -387,7 +387,7 @@
                         <div class="layui-input-block">
                             <div class="cover-y">
                                 <img id="previewImage" src="" alt="">
-                                <InputFile OnChange="HandleFileSelected" id="img_input" class="J_cover_y" style="display:none" @ref="fileInput" multiple />
+                                <InputFile OnChange="HandleFileSelected" id="img_input" class="J_cover_y" style="display:none" @ref="fileInput" />
                                 <span class="btn J_cover_y" @onclick="() => OpenFilePicker()">Ảnh bìa</span>
                             </div>
                             <p class="tip">Kích thước đề xuất 600x800</p>

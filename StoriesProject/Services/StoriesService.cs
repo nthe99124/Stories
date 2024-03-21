@@ -241,8 +241,25 @@ namespace StoriesProject.Services
         /// <returns></returns>
         public async Task<ResponseOutput<string>> AddChapter(List<IBrowserFile> listSelectedFile, AddChapterVM chapter)
         {
+            var i = 0;
+            foreach (var file in listSelectedFile)
+            {
+                if (file != null)
+                {
+                    using MemoryStream ms = new();
+                    await file.OpenReadStream().CopyToAsync(ms);
+                    var fileBytes = ms.ToArray();
+                    chapter.ImgContent.Add(new ImgContentChapterInfor
+                    {
+                        base64 = Convert.ToBase64String(fileBytes),
+                        contentType = file.ContentType,
+                        SeoFilename = file.Name
+                    });
+                    i++;
+                }
+            }
             var url = StoriesApiUrlDef.AddChapter();
-            return await RequestFileAsync<string>(url, listSelectedFile, chapter);
+            return await RequestFullAuthenPostAsync<string>(url, chapter);
         }
     }
 }
