@@ -1,4 +1,4 @@
-﻿@page "/author/add-chapter/{id}"
+﻿@page "/author/assign-comic-step-2/{id}"
 @using StoriesProject.Model.BaseEntity
 @using StoriesProject.Services
 @using StoriesProject.Shared.ComponentBase;
@@ -78,6 +78,49 @@
                 margin-left: 15px;
                 margin-top: 0;
             }
+
+    .step-nav {
+        height: 36px;
+        margin: 32px 0;
+        padding-left: 254px;
+        line-height: 36px;
+        font-size: 18px;
+        color: #ccc;
+    }
+
+        .step-nav .active {
+            color: #00b798;
+        }
+
+        .step-nav .step-itm {
+            float: left;
+            margin-right: 60px;
+        }
+
+        .step-nav .active .num {
+            background: #00b798;
+        }
+
+        .step-nav .num {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            font-size: 20px;
+            text-align: center;
+            line-height: 36px;
+            color: #fff;
+            border-radius: 18px;
+            background: #ccc;
+        }
+
+        .step-nav .active {
+            color: #00b798;
+        }
+
+        .step-nav .step-itm {
+            float: left;
+            margin-right: 60px;
+        }
 
     .layui-input-block {
         margin-left: 140px;
@@ -246,6 +289,19 @@
         text-overflow: ellipsis;
     }
 
+    .step-box .input-box .protocol {
+        overflow: hidden;
+    }
+
+        .step-box .input-box .protocol .layui-unselect {
+            float: left;
+        }
+
+        .step-box .input-box .protocol a {
+            text-decoration: underline;
+            float: left;
+            margin-top: 10px;
+        }
 
     .layui-form-checkbox[lay-skin=primary] {
         height: auto !important;
@@ -273,7 +329,9 @@
         margin: auto;
         display: block;
         width: 50%;
+        /* Chiều rộng của modal */
         max-width: 80%;
+        /* Chiều rộng tối đa của modal */
         max-height: 90%;
         position: absolute;
         top: 50%;
@@ -283,8 +341,12 @@
 
         .modal-content img {
             width: 100%;
+            /* Chiều rộng của ảnh trong modal */
             height: auto;
+            /* Chiều cao tự động để giữ tỉ lệ khung hình */
         }
+
+    /* CSS khác giữ nguyên */
     #imageContainer {
         display: flex;
         flex-wrap: wrap;
@@ -354,13 +416,24 @@
         <!-- main-content -->
         <div class="user-right">
             <div class="user-right-top">
-                <h3>Thêm chapter mới</h3>
+                <h3>Tạo tác phẩm mới</h3>
             </div>
-
+            <!--步骤-->
+            <div class="step-nav clearfix">
+                <div class="step-itm ">
+                    <span class="num">1</span>
+                    <span>Tạo thông tin cơ bản</span>
+                </div>
+                <div class="step-itm active">
+                    <span class="num">2</span>
+                    <span>Thêm chương mới</span>
+                </div>
+            </div>
+            <!--步骤end-->
             <div class="step-box">
                 <div class="input-box layui-form">
-                    <div class="layui-form-item" style="margin-top:40px">
-                        <label class="layui-form-label"><i>*</i>Tên chương: </label>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">Tên chương</label>
                         <div class="layui-input-block">
                             <input type="text" name="title" required lay-verify="required" placeholder="Nhập tên chương"
                                    autocomplete="off" class="layui-input" @bind="chapter.Name">

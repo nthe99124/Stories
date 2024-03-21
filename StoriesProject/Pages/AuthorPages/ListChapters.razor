@@ -80,49 +80,6 @@
                 margin-top: 0;
             }
 
-    .step-nav {
-        height: 36px;
-        margin: 32px 0;
-        padding-left: 254px;
-        line-height: 36px;
-        font-size: 18px;
-        color: #ccc;
-    }
-
-        .step-nav .active {
-            color: #00b798;
-        }
-
-        .step-nav .step-itm {
-            float: left;
-            margin-right: 60px;
-        }
-
-        .step-nav .active .num {
-            background: #00b798;
-        }
-
-        .step-nav .num {
-            display: inline-block;
-            width: 36px;
-            height: 36px;
-            font-size: 20px;
-            text-align: center;
-            line-height: 36px;
-            color: #fff;
-            border-radius: 18px;
-            background: #ccc;
-        }
-
-        .step-nav .active {
-            color: #00b798;
-        }
-
-        .step-nav .step-itm {
-            float: left;
-            margin-right: 60px;
-        }
-
     .layui-input-block {
         margin-left: 140px;
         line-height: 38px;
@@ -233,7 +190,8 @@
                     <span class="update-time">Số tập: 100 chapters</span>
                     <div class="btn--sort" style="display: block;">
                         <button type="button"
-                                style="background-color: #2ccc9c;color: white;padding: 5px;border: none;border-radius: 5px; box-shadow: 5px 5px 5px rgb(215, 206, 206);">
+                                style="background-color: #2ccc9c;color: white;padding: 5px;border: none;border-radius: 5px; box-shadow: 5px 5px 5px rgb(215, 206, 206);"
+                        @onclick="() => NavigateToAdd()">
                             <i class="iconfont icon-add"></i> Thêm chapter
                         </button>
                     </div>
@@ -331,5 +289,9 @@
     void handleShow()
     {
         isShow = !isShow;
+    }
+    void NavigateToAdd()
+    {
+        NavigateToUrl($"/author/add-chapter/1");
     }
 }

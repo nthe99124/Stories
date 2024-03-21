@@ -11,6 +11,7 @@
 		<Compile Include="Common\Cache\DistributedCacheCustom.cs" />
 		<Compile Include="Common\Constant\CacheKeyConstant.cs" />
 		<Compile Include="Common\Constant\RoleConstant.cs" />
+		<Compile Include="Common\Constant\StatusAlert.cs" />
 		<Compile Include="Common\MiddleWare\LanguageMiddleware.cs" />
 		<Compile Include="Pages\Error.cshtml.cs" />
 		<Compile Include="Program.cs" />
@@ -37,7 +38,9 @@
 		<Content Include="Pages\AuthorPages\AuthorHomepage.razor" />
 		<Content Include="Pages\AuthorPages\IdentifyAuthor.razor" />
 		<Content Include="Pages\AuthorPages\MyComic.razor" />
+		<Content Include="Pages\AuthorPages\AssignComicStep_2.razor" />
 		<Content Include="Pages\AuthorPages\AddChapter.razor" />
+		<Content Include="Pages\AuthorPages\EditChapter.razor" />
 		<Content Include="Pages\AuthorPages\ListChapters.razor" />
 		<Content Include="Pages\Counter.razor" />
 		<Content Include="Pages\Error.cshtml" />

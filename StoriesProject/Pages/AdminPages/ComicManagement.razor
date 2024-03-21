@@ -382,12 +382,10 @@
         if (res != null && res.IsSuccess)
         {
             alertComponent.Show(res?.Data, "success");
-            await ShowToast(res?.Data);
         }
         else
         {
             alertComponent.Show(res?.Message, "error");
-            await ShowToast(res?.Message);
         }
         listStoryPending = await _storiesService.GetListStoryForAdmin(StoryStatus.NotApprovedYet);
         StateHasChanged();
@@ -399,12 +397,10 @@
         if (res != null && res.IsSuccess)
         {
             alertComponent.Show(res?.Data, "success");
-            await ShowToast(res?.Data);
         }
         else
         {
             alertComponent.Show(res?.Message, "error");
-            await ShowToast(res?.Message);
         }
         listStoryPending = await _storiesService.GetListStoryForAdmin(StoryStatus.NotApprovedYet);
         StateHasChanged();

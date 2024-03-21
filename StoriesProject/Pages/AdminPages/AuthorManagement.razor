@@ -295,13 +295,11 @@
         if (res != null && res.IsSuccess)
         {
             alertComponent.Show(res?.Data, "success");
-            await ShowToast(res?.Data);
             await GetListAccountForAdminByTab();
         }
         else
         {
             alertComponent.Show(res?.Message, "error");
-            await ShowToast(res?.Message);
         }
     }
 
@@ -311,13 +309,11 @@
         if (res != null && res.IsSuccess)
         {
             alertComponent.Show(res?.Data, "success");
-            await ShowToast(res?.Data);
             await GetListAccountForAdminByTab();
         }
         else
         {
             alertComponent.Show(res?.Message, "error");
-            await ShowToast(res?.Message);
         }
     }
 
@@ -333,13 +329,11 @@
         if (res != null && res.IsSuccess)
         {
             alertComponent.Show(res?.Data, "success");
-            await ShowToast(res?.Data);
             await GetListAccountForAdminByTab();
         }
         else
         {
             alertComponent.Show(res?.Message, "error");
-            await ShowToast(res?.Message);
         }
     }
 }
