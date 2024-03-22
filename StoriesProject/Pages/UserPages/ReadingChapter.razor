@@ -1,4 +1,5 @@
 ﻿@page "/chapter/{id}"
+@using StoriesProject.Model.BaseEntity
 @using StoriesProject.Services
 @using StoriesProject.Shared.ComponentBase
 @inject IStoriesService _storiesService;
@@ -151,8 +152,8 @@
                 }
             </div>
 
-            <div class="rd-article__end hide" style="display: block;">
-                <a class="btn--next-chapter j-rd-next" href="/215599/902532.html">
+            <div class="rd-article__end hide" style="display: block;" @onclick="(() => NavigateToReadChapter(nextChapter))">
+                <a class="btn--next-chapter j-rd-next">
                     <span class="txt">Chap tiếp theo</span>
                     <i class="iconfont icon-ic_read_next_icon"></i>
                 </a>
@@ -290,10 +291,13 @@
     private string StoryName { get; set; }
     private string ChapterName { get; set; }
     private Guid StoryId { get; set; }
+    private List<Chapter> chapterList { get; set; }
+    private Guid? nextChapter { get; set; } = null;
+    private bool isLoadPage { get; set; } = false;
 
     protected override async Task HandleAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
+        if (!isLoadPage)
         {
             if (!string.IsNullOrEmpty(Id))
             {
@@ -305,14 +309,36 @@
                     StoryName = contentChapter.StoryName;
                     ChapterName = contentChapter.ChapterName;
                     StoryId = contentChapter.StoryId;
-                    StateHasChanged();
                 }
+                chapterList = await _storiesService.GetAllChapterInfor(StoryId);
+                var currentIndex = 0;
+                nextChapter = null;
+                for (int i = 0; i < chapterList.Count; i++)
+                {
+                    if (chapterList[i].Id == chapterId && chapterList.Count - 1 != i)
+                    {
+                        nextChapter = chapterList[i + 1].Id;
+                        break;
+                    }
+                }
+                StateHasChanged();
+
             }
+            isLoadPage = true;
         }
     }
 
     private void NavigateToDetails()
     {
         NavigateToUrl($"/details/{StoryId}");
+    }
+
+    private void NavigateToReadChapter(Guid? chapterId = null)
+    {
+        if (chapterId != null)
+        {
+            isLoadPage = false;
+            NavigateToUrl($"/chapter/{chapterId}");
+        }
     }
 }

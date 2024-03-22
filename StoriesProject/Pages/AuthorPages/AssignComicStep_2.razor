@@ -520,14 +520,7 @@
 
     private async Task HandleFileSelected(InputFileChangeEventArgs e)
     {   
-        if (e.FileCount > 10)
-        {
-            alertComponent.Show("Bạn chỉ được chọn tối đa 10 file 1 lần. Vui lòng chọn lại", "error");
-        }
-        else
-        {
-            var files = e.GetMultipleFiles();
-            listSelectedFile.AddRange(files);
-        }
+        var files = e.GetMultipleFiles(1000);
+        listSelectedFile.AddRange(files);
     }
 }

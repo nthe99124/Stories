@@ -31,7 +31,7 @@ namespace StoriesProject.Services.ApiUrldefinition
             {
                 return @$"{pathController}/GetTop10HotStory?name={name}";
             }
-            
+
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace StoriesProject.Services.ApiUrldefinition
             {
                 return @$"{pathController}/GetTopPurchasesStory?numberStory={numberStory}";
             }
-            
+
         }
 
         /// <summary>
@@ -192,6 +192,15 @@ namespace StoriesProject.Services.ApiUrldefinition
         {
             return @$"{pathController}/AddChapter";
         }
-        
+
+        /// <summary>
+        /// Hàm xử lý lấy content của chapter
+        /// CreatedBy ntthe 22.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public static string GetAllChapterInfor(Guid storyId)
+        {
+            return @$"{pathController}/GetAllChapterInfor?storyId={storyId}";
+        }
     }
 }

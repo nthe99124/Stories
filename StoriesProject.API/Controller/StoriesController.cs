@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using StoriesProject.API.Common.Attribute;
 using StoriesProject.API.Common.Constant;
-using StoriesProject.API.Common.Ulti;
 using StoriesProject.API.Services;
 using StoriesProject.Model.BaseEntity;
 using StoriesProject.Model.ViewModel;
@@ -41,7 +40,7 @@ namespace StoriesProject.API.Controller.Base
         [HttpGet("GetTop10HotStory")]
         public async Task<IActionResult> GetTop10HotStory(string? searchStory)
         {
-            var dataResult = await _storiesService.GetTop10HotStory(searchStory); 
+            var dataResult = await _storiesService.GetTop10HotStory(searchStory);
             _res.SuccessEventHandler(dataResult);
             return Ok(_res);
         }
@@ -259,6 +258,20 @@ namespace StoriesProject.API.Controller.Base
             }
             _res = await _storiesService.AddChapter(formFiles, chapter);
 
+            return Ok(_res);
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy danh sách chapter theo truyện
+        /// CreatedBy ntthe 22.03.2024
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetAllChapterInfor")]
+        [Roles(RoleConstant.Customer)]
+        public async Task<IActionResult> GetAllChapterInfor(Guid storyId)
+        {
+            var data = await _storiesService.GetAllChapterInfor(storyId);
+            _res.SuccessEventHandler(data);
             return Ok(_res);
         }
     }

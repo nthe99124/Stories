@@ -350,6 +350,7 @@
     <!-- 头部 -->
 
     <AuthorHeader />
+    <AlertComponent @ref="@alertComponent"></AlertComponent>
 
 
     <!-- 内容 -->
@@ -483,6 +484,7 @@
     private ElementReference targetObjectInput;
     private IBrowserFile selectedFile;
     private InputFile fileInput;
+    private AlertComponent alertComponent;
 
     private List<Guid> listTopicSelected { get; set; } = new List<Guid>();
 
@@ -495,11 +497,18 @@
             {
                 story.ListTopic = null;
             }
-            var res = await _storiesService.CreateStoryByAuthor(selectedFile, story);
-
-            if (res != null && res.IsSuccess)
+            if (selectedFile == null)
             {
-                NavigateToUrl($"/author/assign-comic-step-2/{res.Data}");
+                alertComponent.Show("Bạn chưa chọn ảnh bìa truyện", "error");
+            }
+            else
+            {
+                var res = await _storiesService.CreateStoryByAuthor(selectedFile, story);
+
+                if (res != null && res.IsSuccess)
+                {
+                    NavigateToUrl($"/author/assign-comic-step-2/{res.Data}");
+                }
             }
         }
     }

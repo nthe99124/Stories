@@ -49,3 +49,9 @@ window.getValue = function (element) {
 window.reload = function () {
     window.location.reload();
 }
+
+// JavaScript
+function resetInput(id) {
+    var input = document.getElementById(id);
+    input.value = null;
+}

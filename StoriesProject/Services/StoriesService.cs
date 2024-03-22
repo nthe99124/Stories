@@ -7,7 +7,6 @@ using StoriesProject.Model.DTO;
 using StoriesProject.Model.DTO.Story;
 using StoriesProject.Model.ViewModel;
 using StoriesProject.Model.ViewModel.Story;
-using StoriesProject.Pages.AuthorPages;
 using StoriesProject.Services.ApiUrldefinition;
 using static StoriesProject.Model.Enum.DataType;
 
@@ -32,12 +31,13 @@ namespace StoriesProject.Services
         Task<ResponseOutput<string>> ChangeStatusStory(Guid storyId, StoryStatus status);
         Task<List<StoryInforAdmin>> GetListStoryForAdmin(StoryStatus status);
         Task<ResponseOutput<string>> AddChapter(List<IBrowserFile> listSelectedFile, AddChapterVM chapter);
+        Task<List<Chapter>> GetAllChapterInfor(Guid storyId);
     }
     public class StoriesService : BaseService, IStoriesService
     {
         public StoriesService(IDistributedCacheCustom cache, IHttpClientFactory httpClientFactory, IConfiguration config, IJSRuntime js) : base(cache, httpClientFactory, config, js)
         {
-            
+
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace StoriesProject.Services
             {
                 TopicId = topicId,
             };
-            if (sort != null && sort.Count>0)
+            if (sort != null && sort.Count > 0)
             {
                 param.Sort = sort;
             }
@@ -261,5 +261,17 @@ namespace StoriesProject.Services
             var url = StoriesApiUrlDef.AddChapter();
             return await RequestFullAuthenPostAsync<string>(url, chapter);
         }
+
+        /// <summary>
+        /// Hàm xử lý lấy danh sách chapter
+        /// CreatedBy ntthe 22.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Chapter>> GetAllChapterInfor(Guid storyId)
+        {
+            var url = StoriesApiUrlDef.GetAllChapterInfor(storyId);
+            return await RequestAuthenGetAsync<List<Chapter>>(url);
+        }
+
     }
 }

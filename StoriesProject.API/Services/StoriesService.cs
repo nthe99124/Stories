@@ -31,8 +31,9 @@ namespace StoriesProject.API.Services
         Task<RestOutput> ChangeStatusStory(Guid storyId, StoryStatus status);
         Task<ContentChapterGeneric> GetContentChapter(Guid chapterId);
         Task<RestOutput> AddChapter(List<IFormFile> listFile, AddChapterVM chapter);
+        Task<IEnumerable<Chapter>?> GetAllChapterInfor(Guid storyId);
     }
-    public class StoriesService: BaseService, IStoriesService
+    public class StoriesService : BaseService, IStoriesService
     {
         private IFileUlti _fileUlti;
         public StoriesService(IHttpContextAccessor httpContextAccessor, IDistributedCacheCustom cache, IUnitOfWork unitOfWork, IMapper mapper, IFileUlti fileUlti) : base(httpContextAccessor, cache, unitOfWork, mapper)
@@ -225,21 +226,21 @@ namespace StoriesProject.API.Services
         public async Task<List<StoryAccountGeneric>?> GetTopPurchasesStory(Guid? topicId, int numberStory)
         {
             var topResult = (from s in _unitOfWork.StoriesRepository.Get()
-                         join ts in _unitOfWork.TopicStoryRepository.Get() on s.Id equals ts.StoryId into tmp_ts
-                         from ts in tmp_ts.DefaultIfEmpty()
-                         where ts == null || topicId == null || ts.TopicId == topicId
-                         
-                         orderby s.Purchases descending
-                         select new StoryAccountGeneric
-                         {
-                             Id = s.Id,
-                             Name = s.Name,
-                             Code = s.Code,
-                             ImageLink = s.ImageLink,
-                             VideoLink = s.VideoLink,
-                             Description = s.Description,
-                             TypeOfStory = s.TypeOfStory,
-                         }).Take(numberStory);
+                             join ts in _unitOfWork.TopicStoryRepository.Get() on s.Id equals ts.StoryId into tmp_ts
+                             from ts in tmp_ts.DefaultIfEmpty()
+                             where ts == null || topicId == null || ts.TopicId == topicId
+
+                             orderby s.Purchases descending
+                             select new StoryAccountGeneric
+                             {
+                                 Id = s.Id,
+                                 Name = s.Name,
+                                 Code = s.Code,
+                                 ImageLink = s.ImageLink,
+                                 VideoLink = s.VideoLink,
+                                 Description = s.Description,
+                                 TypeOfStory = s.TypeOfStory,
+                             }).Take(numberStory);
             var result = _mapper.Map<List<StoryAccountGeneric>>(topResult.ToList());
             return result;
         }
@@ -270,7 +271,7 @@ namespace StoriesProject.API.Services
                 await _unitOfWork.CommitAsync();
                 res.SuccessEventHandler("Đổi trạng thái thành công");
             }
-            else 
+            else
             {
                 res.ErrorEventHandler("Không tìm thấy truyện để đổi trạng thái");
             }
@@ -286,8 +287,8 @@ namespace StoriesProject.API.Services
         {
             // ntthe 2 con này độc lập nên phân task
             var getStoryNameTask = Task.FromResult((from s in _unitOfWork.StoriesRepository.Get()
-                                                     join c in _unitOfWork.ChapterRepository.Get() on s.Id equals c.StoryId
-                                                     where c.Id == chapterId
+                                                    join c in _unitOfWork.ChapterRepository.Get() on s.Id equals c.StoryId
+                                                    where c.Id == chapterId
                                                     select new ContentChapterGeneric
                                                     {
                                                         StoryName = s.Name,
@@ -342,6 +343,18 @@ namespace StoriesProject.API.Services
                 res.SuccessEventHandler();
             }
             return res;
+        }
+
+        /// <summary>
+        /// Hàm xử lý lấy danh sách chapter theo truyện
+        /// CreatedBy ntthe 22.03.2024
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Chapter>?> GetAllChapterInfor(Guid storyId)
+        {
+            var chapterList = await _unitOfWork.ChapterRepository.FindBy(item => item.StoryId == storyId);
+
+            return chapterList;
         }
 
         #region Private Method
