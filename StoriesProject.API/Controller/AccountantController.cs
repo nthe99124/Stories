@@ -11,7 +11,7 @@ namespace StoriesProject.API.Controller.Base
     {
         private IAccountantsService _accoutantsService;
         public AccountantController(IRestOutput res, IHttpContextAccessor httpContextAccessor,
-                                    IAccountantsService accoutantsService): base(res, httpContextAccessor)
+                                    IAccountantsService accoutantsService) : base(res, httpContextAccessor)
         {
             _accoutantsService = accoutantsService;
         }
@@ -74,7 +74,7 @@ namespace StoriesProject.API.Controller.Base
                 {
                     _res.ErrorEventHandler();
                 }
-                
+
             }
             return Ok(_res);
         }
@@ -84,7 +84,6 @@ namespace StoriesProject.API.Controller.Base
         /// </summary>
         /// <returns></returns>
         [HttpPost("RegisterAuthorAccountant")]
-        [Roles(RoleConstant.Customer)]
         public async Task<IActionResult> RegisterAuthorAccountant(AuthorRegisterModel register)
         {
             if (register != null)

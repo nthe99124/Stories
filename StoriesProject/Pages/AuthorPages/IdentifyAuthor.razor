@@ -264,7 +264,7 @@
     <!-- 头部 -->
 
     <AuthorHeader />
-
+    <AlertComponent @ref="@alertComponent"></AlertComponent>
 
     <!-- 内容 -->
     <div class="main-container">
@@ -510,7 +510,7 @@
 
 @code {
     private AuthorRegisterModel authorRegister { get; set; } = new AuthorRegisterModel();
-
+    private AlertComponent alertComponent;
     private async Task RegisterAuthorAccountant(AuthorRegisterModel register)
     {
         var isValid = await InvokeAsync<bool>("validateRegisterForm");
@@ -520,11 +520,12 @@
             // TODO: tạm thời xử lý show toast
             if (res != null && res.IsSuccess)
             {
-                await ShowToast(res.Data);
+                alertComponent.Show(res.Data, "success");
+                NavigateToUrl($"/user");
             }
             else
             {
-                await ShowToast(res?.Message);
+                alertComponent.Show(res?.Message, "error");
             }
         }
     }
