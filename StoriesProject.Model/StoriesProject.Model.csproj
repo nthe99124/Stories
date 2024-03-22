@@ -28,6 +28,7 @@
     <Compile Include="DTO\Accountant\AccountAuthenDTO.cs" />
     <Compile Include="DTO\Accountant\AccountGenericDTO.cs" />
     <Compile Include="DTO\Accountant\AuthorRegisterGenericDTO.cs" />
+    <Compile Include="DTO\Chapter\ChapterForEditDTO.cs" />
     <Compile Include="DTO\PagingModel.cs" />
     <Compile Include="DTO\Story\ContentChapterGeneric.cs" />
     <Compile Include="DTO\Story\StoryInforAdmin.cs" />

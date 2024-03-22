@@ -1,5 +1,6 @@
 ﻿@page "/author/list-chapters/{id}"
 @using StoriesProject.Model.BaseEntity;
+@using StoriesProject.Model.DTO.Chapter;
 @using StoriesProject.Model.DTO.Story;
 @using StoriesProject.Services;
 @using StoriesProject.Shared.ComponentBase;
@@ -199,67 +200,14 @@
                 <div class="chapter__list clearfix">
                     <ul class="chapter__list-box clearfix hide"
                         style="display: block; height: auto;overflow: hidden; height: 302px;">
-
-                        <li class="j-chapter-item chapter__item">
-                            <a class="j-chapter-link">
-                                asdfasdfasdfadsfasdfasdfasdfadsf
-                            </a>
-                        </li>
-                        <li class="j-chapter-item chapter__item">
-                            <a class="j-chapter-link">
-                                <i class="vip-tag iconfont icon-ic_readlist_vip1"></i> asdfasdfasdfadsfasdfasdfasdfadsf
-                            </a>
-                        </li>
-                        <li class="j-chapter-item chapter__item">
-                            <a class="j-chapter-link">
-                                <i class="vip-tag iconfont icon-ic_readlist_vip1"></i> asdfasdfasdfadsfasdfasdfasdfadsf
-                            </a>
-                        </li>
-                        <li class="j-chapter-item chapter__item">
-                            <a class="j-chapter-link">
-                                <i class="vip-tag iconfont icon-ic_readlist_vip1"></i> asdfasdfasdfadsfasdfasdfasdfadsf
-                            </a>
-                        </li>
-                        <li class="j-chapter-item chapter__item">
-                            <a class="j-chapter-link">
-                                <i class="vip-tag iconfont icon-ic_readlist_vip1"></i> asdfasdfasdfadsfasdfasdfasdfadsf
-                            </a>
-                        </li>
-                        <li class="j-chapter-item chapter__item">
-                            <a class="j-chapter-link">
-                                <i class="vip-tag iconfont icon-ic_readlist_vip1"></i> asdfasdfasdfadsfasdfasdfasdfadsf
-                            </a>
-                        </li>
-                        <li class="j-chapter-item chapter__item">
-                            <a class="j-chapter-link">
-                                <i class="vip-tag iconfont icon-ic_readlist_vip1"></i> asdfasdfasdfadsfasdfasdfasdfadsf
-                            </a>
-                        </li>
-                        <li class="j-chapter-item chapter__item">
-                            <a class="j-chapter-link">
-                                <i class="vip-tag iconfont icon-ic_readlist_vip1"></i> asdfasdfasdfadsfasdfasdfasdfadsf
-                            </a>
-                        </li>
-                        <li class="j-chapter-item chapter__item">
-                            <a class="j-chapter-link">
-                                <i class="vip-tag iconfont icon-ic_readlist_vip1"></i> asdfasdfasdfadsfasdfasdfasdfadsf
-                            </a>
-                        </li>
-                        <li class="j-chapter-item chapter__item">
-                            <a class="j-chapter-link">
-                                <i class="vip-tag iconfont icon-ic_readlist_vip1"></i> asdfasdfasdfadsfasdfasdfasdfadsf
-                            </a>
-                        </li>
-                        <li class="j-chapter-item chapter__item">
-                            <a class="j-chapter-link">
-                                <i class="vip-tag iconfont icon-ic_readlist_vip1"></i> asdfasdfasdfadsfasdfasdfasdfadsf
-                            </a>
-                        </li>
-                        <li class="j-chapter-item chapter__item">
-                            <a class="j-chapter-link">
-                                <i class="vip-tag iconfont icon-ic_readlist_vip1"></i> asdfasdfasdfadsfasdfasdfasdfadsf
-                            </a>
-                        </li>
+                        @foreach(var chapter in chapters)
+                        {
+                            <li class="j-chapter-item chapter__item">
+                                <a class="j-chapter-link" href="/edit-chapter/@chapter.ChapterId">
+                                    @chapter.ChapterName
+                                </a>
+                            </li>
+                        })
                     </ul>
                     <div class="chapter__more">
                         <a class="btn close" href="javascript:void(0);">
@@ -285,7 +233,14 @@
 @code {
     [Parameter]
     public string Id { get; set; }
+
+    public List<ChapterForEditDTO> chapters { get; set; }
     bool isShow = false;
+    protected override async Task OnInitializedAsync()
+    {
+        //Chú viết API lấy chapter by Id hộ cháu rồi gán vào biến chapters
+        chapters = null;
+    }
     void handleShow()
     {
         isShow = !isShow;
