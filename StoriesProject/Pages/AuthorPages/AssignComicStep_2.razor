@@ -503,12 +503,17 @@
             {
                 isSuccess = true;
                 alertComponent.Show("Thêm chương thành công", "success");
-                await Task.Delay(2000);
-                NavigateToUrl($"/author/list-chapters/1");
+                // await Task.Delay(2000);
+                // NavigateToUrl($"/author/list-chapters/1");
+                // reset form để thêm tiếp
+                Thread.Sleep(2000);
+                await InvokeVoidAsync("reload");
             }
             if (!isSuccess)
             {
                 alertComponent.Show("Thêm chương thất bại", "error");
+                Thread.Sleep(2000);
+                await InvokeVoidAsync("reload");
             }
         }
     }
