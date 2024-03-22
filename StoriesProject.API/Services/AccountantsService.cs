@@ -202,7 +202,7 @@ namespace StoriesProject.API.Services
             if (account != null)
             {
                 var isExistUser = await _unitOfWork.AccountantsRepository.CheckExitsByCondition(item => item.UserName == account.UserName);
-                if (isExistUser)
+                if (false)
                 {
                     res.ErrorEventHandler("Username đã tồn tại");
                 }
@@ -344,6 +344,7 @@ namespace StoriesProject.API.Services
                     _unitOfWork.RoleAccountantRepository.Create(userRole);
                     // xóa dữ liệu đăng ký
                     _unitOfWork.AuthorRegisterRepository.Delete(registerData);
+                    _unitOfWork.CommitAsync();
                 }
                 catch (Exception ex)
                 {
@@ -372,6 +373,7 @@ namespace StoriesProject.API.Services
             {
                 // xóa dữ liệu đăng ký
                 _unitOfWork.AuthorRegisterRepository.Delete(registerData);
+                _unitOfWork.CommitAsync();
             }
             catch (Exception ex)
             {

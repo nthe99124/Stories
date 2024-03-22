@@ -23,7 +23,7 @@ function registerMouseEvents(classShowComicInfo, classTab) {
                 });
             });
             row.on('mouseleave', function () {
-                showComicInfo.css('display', 'none');
+                //showComicInfo.css('display', 'none');
             });
         }
     });

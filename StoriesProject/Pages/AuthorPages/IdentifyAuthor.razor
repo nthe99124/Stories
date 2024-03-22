@@ -520,7 +520,8 @@
             // TODO: tạm thời xử lý show toast
             if (res != null && res.IsSuccess)
             {
-                alertComponent.Show(res.Data, "success");
+                alertComponent.Show("Đăng kí tác giả thành công", "success");
+                Thread.Sleep(2000);
                 NavigateToUrl($"/user");
             }
             else

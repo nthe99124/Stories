@@ -218,7 +218,7 @@ a.sidebar-link:hover {
 .show-comic__on-hover {
     display: none;
     position: absolute;
-    width: 300px;
+    width: 500px;
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 5px;

@@ -1,16 +1,11 @@
 {
   "profiles": {
-    "Reload": {
-      "commandName": "Project",
-      "executablePath": "dotnet.exe",
-      "workingDirectory": "$(ProjectDir)",
-      "commandLineArgs": "watch run",
-      "launchBrowser": true,
-      "launchUrl": "swagger",
+    "WSL": {
+      "commandName": "WSL2",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://localhost:5002"
+      "distributionName": ""
     },
     "IIS Express": {
       "commandName": "IISExpress",

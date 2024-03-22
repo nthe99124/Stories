@@ -9,6 +9,7 @@
 
 <body>
     <div class="wrapper">
+        <AlertComponent @ref="@alertComponent"></AlertComponent>
         <AdminSidebar tab=1 />
         <div class="main">
             <nav class="navbar navbar-expand px-4 py-3">
@@ -294,7 +295,7 @@
         var res = await _accountantsService.ApprovedAccountant(regiserId);
         if (res != null && res.IsSuccess)
         {
-            alertComponent.Show(res?.Data, "success");
+            alertComponent.Show("Phê duyệt thành công", "success");
             await GetListAccountForAdminByTab();
         }
         else
@@ -308,7 +309,7 @@
         var res = await _accountantsService.DeniedAccountant(regiserId);
         if (res != null && res.IsSuccess)
         {
-            alertComponent.Show(res?.Data, "success");
+            alertComponent.Show("Từ chối thành công", "success");
             await GetListAccountForAdminByTab();
         }
         else

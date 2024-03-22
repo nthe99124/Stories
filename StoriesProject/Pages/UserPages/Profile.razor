@@ -444,7 +444,7 @@
                     Coin = res.Data.Coin,
                 };
                 var userInforJson = JsonSerializer.Serialize(userInfor);
-                await SetSessionStorage("userInfor", userInforJson);
+                // await SetSessionStorage("userInfor", userInforJson);
                 alertComponent.Show("Cập nhật thành công", "success");
 
             }

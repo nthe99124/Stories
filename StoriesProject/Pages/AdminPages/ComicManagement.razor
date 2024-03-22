@@ -178,7 +178,7 @@
                                             <tbody class="table-group-divider">
                                                 @if (listStoryPending != null && listStoryPending.Count > 0)
                                                 {
-                                                    <div class="show-comic__on-hover" id="showComicInfo2">
+                                                    @* <div class="show-comic__on-hover" id="showComicInfo2">
                                                         <div style="display: flex;">
                                                             <img src="@imgLinkSelector"
                                                                  style="height : 150px !important" />
@@ -187,7 +187,7 @@
                                                                 <p style="font-size: 13px;">@descriptionSelector</p>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div> *@
                                                     @for (int i = 0; i < listStoryPending.Count; i++)
                                                     {
                                                         var currentItem = listStoryPending[i];
@@ -381,7 +381,7 @@
         var res = await _storiesService.ChangeStatusStory(storyId, StoryStatus.Approved);
         if (res != null && res.IsSuccess)
         {
-            alertComponent.Show(res?.Data, "success");
+            alertComponent.Show("Phê duyệt truyện thành công", "success");
         }
         else
         {
@@ -412,7 +412,7 @@
 
     private void UpdateStoryHover(string imgLink, string name, string description)
     {
-        imgLinkSelector = imgLink;
+        imgLinkSelector = GetLinkImage(imgLink);
         nameSelector = name;
         descriptionSelector = description;
         StateHasChanged();
